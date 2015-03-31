@@ -1,0 +1,10 @@
+﻿<Window x:Class="Bugdet.AddedSalariesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AddedSalariesWindow" Height="350" Width="334">
+    <Grid>
+        <Frame x:Name="pageFrame" Content="" HorizontalAlignment="Left" Height="273" Margin="10,10,0,0" VerticalAlignment="Top" Width="300" NavigationUIVisibility="Hidden"/>
+        <Button x:Name="backBtn" Content="Wyjdź" HorizontalAlignment="Left" Margin="28,288,0,0" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,24 @@
+﻿<Page x:Class="Bugdet.MakeBudgetPage3"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="250" d:DesignWidth="272"
+	Title="MakeBudgetPage3">
+
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Dodaj okresowe wydatki, czyli takie które są opłacane w dany dzień w miesiącu badź dany dzień w tygodniu, bądź co określony okres czasu" VerticalAlignment="Top"/>
+        <TextBox x:Name="salaryName" HorizontalAlignment="Left" Height="23" Margin="118,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96"/>
+        <Label Content="Nazwa wydatku" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" Width="103"/>
+        <Label Content="Wielkość zapłaty" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="salaryValue" HorizontalAlignment="Left" Height="23" Margin="152,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97"/>
+        <Label Content="Rodzaj zapłaty" HorizontalAlignment="Left" Margin="10,128,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="type1Radio" Content="Co x dni" HorizontalAlignment="Left" Margin="10,159,0,0" VerticalAlignment="Top" Checked="type1Radio_Checked" IsChecked="True"/>
+        <RadioButton x:Name="type2Radio" Content="W określony dzień miesiąca" HorizontalAlignment="Left" Margin="87,159,0,0" VerticalAlignment="Top" Checked="type2Radio_Checked"/>
+        <TextBox x:Name="dateText" HorizontalAlignment="Right" Height="23" Margin="0,183,51,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
+        <Label x:Name="descLbl" Content="Co ile dni jest opłacane" HorizontalAlignment="Left" Margin="10,180,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="addSalaryBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="10,218,0,0" VerticalAlignment="Top" Width="75" Click="addSalaryBtn_Click"/>
+        <Button x:Name="addedSalariesBtn" Content="Juz dodane" HorizontalAlignment="Left" Margin="152,218,0,0" VerticalAlignment="Top" Width="75" Click="addedSalariesBtn_Click"/>
+    </Grid>
+</Page>

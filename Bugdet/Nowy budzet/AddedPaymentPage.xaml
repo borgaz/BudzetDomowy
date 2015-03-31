@@ -1,0 +1,15 @@
+﻿<Page x:Class="Bugdet.AddedPaymentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="273" d:DesignWidth="300"
+	Title="AddedPaymentPage">
+
+    <Grid>
+        <DataGrid x:Name="paymentTable" HorizontalAlignment="Left" VerticalAlignment="Top" Height="217" Width="280" Margin="10,10,0,0"/>
+        <Button x:Name="deleteBtn" Content="usuń dany rekord" HorizontalAlignment="Left" Margin="10,241,0,0" VerticalAlignment="Top" Width="111" Click="deleteBtn_Click"/>
+
+    </Grid>
+</Page>

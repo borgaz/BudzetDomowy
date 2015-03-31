@@ -1,0 +1,33 @@
+﻿<Window x:Class="Bugdet.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="BUDŻET DOMOWY" Height="600" Width="800">
+    <Grid>
+        <Button x:Name="makeNewBudget" Content="Stwórz nowy Budzet" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" Click="makeNewBudget_Click" Height="40" BorderBrush="#FF0A1A80" Foreground="Black">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="#FFF3F3F3" Offset="0"/>
+                    <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
+                    <GradientStop Color="#FFDDDDDD" Offset="0.5"/>
+                    <GradientStop Color="#FF1B8EC3" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <Frame Content="" HorizontalAlignment="Left" Height="490" Margin="164,40,0,0" VerticalAlignment="Top" Width="625" NavigationUIVisibility="Hidden" Background="Black"/>
+        <Button x:Name="button1" Content="Button 1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" Height="40" Margin="0,40,0,0"/>
+        <Button x:Name="button1_Copy" Content="Button 1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" Height="40" Margin="0,80,0,0"/>
+        <Button x:Name="button1_Copy1" Content="Button 2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" Height="40" Margin="0,120,0,0"/>
+        <Button x:Name="button1_Copy2" Content="Button 3" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" Height="40" Margin="0,160,0,0"/>
+        <Button x:Name="button1_Copy3" Content="Button 4" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" Height="40" Margin="0,200,0,0"/>
+        <Button x:Name="button1_Copy4" Content="Button 5" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" Height="40" Margin="0,240,0,0"/>
+        <Button x:Name="button1_Copy5" Content="Button 6" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" Height="40" Margin="0,280,0,0"/>
+        <Button x:Name="button1_Copy6" Content="Button 7" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" Height="40" Margin="0,320,0,0"/>
+        <Button x:Name="button1_Copy7" Content="Button 8" HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" Height="40" Margin="0,360,0,0"/>
+        <Calendar HorizontalAlignment="Left" Margin="0,400,0,0" VerticalAlignment="Top" Height="160" Width="164"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="208,9,0,0" TextWrapping="Wrap" Text="Nazwa budzetu" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="356,10,0,0" TextWrapping="Wrap" Text="aktualna kasa" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <Label Content="InsERT" Margin="662,6,0,0" VerticalAlignment="Top" Background="#FF0E1B6C" BorderBrush="Black" Foreground="#FFF5F3F3" Width="102" FontWeight="Bold" FontSize="16" HorizontalAlignment="Left" HorizontalContentAlignment="Center"/>
+        <Label Content="Godzina aktualna" HorizontalAlignment="Left" Margin="680,534,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.895,-1.3" Background="#FF67BB2C" Height="26"/>
+        <Label Content="Dodatkowe informacje, bla bla bla bla bla bla bla bla bla " HorizontalAlignment="Left" Margin="208,534,0,0" VerticalAlignment="Top" Background="#FF8B1616"/>
+    </Grid>
+</Window>
