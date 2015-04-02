@@ -75,9 +75,9 @@ namespace Bugdet
                 return true;
 
             }
-            catch(SQLiteException)
+            catch(SQLiteException ex)
             {
-                MessageBox.Show("Cos poszlo nie tak");
+                MessageBox.Show(ex.GetBaseException() + "\n" + "SQLConnect.MakeDB()");
                 return false;
                 // gunwo
             }
@@ -97,7 +97,7 @@ namespace Bugdet
             }
             catch (SQLiteException ex)
             {
-                MessageBox.Show( ex.GetBaseException() + "\n nie udalo sie");
+                MessageBox.Show( ex.GetBaseException() + "\n SQLConnect.ExecuteSQLNoNQuery");
                 return false;
             }
         }

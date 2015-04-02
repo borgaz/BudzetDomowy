@@ -78,7 +78,7 @@ namespace Bugdet
                         ManagePages(0, 0);
                     }
                     else
-                        MessageBox.Show("jakis blad");
+                        MessageBox.Show("Nie przeszlo w CompleteBudget()");
                     break;
                 default: break;
             }
@@ -174,8 +174,9 @@ namespace Bugdet
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.ToString());
                 return false;
             }
         }

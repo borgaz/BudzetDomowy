@@ -32,11 +32,18 @@ namespace Bugdet
 
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(salaryTable.SelectedItem != null)
+            try
             {
-                DataRowView dataRow = (DataRowView)salaryTable.SelectedItem;
-                MakeBudgetPage2.budgetList.RemoveAt((int)dataRow.Row.ItemArray[0]);
-              //  salaryTable.Items.Remove(dataRow);
+                if (salaryTable.SelectedItem != null)
+                {
+                    DataRowView dataRow = (DataRowView)salaryTable.SelectedItem;
+                    MakeBudgetPage2.budgetList.RemoveAt((int)dataRow.Row.ItemArray[0]);
+                    Refresh();
+                }
+            }
+            catch(Exception ex)
+            {
+                // niech se klika
             }
         }
         private void Refresh()
