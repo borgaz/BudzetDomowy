@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bugdet
 {
-    class Category
+    public class Category
     {
         private int id;
         private string name;

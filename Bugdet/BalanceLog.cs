@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bugdet
 {
-    class BalanceLog
+    public class BalanceLog
     {
         private DateTime date;
         private string note;

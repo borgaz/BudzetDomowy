@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bugdet
 {
-    abstract class Payment
+    abstract public class Payment
     {
         private int id;
         private int categoryID;

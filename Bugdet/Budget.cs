@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bugdet
 {
-    class Budget
+    public class Budget
     {
         private String note;
         private String name;
@@ -18,7 +18,7 @@ namespace Bugdet
         private int numberOfPeople;
         private DateTime creationDate;
 
-        Budget(String note, String name, String password, List<Payment> payments, List<Category> categories,
+        public Budget(String note, String name, String password, List<Payment> payments, List<Category> categories,
             List<SavingsTarget> savingsTargets, BalanceLog balance, int numberOfPeople, DateTime creationDate)
         {
             this.note = note;
@@ -31,20 +31,6 @@ namespace Bugdet
             this.numberOfPeople = numberOfPeople;
             this.creationDate = creationDate;
         }
-
-        Budget()
-        {
-            this.note = "";
-            this.name = "";
-            this.password = "";
-            this.payments = null;
-            this.categories = null;
-            this.savingsTargets = null;
-            this.balance = null;
-            this.numberOfPeople = 0;
-            this.creationDate = DateTime.Now;
-        }
-
 
         public String Note
         {

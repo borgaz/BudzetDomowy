@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bugdet
 {
-    class PeriodPayment : Payment
+    public class PeriodPayment : Payment
     {
         private DateTime startDate;
         private String period;      

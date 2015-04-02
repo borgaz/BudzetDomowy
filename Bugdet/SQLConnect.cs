@@ -130,5 +130,34 @@ namespace Bugdet
 
             return 0;
         }
+        /// <summary>
+        /// Pobiera wszystkie dane z bazy do obiektu
+        /// </summary>
+        /// <returns> Zwraca obiekt z wszystkimi danymi z bazy </returns>
+        public Budget FetchAll()
+        {
+            String note = ""; //chwilowo brak w bazie
+            String password = ""; //chwilowo brak w bazie
+            String name = (string)this.SelectQuery("SELECT name FROM Budget").Tables[0].Rows[0]["name"];
+
+            List<Payment> payments = null;
+
+            List<Category> categories = null;
+
+            List<SavingsTarget> savingsTargets = null;
+
+            BalanceLog balance = null;
+
+            int numberOfPeople = 0; // liczba budzetów
+            DateTime creationDate = DateTime.Today; //chwilowo brak w bazie
+
+
+
+            Budget temporary = new Budget (note, name, password, payments, categories,
+                                    savingsTargets, balance, numberOfPeople, creationDate);
+            
+            return temporary;
+
+        }
     }
 }

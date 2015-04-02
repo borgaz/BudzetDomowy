@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bugdet
 {
-    class SavingsTarget
+    public class SavingsTarget
     {
         private String target; //description of the target
         private String note;
