@@ -25,7 +25,7 @@ namespace Bugdet
         {
             InitializeComponent();
             SQLConnect.Instance.Connect();
-            SQLConnect.Instance.FetchAll();
+            //SQLConnect.Instance.FetchAll();
         }
 
         private void makeNewBudget_Click(object sender, RoutedEventArgs e)
