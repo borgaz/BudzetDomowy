@@ -66,9 +66,9 @@ namespace Bugdet
                                                                       "type integer," +
                                                                       "note varchar(100))");
                 this.ExecuteSQLNoNQuery("CREATE TABLE BalanceLogs (id INTEGER PRIMARY KEY," +
-                                                                      "pariodPaymentId integer not null," +
+                                                                      "pariodPaymentId integer not null," + // period....
                                                                       "categoryId integer not null," +
-                                                                      "income integer," +
+                                                                      "income integer," + // czemu nie double (?)
                                                                       "date date," +
                                                                       "note varchar(100))");
                 this.ExecuteSQLNoNQuery("CREATE TABLE Categories (id INTEGER PRIMARY KEY, name varchar(50) not null,note varchar(100))");
@@ -138,20 +138,70 @@ namespace Bugdet
         {
             String note = ""; //chwilowo brak w bazie
             String password = ""; //chwilowo brak w bazie
-            String name = (string)this.SelectQuery("SELECT name FROM Budget").Tables[0].Rows[0]["name"];
-
-            List<Payment> payments = null;
-
-            List<Category> categories = null;
-
-            List<SavingsTarget> savingsTargets = null;
-
-            BalanceLog balance = null;
-
-            int numberOfPeople = 0; // liczba budzetów
+            List<SavingsTarget> savingsTargets = null; //chwilowo brak w bazie
+            int numberOfPeople = 0; // chwilowo brak w bazie
             DateTime creationDate = DateTime.Today; //chwilowo brak w bazie
 
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            // Nazwa bazy
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            String name = "";
+            DataSet nameFromSelect = this.SelectQuery("SELECT name FROM Budget");
 
+            if (nameFromSelect.Tables[0].Rows.Count == 0)
+                throw new System.Data.Entity.Core.ObjectNotFoundException("Empty datebase");
+            else
+            {
+                name = (string)this.SelectQuery("SELECT name FROM Budget").Tables[0].Rows[0]["name"];
+            }
+
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            // Lista kategorii
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            List<Category> categories = new List <Category>();
+            DataSet categoriesFromSelect = this.SelectQuery("SELECT * FROM Categories");
+            for (int i = 0; i < categoriesFromSelect.Tables[0].Rows.Count; i++)
+            {
+                categories.Add(new Category(
+                    Convert.ToInt32(categoriesFromSelect.Tables[0].Rows[i]["id"]), 
+                    (string)categoriesFromSelect.Tables[0].Rows[i]["name"], 
+                    (string)categoriesFromSelect.Tables[0].Rows[i]["note"]));
+            }
+
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            // Aktualny stan konta
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            DataSet balanceFromSelect = this.SelectQuery("SELECT * FROM BalanceLogs");
+            BalanceLog balance = new BalanceLog(
+                Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["id"]),
+                Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["income"]),
+                Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["categoryId"]),
+                Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["pariodPaymentId"]),
+                (DateTime)(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["date"]),
+                (string)(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["note"])
+                );
+
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            // Lista płatności
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            List<Payment> payments = new List<Payment>();
+
+            DataSet periodPayFromSelect = this.SelectQuery("SELECT * FROM PeriodPayments");
+            for (int i = 0; i < periodPayFromSelect.Tables[0].Rows.Count; i++)
+            {
+                payments.Add(new PeriodPayment(
+                    Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["id"]),
+                    Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["categoryId"]),
+                    Convert.ToDouble(periodPayFromSelect.Tables[0].Rows[i]["income"]),
+                    (string)(periodPayFromSelect.Tables[0].Rows[i]["note"]),
+                    (string)(periodPayFromSelect.Tables[0].Rows[i]["type"]),
+                    (string)(periodPayFromSelect.Tables[0].Rows[i]["name"]),
+                    Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["repeat"]),
+                    "", // no period in datebase
+                    (DateTime)(periodPayFromSelect.Tables[0].Rows[i]["lastUpdate"]),
+                    (DateTime)(periodPayFromSelect.Tables[0].Rows[i]["startDate"])
+                    ));
+            }
 
             Budget temporary = new Budget (note, name, password, payments, categories,
                                     savingsTargets, balance, numberOfPeople, creationDate);
