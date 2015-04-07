@@ -12,12 +12,14 @@ namespace Bugdet
         private String period;      
         private int frequency;
         private DateTime lastUpdate;
+        private DateTime endDate;
 
-        public PeriodPayment(int ID, int categoryID, double amount, String note, String type, String name, int frequency, String period, DateTime lastUpdate, DateTime startDate)
+        public PeriodPayment(int ID, int categoryID, double amount, String note, int type, String name, int frequency, String period, DateTime lastUpdate, DateTime startDate,DateTime endDate)
             : base(ID, categoryID, amount, note, type, name)
         {
             this.lastUpdate = lastUpdate;
             this.startDate = startDate;
+            this.endDate = endDate;
             this.frequency = frequency;
             this.period = period;
         }
@@ -68,7 +70,7 @@ namespace Bugdet
             }
         }
 
-        public DateTime EndDate
+        public DateTime LastUpdate
         {
             get
             {
@@ -77,6 +79,17 @@ namespace Bugdet
             set
             {
                 lastUpdate = value;
+            }
+        }
+        public DateTime EndDate
+        {
+            get
+            {
+                return endDate;
+            }
+            set
+            {
+                endDate = value;
             }
         }
     }

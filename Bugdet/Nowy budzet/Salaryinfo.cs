@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Bugdet.Nowy_budzet
 {
-    public class Salaryinfo
+    public class SalaryInfo
     {
         private String salaryName;
         private int salaryValue;
         private int salaryType;
         private int repeatDate;
-        public Salaryinfo(String _salaryName, int _salaryValue, int _salaryType, int _repeatDate)
+        public SalaryInfo(String _salaryName, int _salaryValue, int _salaryType, int _repeatDate)
         {
             salaryName = _salaryName;
             salaryValue = _salaryValue;

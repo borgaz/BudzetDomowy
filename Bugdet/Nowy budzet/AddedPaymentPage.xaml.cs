@@ -49,7 +49,7 @@ namespace Bugdet
             payment.Columns.Add("Powtarzalność", typeof(string));
             for (int i = 0; i < MakeBudgetPage3.paymentList.Count; i++)
             {
-                Salaryinfo item = (Salaryinfo)MakeBudgetPage3.paymentList.ToArray().GetValue(i);
+                SalaryInfo item = (SalaryInfo)MakeBudgetPage3.paymentList.ToArray().GetValue(i);
 
                 payment.Rows.Add(i, item.Name, item.Value, (item.Type == 1 ? "co " + item.Repeat + " dni" : "w każdy " + item.Repeat + " dzień miesiąca"));
             }

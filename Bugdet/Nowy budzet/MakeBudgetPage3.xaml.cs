@@ -21,7 +21,7 @@ namespace Bugdet
     /// </summary>
     public partial class MakeBudgetPage3 : Page
     {
-        public static List<Salaryinfo> paymentList = new List<Salaryinfo>();
+        public static List<SalaryInfo> paymentList = new List<SalaryInfo>();
         private int salaries;
         public MakeBudgetPage3()
         {
@@ -44,12 +44,13 @@ namespace Bugdet
         {
             if(salaryName.Text != "" && salaryValue.Text != "" && dateText.Text != "")
             {
-                paymentList.Add(new Salaryinfo(salaryName.Text,
+                paymentList.Add(new SalaryInfo(salaryName.Text,
                                               int.Parse(salaryValue.Text),
                                               (type1Radio.IsChecked == true ? 1 : 2),
                                               int.Parse(dateText.Text)));
                 salaries++;
-                MessageBox.Show("Dodano");
+                infoLbl.Content = "Dodano";
+                infoLbl.Foreground = Brushes.Green;// ="#00FF0000";
                 salaryName.Text = "";
                 salaryValue.Text = "";
                 dateText.Text = "";
@@ -57,6 +58,8 @@ namespace Bugdet
             else
             {
                 MessageBox.Show("Uzupełnij wszystkie pola!");
+                infoLbl.Content = "Nie Dodano";
+                infoLbl.Foreground = Brushes.Red;// ="#00FF0000";
             }
         }
 

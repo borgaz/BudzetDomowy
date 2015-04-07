@@ -12,10 +12,10 @@ namespace Bugdet
         private int categoryID;
         private double amount;
         private String name;
-        private String type;
+        private int type;
         private String note;
 
-        public Payment(int ID, int categoryID, double amount, String note, String type, String name)
+        public Payment(int ID, int categoryID, double amount, String note, int type, String name)
         {
             this.id = ID;
             this.categoryID = categoryID;
@@ -32,7 +32,7 @@ namespace Bugdet
             this.note = "";
             this.amount = 0.0;
             this.categoryID = 0;
-            this.type = "";
+            this.type = 0;
             this.name = "";
         }
 
@@ -84,7 +84,7 @@ namespace Bugdet
             }
         }
 
-        public String Type
+        public int Type
         {
             get
             {

@@ -71,6 +71,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Budget.cs" />
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Nowy budzet\AddedPaymentPage.xaml.cs">
       <DependentUpon>AddedPaymentPage.xaml</DependentUpon>
     </Compile>
@@ -85,7 +88,7 @@
     </Compile>
     <Compile Include="BalanceLog.cs" />
     <Compile Include="Category.cs" />
-    <Compile Include="Nowy budzet\Salaryinfo.cs" />
+    <Compile Include="Nowy budzet\SalaryInfo.cs" />
     <Compile Include="Nowy budzet\MakeBudgetPage2.xaml.cs">
       <DependentUpon>MakeBudgetPage2.xaml</DependentUpon>
     </Compile>
@@ -100,6 +103,19 @@
     <Compile Include="SavingsTarget.cs" />
     <Compile Include="SinglePayment.cs" />
     <Compile Include="SQLConnect.cs" />
+    <Compile Include="zarzadzanie wydatkami i przychodami\AddPaymentPage.xaml.cs">
+      <DependentUpon>AddPaymentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="zarzadzanie wydatkami i przychodami\AddSalaryPage.xaml.cs">
+      <DependentUpon>AddSalaryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="zarzadzanie wydatkami i przychodami\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Page Include="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Nowy budzet\AddedPaymentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -140,6 +156,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="zarzadzanie wydatkami i przychodami\AddPaymentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="zarzadzanie wydatkami i przychodami\AddSalaryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="zarzadzanie wydatkami i przychodami\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -171,6 +199,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="WelcomePage\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.96.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.96.0\build\net45\System.Data.SQLite.Core.targets')" />

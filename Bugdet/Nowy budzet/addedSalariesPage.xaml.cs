@@ -56,7 +56,7 @@ namespace Bugdet
             salary.Columns.Add("Powtarzalność", typeof(string));
             for(int i = 0; i < MakeBudgetPage2.budgetList.Count;i++)
             {
-                Salaryinfo item = (Salaryinfo)MakeBudgetPage2.budgetList.ToArray().GetValue(i);
+                SalaryInfo item = (SalaryInfo)MakeBudgetPage2.budgetList.ToArray().GetValue(i);
 
                 salary.Rows.Add(i,item.Name, item.Value, (item.Type == 1 ? "co " + item.Repeat + " dni" : "w każdy " + item.Repeat + " dzień miesiąca"));
             }
@@ -74,6 +74,10 @@ namespace Bugdet
         {
             salaryTable.Columns[0].Visibility = Visibility.Hidden;
 
+        }
+
+        private void salaryTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
         }
     }
 }

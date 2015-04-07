@@ -1,0 +1,25 @@
+﻿<Page x:Class="Bugdet.zarzadzanie_wydatkami_i_przychodami.AddPaymentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="275" d:DesignWidth="300"
+	Title="addPaymentPage">
+
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Dodaj Wydatek jednorazowy, wydatek ten zawsze będzie można usunąć w zakładce zarządzania." VerticalAlignment="Top"/>
+        <TextBox x:Name="paymentName" HorizontalAlignment="Left" Height="23" Margin="129,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119"/>
+        <Label Content="Nazwa wydatku" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="103"/>
+        <Label Content="Suma zapłaty" HorizontalAlignment="Left" Margin="10,87,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="paymentValue" HorizontalAlignment="Left" Height="23" Margin="129,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="categoryBox" HorizontalAlignment="Left" Margin="129,131,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Kategoria" HorizontalAlignment="Left" Margin="10,127,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="addCategoryBtn" Content="+" HorizontalAlignment="Left" Margin="254,131,0,0" VerticalAlignment="Top" Width="28" ToolTip="Dodaj kategorie"/>
+        <Label Content="Dodatkowa notatka" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="note" HorizontalAlignment="Left" Height="38" Margin="19,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="271"/>
+        <Button x:Name="addPaymentBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="19,243,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.2,-0.091" Click="addPaymentBtn_Click"/>
+        <TextBox x:Name="infoBox" HorizontalAlignment="Left" Height="23" Margin="99,243,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" IsEnabled="False"/>
+
+    </Grid>
+</Page>

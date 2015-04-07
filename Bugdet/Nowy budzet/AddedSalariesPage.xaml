@@ -8,7 +8,7 @@
 	Title="addedSalariesPage">
 
     <Grid>
-        <DataGrid x:Name="salaryTable" HorizontalAlignment="Left" VerticalAlignment="Top" Height="217" Width="280" Margin="10,10,0,0">
+        <DataGrid x:Name="salaryTable" HorizontalAlignment="Left" VerticalAlignment="Top" Height="217" Width="280" Margin="10,10,0,0" SelectionChanged="salaryTable_SelectionChanged">
         </DataGrid>
         <Button x:Name="deleteBtn" Content="usuń dany rekord" HorizontalAlignment="Left" Margin="10,241,0,0" VerticalAlignment="Top" Width="111" Click="deleteBtn_Click"/>
 

@@ -59,19 +59,21 @@ namespace Bugdet
                 this.ExecuteSQLNoNQuery("CREATE TABLE PeriodPayments (id INTEGER PRIMARY KEY," +
                                                                       "categoryId integer," +
                                                                       "name varchar(50)," +
-                                                                      "income integer," +
-                                                                      "repeat integer," +
+                                                                      "amount double," +
+                                                                      "frequency integer," +
+                                                                      "period varchar(20)," +
                                                                       "startDate date," +
                                                                       "lastUpdate date," +
                                                                       "type integer," +
                                                                       "note varchar(100))");
                 this.ExecuteSQLNoNQuery("CREATE TABLE BalanceLogs (id INTEGER PRIMARY KEY," +
-                                                                      "pariodPaymentId integer not null," + // period....
+                                                                      "periodPaymentId integer," + // period.... literowka :)
                                                                       "categoryId integer not null," +
-                                                                      "income integer," + // czemu nie double (?)
+                                                                      "income double," + // czemu nie double (?) w sumie nie wiem czemu, poprawione :)
                                                                       "date date," +
                                                                       "note varchar(100))");
                 this.ExecuteSQLNoNQuery("CREATE TABLE Categories (id INTEGER PRIMARY KEY, name varchar(50) not null,note varchar(100))");
+                this.addDefaultCategories();
                 return true;
 
             }
@@ -79,7 +81,6 @@ namespace Bugdet
             {
                 MessageBox.Show(ex.GetBaseException() + "\n" + "SQLConnect.MakeDB()");
                 return false;
-                // gunwo
             }
         }
         /// <summary>
@@ -122,13 +123,58 @@ namespace Bugdet
                 return null;
             }
         }
-        public int CheckCategory(String category) // do dokonczenia
+        public Boolean CheckCategory(String category,String note)
         {
-            int id = 0;
-            DataSet result;
-            result = SelectQuery("Select count(id) from Categories where name='"+ category +"'");
-
-            return 0;
+            int result = (int)SelectQuery("Select count(id) as count from Categories where name='"+ category +"'").Tables[0].Rows[0]["count"];
+            if (result == 0)
+            {
+                this.ExecuteSQLNoNQuery("INSERT into Categories(name,note) values('" + category + "','" + note + "'"); 
+                return true;
+            }
+            else
+                return false;
+        }
+        public Boolean AddSinglePayment(String name,double value,int category,String note)
+        {
+            try
+            {
+                command = new SQLiteCommand();
+                command.CommandText = "INSERT INTO BalanceLogs(periodPaymentId,categoryId,income,date,note) values(null,@category,@income,date('now'),@note)";
+                command.Parameters.AddWithValue("@category", ++category);
+                command.Parameters.AddWithValue("@income", value * (-1));
+                command.Parameters.AddWithValue("@note", name + "|" + note);
+                command.Connection = _MYDB;
+                command.ExecuteNonQuery();
+                command.Dispose();
+                return true;
+            }
+            catch(SQLiteException ex)
+            {
+                MessageBox.Show("Błąd");
+                Console.WriteLine(ex.GetBaseException() + "\n AddSinglePayment()");
+                return false;
+            }
+        }
+        public Boolean AddSingleSalary(String name,double value,int category,String note)
+        {
+            try
+            {
+                command = new SQLiteCommand();
+                command.CommandText = "INSERT INTO BalanceLogs(periodPaymentId,categoryId,income,date,note) values(null,@category,@income,date('now'),@note)";
+                command.Parameters.AddWithValue("@category", ++category);
+                command.Parameters.AddWithValue("@income", value);
+                command.Parameters.AddWithValue("@note", name + "|" + note);
+                command.Connection = _MYDB;
+                command.ExecuteNonQuery();
+                command.Dispose();
+                return true;
+            }
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show("Błąd");
+                Console.WriteLine(ex.GetBaseException() + "\n AddSinglePayment()");
+                return false;
+            }
         }
         /// <summary>
         /// Pobiera wszystkie dane z bazy do obiektu
@@ -176,7 +222,7 @@ namespace Bugdet
                 Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["id"]),
                 Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["income"]),
                 Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["categoryId"]),
-                Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["pariodPaymentId"]),
+                Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["periodPaymentId"]),
                 (DateTime)(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["date"]),
                 (string)(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["note"])
                 );
@@ -194,12 +240,13 @@ namespace Bugdet
                     Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["categoryId"]),
                     Convert.ToDouble(periodPayFromSelect.Tables[0].Rows[i]["income"]),
                     (string)(periodPayFromSelect.Tables[0].Rows[i]["note"]),
-                    (string)(periodPayFromSelect.Tables[0].Rows[i]["type"]),
+                    (int)(periodPayFromSelect.Tables[0].Rows[i]["type"]),
                     (string)(periodPayFromSelect.Tables[0].Rows[i]["name"]),
                     Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["repeat"]),
                     "", // no period in datebase
                     (DateTime)(periodPayFromSelect.Tables[0].Rows[i]["lastUpdate"]),
-                    (DateTime)(periodPayFromSelect.Tables[0].Rows[i]["startDate"])
+                    (DateTime)(periodPayFromSelect.Tables[0].Rows[i]["startDate"]),
+                    (DateTime)(periodPayFromSelect.Tables[0].Rows[i]["endDate"])
                     ));
             }
 
@@ -208,6 +255,24 @@ namespace Bugdet
             
             return temporary;
 
+        }
+        private Boolean addDefaultCategories()
+        {
+            try
+            {
+                this.ExecuteSQLNoNQuery("INSERT into Categories(name,note) values('Paliwo','Benzyna do samochodu')");
+                this.ExecuteSQLNoNQuery("INSERT into Categories(name,note) values('Jedzenie','Zakupy okresowe')");
+                this.ExecuteSQLNoNQuery("INSERT into Categories(name,note) values('Prąd','Rachunki za prąd')");
+                this.ExecuteSQLNoNQuery("INSERT into Categories(name,note) values('Woda','Rachunki za wodę')");
+                this.ExecuteSQLNoNQuery("INSERT into Categories(name,note) values('Gas','Rachunki za gas')");
+                return true;
+            }
+            catch(SQLiteException ex)
+            {
+                MessageBox.Show("Błąd");
+                Console.WriteLine(ex.GetBaseException() + "\n addDefaultCategories()");
+                return false;
+            }
         }
     }
 }
