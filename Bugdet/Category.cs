@@ -1,39 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bugdet
+﻿namespace Bugdet
 {
     public class Category
     {
-        private int id;
         private string name;
-        private string note;
 
         public Category() { }
 
         public Category(string name, string note)
         {
             this.name = name;
-            this.note = note;
+            this.Note = note;
         }
 
         public Category(int id, string name, string note)
         {
-            this.id = id;
+            this.ID = id;
             this.name = name;
-            this.note = note;
+            this.Note = note;
         }
 
-        public int ID
-        {
-            get
-            {
-                return id;
-            }
-        }
+        public int ID { get; private set; }
 
         public string Name
         {
@@ -50,16 +36,6 @@ namespace Bugdet
             }
         }
 
-        public string Note
-        {
-            get
-            {
-                return note;
-            }
-            set
-            {
-                note = value;
-            }
-        }
+        public string Note { get; set; }
     }
 }

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SQLite;
 using System.Data;
-using System.Windows;
+using System.Data.Entity.Core;
+using System.Data.SQLite;
 using System.IO;
+using System.Windows;
 
 namespace Bugdet
 {
@@ -23,12 +21,7 @@ namespace Bugdet
 
         public static SQLConnect Instance
         {
-            get
-            {
-                if (_instance == null)
-                    _instance = new SQLConnect();
-                return _instance;
-            }
+            get { return _instance ?? (_instance = new SQLConnect()); }
         }
         public void Connect()
         {
@@ -39,7 +32,7 @@ namespace Bugdet
                     SQLiteConnection.CreateFile("budzet.sqlite");
                     _MYDB = new SQLiteConnection("Data Source=budzet.sqlite;Version=3");
                     _MYDB.Open();
-                    MakeDB();
+                    MakeDb();
                 }
                 else
                 {
@@ -51,7 +44,7 @@ namespace Bugdet
             {       
             }
         }
-        public Boolean MakeDB()
+        public Boolean MakeDb()
         {
             try
             {
@@ -112,8 +105,7 @@ namespace Bugdet
             try
             {
                 DataSet dataSet = new DataSet();
-                SQLiteDataAdapter result = new SQLiteDataAdapter();
-                result.SelectCommand = new SQLiteCommand(query, _MYDB);
+                SQLiteDataAdapter result = new SQLiteDataAdapter {SelectCommand = new SQLiteCommand(query, _MYDB)};
                 result.Fill(dataSet);
                 return dataSet;
             }
@@ -138,8 +130,11 @@ namespace Bugdet
         {
             try
             {
-                command = new SQLiteCommand();
-                command.CommandText = "INSERT INTO BalanceLogs(periodPaymentId,categoryId,income,date,note) values(null,@category,@income,date('now'),@note)";
+                command = new SQLiteCommand
+                {
+                    CommandText =
+                        "INSERT INTO BalanceLogs(periodPaymentId,categoryId,income,date,note) values(null,@category,@income,date('now'),@note)"
+                };
                 command.Parameters.AddWithValue("@category", ++category);
                 command.Parameters.AddWithValue("@income", value * (-1));
                 command.Parameters.AddWithValue("@note", name + "|" + note);
@@ -159,8 +154,11 @@ namespace Bugdet
         {
             try
             {
-                command = new SQLiteCommand();
-                command.CommandText = "INSERT INTO BalanceLogs(periodPaymentId,categoryId,income,date,note) values(null,@category,@income,date('now'),@note)";
+                command = new SQLiteCommand
+                {
+                    CommandText =
+                        "INSERT INTO BalanceLogs(periodPaymentId,categoryId,income,date,note) values(null,@category,@income,date('now'),@note)"
+                };
                 command.Parameters.AddWithValue("@category", ++category);
                 command.Parameters.AddWithValue("@income", value);
                 command.Parameters.AddWithValue("@note", name + "|" + note);
@@ -195,7 +193,7 @@ namespace Bugdet
             DataSet nameFromSelect = this.SelectQuery("SELECT name FROM Budget");
 
             if (nameFromSelect.Tables[0].Rows.Count == 0)
-                throw new System.Data.Entity.Core.ObjectNotFoundException("Empty datebase");
+                throw new ObjectNotFoundException("Empty datebase");
             else
             {
                 name = (string)this.SelectQuery("SELECT name FROM Budget").Tables[0].Rows[0]["name"];
@@ -248,6 +246,7 @@ namespace Bugdet
                     (DateTime)(periodPayFromSelect.Tables[0].Rows[i]["startDate"]),
                     (DateTime)(periodPayFromSelect.Tables[0].Rows[i]["endDate"])
                     ));
+                
             }
 
             Budget temporary = new Budget (note, name, password, payments, categories,

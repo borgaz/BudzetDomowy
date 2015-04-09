@@ -1,177 +1,86 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bugdet
 {
     public class Budget
     {
-        private String note;
-        private String name;
-        private String password;
-        private List<Payment> payments;
-        private List<Category> categories;
-        private List<SavingsTarget> savingsTargets;
-        private BalanceLog balance;
-        private int numberOfPeople;
         private DateTime creationDate;
 
         public Budget(String note, String name, String password, List<Payment> payments, List<Category> categories,
             List<SavingsTarget> savingsTargets, BalanceLog balance, int numberOfPeople, DateTime creationDate)
         {
-            this.note = note;
-            this.name = name;
-            this.password = password;
-            this.payments = payments;
-            this.categories = categories;
-            this.savingsTargets = savingsTargets;
-            this.balance = balance;
-            this.numberOfPeople = numberOfPeople;
+            this.Note = note;
+            this.Name = name;
+            this.Password = password;
+            this.Payments = payments;
+            this.Categories = categories;
+            this.SavingsTargets = savingsTargets;
+            this.Balance = balance;
+            this.NumberOfPeople = numberOfPeople;
             this.creationDate = creationDate;
         }
 
-        public String Note
-        {
-            get
-            {
-                return note;
-            }
-            set
-            {
-                note = value;
-            }
-        }
+        public String Note { get; set; }
 
-        public String Name
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-            }
-        }
+        public String Name { get; set; }
 
-        public String Password
-        {
-            get
-            {
-                return password;
-            }
-            set
-            {
-                password = value;
-            }
-        }
+        public String Password { get; set; }
 
-        public int NumberOfPeople
-        {
-            get
-            {
-                return numberOfPeople;
-            }
-            set
-            {
-                numberOfPeople = value;
-            }
-        }
+        public int NumberOfPeople { get; set; }
 
-        public BalanceLog Balance
-        {
-            get
-            {
-                return balance;
-            }
-            set
-            {
-                balance = value;
-            }
-        }
+        public BalanceLog Balance { get; set; }
 
-        public List<Payment> Payments
-        {
-            get
-            {
-                return payments;
-            }
-            set
-            {
-                payments = value;
-            }
-        }
+        public List<Payment> Payments { get; set; }
 
-        public List<Category> Categories
-        {
-            get
-            {
-                return categories;
-            }
-            set
-            {
-                categories = value;
-            }
-        }
+        public List<Category> Categories { get; set; }
 
-        public List<SavingsTarget> SavingsTargets
-        {
-            get
-            {
-                return savingsTargets;
-            }
-            set
-            {
-                savingsTargets = value;
-            }
-        }
+        public List<SavingsTarget> SavingsTargets { get; set; }
 
 
         public void SetNumberOfPeople(int number)
         {
-            this.numberOfPeople = number;
+            this.NumberOfPeople = number;
         }
 
         public void AddNote(String note)
         {
-            this.note = note; 
+            this.Note = note; 
         }
 
         public void DeleteNumberOfPeople ()
         {
-            this.numberOfPeople = 0;
+            this.NumberOfPeople = 0;
         }
 
         public void AddSinglePayment(SinglePayment payment)
         {
-            payments.Add(payment);
+            Payments.Add(payment);
         }
 
         public void DeleteSinglePayment(SinglePayment payment)
         {
-            payments.Remove(payment);
+            Payments.Remove(payment);
         }
 
         public void AddSavingsTarget(SavingsTarget target)
         {
-            savingsTargets.Add(target);
+            SavingsTargets.Add(target);
         }
 
         public void DeleteSavingsTarget(SavingsTarget target)
         {
-            savingsTargets.Remove(target);
+            SavingsTargets.Remove(target);
         }
 
         public void AddPeriodPayment(PeriodPayment payment)
         {
-            payments.Add(payment);
+            Payments.Add(payment);
         }
 
         public void DeletePeriodPayment(PeriodPayment payment)
         {
-            payments.Remove(payment);
+            Payments.Remove(payment);
         }
 
     }

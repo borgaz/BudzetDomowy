@@ -1,16 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 
-namespace Bugdet
+namespace Bugdet.Nowy_budzet
 {
     /// <summary>
     /// Interaction logic for MakeBudzetWindow.xaml
@@ -34,12 +26,7 @@ namespace Bugdet
         }
         public static MakeBudgetWindow Instance
         {
-            get
-            {
-                if (_instance == null)
-                    _instance = new MakeBudgetWindow(1);
-                return _instance;
-            }
+            get { return _instance ?? (_instance = new MakeBudgetWindow(1)); }
         }
         // Dziala normalnie
         public void ManagePages(int _page,int back)

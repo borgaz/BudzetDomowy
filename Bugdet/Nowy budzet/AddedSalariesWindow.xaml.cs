@@ -1,26 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
-namespace Bugdet
+namespace Bugdet.Nowy_budzet
 {
     /// <summary>
     /// Interaction logic for AddedSalariesWindow.xaml
     /// </summary>
     public partial class AddedSalariesWindow : Window
     {
-        AddedSalariesPage page1 = new AddedSalariesPage();
-        AddedPaymentPage page2 = new AddedPaymentPage();
+        readonly AddedSalariesPage _page1 = new AddedSalariesPage();
+        readonly AddedPaymentPage _page2 = new AddedPaymentPage();
         public AddedSalariesWindow(int page)
         {
             InitializeComponent();
@@ -31,10 +19,10 @@ namespace Bugdet
             switch(page)
             {
                 case 1:
-                    pageFrame.Content = page1;
+                    pageFrame.Content = _page1;
                     break;
                 case 2:
-                    pageFrame.Content = page2;
+                    pageFrame.Content = _page2;
                     break;
             }
         }
