@@ -27,7 +27,7 @@ namespace Bugdet.zarzadzanie_wydatkami_i_przychodami
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new MakeBudgetWindow(1).ShowDialog();
+            new Bugdet.Nowy_budzet.MakeBudgetWindow(1).ShowDialog();
         }
     }
 }

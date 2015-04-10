@@ -1,22 +1,34 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Bugdet
 {
     public class SinglePayment : Payment
     {
-        public SinglePayment(int ID, String note, double amount, int categoryID, int type, String name, DateTime date)
-            : base(ID, categoryID, amount, note, type, name)
+        private DateTime date;
+
+        public SinglePayment(String note, double amount, int categoryID, int type, String name, DateTime date)
+            : base( categoryID, amount, note, type, name)
         {
-            this.Date = date;
+            this.date = date;
         }
 
         // default constructor
         public SinglePayment()
             : base()
         {
-            Date = DateTime.Today;
+            date = DateTime.Today;
         }
 
-        public DateTime Date { get; set; }
+        public DateTime Date
+        {
+            get
+            {
+                return date;
+            }
+        }
     }
 }

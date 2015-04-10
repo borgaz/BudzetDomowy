@@ -1,30 +1,23 @@
-﻿namespace Bugdet
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Bugdet
 {
     public class Category
     {
         private string name;
-
-        public String ToString()
-        {
-            return "ID: " + id + "NAME: " + name + "NOTE: " + note + "\n";
-        }
+        private string note;
 
         public Category() { }
 
         public Category(string name, string note)
         {
             this.name = name;
-            this.Note = note;
+            this.note = note;
         }
-
-        public Category(int id, string name, string note)
-        {
-            this.ID = id;
-            this.name = name;
-            this.Note = note;
-        }
-
-        public int ID { get; private set; }
 
         public string Name
         {
@@ -32,15 +25,14 @@
             {
                 return name;
             }
-            set 
-            {
-                if (value.Equals(""))
-                {
-                    name = value;
-                }
-            }
         }
 
-        public string Note { get; set; }
+        public string Note
+        {
+            get
+            {
+                return note;
+            }
+        }
     }
 }

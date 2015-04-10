@@ -1,48 +1,78 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Bugdet
 {
     public class PeriodPayment : Payment
     {
-<<<<<<< HEAD
-        public PeriodPayment(int ID, int categoryID, double amount, String note, int type, String name, int frequency, String period, DateTime lastUpdate, DateTime startDate,DateTime endDate)
-=======
         private DateTime startDate;
-        private DateTime period;      
+        private String period;      
         private int frequency;
         private DateTime lastUpdate;
         private DateTime endDate;
 
-        public PeriodPayment(int ID, int categoryID, double amount, String note, int type, String name, 
-            int frequency, String period, DateTime lastUpdate, DateTime startDate,DateTime endDate)
->>>>>>> origin/master
-            : base(ID, categoryID, amount, note, type, name)
+        public PeriodPayment(int categoryID, double amount, String note, int type, String name, 
+            int frequency, String period, DateTime lastUpdate, DateTime startDate, DateTime endDate)
         {
-            this.LastUpdate = lastUpdate;
-            this.StartDate = startDate;
-            this.EndDate = endDate;
-            this.Frequency = frequency;
-            this.Period = period;
+            this.lastUpdate = lastUpdate;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.frequency = frequency;
+            this.period = period;
         }
 
         // default constructor
         public PeriodPayment() 
             : base ()
         {
-            LastUpdate = DateTime.MinValue;
-            StartDate = DateTime.MinValue;
-            Frequency = 0;
-            Period = "";
+            lastUpdate = DateTime.MinValue;
+            startDate = DateTime.MinValue;
+            frequency = 0;
+            period = "";
         }
 
-        public int Frequency { get; set; }
+        public int Frequency
+        {
+            get
+            {
+                return frequency;
+            }
+        }
 
-        public String Period { get; set; }
+        public String Period
+        {
+            get
+            {
+                return period;
+            }
+        }
 
-        public DateTime StartDate { get; set; }
+        public DateTime StartDate
+        {
+            get
+            {
+                return startDate;
+            }
+        }
 
-        public DateTime LastUpdate { get; set; }
+        public DateTime EndDate
+        {
+            get
+            {
+                return endDate;
+            }
+        }
 
-        public DateTime EndDate { get; set; }
+        public DateTime LastUpdate
+        {
+            get
+            {
+                return lastUpdate;
+            }
+
+        }
     }
 }

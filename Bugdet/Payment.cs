@@ -1,40 +1,77 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Bugdet
 {
     abstract public class Payment
     {
-        public Payment(int ID, int categoryID, double amount, String note, int type, String name)
+        private int categoryID;
+        private double amount;
+        private String name;
+        private int type;
+        private String note;
+
+        public Payment(int categoryID, double amount, String note, int type, String name)
         {
-            this.ID = ID;
-            this.CategoryID = categoryID;
-            this.Amount = amount;
-            this.Note = note;
-            this.Type = type;
-            this.Name = name;
+            this.categoryID = categoryID;
+            this.amount = amount;
+            this.note = note;
+            this.type = type;
+            this.name = name;
         }
 
         // default constructor
         public Payment()
         {
-            this.ID = 0;
-            this.Note = "";
-            this.Amount = 0.0;
-            this.CategoryID = 0;
-            this.Type = 0;
-            this.Name = "";
+            this.note = "";
+            this.amount = 0.0;
+            this.categoryID = 0;
+            this.type = 0;
+            this.name = "";
         }
 
-        public int ID { get; set; }
+        public int CategoryID
+        {
+            get
+            {
+                return categoryID;
+            }
+        }
 
-        public int CategoryID { get; set; }
+        public double Amount
+        {
+            get
+            {
+                return amount;
+            }
+        }
 
-        public double Amount { get; set; }
+        public String Note
+        {
+            get
+            {
+                return note;
+            }
+        }
 
-        public String Note { get; set; }
+        public int Type
+        {
+            get
+            {
+                return type;
+            }
 
-        public int Type { get; set; }
+        }
 
-        public String Name { get; set; }
+        public String Name
+        {
+            get
+            {
+                return name;
+            }
+        }
     }
 }

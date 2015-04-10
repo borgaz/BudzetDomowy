@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Core;
@@ -60,9 +63,9 @@ namespace Bugdet
                                                                       "type integer," +
                                                                       "note varchar(100))");
                 this.ExecuteSQLNoNQuery("CREATE TABLE BalanceLogs (id INTEGER PRIMARY KEY," +
-                                                                      "periodPaymentId integer," + // period.... literowka :)
+                                                                      "periodPaymentId integer," + 
                                                                       "categoryId integer not null," +
-                                                                      "income double," + // czemu nie double (?) w sumie nie wiem czemu, poprawione :)
+                                                                      "income double," + 
                                                                       "date date," +
                                                                       "note varchar(100))");
                 this.ExecuteSQLNoNQuery("CREATE TABLE Categories (id INTEGER PRIMARY KEY, name varchar(50) not null,note varchar(100))");
@@ -182,7 +185,7 @@ namespace Bugdet
         {
             String note = ""; //chwilowo brak w bazie
             String password = ""; //chwilowo brak w bazie
-            List<SavingsTarget> savingsTargets = null; //chwilowo brak w bazie
+            Dictionary<int, SavingsTarget> savingsTargets = null; //chwilowo brak w bazie
             int numberOfPeople = 0; // chwilowo brak w bazie
             DateTime creationDate = DateTime.Today; //chwilowo brak w bazie
 
@@ -202,12 +205,12 @@ namespace Bugdet
             /////////////////////////////////////////////////////////////////////////////////////////////
             // Lista kategorii
             /////////////////////////////////////////////////////////////////////////////////////////////
-            List<Category> categories = new List <Category>();
+            Dictionary<int, Category> categories = new Dictionary<int, Category>();
             DataSet categoriesFromSelect = this.SelectQuery("SELECT * FROM Categories");
             for (int i = 0; i < categoriesFromSelect.Tables[0].Rows.Count; i++)
             {
-                categories.Add(new Category(
-                    Convert.ToInt32(categoriesFromSelect.Tables[0].Rows[i]["id"]), 
+                categories.Add(Convert.ToInt32(categoriesFromSelect.Tables[0].Rows[i]["id"]),
+                new Category(
                     (string)categoriesFromSelect.Tables[0].Rows[i]["name"], 
                     (string)categoriesFromSelect.Tables[0].Rows[i]["note"]));
             }
@@ -228,13 +231,13 @@ namespace Bugdet
             /////////////////////////////////////////////////////////////////////////////////////////////
             // Lista płatności
             /////////////////////////////////////////////////////////////////////////////////////////////
-            List<Payment> payments = new List<Payment>();
+            Dictionary<int, Payment> payments = new Dictionary<int, Payment>();
 
             DataSet periodPayFromSelect = this.SelectQuery("SELECT * FROM PeriodPayments");
             for (int i = 0; i < periodPayFromSelect.Tables[0].Rows.Count; i++)
             {
-                payments.Add(new PeriodPayment(
-                    Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["id"]),
+                payments.Add(Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["id"]), 
+                    new PeriodPayment(
                     Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["categoryId"]),
                     Convert.ToDouble(periodPayFromSelect.Tables[0].Rows[i]["income"]),
                     (string)(periodPayFromSelect.Tables[0].Rows[i]["note"]),
