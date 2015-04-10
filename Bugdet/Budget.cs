@@ -32,19 +32,6 @@ namespace Bugdet
             this.creationDate = creationDate;
         }
 
-        public Budget()
-        {
-            this.note = "";
-            this.name = "";
-            this.password = "";
-            this.payments = null;
-            this.categories = null;
-            this.savingsTargets = null;
-            this.balance = null;
-            this.numberOfPeople = 0;
-            this.creationDate = DateTime.Now;
-        }
-
         public String Note
         {
             get

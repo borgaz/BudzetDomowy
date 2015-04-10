@@ -23,16 +23,6 @@ namespace Bugdet
             this.name = name;
         }
 
-        // default constructor
-        public Payment()
-        {
-            this.note = "";
-            this.amount = 0.0;
-            this.categoryID = 0;
-            this.type = 0;
-            this.name = "";
-        }
-
         public int CategoryID
         {
             get

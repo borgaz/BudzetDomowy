@@ -16,13 +16,6 @@ namespace Bugdet
             this.date = date;
         }
 
-        // default constructor
-        public SinglePayment()
-            : base()
-        {
-            date = DateTime.Today;
-        }
-
         public DateTime Date
         {
             get

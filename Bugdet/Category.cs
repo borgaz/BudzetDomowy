@@ -11,8 +11,6 @@ namespace Bugdet
         private string name;
         private string note;
 
-        public Category() { }
-
         public Category(string name, string note)
         {
             this.name = name;

@@ -29,19 +29,6 @@ namespace Bugdet
             this.neededAmount = neededAmount;
         }
 
-        //default constructor
-        public SavingsTarget ()
-        {
-            this.target = "";
-            this.note = "";
-            this.deadLine = DateTime.Today;
-            this.daysLeft = 0;
-            this.priority = "";
-            this.moneyHoldings = 0.0;
-            this.addedDate = DateTime.Today;
-            this.neededAmount = 0.0;
-        }
-
         public String Target
         {
             get

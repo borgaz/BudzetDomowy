@@ -16,22 +16,13 @@ namespace Bugdet
 
         public PeriodPayment(int categoryID, double amount, String note, int type, String name, 
             int frequency, String period, DateTime lastUpdate, DateTime startDate, DateTime endDate)
+            : base (categoryID, amount, note, type, name)
         {
             this.lastUpdate = lastUpdate;
             this.startDate = startDate;
             this.endDate = endDate;
             this.frequency = frequency;
             this.period = period;
-        }
-
-        // default constructor
-        public PeriodPayment() 
-            : base ()
-        {
-            lastUpdate = DateTime.MinValue;
-            startDate = DateTime.MinValue;
-            frequency = 0;
-            period = "";
         }
 
         public int Frequency
