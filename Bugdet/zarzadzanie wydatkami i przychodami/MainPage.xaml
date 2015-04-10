@@ -8,13 +8,13 @@
 	Title="MainPage">
 
     <Grid Background="White">
-        <DataGrid HorizontalAlignment="Left" Margin="488,337,0,0" VerticalAlignment="Top" Height="203" Width="227"/>
-        <DataGrid HorizontalAlignment="Left" Margin="488,53,0,0" VerticalAlignment="Top" Height="203" Width="227"/>
+        <DataGrid HorizontalAlignment="Left" Margin="488,56,0,0" VerticalAlignment="Top" Height="484" Width="227"/>
         <Frame x:Name="btnsContentFrame" Content="" HorizontalAlignment="Left" Height="275" Margin="10,265,0,0" VerticalAlignment="Top" Width="300" NavigationUIVisibility="Hidden" Background="#FF850C0C"/>
         <Button x:Name="addPaymentBtn" Content="Dodaj Wydatek" HorizontalAlignment="Left" Margin="344,289,0,0" VerticalAlignment="Top" Width="94" Click="addPaymentBtn_Click"/>
         <Button x:Name="addSalaryBtn" Content="Dodaj Przychód" HorizontalAlignment="Left" Margin="344,337,0,0" VerticalAlignment="Top" Width="94" Click="addSalaryBtn_Click"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="344,382,0,0" VerticalAlignment="Top" Width="94"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="344,430,0,0" VerticalAlignment="Top" Width="94"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="221,121,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
 
     </Grid>
 </Page>

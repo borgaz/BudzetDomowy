@@ -4,7 +4,18 @@ namespace Bugdet
 {
     public class PeriodPayment : Payment
     {
+<<<<<<< HEAD
         public PeriodPayment(int ID, int categoryID, double amount, String note, int type, String name, int frequency, String period, DateTime lastUpdate, DateTime startDate,DateTime endDate)
+=======
+        private DateTime startDate;
+        private DateTime period;      
+        private int frequency;
+        private DateTime lastUpdate;
+        private DateTime endDate;
+
+        public PeriodPayment(int ID, int categoryID, double amount, String note, int type, String name, 
+            int frequency, String period, DateTime lastUpdate, DateTime startDate,DateTime endDate)
+>>>>>>> origin/master
             : base(ID, categoryID, amount, note, type, name)
         {
             this.LastUpdate = lastUpdate;
