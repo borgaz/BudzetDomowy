@@ -12,6 +12,11 @@ namespace Bugdet
         private string name;
         private string note;
 
+        public String ToString()
+        {
+            return "ID: " + id + "NAME: " + name + "NOTE: " + note + "\n";
+        }
+
         public Category() { }
 
         public Category(string name, string note)

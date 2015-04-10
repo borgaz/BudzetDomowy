@@ -264,7 +264,7 @@ namespace Bugdet
                 this.ExecuteSQLNoNQuery("INSERT into Categories(name,note) values('Jedzenie','Zakupy okresowe')");
                 this.ExecuteSQLNoNQuery("INSERT into Categories(name,note) values('Prąd','Rachunki za prąd')");
                 this.ExecuteSQLNoNQuery("INSERT into Categories(name,note) values('Woda','Rachunki za wodę')");
-                this.ExecuteSQLNoNQuery("INSERT into Categories(name,note) values('Gas','Rachunki za gas')");
+                this.ExecuteSQLNoNQuery("INSERT into Categories(name,note) values('Gaz','Rachunki za gaz')");
                 return true;
             }
             catch(SQLiteException ex)

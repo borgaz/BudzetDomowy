@@ -36,5 +36,10 @@ namespace Bugdet.zarzadzanie_wydatkami_i_przychodami
         {
             btnsContentFrame.Content = singleSalaryPage;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new MakeBudgetWindow(1).ShowDialog();
+        }
     }
 }
