@@ -8,9 +8,9 @@ namespace Bugdet
 {
     public class SinglePayment : Payment
     {
-        private DateTime date;
+        private DateTime date; // data wykonania
 
-        public SinglePayment(String note, double amount, int categoryID, int type, String name, DateTime date)
+        public SinglePayment(String note, double amount, int categoryID, bool type, String name, DateTime date)
             : base( categoryID, amount, note, type, name)
         {
             this.date = date;

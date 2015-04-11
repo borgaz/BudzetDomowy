@@ -8,13 +8,13 @@ namespace Bugdet
 {
     abstract public class Payment
     {
-        private int categoryID;
-        private double amount;
-        private String name;
-        private int type;
-        private String note;
+        private int categoryID; // id kategorii, z ktorej jest dana platnosc
+        private double amount; // kwota
+        private String name; // nazwa platnosci
+        private bool type; // 0 - rozchod, 1 - przychod
+        private String note; // notatka
 
-        public Payment(int categoryID, double amount, String note, int type, String name)
+        public Payment(int categoryID, double amount, String note, bool type, String name)
         {
             this.categoryID = categoryID;
             this.amount = amount;
@@ -47,13 +47,12 @@ namespace Bugdet
             }
         }
 
-        public int Type
+        public bool Type
         {
             get
             {
                 return type;
             }
-
         }
 
         public String Name

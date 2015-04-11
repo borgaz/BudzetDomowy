@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace Bugdet
 {
-    public class BalanceLog
+    public class BalanceLog // historia sald
     {
-        // historia sald
-
-        private DateTime date;
-        private double balance;
+        private DateTime date; // data
+        private double balance; // kwota
         private int singlePaymentID; // referencja do płatności/wydatku, który spowodował zmianę salda na this
         private int periodPaymentID; // gdy będzie to wydatek single to periodPaymentID ustawiamy na 0 i vice versa
 

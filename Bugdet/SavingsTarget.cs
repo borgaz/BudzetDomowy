@@ -8,14 +8,14 @@ namespace Bugdet
 {
     public class SavingsTarget
     {
-        private String target; //description of the target
-        private String note;
-        private DateTime deadLine;
-        private int daysLeft;
-        private String priority;
-        private double moneyHoldings;
-        private DateTime addedDate;
-        private double neededAmount;
+        private String target; // cel, na jaki chcemy odlozyc pieniadze
+        private String note; // notatka
+        private DateTime deadLine; // data, do ktorej chcemy miec dana kwote
+        private int daysLeft; // ile dni pozostalo do deadLine`a
+        private String priority; // priorytet
+        private double moneyHoldings; // odlozona juz kwota
+        private DateTime addedDate; // data dodatania celu
+        private double neededAmount; // kwota, jaka chcemy odlozyc
 
         public SavingsTarget (String target, String note, DateTime deadLine, String priority, double moneyHoldings, DateTime addedDate, double neededAmount)
         {

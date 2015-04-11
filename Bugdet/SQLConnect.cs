@@ -55,8 +55,7 @@ namespace Bugdet
                                                         "note varchar (200)," +
                                                         "password varchar (20)," +
                                                         "creation date," +
-                                                        "numberOfPeople integer)"
-                                                        );
+                                                        "numberOfPeople integer)");
 
                 ExecuteSqlNonQuery("CREATE TABLE PeriodPayments (id INTEGER PRIMARY KEY," +
                                                                       "categoryId integer," +
@@ -84,7 +83,9 @@ namespace Bugdet
                                                                       "balance double," + 
                                                                       "date date)");
 
-                ExecuteSqlNonQuery("CREATE TABLE Categories (id INTEGER PRIMARY KEY, name varchar(50) not null,note varchar(200))");
+                ExecuteSqlNonQuery("CREATE TABLE Categories (id INTEGER PRIMARY KEY," +
+                                                            "name varchar(50) not null," +
+                                                            "note varchar(200))");
 
                 ExecuteSqlNonQuery("CREATE TABLE SavingsTargets (id INTEGER PRIMARY KEY," +
                                                                       "target varchar(50)," +
@@ -303,7 +304,7 @@ namespace Bugdet
                     Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["categoryId"]),
                     Convert.ToDouble(periodPayFromSelect.Tables[0].Rows[i]["amount"]),
                     (string)(periodPayFromSelect.Tables[0].Rows[i]["note"]),
-                    (int)(periodPayFromSelect.Tables[0].Rows[i]["type"]),
+                    (bool)(periodPayFromSelect.Tables[0].Rows[i]["type"]),
                     (string)(periodPayFromSelect.Tables[0].Rows[i]["name"]),
                     Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["frequency"]),
                     (string)(periodPayFromSelect.Tables[0].Rows[i]["period"]),
@@ -321,7 +322,7 @@ namespace Bugdet
                     (string)(singlePayFromSelect.Tables[0].Rows[i]["note"]),
                     Convert.ToDouble(singlePayFromSelect.Tables[0].Rows[i]["amount"]),
                     Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["categoryId"]),
-                    Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["type"]),
+                    (bool)(singlePayFromSelect.Tables[0].Rows[i]["type"]),
                     (string)(singlePayFromSelect.Tables[0].Rows[i]["name"]),
                     (DateTime)(singlePayFromSelect.Tables[0].Rows[i]["date"])
                     ));

@@ -8,8 +8,8 @@ namespace Bugdet
 {
     public class Category
     {
-        private string name;
-        private string note;
+        private string name; // nazwa kategorii
+        private string note; // opis kategorii
 
         public Category(string name, string note)
         {

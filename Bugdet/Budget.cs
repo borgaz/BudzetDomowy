@@ -8,15 +8,15 @@ namespace Bugdet
 {
     public class Budget
     {
-        private String note;
-        private String name;
-        private String password;
-        private Dictionary<int, Payment> payments;
-        private Dictionary<int, Category> categories;
-        private Dictionary<int, SavingsTarget> savingsTargets;
+        private String note; // notatka
+        private String name; // nazwa budzetu
+        private String password; // haslo do budzetu
+        private Dictionary<int, Payment> payments; // slownik platnosci
+        private Dictionary<int, Category> categories; // slownik platnosci
+        private Dictionary<int, SavingsTarget> savingsTargets; //slownik celow, na ktore oszczedzamy
         private BalanceLog balance; // aktualnie najnowsze saldo, w przyszłosci przerobimy na słownik
-        private int numberOfPeople;
-        private DateTime creationDate;
+        private int numberOfPeople; // ilosc osob, dla ktorych prowadzony jest budzet domowy
+        private DateTime creationDate; // data stworzenia budzetu
 
         public Budget(String note, String name, String password, Dictionary<int, Payment> payments, Dictionary<int, Category> categories,
             Dictionary<int, SavingsTarget> savingsTargets, BalanceLog balance, int numberOfPeople, DateTime creationDate)
@@ -141,6 +141,5 @@ namespace Bugdet
         {
             payments.Remove(index);
         }
-
     }
 }

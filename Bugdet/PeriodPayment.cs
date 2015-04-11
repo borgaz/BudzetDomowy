@@ -8,13 +8,13 @@ namespace Bugdet
 {
     public class PeriodPayment : Payment
     {
-        private DateTime startDate;
-        private String period;      
-        private int frequency;
-        private DateTime lastUpdate;
-        private DateTime endDate;
+        private DateTime startDate; // poczatkowa data
+        private String period; // co jaki czas (dzien/tydzine/miesiac itp)
+        private int frequency; // co ile dni/tygodni itp
+        private DateTime lastUpdate; // data ostatniego wystapienia
+        private DateTime endDate; // koncowa data
 
-        public PeriodPayment(int categoryID, double amount, String note, int type, String name, 
+        public PeriodPayment(int categoryID, double amount, String note, bool type, String name, 
             int frequency, String period, DateTime lastUpdate, DateTime startDate, DateTime endDate)
             : base (categoryID, amount, note, type, name)
         {
