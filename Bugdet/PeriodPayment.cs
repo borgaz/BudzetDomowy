@@ -1,31 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Bugdet
 {
     public class PeriodPayment : Payment
     {
-        private DateTime _startDate;
-        private String _period;      
-        private int _frequency;
-        private DateTime _lastUpdate;
-        private DateTime _endDate;
+        private DateTime startDate;
+        private String period;      
+        private int frequency;
+        private DateTime lastUpdate;
+        private DateTime endDate;
 
-        public PeriodPayment(int categoryId, double amount, String note, int type, String name, 
+        public PeriodPayment(int categoryID, double amount, String note, int type, String name, 
             int frequency, String period, DateTime lastUpdate, DateTime startDate, DateTime endDate)
-            : base (categoryId, amount, note, type, name)
+            : base (categoryID, amount, note, type, name)
         {
-            this._lastUpdate = lastUpdate;
-            this._startDate = startDate;
-            this._endDate = endDate;
-            this._frequency = frequency;
-            this._period = period;
+            this.lastUpdate = lastUpdate;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.frequency = frequency;
+            this.period = period;
         }
 
         public int Frequency
         {
             get
             {
-                return _frequency;
+                return frequency;
             }
         }
 
@@ -33,7 +37,7 @@ namespace Bugdet
         {
             get
             {
-                return _period;
+                return period;
             }
         }
 
@@ -41,7 +45,7 @@ namespace Bugdet
         {
             get
             {
-                return _startDate;
+                return startDate;
             }
         }
 
@@ -49,7 +53,7 @@ namespace Bugdet
         {
             get
             {
-                return _endDate;
+                return endDate;
             }
         }
 
@@ -57,7 +61,7 @@ namespace Bugdet
         {
             get
             {
-                return _lastUpdate;
+                return lastUpdate;
             }
 
         }

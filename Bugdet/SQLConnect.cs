@@ -115,6 +115,11 @@ namespace Bugdet
                 return null;
             }
         }
+
+        public String HashPasswordMd5(String password)
+        {
+            
+        }
         public Boolean CheckCategory(String category,String note)
         {
             int result = (int)SelectQuery("Select count(id) as count from Categories where name='"+ category +"'").Tables[0].Rows[0]["count"];

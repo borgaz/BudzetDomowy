@@ -1,34 +1,38 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Bugdet
 {
     public class BalanceLog
     {
-        private DateTime _date;
-        private string _note;
-        private int _id;
-        private int _amount;
-        private int _categoryId;
-        private int _periodPaymentId;
+        private DateTime date;
+        private string note;
+        private int id;
+        private int amount;
+        private int categoryId;
+        private int periodPaymentId;
 
         public BalanceLog(int id, int amount, int categoryId, int periodPaymentId, DateTime date, string note)
         {
-            this._id = id;
-            this._amount = amount;
-            this._categoryId = categoryId;
-            this._periodPaymentId = periodPaymentId;
-            this._date = date;
-            this._note = note;
+            this.id = id;
+            this.amount = amount;
+            this.categoryId = categoryId;
+            this.periodPaymentId = periodPaymentId;
+            this.date = date;
+            this.note = note;
 
         }
 
         public BalanceLog(int amount, int categoryId, int periodPaymentId, DateTime date, string note)
         {
-            this._amount = amount;
-            this._categoryId = categoryId;
-            this._periodPaymentId = periodPaymentId;
-            this._date = date;
-            this._note = note;
+            this.amount = amount;
+            this.categoryId = categoryId;
+            this.periodPaymentId = periodPaymentId;
+            this.date = date;
+            this.note = note;
 
         }
 
@@ -36,7 +40,7 @@ namespace Bugdet
         {
             get
             {
-                return _date;
+                return date;
             }
         }
 
@@ -44,7 +48,7 @@ namespace Bugdet
         {
             get
             {
-                return _note;
+                return note;
             }
         }
 
@@ -52,7 +56,7 @@ namespace Bugdet
         {
             get
             {
-                return _id;
+                return id;
             }
         }
 
@@ -60,7 +64,7 @@ namespace Bugdet
         {
             get
             {
-                return _amount;
+                return amount;
             }
         }
 
@@ -68,7 +72,7 @@ namespace Bugdet
         {
             get
             {
-                return _categoryId;
+                return categoryId;
             }
         }
 
@@ -76,7 +80,7 @@ namespace Bugdet
         {
             get
             {
-                return _periodPaymentId;
+                return periodPaymentId;
             }
         }
     }
