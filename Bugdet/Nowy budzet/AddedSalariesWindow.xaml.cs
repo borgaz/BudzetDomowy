@@ -19,10 +19,10 @@ namespace Bugdet.Nowy_budzet
             switch(page)
             {
                 case 1:
-                    pageFrame.Content = _page1;
+                    PageFrame.Content = _page1;
                     break;
                 case 2:
-                    pageFrame.Content = _page2;
+                    PageFrame.Content = _page2;
                     break;
             }
         }

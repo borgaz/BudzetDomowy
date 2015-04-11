@@ -1,33 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bugdet
 {
     abstract public class Payment
     {
-        private int categoryID;
-        private double amount;
-        private String name;
-        private int type;
-        private String note;
+        private int _categoryId;
+        private double _amount;
+        private String _name;
+        private int _type;
+        private String _note;
 
-        public Payment(int categoryID, double amount, String note, int type, String name)
+        public Payment(int categoryId, double amount, String note, int type, String name)
         {
-            this.categoryID = categoryID;
-            this.amount = amount;
-            this.note = note;
-            this.type = type;
-            this.name = name;
+            this._categoryId = categoryId;
+            this._amount = amount;
+            this._note = note;
+            this._type = type;
+            this._name = name;
         }
 
-        public int CategoryID
+        public int CategoryId
         {
             get
             {
-                return categoryID;
+                return _categoryId;
             }
         }
 
@@ -35,7 +31,7 @@ namespace Bugdet
         {
             get
             {
-                return amount;
+                return _amount;
             }
         }
 
@@ -43,7 +39,7 @@ namespace Bugdet
         {
             get
             {
-                return note;
+                return _note;
             }
         }
 
@@ -51,7 +47,7 @@ namespace Bugdet
         {
             get
             {
-                return type;
+                return _type;
             }
 
         }
@@ -60,7 +56,7 @@ namespace Bugdet
         {
             get
             {
-                return name;
+                return _name;
             }
         }
     }

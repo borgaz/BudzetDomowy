@@ -1,39 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bugdet
 {
     public class SavingsTarget
     {
-        private String target; //description of the target
-        private String note;
-        private DateTime deadLine;
-        private int daysLeft;
-        private String priority;
-        private double moneyHoldings;
-        private DateTime addedDate;
-        private double neededAmount;
+        private String _target; //description of the target
+        private String _note;
+        private DateTime _deadLine;
+        private int _daysLeft;
+        private String _priority;
+        private double _moneyHoldings;
+        private DateTime _addedDate;
+        private double _neededAmount;
 
         public SavingsTarget (String target, String note, DateTime deadLine, String priority, double moneyHoldings, DateTime addedDate, double neededAmount)
         {
-            this.target = target;
-            this.note = note;
-            this.deadLine = deadLine;
-            this.daysLeft = (int)(deadLine - DateTime.Today).TotalDays;
-            this.priority = priority;
-            this.moneyHoldings = moneyHoldings;
-            this.addedDate = addedDate;
-            this.neededAmount = neededAmount;
+            this._target = target;
+            this._note = note;
+            this._deadLine = deadLine;
+            this._daysLeft = (int)(deadLine - DateTime.Today).TotalDays;
+            this._priority = priority;
+            this._moneyHoldings = moneyHoldings;
+            this._addedDate = addedDate;
+            this._neededAmount = neededAmount;
         }
 
         public String Target
         {
             get
             {
-                return target;
+                return _target;
             }
         }
 
@@ -41,7 +37,7 @@ namespace Bugdet
         {
             get
             {
-                return note;
+                return _note;
             }
         }
 
@@ -49,7 +45,7 @@ namespace Bugdet
         {
             get
             {
-                return deadLine;
+                return _deadLine;
             }
         }
 
@@ -57,7 +53,7 @@ namespace Bugdet
         {
             get
             {
-                return daysLeft;
+                return _daysLeft;
             }
         }
 
@@ -65,7 +61,7 @@ namespace Bugdet
         {
             get
             {
-                return priority;
+                return _priority;
             }
         }
 
@@ -73,7 +69,7 @@ namespace Bugdet
         {
             get
             {
-                return moneyHoldings;
+                return _moneyHoldings;
             }
         }
 
@@ -81,7 +77,7 @@ namespace Bugdet
         {
             get
             {
-                return addedDate;
+                return _addedDate;
             }
         }
 
@@ -89,7 +85,7 @@ namespace Bugdet
         {
             get
             {
-                return neededAmount;
+                return _neededAmount;
             }
         }
    }

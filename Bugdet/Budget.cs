@@ -1,42 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bugdet
 {
     public class Budget
     {
-        private String note;
-        private String name;
-        private String password;
-        private Dictionary<int, Payment> payments;
-        private Dictionary<int, Category> categories;
-        private Dictionary<int, SavingsTarget> savingsTargets;
-        private BalanceLog balance;
-        private int numberOfPeople;
-        private DateTime creationDate;
+        private String _note;
+        private String _name;
+        private String _password;
+        private Dictionary<int, Payment> _payments;
+        private Dictionary<int, Category> _categories;
+        private Dictionary<int, SavingsTarget> _savingsTargets;
+        private BalanceLog _balance;
+        private int _numberOfPeople;
+        private DateTime _creationDate;
 
         public Budget(String note, String name, String password, Dictionary<int, Payment> payments, Dictionary<int, Category> categories,
             Dictionary<int, SavingsTarget> savingsTargets, BalanceLog balance, int numberOfPeople, DateTime creationDate)
         {
-            this.note = note;
-            this.name = name;
-            this.password = password;
-            this.payments = payments;
-            this.categories = categories;
-            this.savingsTargets = savingsTargets;
-            this.balance = balance;
-            this.numberOfPeople = numberOfPeople;
-            this.creationDate = creationDate;
+            this._note = note;
+            this._name = name;
+            this._password = password;
+            this._payments = payments;
+            this._categories = categories;
+            this._savingsTargets = savingsTargets;
+            this._balance = balance;
+            this._numberOfPeople = numberOfPeople;
+            this._creationDate = creationDate;
         }
 
         public String Note
         {
             get
             {
-                return note;
+                return _note;
             }
         }
 
@@ -44,7 +41,7 @@ namespace Bugdet
         {
             get
             {
-                return name;
+                return _name;
             }
         }
 
@@ -52,7 +49,7 @@ namespace Bugdet
         {
             get
             {
-                return password;
+                return _password;
             }
         }
 
@@ -60,7 +57,7 @@ namespace Bugdet
         {
             get
             {
-                return numberOfPeople;
+                return _numberOfPeople;
             }
         }
 
@@ -68,7 +65,7 @@ namespace Bugdet
         {
             get
             {
-                return balance;
+                return _balance;
             }
         }
 
@@ -76,7 +73,7 @@ namespace Bugdet
         {
             get
             {
-                return payments;
+                return _payments;
             }
         }
 
@@ -84,7 +81,7 @@ namespace Bugdet
         {
             get
             {
-                return categories;
+                return _categories;
             }
         }
 
@@ -92,54 +89,54 @@ namespace Bugdet
         {
             get
             {
-                return savingsTargets;
+                return _savingsTargets;
             }
         }
 
 
         public void SetNumberOfPeople(int number)
         {
-            this.numberOfPeople = number;
+            this._numberOfPeople = number;
         }
 
         public void AddNote(String note)
         {
-            this.note = note; 
+            this._note = note; 
         }
 
         public void DeleteNumberOfPeople ()
         {
-            this.numberOfPeople = 0;
+            this._numberOfPeople = 0;
         }
 
         public void AddSinglePayment(int index, SinglePayment payment)
         {
-            payments.Add(index, payment);
+            _payments.Add(index, payment);
         }
 
         public void DeleteSinglePayment(int index)
         {
-            payments.Remove(index);
+            _payments.Remove(index);
         }
 
         public void AddSavingsTarget(int index, SavingsTarget target)
         {
-            savingsTargets.Add(index, target);
+            _savingsTargets.Add(index, target);
         }
 
         public void DeleteSavingsTarget(int index)
         {
-            savingsTargets.Remove(index);
+            _savingsTargets.Remove(index);
         }
 
         public void AddPeriodPayment(int index, PeriodPayment payment)
         {
-            payments.Add(index, payment);
+            _payments.Add(index, payment);
         }
 
         public void DeletePeriodPayment(int index)
         {
-            payments.Remove(index);
+            _payments.Remove(index);
         }
 
     }

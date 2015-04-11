@@ -1,27 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bugdet
+﻿namespace Bugdet
 {
     public class Category
     {
-        private string name;
-        private string note;
+        private string _name;
+        private string _note;
 
         public Category(string name, string note)
         {
-            this.name = name;
-            this.note = note;
+            this._name = name;
+            this._note = note;
         }
 
         public string Name
         {
             get
             {
-                return name;
+                return _name;
             }
         }
 
@@ -29,7 +23,7 @@ namespace Bugdet
         {
             get
             {
-                return note;
+                return _note;
             }
         }
     }

@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MakeBudzetWindow" Height="379" Width="332">
     <Grid Margin="0,0,0,-1">
-        <Frame x:Name="pageFrame" Content="" HorizontalAlignment="Left" Height="300" Margin="10,10,0,0" VerticalAlignment="Top" Width="300" NavigationUIVisibility="Hidden"/>
-        <Button x:Name="exitBtn" Content="Wyjdz" HorizontalAlignment="Left" Margin="40,318,0,0" VerticalAlignment="Top" Width="75" Click="exitBtn_Click"/>
-        <Button x:Name="forwardBtn" Content="Dalej" HorizontalAlignment="Left" Margin="198,318,0,0" VerticalAlignment="Top" Width="75" Click="forwardBtn_Click"/>
+        <Frame x:Name="PageFrame" Content="" HorizontalAlignment="Left" Height="300" Margin="10,10,0,0" VerticalAlignment="Top" Width="300" NavigationUIVisibility="Hidden"/>
+        <Button x:Name="ExitBtn" Content="Wyjdz" HorizontalAlignment="Left" Margin="40,318,0,0" VerticalAlignment="Top" Width="75" Click="exitBtn_Click"/>
+        <Button x:Name="ForwardBtn" Content="Dalej" HorizontalAlignment="Left" Margin="198,318,0,0" VerticalAlignment="Top" Width="75" Click="forwardBtn_Click"/>
 
     </Grid>
 </Window>

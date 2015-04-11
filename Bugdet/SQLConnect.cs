@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Core;
@@ -11,20 +8,20 @@ using System.Windows;
 
 namespace Bugdet
 {
-    public sealed class SQLConnect
+    public sealed class SqlConnect
     {
-        private static SQLConnect _instance = null;
-        private SQLiteConnection _MYDB;
-        private SQLiteCommand command;
+        private static SqlConnect _instance = null;
+        private SQLiteConnection _mydb;
+        private SQLiteCommand _command;
 
-        private SQLConnect()
+        private SqlConnect()
         {
             Connect();
         }
 
-        public static SQLConnect Instance
+        public static SqlConnect Instance
         {
-            get { return _instance ?? (_instance = new SQLConnect()); }
+            get { return _instance ?? (_instance = new SqlConnect()); }
         }
         public void Connect()
         {
@@ -33,14 +30,14 @@ namespace Bugdet
                 if (!File.Exists("./budzet.sqlite")) // sprawdzanie czy juz jest baza -  w pozniejszym projekcie sie inaczej zrobi
                 {
                     SQLiteConnection.CreateFile("budzet.sqlite");
-                    _MYDB = new SQLiteConnection("Data Source=budzet.sqlite;Version=3");
-                    _MYDB.Open();
+                    _mydb = new SQLiteConnection("Data Source=budzet.sqlite;Version=3");
+                    _mydb.Open();
                     MakeDb();
                 }
                 else
                 {
-                    _MYDB = new SQLiteConnection("Data Source=budzet.sqlite;Version=3");
-                    _MYDB.Open();
+                    _mydb = new SQLiteConnection("Data Source=budzet.sqlite;Version=3");
+                    _mydb.Open();
                 }
             }
             catch(SQLiteException)
@@ -51,8 +48,8 @@ namespace Bugdet
         {
             try
             {
-                this.ExecuteSQLNoNQuery("CREATE TABLE Budget (name varchar(50), balance integer)");
-                this.ExecuteSQLNoNQuery("CREATE TABLE PeriodPayments (id INTEGER PRIMARY KEY," +
+                ExecuteSqlNonQuery("CREATE TABLE Budget (name varchar(50), balance integer)");
+                ExecuteSqlNonQuery("CREATE TABLE PeriodPayments (id INTEGER PRIMARY KEY," +
                                                                       "categoryId integer," +
                                                                       "name varchar(50)," +
                                                                       "amount double," +
@@ -62,14 +59,14 @@ namespace Bugdet
                                                                       "lastUpdate date," +
                                                                       "type integer," +
                                                                       "note varchar(100))");
-                this.ExecuteSQLNoNQuery("CREATE TABLE BalanceLogs (id INTEGER PRIMARY KEY," +
+                ExecuteSqlNonQuery("CREATE TABLE BalanceLogs (id INTEGER PRIMARY KEY," +
                                                                       "periodPaymentId integer," + 
                                                                       "categoryId integer not null," +
                                                                       "income double," + 
                                                                       "date date," +
                                                                       "note varchar(100))");
-                this.ExecuteSQLNoNQuery("CREATE TABLE Categories (id INTEGER PRIMARY KEY, name varchar(50) not null,note varchar(100))");
-                this.addDefaultCategories();
+                ExecuteSqlNonQuery("CREATE TABLE Categories (id INTEGER PRIMARY KEY, name varchar(50) not null,note varchar(100))");
+                AddDefaultCategories();
                 return true;
 
             }
@@ -83,13 +80,13 @@ namespace Bugdet
         /// - wykonuje zapytanie, zwraca true jak sie uda
         /// </summary>
         /// <param name="query">zapytanie (insert, create itp )</param>
-        public Boolean ExecuteSQLNoNQuery(String query)
+        public Boolean ExecuteSqlNonQuery(String query)
         {
             try
             {
-                command = new SQLiteCommand(query, _MYDB);
-                command.ExecuteNonQuery();
-                command.Dispose();
+                _command = new SQLiteCommand(query, _mydb);
+                _command.ExecuteNonQuery();
+                _command.Dispose();
                 return true;
             }
             catch (SQLiteException ex)
@@ -108,7 +105,7 @@ namespace Bugdet
             try
             {
                 DataSet dataSet = new DataSet();
-                SQLiteDataAdapter result = new SQLiteDataAdapter {SelectCommand = new SQLiteCommand(query, _MYDB)};
+                SQLiteDataAdapter result = new SQLiteDataAdapter {SelectCommand = new SQLiteCommand(query, _mydb)};
                 result.Fill(dataSet);
                 return dataSet;
             }
@@ -123,7 +120,7 @@ namespace Bugdet
             int result = (int)SelectQuery("Select count(id) as count from Categories where name='"+ category +"'").Tables[0].Rows[0]["count"];
             if (result == 0)
             {
-                this.ExecuteSQLNoNQuery("INSERT into Categories(name,note) values('" + category + "','" + note + "'"); 
+                ExecuteSqlNonQuery("INSERT into Categories(name,note) values('" + category + "','" + note + "'"); 
                 return true;
             }
             else
@@ -133,23 +130,23 @@ namespace Bugdet
         {
             try
             {
-                command = new SQLiteCommand
+                _command = new SQLiteCommand
                 {
                     CommandText =
                         "INSERT INTO BalanceLogs(periodPaymentId,categoryId,income,date,note) values(null,@category,@income,date('now'),@note)"
                 };
-                command.Parameters.AddWithValue("@category", ++category);
-                command.Parameters.AddWithValue("@income", value * (-1));
-                command.Parameters.AddWithValue("@note", name + "|" + note);
-                command.Connection = _MYDB;
-                command.ExecuteNonQuery();
-                command.Dispose();
+                _command.Parameters.AddWithValue("@category", ++category);
+                _command.Parameters.AddWithValue("@income", value * (-1));
+                _command.Parameters.AddWithValue("@note", name + "|" + note);
+                _command.Connection = _mydb;
+                _command.ExecuteNonQuery();
+                _command.Dispose();
                 return true;
             }
             catch(SQLiteException ex)
             {
                 MessageBox.Show("Błąd");
-                Console.WriteLine(ex.GetBaseException() + "\n AddSinglePayment()");
+                Console.WriteLine(ex.GetBaseException() + @"AddSinglePayment()");
                 return false;
             }
         }
@@ -157,17 +154,17 @@ namespace Bugdet
         {
             try
             {
-                command = new SQLiteCommand
+                _command = new SQLiteCommand
                 {
                     CommandText =
                         "INSERT INTO BalanceLogs(periodPaymentId,categoryId,income,date,note) values(null,@category,@income,date('now'),@note)"
                 };
-                command.Parameters.AddWithValue("@category", ++category);
-                command.Parameters.AddWithValue("@income", value);
-                command.Parameters.AddWithValue("@note", name + "|" + note);
-                command.Connection = _MYDB;
-                command.ExecuteNonQuery();
-                command.Dispose();
+                _command.Parameters.AddWithValue("@category", ++category);
+                _command.Parameters.AddWithValue("@income", value);
+                _command.Parameters.AddWithValue("@note", name + "|" + note);
+                _command.Connection = _mydb;
+                _command.ExecuteNonQuery();
+                _command.Dispose();
                 return true;
             }
             catch (SQLiteException ex)
@@ -193,20 +190,20 @@ namespace Bugdet
             // Nazwa bazy
             /////////////////////////////////////////////////////////////////////////////////////////////
             String name = "";
-            DataSet nameFromSelect = this.SelectQuery("SELECT name FROM Budget");
+            DataSet nameFromSelect = SelectQuery("SELECT name FROM Budget");
 
             if (nameFromSelect.Tables[0].Rows.Count == 0)
                 throw new ObjectNotFoundException("Empty datebase");
             else
             {
-                name = (string)this.SelectQuery("SELECT name FROM Budget").Tables[0].Rows[0]["name"];
+                name = (string)SelectQuery("SELECT name FROM Budget").Tables[0].Rows[0]["name"];
             }
 
             /////////////////////////////////////////////////////////////////////////////////////////////
             // Lista kategorii
             /////////////////////////////////////////////////////////////////////////////////////////////
             Dictionary<int, Category> categories = new Dictionary<int, Category>();
-            DataSet categoriesFromSelect = this.SelectQuery("SELECT * FROM Categories");
+            DataSet categoriesFromSelect = SelectQuery("SELECT * FROM Categories");
             for (int i = 0; i < categoriesFromSelect.Tables[0].Rows.Count; i++)
             {
                 categories.Add(Convert.ToInt32(categoriesFromSelect.Tables[0].Rows[i]["id"]),
@@ -218,7 +215,7 @@ namespace Bugdet
             /////////////////////////////////////////////////////////////////////////////////////////////
             // Aktualny stan konta
             /////////////////////////////////////////////////////////////////////////////////////////////
-            DataSet balanceFromSelect = this.SelectQuery("SELECT * FROM BalanceLogs");
+            DataSet balanceFromSelect = SelectQuery("SELECT * FROM BalanceLogs");
             BalanceLog balance = new BalanceLog(
                 Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["id"]),
                 Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["income"]),
@@ -233,7 +230,7 @@ namespace Bugdet
             /////////////////////////////////////////////////////////////////////////////////////////////
             Dictionary<int, Payment> payments = new Dictionary<int, Payment>();
 
-            DataSet periodPayFromSelect = this.SelectQuery("SELECT * FROM PeriodPayments");
+            DataSet periodPayFromSelect = SelectQuery("SELECT * FROM PeriodPayments");
             for (int i = 0; i < periodPayFromSelect.Tables[0].Rows.Count; i++)
             {
                 payments.Add(Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["id"]), 
@@ -258,15 +255,15 @@ namespace Bugdet
             return temporary;
 
         }
-        private Boolean addDefaultCategories()
+        private Boolean AddDefaultCategories()
         {
             try
             {
-                this.ExecuteSQLNoNQuery("INSERT into Categories(name,note) values('Paliwo','Benzyna do samochodu')");
-                this.ExecuteSQLNoNQuery("INSERT into Categories(name,note) values('Jedzenie','Zakupy okresowe')");
-                this.ExecuteSQLNoNQuery("INSERT into Categories(name,note) values('Prąd','Rachunki za prąd')");
-                this.ExecuteSQLNoNQuery("INSERT into Categories(name,note) values('Woda','Rachunki za wodę')");
-                this.ExecuteSQLNoNQuery("INSERT into Categories(name,note) values('Gaz','Rachunki za gaz')");
+                ExecuteSqlNonQuery("INSERT into Categories(name,note) values('Paliwo','Benzyna do samochodu')");
+                ExecuteSqlNonQuery("INSERT into Categories(name,note) values('Jedzenie','Zakupy okresowe')");
+                ExecuteSqlNonQuery("INSERT into Categories(name,note) values('Prąd','Rachunki za prąd')");
+                ExecuteSqlNonQuery("INSERT into Categories(name,note) values('Woda','Rachunki za wodę')");
+                ExecuteSqlNonQuery("INSERT into Categories(name,note) values('Gaz','Rachunki za gaz')");
                 return true;
             }
             catch(SQLiteException ex)

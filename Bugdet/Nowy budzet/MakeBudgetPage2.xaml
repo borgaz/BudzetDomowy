@@ -9,19 +9,19 @@
 
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Dodaj okresowe przychody, czyli takie które są wypłacane w dany dzień w miesiącu badź dany dzień w tygodniu, bądź co określony okres czasu" VerticalAlignment="Top"/>
-        <TextBox x:Name="salaryName" HorizontalAlignment="Left" Height="23" Margin="152,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96"/>
+        <TextBox x:Name="SalaryName" HorizontalAlignment="Left" Height="23" Margin="152,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96"/>
         <Label Content="Nazwa przychodu" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" Width="103"/>
         <Label Content="Suma wynagrodzenia" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="salaryValue" HorizontalAlignment="Left" Height="23" Margin="152,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97"/>
+        <TextBox x:Name="SalaryValue" HorizontalAlignment="Left" Height="23" Margin="152,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97"/>
         <Label Content="Rodzaj wynagrodzenia" HorizontalAlignment="Left" Margin="13,144,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="type1Radio" Content="Co x dni" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Checked="type1Radio_Checked" IsChecked="True"/>
-        <RadioButton x:Name="type2Radio" Content="W określony dzień miesiąca" HorizontalAlignment="Left" Margin="104,170,0,0" VerticalAlignment="Top" Checked="type2Radio_Checked"/>
-        <TextBox x:Name="dateText" HorizontalAlignment="Right" Height="23" Margin="0,209,11,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
-        <Label x:Name="descLbl" Content="Co ile dni jest wypłata" HorizontalAlignment="Left" Margin="10,206,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="addSalaryBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="20,253,0,0" VerticalAlignment="Top" Width="75" Click="addSalaryBtn_Click"/>
-        <Button x:Name="addedSalariesBtn" Content="Juz dodane" HorizontalAlignment="Left" Margin="113,253,0,0" VerticalAlignment="Top" Width="75" Click="addedSalariesBtn_Click"/>
+        <RadioButton x:Name="Type1Radio" Content="Co x dni" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Checked="type1Radio_Checked" IsChecked="True"/>
+        <RadioButton x:Name="Type2Radio" Content="W określony dzień miesiąca" HorizontalAlignment="Left" Margin="104,170,0,0" VerticalAlignment="Top" Checked="type2Radio_Checked"/>
+        <TextBox x:Name="DateText" HorizontalAlignment="Right" Height="23" Margin="0,209,11,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
+        <Label x:Name="DescLbl" Content="Co ile dni jest wypłata" HorizontalAlignment="Left" Margin="10,206,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="AddSalaryBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="20,253,0,0" VerticalAlignment="Top" Width="75" Click="addSalaryBtn_Click"/>
+        <Button x:Name="AddedSalariesBtn" Content="Juz dodane" HorizontalAlignment="Left" Margin="113,253,0,0" VerticalAlignment="Top" Width="75" Click="addedSalariesBtn_Click"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="37" Margin="202,238,0,0" VerticalAlignment="Top" Width="87">
-            <Label x:Name="infoLbl" Content="" Margin="1,-1,-1,1" Foreground="#FF9B1818" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+            <Label x:Name="InfoLbl" Content="" Margin="1,-1,-1,1" Foreground="#FF9B1818" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
         </Border>
 
     </Grid>

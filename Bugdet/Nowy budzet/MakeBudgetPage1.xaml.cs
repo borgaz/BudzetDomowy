@@ -18,10 +18,10 @@ namespace Bugdet.Nowy_budzet
         /// </summary>
         public Boolean CheckInfo()
         {
-            if(budgetBalance.Text != "" && budgetNameText.Text != "")
+            if(BudgetBalance.Text != "" && BudgetNameText.Text != "")
             {
-                MakeBudgetWindow._budgetstack.Push(budgetNameText.Text);
-                MakeBudgetWindow._budgetstack.Push(budgetBalance.Text);
+                MakeBudgetWindow.Budgetstack.Push(BudgetNameText.Text);
+                MakeBudgetWindow.Budgetstack.Push(BudgetBalance.Text);
                 return true;
             }
             else
@@ -34,8 +34,8 @@ namespace Bugdet.Nowy_budzet
         {
             try
             {
-                MakeBudgetWindow._budgetstack.Pop();
-                MakeBudgetWindow._budgetstack.Pop();
+                MakeBudgetWindow.Budgetstack.Pop();
+                MakeBudgetWindow.Budgetstack.Pop();
                 return true;
             }
             catch(InsufficientExecutionStackException)

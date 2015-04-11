@@ -14,7 +14,7 @@ namespace Bugdet.Nowy_budzet
         public AddedSalariesPage()
         {
             InitializeComponent();
-            MessageBox.Show(MakeBudgetPage2.budgetList.Count + "");
+            MessageBox.Show(MakeBudgetPage2.BudgetList.Count + "");
             Refresh();
         }
 
@@ -22,9 +22,9 @@ namespace Bugdet.Nowy_budzet
         {
             try
             {
-                if (salaryTable.SelectedItem == null) return;
-                DataRowView dataRow = (DataRowView)salaryTable.SelectedItem;
-                MakeBudgetPage2.budgetList.RemoveAt((int)dataRow.Row.ItemArray[0]);
+                if (SalaryTable.SelectedItem == null) return;
+                DataRowView dataRow = (DataRowView)SalaryTable.SelectedItem;
+                MakeBudgetPage2.BudgetList.RemoveAt((int)dataRow.Row.ItemArray[0]);
                 Refresh();
             }
             catch(Exception ex)
@@ -40,25 +40,25 @@ namespace Bugdet.Nowy_budzet
             salary.Columns.Add("Nazwa", typeof(string));
             salary.Columns.Add("Wynagrodzenie", typeof(int));
             salary.Columns.Add("Powtarzalność", typeof(string));
-            for(int i = 0; i < MakeBudgetPage2.budgetList.Count;i++)
+            for(int i = 0; i < MakeBudgetPage2.BudgetList.Count;i++)
             {
-                SalaryInfo item = (SalaryInfo)MakeBudgetPage2.budgetList.ToArray().GetValue(i);
+                SalaryInfo item = (SalaryInfo)MakeBudgetPage2.BudgetList.ToArray().GetValue(i);
 
                 salary.Rows.Add(i,item.Name, item.Value, (item.Type == 1 ? "co " + item.Repeat + " dni" : "w każdy " + item.Repeat + " dzień miesiąca"));
             }
-            salaryTable.ItemsSource = salary.DefaultView;
+            SalaryTable.ItemsSource = salary.DefaultView;
           //  salaryTable.Columns[0].Visibility = Visibility.Hidden;
             new Thread(new ThreadStart(HideColumns)).Start();
         }
         private void HideColumns()
         {
-            while (salaryTable.Columns.Count == 0)
+            while (SalaryTable.Columns.Count == 0)
             { }
             this.Dispatcher.Invoke(HideColums2);
         }
         private void HideColums2()
         {
-            salaryTable.Columns[0].Visibility = Visibility.Hidden;
+            SalaryTable.Columns[0].Visibility = Visibility.Hidden;
 
         }
 

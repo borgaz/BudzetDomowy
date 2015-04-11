@@ -12,8 +12,8 @@ namespace Bugdet.Nowy_budzet
     /// </summary>
     public partial class MakeBudgetPage3 : Page
     {
-        public static List<SalaryInfo> paymentList = new List<SalaryInfo>();
-        private int salaries;
+        public static List<SalaryInfo> PaymentList = new List<SalaryInfo>();
+        private int _salaries;
         public MakeBudgetPage3()
         {
             InitializeComponent();
@@ -21,36 +21,36 @@ namespace Bugdet.Nowy_budzet
 
         private void type1Radio_Checked(object sender, RoutedEventArgs e)
         {
-            if(descLbl != null)
-                descLbl.Content = "Co ile dni jest opłata";
+            if(DescLbl != null)
+                DescLbl.Content = "Co ile dni jest opłata";
         }
 
         private void type2Radio_Checked(object sender, RoutedEventArgs e)
         {
-            if (descLbl != null)
-                descLbl.Content = "W jaki dzień miesiąca jest opłacane";
+            if (DescLbl != null)
+                DescLbl.Content = "W jaki dzień miesiąca jest opłacane";
         }
 
         private void addSalaryBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(salaryName.Text != "" && salaryValue.Text != "" && dateText.Text != "")
+            if(SalaryName.Text != "" && SalaryValue.Text != "" && DateText.Text != "")
             {
-                paymentList.Add(new SalaryInfo(salaryName.Text,
-                                              int.Parse(salaryValue.Text),
-                                              (type1Radio.IsChecked == true ? 1 : 2),
-                                              int.Parse(dateText.Text)));
-                salaries++;
-                infoLbl.Content = "Dodano";
-                infoLbl.Foreground = Brushes.Green;// ="#00FF0000";
-                salaryName.Text = "";
-                salaryValue.Text = "";
-                dateText.Text = "";
+                PaymentList.Add(new SalaryInfo(SalaryName.Text,
+                                              int.Parse(SalaryValue.Text),
+                                              (Type1Radio.IsChecked == true ? 1 : 2),
+                                              int.Parse(DateText.Text)));
+                _salaries++;
+                InfoLbl.Content = "Dodano";
+                InfoLbl.Foreground = Brushes.Green;// ="#00FF0000";
+                SalaryName.Text = "";
+                SalaryValue.Text = "";
+                DateText.Text = "";
             }
             else
             {
                 MessageBox.Show("Uzupełnij wszystkie pola!");
-                infoLbl.Content = "Nie Dodano";
-                infoLbl.Foreground = Brushes.Red;// ="#00FF0000";
+                InfoLbl.Content = "Nie Dodano";
+                InfoLbl.Foreground = Brushes.Red;// ="#00FF0000";
             }
         }
 
@@ -62,16 +62,16 @@ namespace Bugdet.Nowy_budzet
         {
             try
             {
-                for (int i = 0; i < salaries; i++)
+                for (int i = 0; i < _salaries; i++)
                 {
-                    MakeBudgetWindow._budgetstack.Push(paymentList.ElementAt(i).Name); // String
-                    MakeBudgetWindow._budgetstack.Push(paymentList.ElementAt(i).Value); // String
-                    MakeBudgetWindow._budgetstack.Push(paymentList.ElementAt(i).Repeat); // String
-                    MakeBudgetWindow._budgetstack.Push(paymentList.ElementAt(i).Type); // int
+                    MakeBudgetWindow.Budgetstack.Push(PaymentList.ElementAt(i).Name); // String
+                    MakeBudgetWindow.Budgetstack.Push(PaymentList.ElementAt(i).Value); // String
+                    MakeBudgetWindow.Budgetstack.Push(PaymentList.ElementAt(i).Repeat); // String
+                    MakeBudgetWindow.Budgetstack.Push(PaymentList.ElementAt(i).Type); // int
                 }
-                if (salaries != 0)
-                    MakeBudgetWindow._budgetstack.Push(-2); // identyfikator ze sa jakies periodPayments
-                MakeBudgetWindow._budgetstack.Push(salaries); // ilosc "pakietow"
+                if (_salaries != 0)
+                    MakeBudgetWindow.Budgetstack.Push(-2); // identyfikator ze sa jakies periodPayments
+                MakeBudgetWindow.Budgetstack.Push(_salaries); // ilosc "pakietow"
                 return true;
             }
             catch (InsufficientExecutionStackException)
@@ -83,15 +83,15 @@ namespace Bugdet.Nowy_budzet
         {
             try
             {
-                int _salaries = (int)MakeBudgetWindow._budgetstack.Pop(); // ile "pakietow" danych bylo na stosie
+                int _salaries = (int)MakeBudgetWindow.Budgetstack.Pop(); // ile "pakietow" danych bylo na stosie
                 if(_salaries != 0)
-                    MakeBudgetWindow._budgetstack.Pop(); // identyfikator periodPayments
+                    MakeBudgetWindow.Budgetstack.Pop(); // identyfikator periodPayments
                 for (int i = 0; i < _salaries; i++) // zbieranie ze stosu wrzuconych informacji
                 {
-                    MakeBudgetWindow._budgetstack.Pop();
-                    MakeBudgetWindow._budgetstack.Pop();
-                    MakeBudgetWindow._budgetstack.Pop();
-                    MakeBudgetWindow._budgetstack.Pop(); 
+                    MakeBudgetWindow.Budgetstack.Pop();
+                    MakeBudgetWindow.Budgetstack.Pop();
+                    MakeBudgetWindow.Budgetstack.Pop();
+                    MakeBudgetWindow.Budgetstack.Pop(); 
                 }
                 return true;
             }

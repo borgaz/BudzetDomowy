@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="BUDŻET DOMOWY" Height="600" Width="800">
     <Grid>
-        <Button x:Name="additionalBtn" HorizontalAlignment="Left" Margin="-247,265,0,0" VerticalAlignment="Top" Width="550" Height="40" RenderTransformOrigin="0.5,0.5" Content="INTERFACE" FontSize="20">
+        <Button x:Name="AdditionalBtn" HorizontalAlignment="Left" Margin="-247,265,0,0" VerticalAlignment="Top" Width="550" Height="40" RenderTransformOrigin="0.5,0.5" Content="INTERFACE" FontSize="20">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -13,6 +13,6 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Frame x:Name="mainContentFrame" Content="" HorizontalAlignment="Left" Height="550" Margin="57,10,0,0" VerticalAlignment="Top" Width="725" NavigationUIVisibility="Hidden" Background="#FF8D1515"/>
+        <Frame x:Name="MainContentFrame" Content="" HorizontalAlignment="Left" Height="550" Margin="57,10,0,0" VerticalAlignment="Top" Width="725" NavigationUIVisibility="Hidden" Background="#FF8D1515"/>
     </Grid>
 </Window>

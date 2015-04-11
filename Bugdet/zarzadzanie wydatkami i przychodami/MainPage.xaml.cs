@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Bugdet.Nowy_budzet;
 
 namespace Bugdet.zarzadzanie_wydatkami_i_przychodami
 {
@@ -8,8 +9,8 @@ namespace Bugdet.zarzadzanie_wydatkami_i_przychodami
     /// </summary>
     public partial class MainPage : Page
     {
-        private AddPaymentPage singlePaymentPage = new AddPaymentPage();
-        private AddSalaryPage singleSalaryPage = new AddSalaryPage();
+        private AddPaymentPage _singlePaymentPage = new AddPaymentPage();
+        private AddSalaryPage _singleSalaryPage = new AddSalaryPage();
         public MainPage()
         {
             InitializeComponent();
@@ -17,17 +18,17 @@ namespace Bugdet.zarzadzanie_wydatkami_i_przychodami
 
         private void addPaymentBtn_Click(object sender, RoutedEventArgs e)
         {
-            btnsContentFrame.Content = singlePaymentPage;
+            BtnsContentFrame.Content = _singlePaymentPage;
         }
 
         private void addSalaryBtn_Click(object sender, RoutedEventArgs e)
         {
-            btnsContentFrame.Content = singleSalaryPage;
+            BtnsContentFrame.Content = _singleSalaryPage;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new Bugdet.Nowy_budzet.MakeBudgetWindow(1).ShowDialog();
+            new MakeBudgetWindow(1).ShowDialog();
         }
     }
 }

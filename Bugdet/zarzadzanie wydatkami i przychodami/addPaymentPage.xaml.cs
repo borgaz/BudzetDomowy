@@ -18,38 +18,48 @@ namespace Bugdet.zarzadzanie_wydatkami_i_przychodami
 
         private void addPaymentBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (paymentName.Text != "" && paymentValue.Text != "" && categoryBox.SelectedIndex != -1)
+            if (PaymentName.Text != "" && PaymentValue.Text != "" && CategoryBox.SelectedIndex != -1)
             {
-                if (SQLConnect.Instance.AddSinglePayment(paymentName.Text, double.Parse(paymentValue.Text), categoryBox.SelectedIndex, note.Text))
+                if (SqlConnect.Instance.AddSinglePayment(PaymentName.Text, double.Parse(PaymentValue.Text), CategoryBox.SelectedIndex, Note.Text))
                 {
-                    infoBox.Text = "Dodano";
-                    infoBox.Foreground = Brushes.Green;
-                    paymentName.Text = "";
-                    paymentValue.Text = "";
-                    categoryBox.SelectedIndex = -1;
+                    InfoBox.Text = "Dodano";
+                    InfoBox.Foreground = Brushes.Green;
+                    PaymentName.Text = "";
+                    PaymentValue.Text = "";
+                    CategoryBox.SelectedIndex = -1;
                 }
                 else
                 {
-                    infoBox.Text = "Wystąpił Błąd";
-                    infoBox.Foreground = Brushes.Red;
+                    InfoBox.Text = "Wystąpił Błąd";
+                    InfoBox.Foreground = Brushes.Red;
                 }
             }
             else
             {
-                infoBox.Text = "Uzupełnij Wszystko";
-                infoBox.Foreground = Brushes.Red;
+                InfoBox.Text = "Uzupełnij Wszystko";
+                InfoBox.Foreground = Brushes.Red;
             }
         }
         private void InsertCategories()
         {
-            DataSet result = SQLConnect.Instance.SelectQuery("Select id,name from Categories order by id asc");
+            DataSet result = SqlConnect.Instance.SelectQuery("Select id,name from Categories order by id asc");
             foreach (DataTable table in result.Tables)
             {
                 foreach (DataRow row in table.Rows)
                 {
-                    categoryBox.Items.Add(row["name"]);
+                    CategoryBox.Items.Add(row["name"]);
                 }
             }
+        }
+
+        private void periodCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            PeriodInfoGrid.IsEnabled = true;
+        }
+
+        private void PeriodCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            PeriodInfoGrid.IsEnabled = false;
         }
     }
 }

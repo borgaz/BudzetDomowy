@@ -13,17 +13,17 @@ namespace Bugdet.Nowy_budzet
         public AddedPaymentPage()
         {
             InitializeComponent();
-            MessageBox.Show(MakeBudgetPage3.paymentList.Count + "");
+            MessageBox.Show(MakeBudgetPage3.PaymentList.Count + "");
             Refresh();
         }
 
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(paymentTable.SelectedItem != null)
+            if(PaymentTable.SelectedItem != null)
             {
-                DataRowView dataRow = (DataRowView)paymentTable.SelectedItem;
-                MakeBudgetPage3.paymentList.RemoveAt((int)dataRow.Row.ItemArray[3]);
-                paymentTable.Items.Remove(dataRow);
+                DataRowView dataRow = (DataRowView)PaymentTable.SelectedItem;
+                MakeBudgetPage3.PaymentList.RemoveAt((int)dataRow.Row.ItemArray[3]);
+                PaymentTable.Items.Remove(dataRow);
             }
         }
         private void Refresh()
@@ -34,25 +34,25 @@ namespace Bugdet.Nowy_budzet
             payment.Columns.Add("Nazwa", typeof(string));
             payment.Columns.Add("Wynagrodzenie", typeof(int));
             payment.Columns.Add("Powtarzalność", typeof(string));
-            for (int i = 0; i < MakeBudgetPage3.paymentList.Count; i++)
+            for (int i = 0; i < MakeBudgetPage3.PaymentList.Count; i++)
             {
-                SalaryInfo item = (SalaryInfo)MakeBudgetPage3.paymentList.ToArray().GetValue(i);
+                SalaryInfo item = (SalaryInfo)MakeBudgetPage3.PaymentList.ToArray().GetValue(i);
 
                 payment.Rows.Add(i, item.Name, item.Value, (item.Type == 1 ? "co " + item.Repeat + " dni" : "w każdy " + item.Repeat + " dzień miesiąca"));
             }
-            paymentTable.ItemsSource = payment.DefaultView;
+            PaymentTable.ItemsSource = payment.DefaultView;
           //  salaryTable.Columns[0].Visibility = Visibility.Hidden;
             new Thread(new ThreadStart(HideColumns)).Start();
         }
         private void HideColumns()
         {
-            while (paymentTable.Columns.Count == 0)
+            while (PaymentTable.Columns.Count == 0)
             { }
             this.Dispatcher.Invoke(HideColums2);
         }
         private void HideColums2()
         {
-            paymentTable.Columns[0].Visibility = Visibility.Hidden;
+            PaymentTable.Columns[0].Visibility = Visibility.Hidden;
 
         }
     }

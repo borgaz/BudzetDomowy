@@ -4,22 +4,29 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="275" d:DesignWidth="300"
+      d:DesignHeight="461" d:DesignWidth="300"
 	Title="addPaymentPage">
 
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Dodaj Wydatek jednorazowy, wydatek ten zawsze będzie można usunąć w zakładce zarządzania." VerticalAlignment="Top"/>
-        <TextBox x:Name="paymentName" HorizontalAlignment="Left" Height="23" Margin="129,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119"/>
+        <TextBox x:Name="PaymentName" HorizontalAlignment="Left" Height="23" Margin="129,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119"/>
         <Label Content="Nazwa wydatku" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="103"/>
         <Label Content="Suma zapłaty" HorizontalAlignment="Left" Margin="10,87,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="paymentValue" HorizontalAlignment="Left" Height="23" Margin="129,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="categoryBox" HorizontalAlignment="Left" Margin="129,131,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="PaymentValue" HorizontalAlignment="Left" Height="23" Margin="129,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="CategoryBox" HorizontalAlignment="Left" Margin="129,131,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Kategoria" HorizontalAlignment="Left" Margin="10,127,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="addCategoryBtn" Content="+" HorizontalAlignment="Left" Margin="254,131,0,0" VerticalAlignment="Top" Width="28" ToolTip="Dodaj kategorie"/>
-        <Label Content="Dodatkowa notatka" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="note" HorizontalAlignment="Left" Height="38" Margin="19,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="271"/>
-        <Button x:Name="addPaymentBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="19,243,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.2,-0.091" Click="addPaymentBtn_Click"/>
-        <TextBox x:Name="infoBox" HorizontalAlignment="Left" Height="23" Margin="99,243,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" IsEnabled="False"/>
+        <Button x:Name="AddCategoryBtn" Content="+" HorizontalAlignment="Left" Margin="254,131,0,0" VerticalAlignment="Top" Width="28" ToolTip="Dodaj kategorie"/>
+        <Label Content="Dodatkowa notatka" HorizontalAlignment="Left" Margin="16,337,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Note" HorizontalAlignment="Left" Height="38" Margin="19,368,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="271"/>
+        <Button x:Name="AddPaymentBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="16,429,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.2,-0.091" Click="addPaymentBtn_Click"/>
+        <TextBox x:Name="InfoBox" HorizontalAlignment="Left" Height="23" Margin="99,428,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" IsEnabled="False"/>
+        <Grid x:Name="PeriodInfoGrid" HorizontalAlignment="Left" Height="125" Margin="19,212,0,0" VerticalAlignment="Top" Width="271" IsEnabled="False">
+            <RadioButton x:Name="Type1RadioBtn" Content="Co stały czas" HorizontalAlignment="Left" Margin="0,22,0,0" VerticalAlignment="Top"/>
+            <RadioButton x:Name="Type2RadioBtn" Content="w określony dzień" HorizontalAlignment="Left" Margin="155,22,0,0" VerticalAlignment="Top" />
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="92,55,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="68"/>
+            <Label x:Name="InfoLbl" Content="cos" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Width="56"/>
+        </Grid>
+        <CheckBox x:Name="PeriodCheckBox" Content="Wydatek okresowy" HorizontalAlignment="Left" Margin="13,179,0,0" VerticalAlignment="Top" Checked="periodCheckBox_Checked" Unchecked="PeriodCheckBox_OnUnchecked"/>
 
     </Grid>
 </Page>

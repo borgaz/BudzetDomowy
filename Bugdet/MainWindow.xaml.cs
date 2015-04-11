@@ -10,11 +10,11 @@ namespace Bugdet
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MainPage mainPage = new MainPage();
+        private MainPage _mainPage = new MainPage();
         public MainWindow()
         {
             InitializeComponent();
-            SQLConnect.Instance.Connect();
+            SqlConnect.Instance.Connect();
             //SQLConnect.Instance.FetchAll();
             InsertPage();
         }
@@ -26,7 +26,7 @@ namespace Bugdet
         }
         private void InsertPage()
         {
-            this.mainContentFrame.Content = mainPage;
+            this.MainContentFrame.Content = _mainPage;
         }
     }
 }

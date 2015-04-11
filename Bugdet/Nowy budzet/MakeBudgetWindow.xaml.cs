@@ -10,11 +10,11 @@ namespace Bugdet.Nowy_budzet
     public partial class MakeBudgetWindow : Window
     {
         private static MakeBudgetWindow _instance = null; // jako ze Frame nie jest statyczny, trzeba bylo jakos z Page'ow wywolywac zmiane
-        MakeBudgetPage1 page1 = new MakeBudgetPage1(); // strona pierwsza
-        MakeBudgetPage2 page2 = new MakeBudgetPage2(); // strona druga
-        MakeBudgetPage3 page3 = new MakeBudgetPage3(); // strona trzecia
-        private int actual = 1;
-        public static Stack _budgetstack = new Stack(); // stos, wrzucane w menu tworzenia budzetu dane sa wrzucane na stosik, ew mozna inna forme wymyslec
+        MakeBudgetPage1 _page1 = new MakeBudgetPage1(); // strona pierwsza
+        MakeBudgetPage2 _page2 = new MakeBudgetPage2(); // strona druga
+        MakeBudgetPage3 _page3 = new MakeBudgetPage3(); // strona trzecia
+        private int _actual = 1;
+        public static Stack Budgetstack = new Stack(); // stos, wrzucane w menu tworzenia budzetu dane sa wrzucane na stosik, ew mozna inna forme wymyslec
                                    // dzieki tej formie mozna latwo zdejmowac wrzucone rzeczy klikajac wroc w kolejnym oknie
 
 
@@ -29,35 +29,35 @@ namespace Bugdet.Nowy_budzet
             get { return _instance ?? (_instance = new MakeBudgetWindow(1)); }
         }
         // Dziala normalnie
-        public void ManagePages(int _page,int back)
+        public void ManagePages(int page,int back)
         {
-            switch (_page)
+            switch (page)
             {
                 case 0:
-                    pageFrame.Content = null; // 
+                    PageFrame.Content = null; // 
                     _instance = null;
-                    page1 = null;
-                    page2 = null;
-                    page3 = null;
+                    _page1 = null;
+                    _page2 = null;
+                    _page3 = null;
                     this.Close(); // 
                     break;
                 case 1:
                     if (back == 1)
-                        page1.BackToThisPage();
-                    pageFrame.Content = page1;
-                    exitBtn.Content = "Wyjdz";
+                        _page1.BackToThisPage();
+                    PageFrame.Content = _page1;
+                    ExitBtn.Content = "Wyjdz";
                     break;
                 case 2:
                     if (back == 1)
-                        page2.BackToThisPage();
-                    pageFrame.Content = page2;
-                    exitBtn.Content = "Wroc";
+                        _page2.BackToThisPage();
+                    PageFrame.Content = _page2;
+                    ExitBtn.Content = "Wroc";
                     break;
                 case 3:
                     if (back == 1)
-                        page3.BackToThisPage();
-                    pageFrame.Content = page3;
-                    forwardBtn.Content = "Zakończ";
+                        _page3.BackToThisPage();
+                    PageFrame.Content = _page3;
+                    ForwardBtn.Content = "Zakończ";
                     break;
                 case 4:
                     if (CompleteBudget())
@@ -78,70 +78,70 @@ namespace Bugdet.Nowy_budzet
                     return false;
                     
                 case 1:
-                    return page1.CheckInfo();
+                    return _page1.CheckInfo();
                     
                 case 2:
-                    return page2.CheckInfo();
+                    return _page2.CheckInfo();
                 case 3:
-                    return page3.CheckInfo();
+                    return _page3.CheckInfo();
                 default:
                     return false;
             }
         }
         private void exitBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (actual == 1)
+            if (_actual == 1)
             {
-                _budgetstack = null;
-                page1 = null;
-                page2 = null;
+                Budgetstack = null;
+                _page1 = null;
+                _page2 = null;
                 this.Close();
             }
             else
-                ManagePages(--actual,1);
+                ManagePages(--_actual,1);
         }
 
         private void forwardBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(CheckPage(actual))
+            if(CheckPage(_actual))
             {
                 Console.WriteLine("nowy--------------------");
-                foreach (Object o in _budgetstack)
+                foreach (Object o in Budgetstack)
                 {
                     Console.WriteLine(o);
                 }
-                ManagePages(++actual,0);
+                ManagePages(++_actual,0);
             }
         }
         private Boolean CompleteBudget()
         {
             try
             {
-                int j = _budgetstack.Count;
+                int j = Budgetstack.Count;
                 if (j < 3) // sama nazwa i balance
                 {
-                    SQLConnect.Instance.ExecuteSQLNoNQuery("INSERT into Budget(balance,name) values(" + int.Parse(_budgetstack.Pop().ToString()) + ",'" + _budgetstack.Pop().ToString() + "')");
+                    SqlConnect.Instance.ExecuteSqlNonQuery("INSERT into Budget(balance,name) values(" + int.Parse(Budgetstack.Pop().ToString()) + ",'" + Budgetstack.Pop().ToString() + "')");
                 }
                 else
                 {
-                    while(_budgetstack.Count > 0)
+                    while(Budgetstack.Count > 0)
                     {
-                        j = _budgetstack.Count;
+                        j = Budgetstack.Count;
                         if (j < 3) // sama nazwa i balance
                         {
-                            SQLConnect.Instance.ExecuteSQLNoNQuery("INSERT into Budget(balance,name) values(" + int.Parse(_budgetstack.Pop().ToString()) + ",'" + _budgetstack.Pop().ToString() + "')");
+                            SqlConnect.Instance.ExecuteSqlNonQuery("INSERT into Budget(balance,name) values(" + int.Parse(Budgetstack.Pop().ToString()) + ",'" + Budgetstack.Pop().ToString() + "')");
                             break;
                         }
-                        int k = (int)_budgetstack.Pop();
-                        int p = (int)_budgetstack.Pop();
+                        int k = (int)Budgetstack.Pop();
+                        int p = (int)Budgetstack.Pop();
                         if(p == -2) // dane periodPayment
                         {
                             for(int o = 0; o < k; o++)
                             {
-                                SQLConnect.Instance.ExecuteSQLNoNQuery("INSERT INTO PeriodPayments(type,repeat,income,name,startDate) values(" + (int)_budgetstack.Pop() +
-                                                                                                                                            "," + int.Parse(_budgetstack.Pop().ToString()) + 
-                                                                                                                                            "," + int.Parse(_budgetstack.Pop().ToString()) * (-1) + 
-                                                                                                                                            ",'" + _budgetstack.Pop().ToString() + "', date('now'))");
+                                SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO PeriodPayments(type,repeat,income,name,startDate) values(" + (int)Budgetstack.Pop() +
+                                                                                                                                            "," + int.Parse(Budgetstack.Pop().ToString()) + 
+                                                                                                                                            "," + int.Parse(Budgetstack.Pop().ToString()) * (-1) + 
+                                                                                                                                            ",'" + Budgetstack.Pop().ToString() + "', date('now'))");
                             }
                         }
                         else 
@@ -150,10 +150,10 @@ namespace Bugdet.Nowy_budzet
                             {
                                 for (int o = 0; o < k; o++)
                                 {
-                                    SQLConnect.Instance.ExecuteSQLNoNQuery("INSERT INTO PeriodPayments(type,repeat,income,name,startDate) values(" + (int)_budgetstack.Pop() +
-                                                                                                                                                "," + int.Parse(_budgetstack.Pop().ToString()) +
-                                                                                                                                                "," + int.Parse(_budgetstack.Pop().ToString()) +
-                                                                                                                                                ",'" + _budgetstack.Pop().ToString() + "', date('now'))");
+                                    SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO PeriodPayments(type,repeat,income,name,startDate) values(" + (int)Budgetstack.Pop() +
+                                                                                                                                                "," + int.Parse(Budgetstack.Pop().ToString()) +
+                                                                                                                                                "," + int.Parse(Budgetstack.Pop().ToString()) +
+                                                                                                                                                ",'" + Budgetstack.Pop().ToString() + "', date('now'))");
                                 }
                             }
                         }
