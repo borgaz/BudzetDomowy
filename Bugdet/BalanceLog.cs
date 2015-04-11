@@ -8,32 +8,19 @@ namespace Bugdet
 {
     public class BalanceLog
     {
+        // historia sald
+
         private DateTime date;
-        private string note;
-        private int id;
-        private int amount;
-        private int categoryId;
-        private int periodPaymentId;
+        private double balance;
+        private int singlePaymentID; // referencja do płatności/wydatku, który spowodował zmianę salda na this
+        private int periodPaymentID; // gdy będzie to wydatek single to periodPaymentID ustawiamy na 0 i vice versa
 
-        public BalanceLog(int id, int amount, int categoryId, int periodPaymentId, DateTime date, string note)
+        public BalanceLog(double balance, DateTime date, int singlepaymentid, int periodpaymentid)
         {
-            this.id = id;
-            this.amount = amount;
-            this.categoryId = categoryId;
-            this.periodPaymentId = periodPaymentId;
+            this.balance = balance;
             this.date = date;
-            this.note = note;
-
-        }
-
-        public BalanceLog(int amount, int categoryId, int periodPaymentId, DateTime date, string note)
-        {
-            this.amount = amount;
-            this.categoryId = categoryId;
-            this.periodPaymentId = periodPaymentId;
-            this.date = date;
-            this.note = note;
-
+            this.singlePaymentID = singlepaymentid;
+            this.periodPaymentID = periodpaymentid;
         }
 
         public DateTime Date
@@ -44,43 +31,27 @@ namespace Bugdet
             }
         }
 
-        public string Note
+        public double Balance
         {
             get
             {
-                return note;
+                return balance;
             }
         }
 
-        public int Id
+        public int SinglePaymentID
         {
             get
             {
-                return id;
+                return singlePaymentID;
             }
         }
 
-        public int Amount
+        public int PeriodPaymentID
         {
             get
             {
-                return amount;
-            }
-        }
-
-        public int CategoryId
-        {
-            get
-            {
-                return categoryId;
-            }
-        }
-
-        public int PeriodPaymentId
-        {
-            get
-            {
-                return periodPaymentId;
+                return periodPaymentID;
             }
         }
     }

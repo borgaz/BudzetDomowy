@@ -14,7 +14,7 @@ namespace Bugdet
         private Dictionary<int, Payment> payments;
         private Dictionary<int, Category> categories;
         private Dictionary<int, SavingsTarget> savingsTargets;
-        private BalanceLog balance;
+        private BalanceLog balance; // aktualnie najnowsze saldo, w przyszłosci przerobimy na słownik
         private int numberOfPeople;
         private DateTime creationDate;
 

@@ -50,7 +50,14 @@ namespace Bugdet
         {
             try
             {
-                ExecuteSqlNonQuery("CREATE TABLE Budget (name varchar(50), balance integer)");
+                ExecuteSqlNonQuery("CREATE TABLE Budget (name varchar(50)," + 
+                                                        "balance double," +
+                                                        "note varchar (200)," +
+                                                        "password varchar (20)," +
+                                                        "creation date," +
+                                                        "numberOfPeople integer)"
+                                                        );
+
                 ExecuteSqlNonQuery("CREATE TABLE PeriodPayments (id INTEGER PRIMARY KEY," +
                                                                       "categoryId integer," +
                                                                       "name varchar(50)," +
@@ -58,16 +65,36 @@ namespace Bugdet
                                                                       "frequency integer," +
                                                                       "period varchar(20)," +
                                                                       "startDate date," +
+                                                                      "endDate date," +
                                                                       "lastUpdate date," +
                                                                       "type integer," +
-                                                                      "note varchar(100))");
+                                                                      "note varchar(200))");
+
+                ExecuteSqlNonQuery("CREATE TABLE SinglePayments (id INTEGER PRIMARY KEY," +
+                                                                      "categoryId integer," +
+                                                                      "name varchar(50)," +
+                                                                      "amount double," +
+                                                                      "date date," +
+                                                                      "type integer," +
+                                                                      "note varchar(200))");
+
                 ExecuteSqlNonQuery("CREATE TABLE BalanceLogs (id INTEGER PRIMARY KEY," +
                                                                       "periodPaymentId integer," + 
-                                                                      "categoryId integer not null," +
-                                                                      "income double," + 
-                                                                      "date date," +
-                                                                      "note varchar(100))");
-                ExecuteSqlNonQuery("CREATE TABLE Categories (id INTEGER PRIMARY KEY, name varchar(50) not null,note varchar(100))");
+                                                                      "singlePaymentId integer," +
+                                                                      "balance double," + 
+                                                                      "date date)");
+
+                ExecuteSqlNonQuery("CREATE TABLE Categories (id INTEGER PRIMARY KEY, name varchar(50) not null,note varchar(200))");
+
+                ExecuteSqlNonQuery("CREATE TABLE SavingsTargets (id INTEGER PRIMARY KEY," +
+                                                                      "target varchar(50)," +
+                                                                      "note varchar(200)," +
+                                                                      "deadLine date," +
+                                                                      "moneyHoldings double," +
+                                                                      "neededAmount double," +
+                                                                      "priority varchar(50)," +
+                                                                      "addedDate date)");
+
                 AddDefaultCategories();
                 return true;
 
@@ -195,14 +222,8 @@ namespace Bugdet
         /// <returns> Zwraca obiekt z wszystkimi danymi z bazy </returns>
         public Budget FetchAll()
         {
-            String note = ""; //chwilowo brak w bazie
-            String password = ""; //chwilowo brak w bazie
-            Dictionary<int, SavingsTarget> savingsTargets = null; //chwilowo brak w bazie
-            int numberOfPeople = 0; // chwilowo brak w bazie
-            DateTime creationDate = DateTime.Today; //chwilowo brak w bazie
-
             /////////////////////////////////////////////////////////////////////////////////////////////
-            // Nazwa bazy
+            // Nazwa budzetu
             /////////////////////////////////////////////////////////////////////////////////////////////
             String name = "";
             DataSet nameFromSelect = SelectQuery("SELECT name FROM Budget");
@@ -211,8 +232,32 @@ namespace Bugdet
                 throw new ObjectNotFoundException("Empty datebase");
             else
             {
-                name = (string)SelectQuery("SELECT name FROM Budget").Tables[0].Rows[0]["name"];
+                name = (string)nameFromSelect.Tables[0].Rows[0]["name"];
             }
+
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            // Opis budzetu
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            String note = "";
+            note = (string)SelectQuery("SELECT note FROM Budget").Tables[0].Rows[0]["note"];
+
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            // Hasło budżetu
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            String password = "";
+            password = (string)SelectQuery("SELECT password FROM Budget").Tables[0].Rows[0]["password"];
+
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            // Data powstania budżetu
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            DateTime creationDate;
+            creationDate = (DateTime)SelectQuery("SELECT creation FROM Budget").Tables[0].Rows[0]["creation"];
+
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            // Liczba osób w budżecie
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            int numberOfPeople;
+            numberOfPeople = Convert.ToInt32(SelectQuery("SELECT numberOfPeople FROM Budget").Tables[0].Rows[0]["numberOfPeople"]);
 
             /////////////////////////////////////////////////////////////////////////////////////////////
             // Lista kategorii
@@ -231,14 +276,19 @@ namespace Bugdet
             // Aktualny stan konta
             /////////////////////////////////////////////////////////////////////////////////////////////
             DataSet balanceFromSelect = SelectQuery("SELECT * FROM BalanceLogs");
-            BalanceLog balance = new BalanceLog(
-                Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["id"]),
-                Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["income"]),
-                Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["categoryId"]),
-                Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["periodPaymentId"]),
-                (DateTime)(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["date"]),
-                (string)(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["note"])
-                );
+            BalanceLog balance;
+            if (balanceFromSelect.Tables[0].Rows.Count - 1 >= 0)
+            {
+                balance = new BalanceLog(
+                    //Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["id"]),
+                    Convert.ToDouble(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["balance"]),
+                    (DateTime)(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["date"]),
+                    Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["singlePaymentId"]),
+                    Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["periodPaymentId"])
+                    );
+            }
+            else
+                throw new ObjectNotFoundException("No balance in datebase");
 
             /////////////////////////////////////////////////////////////////////////////////////////////
             // Lista płatności
@@ -251,23 +301,53 @@ namespace Bugdet
                 payments.Add(Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["id"]), 
                     new PeriodPayment(
                     Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["categoryId"]),
-                    Convert.ToDouble(periodPayFromSelect.Tables[0].Rows[i]["income"]),
+                    Convert.ToDouble(periodPayFromSelect.Tables[0].Rows[i]["amount"]),
                     (string)(periodPayFromSelect.Tables[0].Rows[i]["note"]),
                     (int)(periodPayFromSelect.Tables[0].Rows[i]["type"]),
                     (string)(periodPayFromSelect.Tables[0].Rows[i]["name"]),
-                    Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["repeat"]),
-                    "", // no period in datebase
+                    Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["frequency"]),
+                    (string)(periodPayFromSelect.Tables[0].Rows[i]["period"]),
                     (DateTime)(periodPayFromSelect.Tables[0].Rows[i]["lastUpdate"]),
                     (DateTime)(periodPayFromSelect.Tables[0].Rows[i]["startDate"]),
                     (DateTime)(periodPayFromSelect.Tables[0].Rows[i]["endDate"])
-                    ));
-                
+                    ));  
             }
 
-            Budget temporary = new Budget (note, name, password, payments, categories,
+            DataSet singlePayFromSelect = SelectQuery("SELECT * FROM SinglePayments");
+            for (int i = 0; i < singlePayFromSelect.Tables[0].Rows.Count; i++)
+            {
+                payments.Add(Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["id"]),
+                    new SinglePayment(
+                    (string)(singlePayFromSelect.Tables[0].Rows[i]["note"]),
+                    Convert.ToDouble(singlePayFromSelect.Tables[0].Rows[i]["amount"]),
+                    Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["categoryId"]),
+                    Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["type"]),
+                    (string)(singlePayFromSelect.Tables[0].Rows[i]["name"]),
+                    (DateTime)(singlePayFromSelect.Tables[0].Rows[i]["date"])
+                    ));
+            }
+
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            // Cele oszczędzania
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            Dictionary<int, SavingsTarget> savingsTargets = new Dictionary<int, SavingsTarget>();
+            DataSet savTargetsFromSelect = SelectQuery("SELECT * FROM SavingsTargets");
+            for (int i = 0; i < savTargetsFromSelect.Tables[0].Rows.Count; i++)
+            {
+                savingsTargets.Add(Convert.ToInt32(savTargetsFromSelect.Tables[0].Rows[i]["id"]),
+                    new SavingsTarget(
+                    (string)(savTargetsFromSelect.Tables[0].Rows[i]["target"]),
+                    (string)(savTargetsFromSelect.Tables[0].Rows[i]["note"]),
+                    (DateTime)(savTargetsFromSelect.Tables[0].Rows[i]["deadLine"]),
+                    (string)(savTargetsFromSelect.Tables[0].Rows[i]["priority"]),
+                    Convert.ToDouble(savTargetsFromSelect.Tables[0].Rows[i]["moneyHoldings"]),
+                    (DateTime)(savTargetsFromSelect.Tables[0].Rows[i]["addedDate"]),
+                    Convert.ToDouble(savTargetsFromSelect.Tables[0].Rows[i]["neededAmount"])
+                    ));
+            }
+
+            return new Budget(note, name, password, payments, categories,
                                     savingsTargets, balance, numberOfPeople, creationDate);
-            
-            return temporary;
 
         }
         private Boolean AddDefaultCategories()
