@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.Entity.Core;
 using System.Data.SQLite;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
 
 namespace Bugdet
@@ -118,7 +120,15 @@ namespace Bugdet
 
         public String HashPasswordMd5(String password)
         {
-            
+            MD5 md5 = new MD5CryptoServiceProvider();
+            md5.ComputeHash(Encoding.ASCII.GetBytes(password));
+            byte[] result = md5.Hash;
+            StringBuilder hashedPassword = new StringBuilder();
+            foreach (byte resultChunk in result)
+            {
+                hashedPassword.Append(resultChunk.ToString("x2"));
+            }
+            return hashedPassword.ToString(); 
         }
         public Boolean CheckCategory(String category,String note)
         {
