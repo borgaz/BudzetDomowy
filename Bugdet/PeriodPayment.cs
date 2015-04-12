@@ -14,6 +14,11 @@ namespace Bugdet
         private DateTime lastUpdate; // data ostatniego wystapienia
         private DateTime endDate; // koncowa data
 
+        public String ToString()
+        {
+            return "START_DATE: " + startDate + "PERIOD: " + period + "FREQUENCY: " + frequency + "LAST_UPDATE: " + lastUpdate + "END_DATE: " + endDate + "\n";
+        }
+
         public PeriodPayment(int categoryID, double amount, String note, bool type, String name, 
             int frequency, String period, DateTime lastUpdate, DateTime startDate, DateTime endDate)
             : base (categoryID, amount, note, type, name)

@@ -8,8 +8,8 @@ namespace Bugdet
 {
     public class Budget
     {
-        private String note; // notatka
         private String name; // nazwa budzetu
+        private String note; // notatka
         private String password; // haslo do budzetu
         private Dictionary<int, Payment> payments; // slownik platnosci
         private Dictionary<int, Category> categories; // slownik platnosci
@@ -17,6 +17,11 @@ namespace Bugdet
         private BalanceLog balance; // aktualnie najnowsze saldo, w przyszłosci przerobimy na słownik
         private int numberOfPeople; // ilosc osob, dla ktorych prowadzony jest budzet domowy
         private DateTime creationDate; // data stworzenia budzetu
+
+        public String ToString()
+        {
+            return "NAME: " + name + "NOTE: " + note + "PASSWORD: " + password + "BALANCE: " + balance + "NUMBER_OF_PEOPLE: " + numberOfPeople + "CREATION_DATE: " + creationDate + "\n";
+        }
 
         public Budget(String note, String name, String password, Dictionary<int, Payment> payments, Dictionary<int, Category> categories,
             Dictionary<int, SavingsTarget> savingsTargets, BalanceLog balance, int numberOfPeople, DateTime creationDate)
@@ -95,7 +100,6 @@ namespace Bugdet
                 return savingsTargets;
             }
         }
-
 
         public void SetNumberOfPeople(int number)
         {

@@ -13,6 +13,11 @@ namespace Bugdet
         private int singlePaymentID; // referencja do płatności/wydatku, który spowodował zmianę salda na this
         private int periodPaymentID; // gdy będzie to wydatek single to periodPaymentID ustawiamy na 0 i vice versa
 
+        public String ToString()
+        {
+            return "DATE: " + date + "BALANCE: " + balance + "SINGLE_PAYMENT_ID: " + singlePaymentID + "PERIOD_PAYMENT_ID: " + periodPaymentID + "\n";
+        }
+
         public BalanceLog(double balance, DateTime date, int singlepaymentid, int periodpaymentid)
         {
             this.balance = balance;

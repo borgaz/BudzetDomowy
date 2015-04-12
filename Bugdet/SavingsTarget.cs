@@ -10,18 +10,24 @@ namespace Bugdet
     {
         private String target; // cel, na jaki chcemy odlozyc pieniadze
         private String note; // notatka
-        private DateTime deadLine; // data, do ktorej chcemy miec dana kwote
+        private DateTime deadline; // data, do ktorej chcemy miec dana kwote
         private int daysLeft; // ile dni pozostalo do deadLine`a
         private String priority; // priorytet
         private double moneyHoldings; // odlozona juz kwota
         private DateTime addedDate; // data dodatania celu
         private double neededAmount; // kwota, jaka chcemy odlozyc
 
-        public SavingsTarget (String target, String note, DateTime deadLine, String priority, double moneyHoldings, DateTime addedDate, double neededAmount)
+        public String ToString()
+        {
+            return "TARGET: " + target + "NOTE: " + note + "DEADLINE: " + deadline + "DAYS_LEFT: " + daysLeft + "PRIORITY: " + priority
+                + "MONEY_HOLDINGS: " + moneyHoldings + "ADDED_DATE: " + addedDate + "NEEDED_AMOUNT: " + neededAmount + "\n";
+        }
+
+        public SavingsTarget (String target, String note, DateTime deadline, String priority, double moneyHoldings, DateTime addedDate, double neededAmount)
         {
             this.target = target;
             this.note = note;
-            this.deadLine = deadLine;
+            this.deadline = deadline;
             CountDaysLeft();
             this.priority = priority;
             this.moneyHoldings = moneyHoldings;
@@ -45,7 +51,7 @@ namespace Bugdet
 
         public int CountDaysLeft()
         {
-            int days = (int)(deadLine - DateTime.Today).TotalDays;
+            int days = (int)(deadline - DateTime.Today).TotalDays;
             this.daysLeft = days;
             return days;
         }
@@ -74,11 +80,11 @@ namespace Bugdet
             }
         }
 
-        public DateTime DeadLine
+        public DateTime Deadline
         {
             get
             {
-                return deadLine;
+                return deadline;
             }
         }
 
