@@ -359,12 +359,7 @@ namespace Bugdet
                                     savingsTargets, balance, numberOfPeople, creationDate);
 
         }
-<<<<<<< HEAD
         public Dictionary<int, Category> AddDefaultCategories()
-=======
-
-        private Boolean AddDefaultCategories()
->>>>>>> origin/master
         {
             var defaultCategories = new Dictionary<int, Category>();
             try
