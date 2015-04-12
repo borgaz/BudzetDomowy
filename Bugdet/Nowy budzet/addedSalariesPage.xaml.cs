@@ -14,7 +14,7 @@ namespace Bugdet.Nowy_budzet
         public AddedSalariesPage()
         {
             InitializeComponent();
-            MessageBox.Show(MakeBudgetPage2.BudgetList.Count + "");
+         //   MessageBox.Show(MakeBudgetPage2.BudgetList.Count + "");
             Refresh();
         }
 
@@ -24,7 +24,7 @@ namespace Bugdet.Nowy_budzet
             {
                 if (SalaryTable.SelectedItem == null) return;
                 DataRowView dataRow = (DataRowView)SalaryTable.SelectedItem;
-                MakeBudgetPage2.BudgetList.RemoveAt((int)dataRow.Row.ItemArray[0]);
+                MakeBudgetPage2._periodPayments.Remove((int)dataRow.Row.ItemArray[0]);
                 Refresh();
             }
             catch(Exception ex)
@@ -34,17 +34,18 @@ namespace Bugdet.Nowy_budzet
         }
         private void Refresh()
         {
-
             DataTable salary = new DataTable();
             salary.Columns.Add("id", typeof(int));
             salary.Columns.Add("Nazwa", typeof(string));
             salary.Columns.Add("Wynagrodzenie", typeof(int));
+            salary.Columns.Add("Kategoria", typeof (string));
             salary.Columns.Add("Powtarzalność", typeof(string));
-            for(int i = 0; i < MakeBudgetPage2.BudgetList.Count;i++)
+            salary.Columns.Add("Od Kiedy", typeof (string));
+            salary.Columns.Add("Do Kiedy", typeof (string));
+            for(int i = 0; i < MakeBudgetPage2._periodPayments.Count;i++)
             {
-                SalaryInfo item = (SalaryInfo)MakeBudgetPage2.BudgetList.ToArray().GetValue(i);
-
-                salary.Rows.Add(i,item.Name, item.Value, (item.Type == 1 ? "co " + item.Repeat + " dni" : "w każdy " + item.Repeat + " dzień miesiąca"));
+                PeriodPayment p = MakeBudgetPage2._periodPayments[i + 1];
+                salary.Rows.Add(i+1,p.Name,p.Amount,MakeBudgetWindow._categories[p.CategoryID].Name,"Co " + p.Frequency + " " + p.Period,p.StartDate.ToString(),p.EndDate.ToString());
             }
             SalaryTable.ItemsSource = salary.DefaultView;
           //  salaryTable.Columns[0].Visibility = Visibility.Hidden;
@@ -60,10 +61,6 @@ namespace Bugdet.Nowy_budzet
         {
             SalaryTable.Columns[0].Visibility = Visibility.Hidden;
 
-        }
-
-        private void salaryTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
         }
     }
 }

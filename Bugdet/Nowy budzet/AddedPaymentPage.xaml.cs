@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,35 +14,41 @@ namespace Bugdet.Nowy_budzet
         public AddedPaymentPage()
         {
             InitializeComponent();
-            MessageBox.Show(MakeBudgetPage3.PaymentList.Count + "");
+        //    MessageBox.Show(MakeBudgetPage3.PaymentList.Count + "");
             Refresh();
         }
 
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(PaymentTable.SelectedItem != null)
+            try
             {
+                if (PaymentTable.SelectedItem == null) return;
                 DataRowView dataRow = (DataRowView)PaymentTable.SelectedItem;
-                MakeBudgetPage3.PaymentList.RemoveAt((int)dataRow.Row.ItemArray[3]);
-                PaymentTable.Items.Remove(dataRow);
+                MakeBudgetPage2._periodPayments.Remove((int)dataRow.Row.ItemArray[0]);
+                Refresh();
+            }
+            catch (Exception ex)
+            {
+                // niech se klika
             }
         }
         private void Refresh()
         {
-
-            DataTable payment = new DataTable();
-            payment.Columns.Add("id", typeof(int));
-            payment.Columns.Add("Nazwa", typeof(string));
-            payment.Columns.Add("Wynagrodzenie", typeof(int));
-            payment.Columns.Add("Powtarzalność", typeof(string));
-            for (int i = 0; i < MakeBudgetPage3.PaymentList.Count; i++)
+            DataTable salary = new DataTable();
+            salary.Columns.Add("id", typeof(int));
+            salary.Columns.Add("Nazwa", typeof(string));
+            salary.Columns.Add("Zapłata", typeof(int));
+            salary.Columns.Add("Kategoria", typeof(string));
+            salary.Columns.Add("Powtarzalność", typeof(string));
+            salary.Columns.Add("Od Kiedy", typeof(string));
+            salary.Columns.Add("Do Kiedy", typeof(string));
+            for (int i = 0; i < MakeBudgetPage2._periodPayments.Count; i++)
             {
-                SalaryInfo item = (SalaryInfo)MakeBudgetPage3.PaymentList.ToArray().GetValue(i);
-
-                payment.Rows.Add(i, item.Name, item.Value, (item.Type == 1 ? "co " + item.Repeat + " dni" : "w każdy " + item.Repeat + " dzień miesiąca"));
+                PeriodPayment p = MakeBudgetPage2._periodPayments[i + 1];
+                salary.Rows.Add(i + 1, p.Name, p.Amount, MakeBudgetWindow._categories[p.CategoryID].Name, "Co " + p.Frequency + " " + p.Period, p.StartDate.ToString(), p.EndDate.ToString());
             }
-            PaymentTable.ItemsSource = payment.DefaultView;
-          //  salaryTable.Columns[0].Visibility = Visibility.Hidden;
+            PaymentTable.ItemsSource = salary.DefaultView;
+            //  salaryTable.Columns[0].Visibility = Visibility.Hidden;
             new Thread(new ThreadStart(HideColumns)).Start();
         }
         private void HideColumns()

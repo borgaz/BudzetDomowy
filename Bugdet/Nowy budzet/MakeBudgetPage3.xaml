@@ -4,24 +4,33 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="404" d:DesignWidth="472"
 	Title="MakeBudgetPage3">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Dodaj okresowe wydatki, czyli takie które są opłacane w dany dzień w miesiącu badź dany dzień w tygodniu, bądź co określony okres czasu" VerticalAlignment="Top"/>
-        <TextBox x:Name="SalaryName" HorizontalAlignment="Left" Height="23" Margin="152,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96"/>
-        <Label Content="Nazwa wydatku" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" Width="103"/>
-        <Label Content="Wielkość zapłaty" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="SalaryValue" HorizontalAlignment="Left" Height="23" Margin="152,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97"/>
-        <Label Content="Rodzaj zapłaty" HorizontalAlignment="Left" Margin="10,147,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="Type1Radio" Content="Co x dni" HorizontalAlignment="Left" Margin="10,178,0,0" VerticalAlignment="Top" Checked="type1Radio_Checked" IsChecked="True"/>
-        <RadioButton x:Name="Type2Radio" Content="W określony dzień miesiąca" HorizontalAlignment="Left" Margin="87,178,0,0" VerticalAlignment="Top" Checked="type2Radio_Checked"/>
-        <TextBox x:Name="DateText" HorizontalAlignment="Right" Height="23" Margin="0,212,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45"/>
-        <Label x:Name="DescLbl" Content="Co ile dni jest opłacane" HorizontalAlignment="Left" Margin="10,209,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="AddSalaryBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="22,258,0,0" VerticalAlignment="Top" Width="75" Click="addSalaryBtn_Click"/>
-        <Button x:Name="AddedSalariesBtn" Content="Juz dodane" HorizontalAlignment="Left" Margin="118,258,0,0" VerticalAlignment="Top" Width="75" Click="addedSalariesBtn_Click"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="37" Margin="203,243,0,0" VerticalAlignment="Top" Width="87">
-            <Label x:Name="InfoLbl" Content="" Margin="1,-1,-1,1" Foreground="#FF9B1818" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Dodaj okresowe przychody, czyli takie które są wypłacane w dany dzień w miesiącu badź dany dzień w tygodniu, bądź co określony okres czasu" VerticalAlignment="Top" Width="452"/>
+        <TextBox x:Name="SalaryName" HorizontalAlignment="Left" Height="23" Margin="139,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" GotFocus="SalaryName_OnGotFocus"/>
+        <Label Content="Nazwa przychodu" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" Width="103"/>
+        <Label Content="Suma wynagrodzenia" HorizontalAlignment="Left" Margin="254,71,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="SalaryValue" HorizontalAlignment="Left" Height="23" Margin="382,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
+        <TextBox x:Name="NumberOfTextBox" HorizontalAlignment="Right" Height="26" Margin="0,165,248,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="67"/>
+        <Label x:Name="DescLbl" Content="Co ile dni jest wypłata" HorizontalAlignment="Left" Margin="13,165,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="AddSalaryBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="38,361,0,0" VerticalAlignment="Top" Width="75" Click="addSalaryBtn_Click"/>
+        <Button x:Name="AddedSalariesBtn" Content="Juz dodane" HorizontalAlignment="Left" Margin="241,361,0,0" VerticalAlignment="Top" Width="75" Click="addedSalariesBtn_Click"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="254,289,0,0" VerticalAlignment="Top" Width="100">
+            <Label x:Name="InfoLbl" Content="" Margin="-1" Foreground="#FF9B1818" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Height="52" Width="100"/>
         </Border>
+        <Button x:Name="AddCategoryBtn" Content="+" HorizontalAlignment="Left" Margin="241,106,0,0" VerticalAlignment="Top" Width="25" Click="AddCategoryBtn_Click"/>
+        <Label Content="Kategoria" HorizontalAlignment="Left" Margin="13,102,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="CategoryComboBox" HorizontalAlignment="Left" Margin="139,106,0,0" VerticalAlignment="Top" Width="97"/>
+        <DatePicker x:Name="StartDatePicker" HorizontalAlignment="Left" Margin="90,216,0,0" VerticalAlignment="Top"/>
+        <Label Content="Od Kiedy" HorizontalAlignment="Left" Margin="16,214,0,0" VerticalAlignment="Top"/>
+        <DatePicker x:Name="EndDatePicker" HorizontalAlignment="Left" Margin="321,220,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="EndDateCheckBox" Content="Do Kiedy" HorizontalAlignment="Left" Margin="251,220,0,0" VerticalAlignment="Top"
+                  Checked="EndDateCheckBox_OnChecked" Unchecked="EndDateCheckBox_OnUnchecked" IsEnabled="False"/>
+        <Label Content="Dodatkowa notatka" HorizontalAlignment="Left" Margin="16,258,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="NoteTextBox" HorizontalAlignment="Left" Height="52" Margin="22,289,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170"/>
+        <ComboBox x:Name="DateTypeBox" HorizontalAlignment="Left" Margin="241,169,0,0" VerticalAlignment="Top" Width="88"/>
+
     </Grid>
 </Page>

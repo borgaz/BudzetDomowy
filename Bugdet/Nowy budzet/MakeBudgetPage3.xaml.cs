@@ -12,45 +12,56 @@ namespace Bugdet.Nowy_budzet
     /// </summary>
     public partial class MakeBudgetPage3 : Page
     {
-        public static List<SalaryInfo> PaymentList = new List<SalaryInfo>();
-        private int _salaries;
+        public static Dictionary<int,PeriodPayment> _periodPayments = new Dictionary<int, PeriodPayment>(); 
+      //  private int _salaries;
         public MakeBudgetPage3()
         {
             InitializeComponent();
+            InsertDateTypes();
+            InsertCategories();
         }
 
-        private void type1Radio_Checked(object sender, RoutedEventArgs e)
+        //private void type1Radio_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    if(DescLbl != null)
+        //        DescLbl.Content = "Co ile dni jest wypłata";
+        //}
+
+        //private void type2Radio_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    if (DescLbl != null)
+        //        DescLbl.Content = "W konkretny dzień";
+        //}
+        private void InsertDateTypes()
         {
-            if(DescLbl != null)
-                DescLbl.Content = "Co ile dni jest opłata";
+            DateTypeBox.Items.Add("DZIEŃ");
+            DateTypeBox.Items.Add("TYDZIEŃ");
+            DateTypeBox.Items.Add("MIESIĄC");
+            DateTypeBox.Items.Add("ROK");
         }
-
-        private void type2Radio_Checked(object sender, RoutedEventArgs e)
-        {
-            if (DescLbl != null)
-                DescLbl.Content = "W jaki dzień miesiąca jest opłacane";
-        }
-
         private void addSalaryBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(SalaryName.Text != "" && SalaryValue.Text != "" && DateText.Text != "")
+            if(SalaryName.Text != "" && SalaryValue.Text != "" && NumberOfTextBox.Text != "" && DateTypeBox.SelectedIndex != -1 && CategoryComboBox.SelectedIndex != -1 )
             {
-                PaymentList.Add(new SalaryInfo(SalaryName.Text,
-                                              int.Parse(SalaryValue.Text),
-                                              (Type1Radio.IsChecked == true ? 1 : 2),
-                                              int.Parse(DateText.Text)));
-                _salaries++;
+                _periodPayments.Add(1,new PeriodPayment(CategoryComboBox.SelectedIndex + 1,
+                    Double.Parse(SalaryValue.Text),
+                    NoteTextBox.Text,
+                    true,SalaryName.Text,
+                    int.Parse(NumberOfTextBox.Text),
+                    DateTypeBox.SelectedValue.ToString(),
+                    StartDatePicker.DisplayDate,StartDatePicker.DisplayDate,
+                    (EndDateCheckBox.IsEnabled == true ? EndDatePicker.DisplayDate : StartDatePicker.DisplayDate)));
                 InfoLbl.Content = "Dodano";
                 InfoLbl.Foreground = Brushes.Green;// ="#00FF0000";
                 SalaryName.Text = "";
                 SalaryValue.Text = "";
-                DateText.Text = "";
+                NumberOfTextBox.Text = "";
             }
             else
             {
                 MessageBox.Show("Uzupełnij wszystkie pola!");
                 InfoLbl.Content = "Nie Dodano";
-                InfoLbl.Foreground = Brushes.Red;// ="#00FF0000";
+                InfoLbl.Foreground = Brushes.Red;// ="#FF000000";
             }
         }
 
@@ -58,47 +69,89 @@ namespace Bugdet.Nowy_budzet
         {
             new AddedSalariesWindow(2).ShowDialog();
         }
-        public Boolean CheckInfo()
+
+        public void InsertCategories()
         {
+            CategoryComboBox.Items.Clear();
             try
             {
-                for (int i = 0; i < _salaries; i++)
+                for (int i = 0; i < MakeBudgetWindow._categories.Count; i++)
                 {
-                    MakeBudgetWindow.Budgetstack.Push(PaymentList.ElementAt(i).Name); // String
-                    MakeBudgetWindow.Budgetstack.Push(PaymentList.ElementAt(i).Value); // String
-                    MakeBudgetWindow.Budgetstack.Push(PaymentList.ElementAt(i).Repeat); // String
-                    MakeBudgetWindow.Budgetstack.Push(PaymentList.ElementAt(i).Type); // int
+                    CategoryComboBox.Items.Add(MakeBudgetWindow._categories[i + 1].Name);
                 }
-                if (_salaries != 0)
-                    MakeBudgetWindow.Budgetstack.Push(-2); // identyfikator ze sa jakies periodPayments
-                MakeBudgetWindow.Budgetstack.Push(_salaries); // ilosc "pakietow"
-                return true;
             }
-            catch (InsufficientExecutionStackException)
+            catch (Exception)
             {
-                return false;
+                MessageBox.Show(MakeBudgetWindow._categories.Count + "");
+                Console.WriteLine(MakeBudgetWindow._categories.ToArray());
             }
+        }
+
+        public Boolean CheckInfo()
+        {
+        //    try
+        //    {
+        //        for (int i = 0; i < _salaries; i++)
+        //        {
+        //        //    MakeBudgetWindow.Budgetstack.Push(BudgetList.ElementAt(i).Name); // String
+        //        //    MakeBudgetWindow.Budgetstack.Push(BudgetList.ElementAt(i).Value); // String
+        //        //    MakeBudgetWindow.Budgetstack.Push(BudgetList.ElementAt(i).Repeat); // String
+        //        //    MakeBudgetWindow.Budgetstack.Push(BudgetList.ElementAt(i).Type); // int
+        //        }
+        //        if (_salaries != 0)
+        //            MakeBudgetWindow.Budgetstack.Push(-1); // identyfikator periodSalary
+        //        MakeBudgetWindow.Budgetstack.Push(_salaries);
+        //        return true;
+        //    }
+        //    catch(InsufficientExecutionStackException)
+        //    {
+        //        return false;
+        //    }
+            MakeBudgetWindow._payments = _periodPayments;
+            return true;
         }
         public Boolean BackToThisPage()
         {
-            try
-            {
-                int _salaries = (int)MakeBudgetWindow.Budgetstack.Pop(); // ile "pakietow" danych bylo na stosie
-                if(_salaries != 0)
-                    MakeBudgetWindow.Budgetstack.Pop(); // identyfikator periodPayments
-                for (int i = 0; i < _salaries; i++) // zbieranie ze stosu wrzuconych informacji
-                {
-                    MakeBudgetWindow.Budgetstack.Pop();
-                    MakeBudgetWindow.Budgetstack.Pop();
-                    MakeBudgetWindow.Budgetstack.Pop();
-                    MakeBudgetWindow.Budgetstack.Pop(); 
-                }
-                return true;
-            }
-            catch (InsufficientExecutionStackException)
-            {
-                return false;
-            }
+        //    try
+        //    {
+        //        int _salaries = (int)MakeBudgetWindow.Budgetstack.Pop(); // ile pakietow
+        //        if (_salaries != 0)
+        //            MakeBudgetWindow.Budgetstack.Pop(); // identyfikator periodsalary
+        //        for (int i = 0; i < _salaries; i++)
+        //        {
+        //            MakeBudgetWindow.Budgetstack.Pop();
+        //            MakeBudgetWindow.Budgetstack.Pop();
+        //            MakeBudgetWindow.Budgetstack.Pop();
+        //            MakeBudgetWindow.Budgetstack.Pop();
+        //        }
+        //        return true;
+        //    }
+        //    catch(InsufficientExecutionStackException)
+        //    {
+        //        return false;
+        //    }
+            return true;
+        }
+
+        private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            new AddCategoryWindow().ShowDialog();
+            InsertCategories();
+        }
+
+        private void EndDateCheckBox_OnChecked(object sender, RoutedEventArgs e)
+        {
+            EndDatePicker.IsEnabled = true;
+        }
+
+        private void EndDateCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            EndDatePicker.IsEnabled = false;
+        }
+
+        private void SalaryName_OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            InfoLbl.Content = "";
         }
     }
 }

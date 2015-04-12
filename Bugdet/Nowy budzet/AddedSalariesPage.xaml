@@ -4,13 +4,13 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="273" d:DesignWidth="300"
+      d:DesignHeight="210" d:DesignWidth="526"
 	Title="addedSalariesPage">
 
     <Grid>
-        <DataGrid x:Name="SalaryTable" HorizontalAlignment="Left" VerticalAlignment="Top" Height="217" Width="280" Margin="10,10,0,0" SelectionChanged="salaryTable_SelectionChanged">
+        <DataGrid x:Name="SalaryTable" HorizontalAlignment="Left" VerticalAlignment="Top" Height="156" Width="506" Margin="10,10,0,0">
         </DataGrid>
-        <Button x:Name="DeleteBtn" Content="usuń dany rekord" HorizontalAlignment="Left" Margin="10,241,0,0" VerticalAlignment="Top" Width="111" Click="deleteBtn_Click"/>
+        <Button x:Name="DeleteBtn" Content="usuń dany rekord" HorizontalAlignment="Left" Margin="31,178,0,0" VerticalAlignment="Top" Width="111" Click="deleteBtn_Click"/>
 
     </Grid>
 </Page>

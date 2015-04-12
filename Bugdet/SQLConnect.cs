@@ -351,22 +351,25 @@ namespace Bugdet
                                     savingsTargets, balance, numberOfPeople, creationDate);
 
         }
-        private Boolean AddDefaultCategories()
+        public Dictionary<int, Category> AddDefaultCategories()
         {
+            var defaultCategories = new Dictionary<int, Category>();
             try
             {
-                ExecuteSqlNonQuery("INSERT into Categories(name,note) values('Paliwo','Benzyna do samochodu')");
-                ExecuteSqlNonQuery("INSERT into Categories(name,note) values('Jedzenie','Zakupy okresowe')");
-                ExecuteSqlNonQuery("INSERT into Categories(name,note) values('Prąd','Rachunki za prąd')");
-                ExecuteSqlNonQuery("INSERT into Categories(name,note) values('Woda','Rachunki za wodę')");
-                ExecuteSqlNonQuery("INSERT into Categories(name,note) values('Gaz','Rachunki za gaz')");
-                return true;
+                defaultCategories.Add(1, new Category("Paliwo","Benzyna do samochodu"));
+                defaultCategories.Add(2, new Category("Jedzenie", "Zakupy okresowe"));
+                defaultCategories.Add(3, new Category("Prąd", "Rachunki za energie"));
+                defaultCategories.Add(4, new Category("Woda", "Rachunki za wodę"));
+                defaultCategories.Add(5, new Category("Gaz", "Rachunki za gaz"));
+                defaultCategories.Add(6, new Category("Internet", "Rachunki za internet"));
+                defaultCategories.Add(7, new Category("Praca", "wypłata"));
+                return defaultCategories;
             }
-            catch(SQLiteException ex)
+            catch(Exception ex)
             {
-                MessageBox.Show("Błąd");
+                MessageBox.Show("Błąd sraki");
                 Console.WriteLine(ex.GetBaseException() + "\n addDefaultCategories()");
-                return false;
+                return null;
             }
         }
     }

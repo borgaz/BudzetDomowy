@@ -4,28 +4,39 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="404" d:DesignWidth="472"
 	Title="MakeBudzetPage1">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="54" Width="252"><Run Text="Witaj w kreatorze budzetu, przejdz pare krokow do stworzenia swojego wlasnego budzetu."/><LineBreak/><Run Text="Czerwone pola to pola obowiązkowe."/><LineBreak/><Run/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="54" Width="267"><Run Text="Witaj w kreatorze budzetu, przejdz pare krokow do stworzenia swojego wlasnego budzetu."/><LineBreak/><Run Text="Czerwone pola to pola obowiązkowe."/><LineBreak/><Run/></TextBlock>
         <Label Content="Nazwa twojego budzetu" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top"/>
-        <Label Content="Startowy budzet" HorizontalAlignment="Left" Margin="10,134,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="BudgetNameText" HorizontalAlignment="Left" Height="23" Margin="168,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109">
+        <Label Content="Startowy budzet" HorizontalAlignment="Left" Margin="10,208,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="budgetNameText" HorizontalAlignment="Left" Height="23" Margin="168,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" TextChanged="BudgetNameText_OnTextChanged">
             <TextBox.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <LinearGradientBrush x:Name="NameBoxGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFEC1717" Offset="0"/>
                     <GradientStop Color="White" Offset="1"/>
                 </LinearGradientBrush>
             </TextBox.Background>
         </TextBox>
-        <TextBox x:Name="BudgetBalance" HorizontalAlignment="Left" Height="23" Margin="168,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109">
+        <PasswordBox x:Name="passTextBox" HorizontalAlignment="Left" Margin="168,128,0,0" VerticalAlignment="Top" Width="109"/>
+        <PasswordBox x:Name="passRepeatTextBox" HorizontalAlignment="Left" Margin="168,165,0,0" VerticalAlignment="Top" Width="109" GotFocus="PassRepeatTextBox_OnGotFocus" PasswordChanged="PassRepeatTextBox_OnGotFocus">
+            <PasswordBox.Background>
+                <LinearGradientBrush x:Name="PassRepeatGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+
+                </LinearGradientBrush>
+            </PasswordBox.Background>
+        </PasswordBox>
+        <TextBox x:Name="budgetBalance" HorizontalAlignment="Left" Height="23" Margin="168,208,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" TextChanged="BudgetBalance_OnTextChanged">
             <TextBox.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <LinearGradientBrush x:Name="BalanceBoxGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFEC1717" Offset="0"/>
                     <GradientStop Color="White" Offset="1"/>
                 </LinearGradientBrush>
             </TextBox.Background>
         </TextBox>
+        <Label Content="Hasło " HorizontalAlignment="Left" Margin="10,128,0,0" VerticalAlignment="Top"/>
+        <Label Content="Powtórz hasło" HorizontalAlignment="Left" Margin="10,159,0,0" VerticalAlignment="Top"/>
+        
     </Grid>
 </Page>

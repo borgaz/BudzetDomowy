@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Windows;
 
 namespace Bugdet.Nowy_budzet
@@ -13,10 +15,15 @@ namespace Bugdet.Nowy_budzet
         MakeBudgetPage1 _page1 = new MakeBudgetPage1(); // strona pierwsza
         MakeBudgetPage2 _page2 = new MakeBudgetPage2(); // strona druga
         MakeBudgetPage3 _page3 = new MakeBudgetPage3(); // strona trzecia
+        public static Dictionary<int, Category> _categories = SqlConnect.Instance.AddDefaultCategories();
+        public static Dictionary<int,PeriodPayment> _payments = new Dictionary<int, PeriodPayment>();
+        public static Dictionary<int, PeriodPayment> _salaries = new Dictionary<int, PeriodPayment>(); 
         private int _actual = 1;
-        public static Stack Budgetstack = new Stack(); // stos, wrzucane w menu tworzenia budzetu dane sa wrzucane na stosik, ew mozna inna forme wymyslec
-                                   // dzieki tej formie mozna latwo zdejmowac wrzucone rzeczy klikajac wroc w kolejnym oknie
-
+        private Budget newBudget;
+        public static String name;
+        public static String password;
+        public static BalanceLog balance;
+        
 
 
         public MakeBudgetWindow(int page)
@@ -24,11 +31,6 @@ namespace Bugdet.Nowy_budzet
             InitializeComponent();
             ManagePages(page,0);
         }
-        public static MakeBudgetWindow Instance
-        {
-            get { return _instance ?? (_instance = new MakeBudgetWindow(1)); }
-        }
-        // Dziala normalnie
         public void ManagePages(int page,int back)
         {
             switch (page)
@@ -92,7 +94,6 @@ namespace Bugdet.Nowy_budzet
         {
             if (_actual == 1)
             {
-                Budgetstack = null;
                 _page1 = null;
                 _page2 = null;
                 this.Close();
@@ -106,66 +107,12 @@ namespace Bugdet.Nowy_budzet
             if(CheckPage(_actual))
             {
                 Console.WriteLine("nowy--------------------");
-                foreach (Object o in Budgetstack)
-                {
-                    Console.WriteLine(o);
-                }
                 ManagePages(++_actual,0);
             }
         }
         private Boolean CompleteBudget()
         {
-            try
-            {
-                int j = Budgetstack.Count;
-                if (j < 3) // sama nazwa i balance
-                {
-                    SqlConnect.Instance.ExecuteSqlNonQuery("INSERT into Budget(balance,name) values(" + int.Parse(Budgetstack.Pop().ToString()) + ",'" + Budgetstack.Pop().ToString() + "')");
-                }
-                else
-                {
-                    while(Budgetstack.Count > 0)
-                    {
-                        j = Budgetstack.Count;
-                        if (j < 3) // sama nazwa i balance
-                        {
-                            SqlConnect.Instance.ExecuteSqlNonQuery("INSERT into Budget(balance,name) values(" + int.Parse(Budgetstack.Pop().ToString()) + ",'" + Budgetstack.Pop().ToString() + "')");
-                            break;
-                        }
-                        int k = (int)Budgetstack.Pop();
-                        int p = (int)Budgetstack.Pop();
-                        if(p == -2) // dane periodPayment
-                        {
-                            for(int o = 0; o < k; o++)
-                            {
-                                SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO PeriodPayments(type,repeat,income,name,startDate) values(" + (int)Budgetstack.Pop() +
-                                                                                                                                            "," + int.Parse(Budgetstack.Pop().ToString()) + 
-                                                                                                                                            "," + int.Parse(Budgetstack.Pop().ToString()) * (-1) + 
-                                                                                                                                            ",'" + Budgetstack.Pop().ToString() + "', date('now'))");
-                            }
-                        }
-                        else 
-                        {
-                            if (p == -1) // dane periodSalary
-                            {
-                                for (int o = 0; o < k; o++)
-                                {
-                                    SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO PeriodPayments(type,repeat,income,name,startDate) values(" + (int)Budgetstack.Pop() +
-                                                                                                                                                "," + int.Parse(Budgetstack.Pop().ToString()) +
-                                                                                                                                                "," + int.Parse(Budgetstack.Pop().ToString()) +
-                                                                                                                                                ",'" + Budgetstack.Pop().ToString() + "', date('now'))");
-                                }
-                            }
-                        }
-                    }
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                return false;
-            }
+            //
         }
     }
 }
