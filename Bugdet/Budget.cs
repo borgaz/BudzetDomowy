@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 
 namespace Bugdet
 {
@@ -36,7 +37,7 @@ namespace Bugdet
         {
             get
             {
-                return note;
+                return this.note;
             }
         }
 
@@ -44,7 +45,7 @@ namespace Bugdet
         {
             get
             {
-                return name;
+                return this.name;
             }
         }
 
@@ -52,7 +53,7 @@ namespace Bugdet
         {
             get
             {
-                return password;
+                return this.password;
             }
         }
 
@@ -60,7 +61,7 @@ namespace Bugdet
         {
             get
             {
-                return numberOfPeople;
+                return this.numberOfPeople;
             }
         }
 
@@ -68,7 +69,7 @@ namespace Bugdet
         {
             get
             {
-                return balance;
+                return this.balance;
             }
         }
 
@@ -76,7 +77,7 @@ namespace Bugdet
         {
             get
             {
-                return payments;
+                return this.payments;
             }
         }
 
@@ -84,7 +85,7 @@ namespace Bugdet
         {
             get
             {
-                return categories;
+                return this.categories;
             }
         }
 
@@ -92,7 +93,7 @@ namespace Bugdet
         {
             get
             {
-                return savingsTargets;
+                return this.savingsTargets;
             }
         }
 
