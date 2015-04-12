@@ -21,7 +21,8 @@ namespace Bugdet
 
         public String ToString()
         {
-            return "NAME: " + name + "NOTE: " + note + "PASSWORD: " + password + "BALANCE: " + balance + "NUMBER_OF_PEOPLE: " + numberOfPeople + "CREATION_DATE: " + creationDate + "\n";
+            return "NAME: " + name + "NOTE: " + note + "PASSWORD: " + password + "BALANCE: " + balance + "NUMBER_OF_PEOPLE: " + numberOfPeople
+                + "CREATION_DATE: " + creationDate + "\n";
         }
 
         public Budget(String note, String name, String password, Dictionary<int, Payment> payments, Dictionary<int, Category> categories,
