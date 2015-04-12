@@ -21,9 +21,9 @@ namespace Bugdet.Nowy_budzet
         {
             if(budgetBalance.Text != "" && budgetNameText.Text != "" && (passTextBox.Password.Equals(passRepeatTextBox.Password)) && passTextBox.Password != "")
             {
-                MakeBudgetWindow.Budgetstack.Push(budgetNameText.Text);
-                MakeBudgetWindow.Budgetstack.Push(budgetBalance.Text);
-                MakeBudgetWindow.Budgetstack.Push(SqlConnect.Instance.HashPasswordMd5(passTextBox.Password));
+                MakeBudgetWindow.name = budgetNameText.Text;
+               // MakeBudgetWindow.balance = double.Parse(budgetBalance.Text);
+                MakeBudgetWindow.password = SqlConnect.Instance.HashPasswordMd5((passTextBox.Password));
                 return true;
             }
             else
@@ -34,17 +34,7 @@ namespace Bugdet.Nowy_budzet
         }
         public Boolean BackToThisPage()
         {
-            try
-            {
-                MakeBudgetWindow.Budgetstack.Pop();
-                MakeBudgetWindow.Budgetstack.Pop();
-                MakeBudgetWindow.Budgetstack.Pop();
-                return true;
-            }
-            catch(InsufficientExecutionStackException)
-            {
-                return false;
-            }
+            return true;
         }
 
         private void BudgetNameText_OnTextChanged(object sender, TextChangedEventArgs e)

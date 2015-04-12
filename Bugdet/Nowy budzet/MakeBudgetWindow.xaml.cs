@@ -112,7 +112,7 @@ namespace Bugdet.Nowy_budzet
         }
         private Boolean CompleteBudget()
         {
-            //
+            return true;
         }
     }
 }
