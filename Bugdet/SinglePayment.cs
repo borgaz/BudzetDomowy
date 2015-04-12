@@ -10,6 +10,11 @@ namespace Bugdet
     {
         private DateTime date; // data wykonania
 
+        public String ToString()
+        {
+            return "DATE: " + date + "\n";
+        }
+
         public SinglePayment(String note, double amount, int categoryID, bool type, String name, DateTime date)
             : base( categoryID, amount, note, type, name)
         {

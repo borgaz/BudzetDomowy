@@ -25,6 +25,7 @@ namespace Bugdet
         {
             get { return _instance ?? (_instance = new SqlConnect()); }
         }
+
         public void Connect()
         {
             try
@@ -46,6 +47,7 @@ namespace Bugdet
             {       
             }
         }
+
         public Boolean MakeDb()
         {
             try
@@ -106,6 +108,7 @@ namespace Bugdet
                 return false;
             }
         }
+
         /// <summary>
         /// - wykonuje zapytanie, zwraca true jak sie uda
         /// </summary>
@@ -125,6 +128,7 @@ namespace Bugdet
                 return false;
             }
         }
+
         /// <summary>
         /// - Zwraca DataSet z zadanego Selecta
         /// </summary>
@@ -158,6 +162,7 @@ namespace Bugdet
             }
             return hashedPassword.ToString(); 
         }
+
         public Boolean CheckCategory(String category,String note)
         {
             int result = (int)SelectQuery("Select count(id) as count from Categories where name='"+ category +"'").Tables[0].Rows[0]["count"];
@@ -169,6 +174,7 @@ namespace Bugdet
             else
                 return false;
         }
+
         public Boolean AddSinglePayment(String name,double value,int category,String note)
         {
             try
@@ -193,6 +199,7 @@ namespace Bugdet
                 return false;
             }
         }
+
         public Boolean AddSingleSalary(String name,double value,int category,String note)
         {
             try
@@ -217,6 +224,7 @@ namespace Bugdet
                 return false;
             }
         }
+
         /// <summary>
         /// Pobiera wszystkie dane z bazy do obiektu
         /// </summary>
@@ -351,7 +359,12 @@ namespace Bugdet
                                     savingsTargets, balance, numberOfPeople, creationDate);
 
         }
+<<<<<<< HEAD
         public Dictionary<int, Category> AddDefaultCategories()
+=======
+
+        private Boolean AddDefaultCategories()
+>>>>>>> origin/master
         {
             var defaultCategories = new Dictionary<int, Category>();
             try
