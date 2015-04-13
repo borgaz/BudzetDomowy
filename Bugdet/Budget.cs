@@ -19,10 +19,10 @@ namespace Bugdet
         private int numberOfPeople; // ilosc osob, dla ktorych prowadzony jest budzet domowy
         private DateTime creationDate; // data stworzenia budzetu
 
-        public String ToString()
+        public override string ToString()
         {
-            return "NAME: " + name + "NOTE: " + note + "PASSWORD: " + password + "BALANCE: " + balance + "NUMBER_OF_PEOPLE: " + numberOfPeople
-                + "CREATION_DATE: " + creationDate + "\n";
+            return "NAME: " + name + " NOTE: " + note + " PASSWORD: " + password + " NUMBER_OF_PEOPLE: " + numberOfPeople
+                + " CREATION_DATE: " + creationDate + " BALANCE: \n" + balance;
         }
 
         public Budget(String note, String name, String password, Dictionary<int, Payment> payments, Dictionary<int, Category> categories,
@@ -146,6 +146,26 @@ namespace Bugdet
         public void DeletePeriodPayment(int index)
         {
             payments.Remove(index);
+        }
+
+        public void SetDefaultCategories()
+        {
+            var defaultCategories = new Dictionary<int, Category>();
+            try
+            {
+                this.categories.Add(1, new Category("Paliwo", "Benzyna do samochodu"));
+                this.categories.Add(2, new Category("Jedzenie", "Zakupy okresowe"));
+                this.categories.Add(3, new Category("Prąd", "Rachunki za energie"));
+                this.categories.Add(4, new Category("Woda", "Rachunki za wodę"));
+                this.categories.Add(5, new Category("Gaz", "Rachunki za gaz"));
+                this.categories.Add(6, new Category("Internet", "Rachunki za internet"));
+                this.categories.Add(7, new Category("Praca", "wypłata"));
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Wystąpił błąd");
+                Console.WriteLine(ex.GetBaseException() + "\n addDefaultCategories()");
+            }
         }
     }
 }

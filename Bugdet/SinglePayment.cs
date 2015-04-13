@@ -10,10 +10,10 @@ namespace Bugdet
     {
         private DateTime date; // data wykonania
 
-        public String ToString()
+        public override string ToString()
         {
-            return "DATE: " + date + "BASE_CATEGORY_ID: " + base.CategoryID + "BASE_AMOUNT: " + base.Amount 
-                + "BASE_NAME: " + base.Name + "BASE_TYPE: " + base.Type + "BASE_NOTE: " + base.Note + "\n";
+            return "DATE: " + date + " BASE_CATEGORY_ID: " + base.CategoryID + " BASE_AMOUNT: " + base.Amount 
+                + " BASE_NAME: " + base.Name + " BASE_TYPE: " + base.Type + " BASE_NOTE: " + base.Note + "\n";
         }
 
         public SinglePayment(String note, double amount, int categoryID, bool type, String name, DateTime date)

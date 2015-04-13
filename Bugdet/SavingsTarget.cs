@@ -17,10 +17,10 @@ namespace Bugdet
         private DateTime addedDate; // data dodatania celu
         private double neededAmount; // kwota, jaka chcemy odlozyc
 
-        public String ToString()
+        public override string ToString()
         {
-            return "TARGET: " + target + "NOTE: " + note + "DEADLINE: " + deadline + "DAYS_LEFT: " + daysLeft + "PRIORITY: " + priority
-                + "MONEY_HOLDINGS: " + moneyHoldings + "ADDED_DATE: " + addedDate + "NEEDED_AMOUNT: " + neededAmount + "\n";
+            return "TARGET: " + target + " NOTE: " + note + " DEADLINE: " + deadline + " DAYS_LEFT: " + daysLeft + " PRIORITY: " + priority
+                + " MONEY_HOLDINGS: " + moneyHoldings + " ADDED_DATE: " + addedDate + " NEEDED_AMOUNT: " + neededAmount + "\n";
         }
 
         public SavingsTarget (String target, String note, DateTime deadline, String priority, double moneyHoldings, DateTime addedDate, double neededAmount)

@@ -68,7 +68,7 @@ namespace Bugdet
                                                                       "startDate date," +
                                                                       "endDate date," +
                                                                       "lastUpdate date," +
-                                                                      "type integer," +
+                                                                      "type boolean," +
                                                                       "note varchar(200))");
 
                 ExecuteSqlNonQuery("CREATE TABLE SinglePayments (id INTEGER PRIMARY KEY," +
@@ -76,7 +76,7 @@ namespace Bugdet
                                                                       "name varchar(50)," +
                                                                       "amount double," +
                                                                       "date date," +
-                                                                      "type integer," +
+                                                                      "type boolean," +
                                                                       "note varchar(200))");
 
                 ExecuteSqlNonQuery("CREATE TABLE BalanceLogs (id INTEGER PRIMARY KEY," +
@@ -98,7 +98,7 @@ namespace Bugdet
                                                                       "priority varchar(50)," +
                                                                       "addedDate date)");
 
-                AddDefaultCategories();
+                //SetDefaultCategories();
                 return true;
 
             }
@@ -355,8 +355,13 @@ namespace Bugdet
                     ));
             }
 
-            return new Budget(note, name, password, payments, categories,
+            Budget temp = new Budget(note, name, password, payments, categories,
                                     savingsTargets, balance, numberOfPeople, creationDate);
+
+            temp.SetDefaultCategories();
+            Console.WriteLine(temp.Categories[1]); //dla testów
+            
+            return temp;
 
         }
         public Dictionary<int, Category> AddDefaultCategories()
@@ -380,5 +385,6 @@ namespace Bugdet
                 return null;
             }
         }
+        
     }
 }

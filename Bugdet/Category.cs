@@ -11,9 +11,9 @@ namespace Bugdet
         private string name; // nazwa kategorii
         private string note; // opis kategorii
 
-        public String ToString()
+        public override string ToString()
         {
-            return "NAME: " + name + "NOTE: " + note + "\n";
+            return "NAME: " + name + " NOTE: " + note + "\n";
         }
 
         public Category(string name, string note)
