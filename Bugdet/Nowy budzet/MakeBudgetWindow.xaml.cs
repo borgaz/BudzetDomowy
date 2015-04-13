@@ -22,7 +22,8 @@ namespace Bugdet.Nowy_budzet
         private Budget newBudget;
         public static String name;
         public static String password;
-        public static BalanceLog balance;
+        public static double balance;
+        public static int numberOfPpl ;
         
 
 
@@ -112,7 +113,21 @@ namespace Bugdet.Nowy_budzet
         }
         private Boolean CompleteBudget()
         {
-            return true;
+            Dictionary<int,Payment> p = new Dictionary<int, Payment>();
+            for (int i = 1; i <= _payments.Count; i++)
+            {
+                p.Add(i,_payments[i]);
+            }
+            for (int i = 1 + p.Count; i <= p.Count + _salaries.Count; i++)
+            {
+                p.Add(i,_salaries[i-p.Count]);
+            }
+            if (
+                SqlConnect.Instance.DumpAll(new Budget("", name, password, p, _categories,
+                    new Dictionary<int, SavingsTarget>(), new BalanceLog(balance, DateTime.Now, 0, 0), 1, DateTime.Now)))
+                return true;
+            else
+                return false;
         }
     }
 }
