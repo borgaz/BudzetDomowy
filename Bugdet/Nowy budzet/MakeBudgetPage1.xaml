@@ -37,6 +37,8 @@
         </TextBox>
         <Label Content="Hasło " HorizontalAlignment="Left" Margin="10,128,0,0" VerticalAlignment="Top"/>
         <Label Content="Powtórz hasło" HorizontalAlignment="Left" Margin="10,159,0,0" VerticalAlignment="Top"/>
-        
+        <Label Content="Ilość osób w rodzinie" HorizontalAlignment="Left" Margin="15,254,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="NumberOfPplTextBox" HorizontalAlignment="Left" Height="23" Margin="168,254,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" Text="1"/>
+
     </Grid>
 </Page>

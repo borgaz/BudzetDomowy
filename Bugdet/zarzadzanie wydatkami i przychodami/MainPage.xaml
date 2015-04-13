@@ -13,7 +13,7 @@
             <ColumnDefinition Width="311*"/>
         </Grid.ColumnDefinitions>
         <DataGrid HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top" Height="461" Width="240" Grid.Column="2"/>
-        <Frame x:Name="BtnsContentFrame" Content="" HorizontalAlignment="Left" Height="461" Margin="10,79,0,0" VerticalAlignment="Top" Width="300" NavigationUIVisibility="Hidden" Background="#FF850C0C" Grid.ColumnSpan="2"/>
+        <Frame x:Name="BtnsContentFrame" Content="" HorizontalAlignment="Left" Height="461" Margin="10,79,0,0" VerticalAlignment="Top" Width="300" NavigationUIVisibility="Hidden" Background="#FF888888" Grid.ColumnSpan="2"/>
         <Button x:Name="AddPaymentBtn" Content="Dodaj Rozchód" HorizontalAlignment="Left" Margin="38,115,0,0" VerticalAlignment="Top" Width="120" Click="addPaymentBtn_Click" Height="22" Grid.Column="1"/>
         <Button x:Name="AddSalaryBtn" Content="Dodaj Przychód" HorizontalAlignment="Left" Margin="38,79,0,0" VerticalAlignment="Top" Width="120" Click="addSalaryBtn_Click" Height="22" Grid.Column="1"/>
         <Button Content="Historia" HorizontalAlignment="Left" Margin="38,434,0,0" VerticalAlignment="Top" Width="120" Height="22" Grid.Column="1"/>

@@ -61,5 +61,15 @@ namespace Bugdet.zarzadzanie_wydatkami_i_przychodami
         {
             PeriodInfoGrid.IsEnabled = false;
         }
+
+        private void EndDateEnableCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            EndDatePicker.IsEnabled = true;
+        }
+
+        private void EndDateEnableCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            EndDatePicker.IsEnabled = false;
+        }
     }
 }

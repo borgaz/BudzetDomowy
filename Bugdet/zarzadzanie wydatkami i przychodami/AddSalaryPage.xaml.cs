@@ -13,6 +13,8 @@ namespace Bugdet.zarzadzanie_wydatkami_i_przychodami
         public AddSalaryPage()
         {
             InitializeComponent();
+            InsertCategories();
+            InsertDateTypes();
         }
         private void addSalaryBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -38,6 +40,14 @@ namespace Bugdet.zarzadzanie_wydatkami_i_przychodami
                 InfoBox.Foreground = Brushes.Red;
             }
         }
+
+        private void InsertDateTypes()
+        {
+            TypeOfDayComboBox.Items.Add("DZIEŃ");
+            TypeOfDayComboBox.Items.Add("TYDZIEŃ");
+            TypeOfDayComboBox.Items.Add("MIESIĄC");
+            TypeOfDayComboBox.Items.Add("ROK");
+        }
         private void InsertCategories()
         {
             DataSet result = SqlConnect.Instance.SelectQuery("Select id,name from Categories order by id asc");
@@ -58,6 +68,16 @@ namespace Bugdet.zarzadzanie_wydatkami_i_przychodami
         private void PeriodCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
         {
             PeriodInfoGrid.IsEnabled = false;
+        }
+
+        private void EndDateEnableCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            EndDatePicker.IsEnabled = true;
+        }
+
+        private void EndDateEnableCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            EndDatePicker.IsEnabled = false;
         }
     }
 }

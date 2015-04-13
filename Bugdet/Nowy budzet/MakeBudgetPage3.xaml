@@ -8,13 +8,13 @@
 	Title="MakeBudgetPage3">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Dodaj okresowe przychody, czyli takie które są wypłacane w dany dzień w miesiącu badź dany dzień w tygodniu, bądź co określony okres czasu" VerticalAlignment="Top" Width="452"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Dodaj okresowe wydatki, czyli takie które są opłacane w dany dzień w miesiącu badź dany dzień w tygodniu, bądź co określony okres czasu" VerticalAlignment="Top" Width="452"/>
         <TextBox x:Name="SalaryName" HorizontalAlignment="Left" Height="23" Margin="139,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" GotFocus="SalaryName_OnGotFocus"/>
-        <Label Content="Nazwa przychodu" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" Width="103"/>
-        <Label Content="Suma wynagrodzenia" HorizontalAlignment="Left" Margin="254,71,0,0" VerticalAlignment="Top"/>
+        <Label Content="Nazwa wydatku" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" Width="103"/>
+        <Label Content="Suma do zapłaty" HorizontalAlignment="Left" Margin="254,71,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="SalaryValue" HorizontalAlignment="Left" Height="23" Margin="382,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
         <TextBox x:Name="NumberOfTextBox" HorizontalAlignment="Right" Height="26" Margin="0,165,248,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="67"/>
-        <Label x:Name="DescLbl" Content="Co ile dni jest wypłata" HorizontalAlignment="Left" Margin="13,165,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="DescLbl" Content="Co jaki czas jest opłata" HorizontalAlignment="Left" Margin="13,165,0,0" VerticalAlignment="Top"/>
         <Button x:Name="AddSalaryBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="38,361,0,0" VerticalAlignment="Top" Width="75" Click="addSalaryBtn_Click"/>
         <Button x:Name="AddedSalariesBtn" Content="Juz dodane" HorizontalAlignment="Left" Margin="241,361,0,0" VerticalAlignment="Top" Width="75" Click="addedSalariesBtn_Click"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="254,289,0,0" VerticalAlignment="Top" Width="100">

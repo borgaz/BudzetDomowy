@@ -14,7 +14,7 @@
         <Label Content="Suma wynagrodzenia" HorizontalAlignment="Left" Margin="254,71,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="SalaryValue" HorizontalAlignment="Left" Height="23" Margin="382,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80"/>
         <TextBox x:Name="NumberOfTextBox" HorizontalAlignment="Right" Height="26" Margin="0,165,248,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="67"/>
-        <Label x:Name="DescLbl" Content="Co ile dni jest wypłata" HorizontalAlignment="Left" Margin="13,165,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="DescLbl" Content="Co jaki czas jest wypłata" HorizontalAlignment="Left" Margin="13,165,0,0" VerticalAlignment="Top"/>
         <Button x:Name="AddSalaryBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="38,361,0,0" VerticalAlignment="Top" Width="75" Click="addSalaryBtn_Click"/>
         <Button x:Name="AddedSalariesBtn" Content="Juz dodane" HorizontalAlignment="Left" Margin="241,361,0,0" VerticalAlignment="Top" Width="75" Click="addedSalariesBtn_Click"/>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="254,289,0,0" VerticalAlignment="Top" Width="100">

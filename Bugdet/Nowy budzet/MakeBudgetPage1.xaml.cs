@@ -19,11 +19,12 @@ namespace Bugdet.Nowy_budzet
         /// </summary>
         public Boolean CheckInfo()
         {
-            if(budgetBalance.Text != "" && budgetNameText.Text != "" && (passTextBox.Password.Equals(passRepeatTextBox.Password)) && passTextBox.Password != "")
+            if(budgetBalance.Text != "" && budgetNameText.Text != "" && (passTextBox.Password.Equals(passRepeatTextBox.Password)) && passTextBox.Password != "" && NumberOfPplTextBox.Text != "")
             {
                 MakeBudgetWindow.name = budgetNameText.Text;
-               // MakeBudgetWindow.balance = double.Parse(budgetBalance.Text);
+                MakeBudgetWindow.balance = double.Parse(budgetBalance.Text);
                 MakeBudgetWindow.password = SqlConnect.Instance.HashPasswordMd5((passTextBox.Password));
+                MakeBudgetWindow.numberOfPpl = int.Parse(NumberOfPplTextBox.Text);
                 return true;
             }
             else

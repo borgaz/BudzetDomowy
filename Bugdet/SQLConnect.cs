@@ -364,6 +364,72 @@ namespace Bugdet
             return temp;
 
         }
+
+        public Boolean DumpAll(Budget budget)
+        {
+            try
+            {
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                // budzet
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                ExecuteSqlNonQuery("INSERT INTO( name,balance,note,creationdate,numberofpeople,password) values('" +
+                                   budget.Name + "'," + budget.Balance.Balance + ",'note','" + DateTime.Now.ToString() +
+                                   "'," + budget.NumberOfPeople + ",'" + budget.Password + "')");
+
+
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                // Lista kategorii
+                /////////////////////////////////////////////////////////////////////////////////////////////
+
+                for (int i = 0; i < budget.Categories.Count; i++)
+                {
+                    ExecuteSqlNonQuery("INSERT INTO Categories(name,note) values('" + budget.Categories[i + 1].Name +
+                                       "','" + budget.Categories[i + 1].Note + "')");
+                }
+            
+
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                // Aktualny stan konta
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                ExecuteSqlNonQuery("INSERT INTO BalanceLogs(balance,date,singlePaymentId,periodPaymentId) values(" +
+                                   budget.Balance.Balance + ",' " + budget.Balance.Date + "'," +
+                                   budget.Balance.SinglePaymentID + "," + budget.Balance.PeriodPaymentID + ")");
+
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                // Lista płatności
+                /////////////////////////////////////////////////////////////////////////////////////////////
+
+                for (int i = 0; i < budget.Payments.Count; i++)
+                {
+                    PeriodPayment p = (PeriodPayment) (budget.Payments[i + 1]);
+                    ExecuteSqlNonQuery(
+                        "INSERT INTO PeriodPayments(categoryId,amount,note,type,name,frequency,period,lastUpdate,startDate,endDate) values(" +
+                        p.CategoryID + ", " + p.Amount + ",'" + p.Note + "',1,'" + p.LastUpdate + "','" + p.StartDate +
+                        "','" + p.EndDate + "')");
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                // Cele oszczędzania
+                /////////////////////////////////////////////////////////////////////////////////////////////
+
+                for (int i = 0; i < budget.SavingsTargets.Count; i++)
+                {
+                    ExecuteSqlNonQuery(
+                        "INSERT INTO(target,note,deadline,priority,moneyHoldings,addedDate,neededAmount) values('" +
+                        budget.SavingsTargets[i + 1].Target + "','" + budget.SavingsTargets[i + 1].Note + "','" +
+                        budget.SavingsTargets[i + 1].Deadline + "','" + budget.SavingsTargets[i + 1].Priority + "'," +
+                        budget.SavingsTargets[i + 1].MoneyHoldings + ",'" + budget.SavingsTargets[i + 1].AddedDate +
+                        "'," + budget.SavingsTargets[i+1].NeededAmount +")");
+                }
+
+                return true;
+            }
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show("Błąd");
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+        }
         public Dictionary<int, Category> AddDefaultCategories()
         {
             var defaultCategories = new Dictionary<int, Category>();
@@ -380,7 +446,7 @@ namespace Bugdet
             }
             catch(Exception ex)
             {
-                MessageBox.Show("Błąd sraki");
+                MessageBox.Show("Błąd");
                 Console.WriteLine(ex.GetBaseException() + "\n addDefaultCategories()");
                 return null;
             }
