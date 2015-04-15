@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Bugdet.Nowy_budzet;
+using Budget.Nowy_budzet;
 
-namespace Bugdet.zarzadzanie_wydatkami_i_przychodami
+namespace Budget.zarzadzanie_wydatkami_i_przychodami
 {
     /// <summary>
     /// Interaction logic for MainPage.xaml

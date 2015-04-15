@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Bugdet.Nowy_budzet
+namespace Budget.Nowy_budzet
 {
     /// <summary>
     /// Interaction logic for AddCategoryWindow.xaml
     /// </summary>
     public partial class AddCategoryWindow : Window
     {
-        private Dictionary<int, Category> _categories; 
+        private Dictionary<int, Category> _categories;
         public AddCategoryWindow(Dictionary<int,Category> c)
         {
             InitializeComponent();
@@ -28,10 +28,18 @@ namespace Bugdet.Nowy_budzet
 
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (CategoryNameTextBox.Text != "")
+            if (CategoryNameTextBox.Text != "" && categoryTypes.SelectedIndex != -1)
             {
+                bool category = false;
+
+                if (categoryTypes.SelectedIndex == 1)
+                    category = true;
                 _categories.Add(_categories.Last().Key + 1,
-                    new Category(CategoryNameTextBox.Text, CategoryNoteTextBox.Text));
+                    new Category(CategoryNameTextBox.Text, CategoryNoteTextBox.Text, category));
+            }
+            else
+            {
+                MessageBox.Show("Uzupełnij wymagane pola!");
             }
             this.Close();
         }

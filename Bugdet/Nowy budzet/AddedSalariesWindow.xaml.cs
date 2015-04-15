@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 
-namespace Bugdet.Nowy_budzet
+namespace Budget.Nowy_budzet
 {
     /// <summary>
     /// Interaction logic for AddedSalariesWindow.xaml

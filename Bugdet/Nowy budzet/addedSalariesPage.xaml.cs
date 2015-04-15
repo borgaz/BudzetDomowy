@@ -5,7 +5,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Bugdet.Nowy_budzet
+namespace Budget.Nowy_budzet
 {
     /// <summary>
     /// Interaction logic for addedSalariesPage.xaml

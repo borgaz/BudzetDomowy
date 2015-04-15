@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Bugdet.zarzadzanie_wydatkami_i_przychodami
+namespace Budget.zarzadzanie_wydatkami_i_przychodami
 {
     /// <summary>
     /// Interaction logic for addPaymentPage.xaml

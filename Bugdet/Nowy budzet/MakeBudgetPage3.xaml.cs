@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Bugdet.Nowy_budzet
+namespace Budget.Nowy_budzet
 {
     /// <summary>
     /// Interaction logic for MakeBudgetPage3.xaml
@@ -68,7 +68,8 @@ namespace Bugdet.Nowy_budzet
             {
                 for (int i = 0; i < _categories.Count; i++)
                 {
-                    CategoryComboBox.Items.Add(_categories[i + 1].Name);
+                    if (_categories[i + 1].Type == false)
+                        CategoryComboBox.Items.Add(_categories[i + 1].Name);
                 }
             }
             catch (Exception)

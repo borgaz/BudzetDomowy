@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bugdet.Nowy_budzet
+namespace Budget.Nowy_budzet
 {
     public class SalaryInfo
     {

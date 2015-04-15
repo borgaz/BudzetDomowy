@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Bugdet
+namespace Budget
 {
     /// <summary>
     /// Interaction logic for App.xaml

@@ -8,7 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 
-namespace Bugdet
+namespace Budget
 {
     public sealed class SqlConnect
     {
@@ -86,7 +86,8 @@ namespace Bugdet
 
                 ExecuteSqlNonQuery("CREATE TABLE Categories (id INTEGER PRIMARY KEY," +
                                                             "name varchar(50) not null," +
-                                                            "note varchar(200))");
+                                                            "note varchar(200)," +
+                                                            "type boolean)");
 
                 ExecuteSqlNonQuery("CREATE TABLE SavingsTargets (id INTEGER PRIMARY KEY," +
                                                                       "target varchar(50)," +
@@ -94,7 +95,7 @@ namespace Bugdet
                                                                       "deadLine date," +
                                                                       "moneyHoldings double," +
                                                                       "neededAmount double," +
-                                                                      "priority varchar(50)," +
+                                                                      "priority integer," +
                                                                       "addedDate date)");
 
                 //SetDefaultCategories();
@@ -230,13 +231,16 @@ namespace Bugdet
             var defaultCategories = new Dictionary<int, Category>();
             try
             {
-                defaultCategories.Add(1, new Category("Paliwo","Benzyna do samochodu"));
-                defaultCategories.Add(2, new Category("Jedzenie", "Zakupy okresowe"));
-                defaultCategories.Add(3, new Category("Prąd", "Rachunki za energie"));
-                defaultCategories.Add(4, new Category("Woda", "Rachunki za wodę"));
-                defaultCategories.Add(5, new Category("Gaz", "Rachunki za gaz"));
-                defaultCategories.Add(6, new Category("Internet", "Rachunki za internet"));
-                defaultCategories.Add(7, new Category("Praca", "wypłata"));
+                defaultCategories.Add(1, new Category("Paliwo","Benzyna do samochodu", false));
+                defaultCategories.Add(2, new Category("Jedzenie", "Zakupy okresowe", false));
+                defaultCategories.Add(3, new Category("Prąd", "Rachunki za energie", false));
+                defaultCategories.Add(4, new Category("Woda", "Rachunki za wodę", false));
+                defaultCategories.Add(5, new Category("Gaz", "Rachunki za gaz", false));
+                defaultCategories.Add(6, new Category("Internet", "Rachunki za internet", false));
+                defaultCategories.Add(7, new Category("Praca", "Wypłata", true));
+                defaultCategories.Add(8, new Category("Emerytura", "Emerytura", true));
+                defaultCategories.Add(9, new Category("Renta", "Renta", true));
+                defaultCategories.Add(10, new Category("Stypednium", "Stypendium, np. socjalne lub naukowe", true));
                 return defaultCategories;
             }
             catch(Exception ex)

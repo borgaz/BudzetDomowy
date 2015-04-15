@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace Bugdet.Nowy_budzet
+namespace Budget.Nowy_budzet
 {
     /// <summary>
     /// Interaction logic for MakeBudzetWindow.xaml

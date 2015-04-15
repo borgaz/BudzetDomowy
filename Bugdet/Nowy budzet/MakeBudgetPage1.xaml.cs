@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Bugdet.Nowy_budzet
+namespace Budget.Nowy_budzet
 {
     /// <summary>
     /// Interaction logic for MakeBudzetPage1.xaml
@@ -13,13 +13,48 @@ namespace Bugdet.Nowy_budzet
         private String name, password;
         private double balance;
         private int numberOfPeople;
+        private LinearGradientBrush red = new LinearGradientBrush();
+        private LinearGradientBrush white = new LinearGradientBrush();
+        private LinearGradientBrush green = new LinearGradientBrush();
         public MakeBudgetPage1(String name,String password,double balance,int numberOfPeople)
         {
             InitializeComponent();
+            InsertColors();
             this.name = name;
             this.password = password;
             this.balance = balance;
             this.numberOfPeople = numberOfPeople;
+        }
+
+        private void InsertColors()
+        {
+            red.GradientStops.Insert(0, new GradientStop(Color.FromArgb(255, 236, 23, 23), 0));
+            red.GradientStops.Insert(1, new GradientStop(Color.FromArgb(255, 255, 255, 255), 1));
+            red.StartPoint = new Point(0.5,0);
+            red.EndPoint = new Point(0.5, 1);
+            white.GradientStops.Insert(0, new GradientStop(Color.FromArgb(255, 255, 255, 255), 0));
+            green.GradientStops.Insert(0, new GradientStop(Color.FromArgb(255, 6, 119, 58), 0));
+            green.GradientStops.Insert(1, new GradientStop(Color.FromArgb(255, 255, 255, 255), 1));
+            green.StartPoint = new Point(0.5, 0);
+            green.EndPoint = new Point(0.5, 1);
+        }
+        private void CheckWindow() // Proba kolorowania pustych okienek 
+        {
+            try
+            {
+                foreach (TextBox box in Page1Grid.Children)
+                {
+                    if (box.Text == "")
+                        box.Background = Brushes.Red;
+                    else
+                        box.Background = white;
+                }
+            }
+            catch (Exception)
+            {
+                // tymczasowy ducktape
+            }
+
         }
         /// <summary>
         /// - sprawdza czy wypelnione pola oraz wrzuca na stos informacje
@@ -37,60 +72,28 @@ namespace Bugdet.Nowy_budzet
             else
             {
                 MessageBox.Show("uzupelnij wszystkie pola!");
+              //  CheckWindow();
                 return false;
             }
         }
-        public Boolean BackToThisPage()
+        public Boolean BackToThisPage() //do usuniecia przy refaktoryzacji
         {
             return true;
         }
 
         private void BudgetNameText_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if(budgetNameText.Text == "")
-            {
-                NameBoxGradientBrush.GradientStops.Clear();
-                NameBoxGradientBrush.GradientStops.Insert(0, new GradientStop(Color.FromArgb(255, 236, 23, 23), 0));
-                NameBoxGradientBrush.GradientStops.Insert(1, new GradientStop(Color.FromArgb(255, 255, 255, 255), 1));
-            }
-            else
-            {
-                NameBoxGradientBrush.GradientStops.Clear();
-                NameBoxGradientBrush.GradientStops.Insert(0, new GradientStop(Color.FromArgb(255, 6, 119, 58), 0));
-                NameBoxGradientBrush.GradientStops.Insert(1, new GradientStop(Color.FromArgb(255, 255, 255, 255), 1));                
-            }
+            budgetNameText.Background = budgetNameText.Text == "" ? red : green;
         }
 
         private void BudgetBalance_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (budgetBalance.Text == "")
-            {
-                BalanceBoxGradientBrush.GradientStops.Clear();
-                BalanceBoxGradientBrush.GradientStops.Insert(0, new GradientStop(Color.FromArgb(255, 236, 23, 23), 0));
-                BalanceBoxGradientBrush.GradientStops.Insert(1, new GradientStop(Color.FromArgb(255, 255, 255, 255), 1));
-            }
-            else
-            {
-                BalanceBoxGradientBrush.GradientStops.Clear();
-                BalanceBoxGradientBrush.GradientStops.Insert(0, new GradientStop(Color.FromArgb(255, 6, 119, 58), 0));
-                BalanceBoxGradientBrush.GradientStops.Insert(1, new GradientStop(Color.FromArgb(255, 255, 255, 255), 1));
-            }
+            budgetBalance.Background = budgetBalance.Text == "" ? red : green;
         }
 
         private void PassRepeatTextBox_OnGotFocus(object sender, RoutedEventArgs e)
         {
-            if (passTextBox.Password.Equals(passRepeatTextBox.Password))
-            {
-                PassRepeatGradientBrush.GradientStops.Clear();
-                PassRepeatGradientBrush.GradientStops.Insert(0, new GradientStop(Color.FromArgb(255, 6, 119, 58), 0));
-                PassRepeatGradientBrush.GradientStops.Insert(1, new GradientStop(Color.FromArgb(255, 255, 255, 255), 1));
-            }
-            else
-            {
-                PassRepeatGradientBrush.GradientStops.Clear();
-                PassRepeatGradientBrush.GradientStops.Insert(0, new GradientStop(Color.FromArgb(255, 236, 23, 23), 0));
-                PassRepeatGradientBrush.GradientStops.Insert(1, new GradientStop(Color.FromArgb(255, 255, 255, 255), 1)); 
-            }
+            passRepeatTextBox.Background = passTextBox.Password.Equals(passRepeatTextBox.Password) ? green : red;
         }
     }
 }
