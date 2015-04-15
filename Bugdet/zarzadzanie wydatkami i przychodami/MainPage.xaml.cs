@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Collections.Generic;
 using System.Windows.Controls;
 using Budget.Nowy_budzet;
 
@@ -29,6 +30,11 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             new MakeBudgetWindow(1).ShowDialog();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            dataGridView.ItemsSource = Budget.Instance.Payments.Values;
         }
     }
 }

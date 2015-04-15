@@ -3,22 +3,27 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d" d:DesignWidth="741.418"
-	Title="MainPage" Height="500.746">
+      mc:Ignorable="d" d:DesignWidth="750"
+	Title="MainPage" Height="500">
 
-    <Grid Background="White" HorizontalAlignment="Left" Width="743" Margin="0,-43,-2,-39">
+    <Grid Background="White" Margin="0,-40,0,-40" HorizontalAlignment="Left" Width="740">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="306*"/>
-            <ColumnDefinition Width="181*"/>
-            <ColumnDefinition Width="311*"/>
+            <ColumnDefinition Width="320*"/>
+            <ColumnDefinition Width="140*"/>
+            <ColumnDefinition Width="290*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top" Height="461" Width="240" Grid.Column="2"/>
-        <Frame x:Name="BtnsContentFrame" Content="" HorizontalAlignment="Left" Height="461" Margin="10,79,0,0" VerticalAlignment="Top" Width="300" NavigationUIVisibility="Hidden" Background="#FF888888" Grid.ColumnSpan="2"/>
-        <Button x:Name="AddPaymentBtn" Content="Dodaj Rozchód" HorizontalAlignment="Left" Margin="38,115,0,0" VerticalAlignment="Top" Width="120" Click="addPaymentBtn_Click" Height="22" Grid.Column="1"/>
-        <Button x:Name="AddSalaryBtn" Content="Dodaj Przychód" HorizontalAlignment="Left" Margin="38,79,0,0" VerticalAlignment="Top" Width="120" Click="addSalaryBtn_Click" Height="22" Grid.Column="1"/>
-        <Button Content="Historia" HorizontalAlignment="Left" Margin="38,434,0,0" VerticalAlignment="Top" Width="120" Height="22" Grid.Column="1"/>
-        <Button Content="Zapisz " HorizontalAlignment="Left" Margin="38,501,0,0" VerticalAlignment="Top" Width="120" Height="39" Grid.Column="1"/>
-        <Button Content="Nowy budżet" HorizontalAlignment="Left" Margin="38,19,0,0" VerticalAlignment="Top" Width="120" Click="Button_Click" Height="37" Grid.Column="1"/>
-
+        <DataGrid Margin="25,25,25,50" Grid.Column="2" Name="dataGridView" ItemsSource="{Binding}" AutoGenerateColumns="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nazwa" Width="80"  CanUserSort="False" IsReadOnly="True" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Kwota" Width="80" IsReadOnly="True" Binding="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Kategoria" Width="80" IsReadOnly="True" Binding="{Binding CategoryID, UpdateSourceTrigger=PropertyChanged}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Frame x:Name="BtnsContentFrame" Content="" Margin="10,60,10,60" NavigationUIVisibility="Hidden" Background="#FF888888"/>
+        <Button x:Name="AddPaymentBtn" Content="Dodaj Rozchód" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="120" Click="addPaymentBtn_Click" Height="20" Grid.Column="1"/>
+        <Button x:Name="AddSalaryBtn" Content="Dodaj Przychód" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Width="120" Click="addSalaryBtn_Click" Height="20" Grid.Column="1"/>
+        <Button Content="Historia" Margin="80,535,80,20" Width="120" Grid.Column="2" Click="Button_Click_1" />
+        <Button Content="Zapisz" HorizontalAlignment="Left" Margin="10,500,0,40" Width="120" Height="40" Grid.Column="1" />
+        <Button Content="Nowy budżet" Margin="10,20,10,0" VerticalAlignment="Top" Click="Button_Click" Height="40" Grid.Column="1"/>
     </Grid>
 </Page>
