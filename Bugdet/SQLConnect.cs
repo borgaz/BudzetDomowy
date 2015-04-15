@@ -53,7 +53,6 @@ namespace Bugdet
             try
             {
                 ExecuteSqlNonQuery("CREATE TABLE Budget (name varchar(50)," + 
-                                                        "balance double," +
                                                         "note varchar (200)," +
                                                         "password varchar (20)," +
                                                         "creation date," +
@@ -372,8 +371,8 @@ namespace Bugdet
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // budzet
                 /////////////////////////////////////////////////////////////////////////////////////////////
-                ExecuteSqlNonQuery("INSERT INTO( name,balance,note,creationdate,numberofpeople,password) values('" +
-                                   budget.Name + "'," + budget.Balance.Balance + ",'note','" + DateTime.Now.ToString() +
+                ExecuteSqlNonQuery("INSERT INTO( name,note,creationdate,numberofpeople,password) values('" +
+                                   budget.Name + "'," + budget.Note + budget.CreationDate +
                                    "'," + budget.NumberOfPeople + ",'" + budget.Password + "')");
 
 
@@ -407,6 +406,7 @@ namespace Bugdet
                         p.CategoryID + ", " + p.Amount + ",'" + p.Note + "',1,'" + p.LastUpdate + "','" + p.StartDate +
                         "','" + p.EndDate + "')");
                 }
+
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // Cele oszczędzania
                 /////////////////////////////////////////////////////////////////////////////////////////////

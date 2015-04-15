@@ -39,6 +39,14 @@ namespace Bugdet
             this.creationDate = creationDate;
         }
 
+        public DateTime CreationDate
+        {
+            get
+            {
+                return this.creationDate;
+            }
+        }
+
         public String Note
         {
             get
