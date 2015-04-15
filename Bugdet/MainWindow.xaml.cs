@@ -15,7 +15,7 @@ namespace Bugdet
         {
             InitializeComponent();
             SqlConnect.Instance.Connect();
-            //SqlConnect.Instance.FetchAll();
+            
             InsertPage();
         }
 

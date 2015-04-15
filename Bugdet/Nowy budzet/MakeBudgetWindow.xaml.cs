@@ -123,8 +123,9 @@ namespace Bugdet.Nowy_budzet
                 p.Add(i,_salaries[i-p.Count]);
             }
             if (
-                SqlConnect.Instance.DumpAll(new Budget("", name, password, p, _categories,
-                    new Dictionary<int, SavingsTarget>(), new BalanceLog(balance, DateTime.Now, 0, 0), 1, DateTime.Now)))
+                //SqlConnect.Instance.DumpAll(new Budget("", name, password, p, _categories,
+                   // new Dictionary<int, SavingsTarget>(), new BalanceLog(balance, DateTime.Now, 0, 0), 1, DateTime.Now)))
+                Budget.Instance.DumpAll())
                 return true;
             else
                 return false;
