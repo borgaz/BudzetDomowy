@@ -12,26 +12,17 @@ namespace Bugdet.Nowy_budzet
     /// </summary>
     public partial class MakeBudgetPage3 : Page
     {
-        public static Dictionary<int,PeriodPayment> _periodPayments = new Dictionary<int, PeriodPayment>(); 
+        private Dictionary<int, PeriodPayment> _periodPayments;
+        private Dictionary<int, Category> _categories;
       //  private int _salaries;
-        public MakeBudgetPage3()
+        public MakeBudgetPage3(Dictionary<int,PeriodPayment> d,Dictionary<int,Category> c)
         {
             InitializeComponent();
+            _periodPayments = d;
+            _categories = c;
             InsertDateTypes();
             InsertCategories();
         }
-
-        //private void type1Radio_Checked(object sender, RoutedEventArgs e)
-        //{
-        //    if(DescLbl != null)
-        //        DescLbl.Content = "Co ile dni jest wypłata";
-        //}
-
-        //private void type2Radio_Checked(object sender, RoutedEventArgs e)
-        //{
-        //    if (DescLbl != null)
-        //        DescLbl.Content = "W konkretny dzień";
-        //}
         private void InsertDateTypes()
         {
             DateTypeBox.Items.Add("DZIEŃ");
@@ -67,7 +58,7 @@ namespace Bugdet.Nowy_budzet
 
         private void addedSalariesBtn_Click(object sender, RoutedEventArgs e)
         {
-            new AddedSalariesWindow(2).ShowDialog();
+            new AddedSalariesWindow(2,_periodPayments,_categories).ShowDialog();
         }
 
         public void InsertCategories()
@@ -75,67 +66,30 @@ namespace Bugdet.Nowy_budzet
             CategoryComboBox.Items.Clear();
             try
             {
-                for (int i = 0; i < MakeBudgetWindow._categories.Count; i++)
+                for (int i = 0; i < _categories.Count; i++)
                 {
-                    CategoryComboBox.Items.Add(MakeBudgetWindow._categories[i + 1].Name);
+                    CategoryComboBox.Items.Add(_categories[i + 1].Name);
                 }
             }
             catch (Exception)
             {
-                MessageBox.Show(MakeBudgetWindow._categories.Count + "");
-                Console.WriteLine(MakeBudgetWindow._categories.ToArray());
+                MessageBox.Show(_categories.Count + "");
+                Console.WriteLine(_categories.ToArray());
             }
         }
 
         public Boolean CheckInfo()
         {
-        //    try
-        //    {
-        //        for (int i = 0; i < _salaries; i++)
-        //        {
-        //        //    MakeBudgetWindow.Budgetstack.Push(BudgetList.ElementAt(i).Name); // String
-        //        //    MakeBudgetWindow.Budgetstack.Push(BudgetList.ElementAt(i).Value); // String
-        //        //    MakeBudgetWindow.Budgetstack.Push(BudgetList.ElementAt(i).Repeat); // String
-        //        //    MakeBudgetWindow.Budgetstack.Push(BudgetList.ElementAt(i).Type); // int
-        //        }
-        //        if (_salaries != 0)
-        //            MakeBudgetWindow.Budgetstack.Push(-1); // identyfikator periodSalary
-        //        MakeBudgetWindow.Budgetstack.Push(_salaries);
-        //        return true;
-        //    }
-        //    catch(InsufficientExecutionStackException)
-        //    {
-        //        return false;
-        //    }
-            MakeBudgetWindow._payments = _periodPayments;
             return true;
         }
         public Boolean BackToThisPage()
         {
-        //    try
-        //    {
-        //        int _salaries = (int)MakeBudgetWindow.Budgetstack.Pop(); // ile pakietow
-        //        if (_salaries != 0)
-        //            MakeBudgetWindow.Budgetstack.Pop(); // identyfikator periodsalary
-        //        for (int i = 0; i < _salaries; i++)
-        //        {
-        //            MakeBudgetWindow.Budgetstack.Pop();
-        //            MakeBudgetWindow.Budgetstack.Pop();
-        //            MakeBudgetWindow.Budgetstack.Pop();
-        //            MakeBudgetWindow.Budgetstack.Pop();
-        //        }
-        //        return true;
-        //    }
-        //    catch(InsufficientExecutionStackException)
-        //    {
-        //        return false;
-        //    }
             return true;
         }
 
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
-            new AddCategoryWindow().ShowDialog();
+            new AddCategoryWindow(_categories).ShowDialog();
             InsertCategories();
         }
 

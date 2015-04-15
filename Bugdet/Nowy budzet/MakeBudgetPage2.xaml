@@ -25,9 +25,9 @@
         <ComboBox x:Name="CategoryComboBox" HorizontalAlignment="Left" Margin="119,103,0,0" VerticalAlignment="Top" Width="97"/>
         <DatePicker x:Name="StartDatePicker" HorizontalAlignment="Left" Margin="119,255,0,0" VerticalAlignment="Top" Height="25" Width="126"/>
         <Label Content="Od Kiedy" HorizontalAlignment="Left" Margin="13,254,0,0" VerticalAlignment="Top"/>
-        <DatePicker x:Name="EndDatePicker" HorizontalAlignment="Left" Margin="119,298,0,0" VerticalAlignment="Top" Height="25" Width="126"/>
+        <DatePicker x:Name="EndDatePicker" HorizontalAlignment="Left" Margin="119,298,0,0" VerticalAlignment="Top" Height="25" Width="126" IsEnabled="False"/>
         <CheckBox x:Name="EndDateCheckBox" Content="Do Kiedy" HorizontalAlignment="Left" Margin="19,302,0,0" VerticalAlignment="Top"
-                  Checked="EndDateCheckBox_OnChecked" Unchecked="EndDateCheckBox_OnUnchecked" IsEnabled="False"/>
+                  Checked="EndDateCheckBox_OnChecked" Unchecked="EndDateCheckBox_OnUnchecked"/>
         <Label Content="Dodatkowa notatka" HorizontalAlignment="Left" Margin="280,59,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="NoteTextBox" HorizontalAlignment="Left" Height="238" Margin="280,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170"/>
         <ComboBox x:Name="DateTypeBox" HorizontalAlignment="Left" Margin="119,184,0,0" VerticalAlignment="Top" Width="126" Height="23"/>

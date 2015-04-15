@@ -19,16 +19,18 @@ namespace Bugdet.Nowy_budzet
     /// </summary>
     public partial class AddCategoryWindow : Window
     {
-        public AddCategoryWindow()
+        private Dictionary<int, Category> _categories; 
+        public AddCategoryWindow(Dictionary<int,Category> c)
         {
             InitializeComponent();
+            _categories = c;
         }
 
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
             if (CategoryNameTextBox.Text != "")
             {
-                MakeBudgetWindow._categories.Add(MakeBudgetWindow._categories.Last().Key+1,
+                _categories.Add(_categories.Last().Key + 1,
                     new Category(CategoryNameTextBox.Text, CategoryNoteTextBox.Text));
             }
             this.Close();

@@ -10,9 +10,16 @@ namespace Bugdet.Nowy_budzet
     /// </summary>
     public partial class MakeBudgetPage1 : Page
     {
-        public MakeBudgetPage1()
+        private String name, password;
+        private double balance;
+        private int numberOfPeople;
+        public MakeBudgetPage1(String name,String password,double balance,int numberOfPeople)
         {
             InitializeComponent();
+            this.name = name;
+            this.password = password;
+            this.balance = balance;
+            this.numberOfPeople = numberOfPeople;
         }
         /// <summary>
         /// - sprawdza czy wypelnione pola oraz wrzuca na stos informacje
@@ -21,10 +28,10 @@ namespace Bugdet.Nowy_budzet
         {
             if(budgetBalance.Text != "" && budgetNameText.Text != "" && (passTextBox.Password.Equals(passRepeatTextBox.Password)) && passTextBox.Password != "" && NumberOfPplTextBox.Text != "")
             {
-                MakeBudgetWindow.name = budgetNameText.Text;
-                MakeBudgetWindow.balance = double.Parse(budgetBalance.Text);
-                MakeBudgetWindow.password = SqlConnect.Instance.HashPasswordMd5((passTextBox.Password));
-                MakeBudgetWindow.numberOfPpl = int.Parse(NumberOfPplTextBox.Text);
+                name = budgetNameText.Text;
+                balance = double.Parse(budgetBalance.Text);
+                password = SqlConnect.Instance.HashPasswordMd5((passTextBox.Password));
+                numberOfPeople = int.Parse(NumberOfPplTextBox.Text);
                 return true;
             }
             else

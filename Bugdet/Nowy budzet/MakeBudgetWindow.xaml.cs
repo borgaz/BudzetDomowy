@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Windows;
+using System.Windows.Media.Animation;
 
 namespace Bugdet.Nowy_budzet
 {
@@ -12,20 +13,23 @@ namespace Bugdet.Nowy_budzet
     public partial class MakeBudgetWindow : Window
     {
         private static MakeBudgetWindow _instance = null; // jako ze Frame nie jest statyczny, trzeba bylo jakos z Page'ow wywolywac zmiane
-        MakeBudgetPage1 _page1 = new MakeBudgetPage1(); // strona pierwsza
-        MakeBudgetPage2 _page2 = new MakeBudgetPage2(); // strona druga
-        MakeBudgetPage3 _page3 = new MakeBudgetPage3(); // strona trzecia
-        public static Dictionary<int, Category> _categories = SqlConnect.Instance.AddDefaultCategories();
-        public static Dictionary<int,PeriodPayment> _payments = new Dictionary<int, PeriodPayment>();
-        public static Dictionary<int, PeriodPayment> _salaries = new Dictionary<int, PeriodPayment>(); 
+        private static Dictionary<int, Category> _categories = SqlConnect.Instance.AddDefaultCategories();
+        private static Dictionary<int, PeriodPayment> _payments = new Dictionary<int, PeriodPayment>();
+        private static Dictionary<int, PeriodPayment> _salaries = new Dictionary<int, PeriodPayment>(); 
         private int _actual = 1;
-        private Budget newBudget;
-        public static String name;
-        public static String password;
-        public static double balance;
-        public static int numberOfPpl ;
-        
+        private static String name;
+        private static String password;
+        private static double balance;
+        private static int numberOfPeople;
+        private MakeBudgetPage1 _page1;
+        private MakeBudgetPage2 _page2;
+        private MakeBudgetPage3 _page3;
 
+
+        public static MakeBudgetWindow Instance
+        {
+            get { return _instance ?? (_instance = new MakeBudgetWindow(1)); }
+        }
 
         public MakeBudgetWindow(int page)
         {
@@ -47,18 +51,22 @@ namespace Bugdet.Nowy_budzet
                 case 1:
                     if (back == 1)
                         _page1.BackToThisPage();
+                    _page1 = new MakeBudgetPage1(name, password, balance, numberOfPeople); // strona pierwsza
                     PageFrame.Content = _page1;
                     ExitBtn.Content = "Wyjdz";
                     break;
                 case 2:
                     if (back == 1)
                         _page2.BackToThisPage();
+                    _page2 = new MakeBudgetPage2(_salaries, _categories); // strona druga
                     PageFrame.Content = _page2;
                     ExitBtn.Content = "Wroc";
+                    ForwardBtn.Content = "Dalej";
                     break;
                 case 3:
                     if (back == 1)
                         _page3.BackToThisPage();
+                    _page3 = new MakeBudgetPage3(_payments, _categories); // strona trzecia
                     PageFrame.Content = _page3;
                     ForwardBtn.Content = "Zakończ";
                     break;
@@ -107,7 +115,6 @@ namespace Bugdet.Nowy_budzet
         {
             if(CheckPage(_actual))
             {
-                Console.WriteLine("nowy--------------------");
                 ManagePages(++_actual,0);
             }
         }
@@ -118,14 +125,11 @@ namespace Bugdet.Nowy_budzet
             {
                 p.Add(i,_payments[i]);
             }
-            for (int i = 1 + p.Count; i <= p.Count + _salaries.Count; i++)
+            for (int i = 1 +_payments.Count; i <= _payments.Count + _salaries.Count; i++)
             {
                 p.Add(i,_salaries[i-p.Count]);
             }
-            if (
-                //SqlConnect.Instance.DumpAll(new Budget("", name, password, p, _categories,
-                   // new Dictionary<int, SavingsTarget>(), new BalanceLog(balance, DateTime.Now, 0, 0), 1, DateTime.Now)))
-                Budget.Instance.DumpAll())
+            if (Budget.Instance.DumpAll())
                 return true;
             else
                 return false;
