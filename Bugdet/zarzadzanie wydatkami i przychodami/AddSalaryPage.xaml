@@ -4,32 +4,31 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="461" d:DesignWidth="300"
+      d:DesignHeight="450" d:DesignWidth="300"
 	Title="AddSalaryPage">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Dodaj przychód jednorazowy, przychód ten zawsze będzie można usunąć lub zmienić w zakładce zarządzania." VerticalAlignment="Top"/>
-        <TextBox x:Name="PaymentName" HorizontalAlignment="Left" Height="23" Margin="138,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="119"/>
-        <Label Content="Nazwa przychodu" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="103"/>
-        <Label Content="Suma wynagrodzenia" HorizontalAlignment="Left" Margin="10,87,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="PaymentValue" HorizontalAlignment="Left" Height="23" Margin="138,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.95,0.478"/>
-        <ComboBox x:Name="CategoryBox" HorizontalAlignment="Left" Margin="129,131,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Kategoria" HorizontalAlignment="Left" Margin="10,127,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="AddCategoryBtn" Content="+" HorizontalAlignment="Left" Margin="254,131,0,0" VerticalAlignment="Top" Width="28" ToolTip="Dodaj kategorie"/>
-        <Label Content="Dodatkowa notatka" HorizontalAlignment="Left" Margin="10,341,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Note" HorizontalAlignment="Left" Height="38" Margin="11,372,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="271"/>
-        <Button x:Name="AddSalaryBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="10,429,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.2,-0.091" Click="addSalaryBtn_Click"/>
-        <TextBox x:Name="InfoBox" HorizontalAlignment="Left" Height="23" Margin="89,428,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" IsEnabled="False"/>
-        <Grid x:Name="PeriodInfoGrid" HorizontalAlignment="Left" Height="125" Margin="11,211,0,0" VerticalAlignment="Top" Width="271" IsEnabled="False">
-            <TextBox x:Name="NumberOfTexBox" HorizontalAlignment="Left" Height="23" Margin="131,4,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="44"/>
-            <Label x:Name="InfoLbl" Content="Co jaki czas jest przychód" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130"/>
-            <ComboBox x:Name="TypeOfDayComboBox" HorizontalAlignment="Left" Margin="180,4,0,0" VerticalAlignment="Top" Width="89"/>
-            <Label Content="Od Kiedy" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.115"/>
-            <DatePicker x:Name="StartDatePicker" HorizontalAlignment="Left" Margin="73,43,0,0" VerticalAlignment="Top"/>
-            <CheckBox x:Name="EndDateEnableCheckBox" Content="Do Kiedy" HorizontalAlignment="Left" Margin="10,86,0,0" VerticalAlignment="Top" Checked="EndDateEnableCheckBox_Checked" Unchecked="EndDateEnableCheckBox_OnUnchecked"/>
-            <DatePicker x:Name="EndDatePicker" HorizontalAlignment="Left" Margin="97,82,0,0" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Width="280" TextWrapping="Wrap" Text="Dodaj przychód (jednorazowy/okresowy), który później będziesz mógł edytować/usunąć w zakładce zarządzania." VerticalAlignment="Top"/>
+        <TextBox x:Name="PaymentName" HorizontalAlignment="Left" Height="25" Margin="140,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Nazwa przychodu" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="105" Height="25"/>
+        <Label Content="Kwota przychodu" HorizontalAlignment="Left" Margin="10,90,0,0" Height="25" Width="115" VerticalAlignment="Top"/>
+        <TextBox x:Name="PaymentValue" HorizontalAlignment="Left" Height="25" Margin="140,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.95,0.478"/>
+        <ComboBox x:Name="CategoryBox" HorizontalAlignment="Left" Margin="110,130,0,0" Height="25" VerticalAlignment="Top" Width="140"/>
+        <Label Content="Kategoria" HorizontalAlignment="Left" Margin="10,130,0,0" Width="80" Height="25" VerticalAlignment="Top"/>
+        <Button x:Name="AddCategoryBtn" Content="+" HorizontalAlignment="Left" Margin="255,130,0,0" VerticalAlignment="Top" Width="25" Height="25" ToolTip="Dodaj kategorie"/>
+        <Label Content="Dodatkowa notatka" HorizontalAlignment="Left" Margin="10,340,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Note" HorizontalAlignment="Left" Height="40" Margin="10,370,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280"/>
+        <Button x:Name="AddSalaryBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="10,420,0,0" VerticalAlignment="Top" Width="70" Height="20" RenderTransformOrigin="0.2,-0.091" Click="addSalaryBtn_Click"/>
+        <CheckBox x:Name="PeriodCheckBox" Content="Przychód okresowy" HorizontalAlignment="Left" Width="140" Height="25" Margin="10,185,0,0" VerticalAlignment="Top" Checked="periodCheckBox_Checked" Unchecked="PeriodCheckBox_OnUnchecked"/>
+        <TextBox x:Name="InfoBox" HorizontalAlignment="Left" Height="20" Margin="100,420,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" IsEnabled="False"/>
+        <Grid x:Name="PeriodInfoGrid" HorizontalAlignment="Left" Height="125" Margin="10,210,0,0" VerticalAlignment="Top" Width="280" IsEnabled="False">
+            <TextBox x:Name="NumberOfTexBox" HorizontalAlignment="Left" Height="25" Margin="110,5,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="50"/>
+            <Label x:Name="InfoLbl" Content="Przychód co:" Margin="5,5,0,0" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100"/>
+            <ComboBox x:Name="TypeOfDayComboBox" HorizontalAlignment="Left" Margin="170,5,0,0" VerticalAlignment="Top" Width="100" Height="25"/>
+            <Label Content="Od Kiedy:" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.115" Width="70" Height="25"/>
+            <DatePicker x:Name="StartDatePicker" HorizontalAlignment="Left" Margin="110,45,0,0" Width="120" Height="25" VerticalAlignment="Top"/>
+            <CheckBox x:Name="EndDateEnableCheckBox" Content="Do Kiedy:" HorizontalAlignment="Left" Margin="10,85,0,0" Width="70" Height="25" VerticalAlignment="Top" Checked="EndDateEnableCheckBox_Checked" Unchecked="EndDateEnableCheckBox_OnUnchecked"/>
+            <DatePicker x:Name="EndDatePicker" HorizontalAlignment="Left" Margin="110,85,0,0" Width="120" Height="25" VerticalAlignment="Top"/>
         </Grid>
-        <CheckBox x:Name="PeriodCheckBox" Content="Wydatek okresowy" HorizontalAlignment="Left" Margin="13,179,0,0" VerticalAlignment="Top" Checked="periodCheckBox_Checked" Unchecked="PeriodCheckBox_OnUnchecked"/>
-
     </Grid>
 </Page>
