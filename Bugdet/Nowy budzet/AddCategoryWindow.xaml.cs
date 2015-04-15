@@ -28,8 +28,13 @@ namespace Bugdet.Nowy_budzet
         {
             if (CategoryNameTextBox.Text != "")
             {
+                bool category = false; 
+                if (categoryTypes.SelectedIndex == 0)
+                    category = false;
+                if (categoryTypes.SelectedIndex == 1)
+                    category = true;
                 MakeBudgetWindow._categories.Add(MakeBudgetWindow._categories.Last().Key+1,
-                    new Category(CategoryNameTextBox.Text, CategoryNoteTextBox.Text));
+                    new Category(CategoryNameTextBox.Text, CategoryNoteTextBox.Text, category));
             }
             this.Close();
         }

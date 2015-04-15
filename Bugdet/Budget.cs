@@ -175,13 +175,16 @@ namespace Bugdet
             var defaultCategories = new Dictionary<int, Category>();
             try
             {
-                this.categories.Add(1, new Category("Paliwo", "Benzyna do samochodu"));
-                this.categories.Add(2, new Category("Jedzenie", "Zakupy okresowe"));
-                this.categories.Add(3, new Category("Prąd", "Rachunki za energie"));
-                this.categories.Add(4, new Category("Woda", "Rachunki za wodę"));
-                this.categories.Add(5, new Category("Gaz", "Rachunki za gaz"));
-                this.categories.Add(6, new Category("Internet", "Rachunki za internet"));
-                this.categories.Add(7, new Category("Praca", "wypłata"));
+                this.categories.Add(1, new Category("Paliwo", "Benzyna do samochodu", false));
+                this.categories.Add(2, new Category("Jedzenie", "Zakupy okresowe", false));
+                this.categories.Add(3, new Category("Prąd", "Rachunki za energie", false));
+                this.categories.Add(4, new Category("Woda", "Rachunki za wodę", false));
+                this.categories.Add(5, new Category("Gaz", "Rachunki za gaz", false));
+                this.categories.Add(6, new Category("Internet", "Rachunki za internet", false));
+                this.categories.Add(7, new Category("Praca", "wypłata", true));
+                this.categories.Add(8, new Category("Emerytura", "Emerytura", true));
+                this.categories.Add(9, new Category("Renta", "Renta", true));
+                this.categories.Add(10, new Category("Stypednium", "Stypendium, np. socjalne lub naukowe", true));
             }
             catch (Exception ex)
             {
@@ -243,7 +246,9 @@ namespace Bugdet
                 categories.Add(Convert.ToInt32(categoriesFromSelect.Tables[0].Rows[i]["id"]),
                 new Category(
                     (string)categoriesFromSelect.Tables[0].Rows[i]["name"],
-                    (string)categoriesFromSelect.Tables[0].Rows[i]["note"]));
+                    (string)categoriesFromSelect.Tables[0].Rows[i]["note"],
+                    Convert.ToBoolean(categoriesFromSelect.Tables[0].Rows[i]["type"])
+                    ));
             }
 
             /////////////////////////////////////////////////////////////////////////////////////////////
@@ -313,7 +318,7 @@ namespace Bugdet
                     (string)(savTargetsFromSelect.Tables[0].Rows[i]["target"]),
                     (string)(savTargetsFromSelect.Tables[0].Rows[i]["note"]),
                     (DateTime)(savTargetsFromSelect.Tables[0].Rows[i]["deadLine"]),
-                    (string)(savTargetsFromSelect.Tables[0].Rows[i]["priority"]),
+                    Convert.ToInt32(savTargetsFromSelect.Tables[0].Rows[i]["priority"]),
                     Convert.ToDouble(savTargetsFromSelect.Tables[0].Rows[i]["moneyHoldings"]),
                     (DateTime)(savTargetsFromSelect.Tables[0].Rows[i]["addedDate"]),
                     Convert.ToDouble(savTargetsFromSelect.Tables[0].Rows[i]["neededAmount"])

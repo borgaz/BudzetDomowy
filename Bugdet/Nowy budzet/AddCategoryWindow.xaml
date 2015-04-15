@@ -1,15 +1,20 @@
 ﻿<Window x:Class="Bugdet.Nowy_budzet.AddCategoryWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="AddCategoryWindow" Height="200" Width="290">
-    <Grid>
+        Title="Dodaj kategorię" Height="256" Width="300">
+    <Grid Margin="0,0,2,-2">
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Wprowadź nazwę oraz krótki opis kategorii, która ma zostać dodana " VerticalAlignment="Top" Width="262"/>
         <Label Content="Nazwa kategorii" HorizontalAlignment="Left" Margin="13,50,0,0" VerticalAlignment="Top"/>
         <Label Content="Opis" HorizontalAlignment="Left" Margin="13,91,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="CategoryNameTextBox" HorizontalAlignment="Left" Height="23" Margin="152,53,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="CategoryNoteTextBox" HorizontalAlignment="Left" Height="23" Margin="152,94,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="BackBtn" Content="Wyjdź" HorizontalAlignment="Left" Margin="18,138,0,0" VerticalAlignment="Top" Width="120" Click="BackBtn_Click"/>
-        <Button x:Name="AddCategoryBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="152,138,0,0" VerticalAlignment="Top" Width="120" Click="AddCategoryBtn_Click"/>
+        <Button x:Name="BackBtn" Content="Wyjdź" HorizontalAlignment="Left" Margin="13,184,0,0" VerticalAlignment="Top" Width="120" Click="BackBtn_Click"/>
+        <Button x:Name="AddCategoryBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="152,184,0,0" VerticalAlignment="Top" Width="120" Click="AddCategoryBtn_Click"/>
+        <Label Content="Typ" HorizontalAlignment="Left" Margin="13,135,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="categoryTypes" HorizontalAlignment="Left" Margin="152,139,0,0" VerticalAlignment="Top" Width="120">
+            <ListBoxItem Content="Wydatki"/>
+            <ListBoxItem Content="Przychody"/>
+        </ComboBox>
 
     </Grid>
 </Window>

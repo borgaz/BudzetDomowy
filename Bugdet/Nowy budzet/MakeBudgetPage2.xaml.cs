@@ -77,7 +77,8 @@ namespace Bugdet.Nowy_budzet
             {
                 for (int i = 0; i < MakeBudgetWindow._categories.Count; i++)
                 {
-                    CategoryComboBox.Items.Add(MakeBudgetWindow._categories[i + 1].Name);
+                    if (MakeBudgetWindow._categories[i + 1].Type == true)
+                        CategoryComboBox.Items.Add(MakeBudgetWindow._categories[i + 1].Name);
                 }
             }
             catch (Exception)

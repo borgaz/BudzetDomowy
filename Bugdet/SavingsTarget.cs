@@ -12,7 +12,15 @@ namespace Bugdet
         private String note; // notatka
         private DateTime deadline; // data, do ktorej chcemy miec dana kwote
         private int daysLeft; // ile dni pozostalo do deadLine`a
-        private String priority; // priorytet
+        public enum Priorities    
+        {
+            VeryLow = -2,
+            Low = -1,
+            Normal = 0,
+            High = 1,
+            VeryHigh = 2
+        }
+        private Priorities priority;    // priorytet
         private double moneyHoldings; // odlozona juz kwota
         private DateTime addedDate; // data dodatania celu
         private double neededAmount; // kwota, jaka chcemy odlozyc
@@ -23,13 +31,13 @@ namespace Bugdet
                 + " MONEY_HOLDINGS: " + moneyHoldings + " ADDED_DATE: " + addedDate + " NEEDED_AMOUNT: " + neededAmount + "\n";
         }
 
-        public SavingsTarget (String target, String note, DateTime deadline, String priority, double moneyHoldings, DateTime addedDate, double neededAmount)
+        public SavingsTarget(String target, String note, DateTime deadline, int priority, double moneyHoldings, DateTime addedDate, double neededAmount)
         {
             this.target = target;
             this.note = note;
             this.deadline = deadline;
             CountDaysLeft();
-            this.priority = priority;
+            this.priority = (Priorities)priority;
             this.moneyHoldings = moneyHoldings;
             this.addedDate = addedDate;
             this.neededAmount = neededAmount;
@@ -88,19 +96,19 @@ namespace Bugdet
             }
         }
 
+        public int Priority
+        {
+            get
+            {
+                return (int)priority;
+            }
+        }
+
         public int DaysLeft
         {
             get
             {
                 return daysLeft;
-            }
-        }
-
-        public String Priority
-        {
-            get
-            {
-                return priority;
             }
         }
 
