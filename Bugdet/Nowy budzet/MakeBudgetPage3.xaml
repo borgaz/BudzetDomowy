@@ -9,27 +9,28 @@
 
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Dodaj okresowe wydatki, czyli takie które są opłacane w dany dzień w miesiącu badź dany dzień w tygodniu, bądź co określony okres czasu" VerticalAlignment="Top" Width="452"/>
-        <TextBox x:Name="SalaryName" HorizontalAlignment="Left" Height="23" Margin="122,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126" GotFocus="SalaryName_OnGotFocus"/>
-        <Label Content="Nazwa wydatku" HorizontalAlignment="Left" Margin="13,66,0,0" VerticalAlignment="Top" Width="103"/>
-        <Label Content="Kwota" HorizontalAlignment="Left" Margin="13,147,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="SalaryValue" HorizontalAlignment="Left" Height="23" Margin="122,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
-        <TextBox x:Name="NumberOfTextBox" HorizontalAlignment="Right" Height="23" Margin="0,221,224,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"/>
-        <Label x:Name="DescLbl" Content="Odstęp czasu" HorizontalAlignment="Left" Margin="13,188,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="AddSalaryBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="19,369,0,0" VerticalAlignment="Top" Width="103" Click="addSalaryBtn_Click"/>
+        <TextBox x:Name="SalaryName" HorizontalAlignment="Left" Height="23" Margin="119,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126" GotFocus="SalaryName_OnGotFocus"/>
+        <Label Content="Nazwa wydatku" HorizontalAlignment="Left" Margin="13,59,0,0" VerticalAlignment="Top" Width="103"/>
+        <Label Content="Kwota" HorizontalAlignment="Left" Margin="13,140,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="SalaryValue" HorizontalAlignment="Left" Height="23" Width="126" Margin="119,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBox x:Name="NumberOfTextBox" HorizontalAlignment="Left" Height="23" Width="126" Margin="119,214,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Label x:Name="DescLbl" Content="Odstęp czasu" HorizontalAlignment="Left" Margin="13,181,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="AddSalaryBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="142,369,0,0" VerticalAlignment="Top" Width="103" Click="addSalaryBtn_Click"/>
         <Button x:Name="AddedSalariesBtn" Content="Lista dodanych wydatków" HorizontalAlignment="Left" Margin="280,369,0,0" VerticalAlignment="Top" Width="170" Click="addedSalariesBtn_Click"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="148,339,0,0" VerticalAlignment="Top" Width="100"/>
-        <Button x:Name="AddCategoryBtn" Content="+" HorizontalAlignment="Left" Margin="223,110,0,0" VerticalAlignment="Top" Width="25" Click="AddCategoryBtn_Click"/>
-        <Label Content="Kategoria" HorizontalAlignment="Left" Margin="13,108,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="CategoryComboBox" HorizontalAlignment="Left" Margin="122,110,0,0" VerticalAlignment="Top" Width="96"/>
-        <DatePicker x:Name="StartDatePicker" HorizontalAlignment="Left" Margin="122,262,0,0" VerticalAlignment="Top" Height="25" Width="126"/>
-        <Label Content="Od Kiedy" HorizontalAlignment="Left" Margin="13,261,0,0" VerticalAlignment="Top"/>
-        <DatePicker x:Name="EndDatePicker" HorizontalAlignment="Left" Margin="122,305,0,0" VerticalAlignment="Top" Height="25" RenderTransformOrigin="0.5,0.52" Width="126"/>
-        <CheckBox x:Name="EndDateCheckBox" Content="Do Kiedy" HorizontalAlignment="Left" Margin="19,309,0,0" VerticalAlignment="Top"
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="52" Margin="19,339,0,0" VerticalAlignment="Top" Width="100">
+            <Label x:Name="InfoLbl" Content="" Margin="-1" Foreground="#FF9B1818" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Height="52" Width="100"/>
+        </Border>
+        <Button x:Name="AddCategoryBtn" Content="+" HorizontalAlignment="Left" Margin="220,103,0,0" VerticalAlignment="Top" Width="25" Click="AddCategoryBtn_Click"/>
+        <Label Content="Kategoria" HorizontalAlignment="Left" Margin="13,101,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="CategoryComboBox" HorizontalAlignment="Left" Margin="119,103,0,0" VerticalAlignment="Top" Width="96"/>
+        <DatePicker x:Name="StartDatePicker" HorizontalAlignment="Left" Margin="119,255,0,0" VerticalAlignment="Top" Height="25" Width="126"/>
+        <Label Content="Od Kiedy" HorizontalAlignment="Left" Margin="13,254,0,0" VerticalAlignment="Top"/>
+        <DatePicker x:Name="EndDatePicker" HorizontalAlignment="Left" Margin="119,298,0,0" VerticalAlignment="Top" Height="25" RenderTransformOrigin="0.5,0.52" Width="126"/>
+        <CheckBox x:Name="EndDateCheckBox" Content="Do Kiedy" HorizontalAlignment="Left" Margin="19,302,0,0" VerticalAlignment="Top"
                   Checked="EndDateCheckBox_OnChecked" Unchecked="EndDateCheckBox_OnUnchecked" IsEnabled="False"/>
-        <Label Content="Dodatkowa notatka" HorizontalAlignment="Left" Margin="275,66,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="NoteTextBox" HorizontalAlignment="Left" Height="195" Margin="280,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170"/>
-        <ComboBox x:Name="DateTypeBox" HorizontalAlignment="Left" Margin="122,191,0,0" VerticalAlignment="Top" Width="126" Height="23"/>
-        <Label x:Name="InfoLbl" Content="" Margin="148,339,224,13" Foreground="#FF9B1818" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Height="52" Width="100"/>
-
+        <Label Content="Dodatkowa notatka" HorizontalAlignment="Left" Margin="280,59,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="NoteTextBox" HorizontalAlignment="Left" Height="238" Margin="280,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170"/>
+        <ComboBox x:Name="DateTypeBox" HorizontalAlignment="Left" Margin="119,184,0,0" VerticalAlignment="Top" Width="126" Height="23"/>
+        
     </Grid>
 </Page>
