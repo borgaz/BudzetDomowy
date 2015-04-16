@@ -69,6 +69,26 @@ namespace Budget
             return result.Tables[0].Rows.Count != 0;
         }
 
+        public Boolean CleanDatabase()
+        {
+            try
+            {
+                //ExecuteSqlNonQuery("Delete FROM Budget");
+                ExecuteSqlNonQuery("Delete FROM PeriodPayments");
+                ExecuteSqlNonQuery("Delete FROM SinglePayments");
+                ExecuteSqlNonQuery("Delete FROM Categories");
+                ExecuteSqlNonQuery("Delete FROM SavingsTargets");
+                ExecuteSqlNonQuery("Delete FROM BalanceLogs");
+
+                return true;
+            }
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show(ex.GetBaseException() + "\n" + "SQLConnect.CleanDatabase()");
+                return false;
+            }
+        }
+
         public Boolean MakeDb()
         {
             try
@@ -76,6 +96,7 @@ namespace Budget
                 ExecuteSqlNonQuery("CREATE TABLE Budget (name varchar(50)," + 
                                                         "note varchar (200)," +
                                                         "password varchar (20)," +
+                                                        "balance double," +
                                                         "creation date," +
                                                         "numberOfPeople integer)");
 

@@ -41,5 +41,11 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
         {
             new LoginWindow.LoginWindow().ShowDialog();
         }
+
+        private void DumpAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            SqlConnect.Instance.CleanDatabase();
+            Budget.Instance.DumpAll();
+        }
     }
 }

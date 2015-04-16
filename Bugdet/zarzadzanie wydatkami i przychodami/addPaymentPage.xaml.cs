@@ -42,7 +42,7 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
         }
         private void InsertCategories()
         {
-            DataSet result = SqlConnect.Instance.SelectQuery("Select id,name from Categories order by id asc");
+            DataSet result = SqlConnect.Instance.SelectQuery("Select id, name, type FROM Categories order by id asc");
             foreach (DataTable table in result.Tables)
             {
                 foreach (DataRow row in table.Rows)

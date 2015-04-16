@@ -15,20 +15,21 @@ namespace Budget
         private String note; // notatka
         private String password; // haslo do budzetu
         private Dictionary<int, Payment> payments; // slownik platnosci
-        private Dictionary<int, Category> categories; // slownik platnosci
+        private Dictionary<int, Category> categories; // slownik kategorii
         private Dictionary<int, SavingsTarget> savingsTargets; //slownik celow, na ktore oszczedzamy
-        private BalanceLog balance; // aktualnie najnowsze saldo, w przyszłosci przerobimy na słownik
-        private int numberOfPeople; // ilosc osob, dla ktorych prowadzony jest budzet domowy
+        private Dictionary<int, BalanceLog> balanceLogs; // słownik logow
+        private double balance; // saldo
         private DateTime creationDate; // data stworzenia budzetu
+        private int numberOfPeople; // ilosc osob, dla ktorych prowadzony jest budzet domowy
 
         public override string ToString()
         {
-            return "NAME: " + name + " NOTE: " + note + " PASSWORD: " + password + " NUMBER_OF_PEOPLE: " + numberOfPeople
-                + " CREATION_DATE: " + creationDate + " BALANCE: \n" + balance;
+            return "NAME: " + name + ", NOTE: " + note + ", PASSWORD: " + password + ", NUMBER_OF_PEOPLE: " + numberOfPeople
+                + ", CREATION_DATE: " + creationDate + ", BALANCE: " + balance;
         }
 
         private Budget(String note, String name, String password, Dictionary<int, Payment> payments, Dictionary<int, Category> categories,
-            Dictionary<int, SavingsTarget> savingsTargets, BalanceLog balance, int numberOfPeople, DateTime creationDate)
+            Dictionary<int, SavingsTarget> savingsTargets, Dictionary<int, BalanceLog> balanceLogs, double balance, int numberOfPeople, DateTime creationDate)
         {
             this.note = note;
             this.name = name;
@@ -36,21 +37,23 @@ namespace Budget
             this.payments = payments;
             this.categories = categories;
             this.savingsTargets = savingsTargets;
-            this.balance = balance;
+            this.balanceLogs = balanceLogs;
             this.numberOfPeople = numberOfPeople;
+            this.balance = balance;
             this.creationDate = creationDate;
         }
 
         public static Budget Instance
         {
-            get {
-                    if (instance == null)
-                    {
-                        instance = FetchAll();
-                        instance.SetDefaultCategories();
-                    }
-                return instance; 
+            get 
+            {
+                if (instance == null)
+                {
+                    instance = FetchAll();
+                    //instance.SetDefaultCategories(); to musi byc tylko w przypadku, gdy tworzymy nowy budzet!
                 }
+                return instance;
+            }
         }
 
         public DateTime CreationDate
@@ -63,6 +66,10 @@ namespace Budget
 
         public String Note
         {
+            set
+            {
+                note = value;
+            }
             get
             {
                 return this.note;
@@ -91,13 +98,24 @@ namespace Budget
             {
                 return this.numberOfPeople;
             }
+            set
+            {
+                this.numberOfPeople = value;
+            }
         }
 
-        public BalanceLog Balance
+        public double Balance
         {
             get
             {
-                return this.balance;
+                return balance;
+            }
+        }
+        public Dictionary<int, BalanceLog> BalanceLog
+        {
+            get
+            {
+                return this.balanceLogs;
             }
         }
 
@@ -123,21 +141,6 @@ namespace Budget
             {
                 return this.savingsTargets;
             }
-        }
-
-        public void SetNumberOfPeople(int number)
-        {
-            this.numberOfPeople = number;
-        }
-
-        public void AddNote(String note)
-        {
-            this.note = note; 
-        }
-
-        public void DeleteNumberOfPeople ()
-        {
-            this.numberOfPeople = 0;
         }
 
         public void AddSinglePayment(int index, SinglePayment payment)
@@ -170,26 +173,35 @@ namespace Budget
             payments.Remove(index);
         }
 
+        public void AddBalanceLog(int index, BalanceLog log)
+        {
+            balanceLogs.Add(index, log);
+        }
+
+        public void DeleteBalanceLog(int index)
+        {
+            balanceLogs.Remove(index);
+        }
+
         public void SetDefaultCategories()
         {
-            var defaultCategories = new Dictionary<int, Category>();
             try
             {
                 this.categories.Add(1, new Category("Paliwo", "Benzyna do samochodu", false));
                 this.categories.Add(2, new Category("Jedzenie", "Zakupy okresowe", false));
-                this.categories.Add(3, new Category("Prąd", "Rachunki za energie", false));
+                this.categories.Add(3, new Category("Prąd", "Rachunki za energię", false));
                 this.categories.Add(4, new Category("Woda", "Rachunki za wodę", false));
                 this.categories.Add(5, new Category("Gaz", "Rachunki za gaz", false));
                 this.categories.Add(6, new Category("Internet", "Rachunki za internet", false));
-                this.categories.Add(7, new Category("Praca", "wypłata", true));
+                this.categories.Add(7, new Category("Praca", "Wypłata", true));
                 this.categories.Add(8, new Category("Emerytura", "Emerytura", true));
                 this.categories.Add(9, new Category("Renta", "Renta", true));
-                this.categories.Add(10, new Category("Stypednium", "Stypendium, np. socjalne lub naukowe", true));
+                this.categories.Add(10, new Category("Stypednium", "Stypendium, np. socjalne, naukowe itp.", true));
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Wystąpił błąd");
-                Console.WriteLine(ex.GetBaseException() + "\n addDefaultCategories()");
+                System.Windows.MessageBox.Show("Wystąpił błąd w addDefaultCategories");
+                Console.WriteLine("\n" + ex.GetBaseException() + "\n");
             }
         }
 
@@ -199,133 +211,126 @@ namespace Budget
         /// <returns> Zwraca obiekt z wszystkimi danymi z bazy </returns>
         private static Budget FetchAll()
         {
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            // Nazwa budzetu
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            String name = "";
-            System.Data.DataSet nameFromSelect = SqlConnect.Instance.SelectQuery("SELECT name FROM Budget");
-
-            if (nameFromSelect.Tables[0].Rows.Count == 0)
-                throw new System.Data.Entity.Core.ObjectNotFoundException("Empty datebase");
-            else
+            try
             {
-                name = (string)nameFromSelect.Tables[0].Rows[0]["name"];
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                // Budzetu
+                /////////////////////////////////////////////////////////////////////////////////////////////
+
+                String name = String.Empty;
+                String note = String.Empty;
+                String password = String.Empty;
+                DateTime creationDate = DateTime.Now;
+                int numberOfPeople = 0;
+                double balance = 0;
+
+                System.Data.DataSet nameFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM Budget");
+                if (nameFromSelect.Tables[0].Rows.Count > 0)
+                {
+                    name = Convert.ToString(nameFromSelect.Tables[0].Rows[0]["name"]);
+                    note = Convert.ToString(nameFromSelect.Tables[0].Rows[0]["note"]);
+                    balance = Convert.ToDouble(nameFromSelect.Tables[0].Rows[0]["balance"]);
+                    password = Convert.ToString(nameFromSelect.Tables[0].Rows[0]["password"]);
+                    creationDate = Convert.ToDateTime(nameFromSelect.Tables[0].Rows[0]["creation"]);
+                    numberOfPeople = Convert.ToInt32(nameFromSelect.Tables[0].Rows[0]["numberOfPeople"]);
+                }
+
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                // Lista kategorii
+                /////////////////////////////////////////////////////////////////////////////////////////////
+
+                Dictionary<int, Category> categories = new Dictionary<int, Category>();
+                System.Data.DataSet categoriesFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM Categories");
+                for (int i = 0; i < categoriesFromSelect.Tables[0].Rows.Count; i++)
+                {
+                    categories.Add(Convert.ToInt32(categoriesFromSelect.Tables[0].Rows[i]["id"]),
+                    new Category(Convert.ToString(categoriesFromSelect.Tables[0].Rows[i]["name"]),
+                        Convert.ToString(categoriesFromSelect.Tables[0].Rows[i]["note"]),
+                        Convert.ToBoolean(categoriesFromSelect.Tables[0].Rows[i]["type"])
+                        ));
+                }
+
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                // Aktualny stan konta
+                /////////////////////////////////////////////////////////////////////////////////////////////
+
+                Dictionary<int, BalanceLog> balanceLogs = new Dictionary<int, BalanceLog>();
+                System.Data.DataSet balanceLogsFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM BalanceLogs");
+                for (int i = 0; i < balanceLogsFromSelect.Tables[0].Rows.Count; i++)
+                {
+                    balanceLogs.Add(Convert.ToInt32(balanceLogsFromSelect.Tables[0].Rows[i]["id"]),
+                        new BalanceLog(Convert.ToDouble(balanceLogsFromSelect.Tables[0].Rows[i]["balance"]),
+                        Convert.ToDateTime(balanceLogsFromSelect.Tables[0].Rows[i]["date"]),
+                        Convert.ToInt32(balanceLogsFromSelect.Tables[0].Rows[i]["singlePaymentId"]),
+                        Convert.ToInt32(balanceLogsFromSelect.Tables[0].Rows[i]["periodPaymentId"])
+                        ));
+                }
+
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                // Lista płatności
+                /////////////////////////////////////////////////////////////////////////////////////////////
+
+                Dictionary<int, Payment> payments = new Dictionary<int, Payment>();
+
+                System.Data.DataSet periodPayFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM PeriodPayments");
+                for (int i = 0; i < periodPayFromSelect.Tables[0].Rows.Count; i++)
+                {
+                    payments.Add(Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["id"]),
+                        new PeriodPayment(Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["categoryId"]),
+                        Convert.ToDouble(periodPayFromSelect.Tables[0].Rows[i]["amount"]),
+                        Convert.ToString((periodPayFromSelect.Tables[0].Rows[i]["note"])),
+                        Convert.ToBoolean(periodPayFromSelect.Tables[0].Rows[i]["type"]),
+                        Convert.ToString(periodPayFromSelect.Tables[0].Rows[i]["name"]),
+                        Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["frequency"]),
+                        Convert.ToString(periodPayFromSelect.Tables[0].Rows[i]["period"]),
+                        Convert.ToDateTime(periodPayFromSelect.Tables[0].Rows[i]["lastUpdate"]),
+                        Convert.ToDateTime(periodPayFromSelect.Tables[0].Rows[i]["startDate"]),
+                        Convert.ToDateTime(periodPayFromSelect.Tables[0].Rows[i]["endDate"])
+                        ));
+                }
+
+                int nOPP = periodPayFromSelect.Tables[0].Rows.Count; // numberOfPeriodPayments
+
+                System.Data.DataSet singlePayFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM SinglePayments");
+                for (int i = 0; i < singlePayFromSelect.Tables[0].Rows.Count; i++)
+                {
+                    payments.Add(Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["id"]) + nOPP,
+                        new SinglePayment(Convert.ToString(singlePayFromSelect.Tables[0].Rows[i]["note"]),
+                        Convert.ToDouble(singlePayFromSelect.Tables[0].Rows[i]["amount"]),
+                        Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["categoryId"]),
+                        Convert.ToBoolean(singlePayFromSelect.Tables[0].Rows[i]["type"]),
+                        Convert.ToString(singlePayFromSelect.Tables[0].Rows[i]["name"]),
+                        Convert.ToDateTime(singlePayFromSelect.Tables[0].Rows[i]["date"])
+                        ));
+                }
+
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                // Cele oszczędzania
+                /////////////////////////////////////////////////////////////////////////////////////////////
+
+                Dictionary<int, SavingsTarget> savingsTargets = new Dictionary<int, SavingsTarget>();
+                System.Data.DataSet savTargetsFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM SavingsTargets");
+                for (int i = 0; i < savTargetsFromSelect.Tables[0].Rows.Count; i++)
+                {
+                    savingsTargets.Add(Convert.ToInt32(savTargetsFromSelect.Tables[0].Rows[i]["id"]),
+                        new SavingsTarget(Convert.ToString(savTargetsFromSelect.Tables[0].Rows[i]["target"]),
+                        Convert.ToString(savTargetsFromSelect.Tables[0].Rows[i]["note"]),
+                        (DateTime)(savTargetsFromSelect.Tables[0].Rows[i]["deadLine"]),
+                        Convert.ToInt32(savTargetsFromSelect.Tables[0].Rows[i]["priority"]),
+                        Convert.ToDouble(savTargetsFromSelect.Tables[0].Rows[i]["moneyHoldings"]),
+                        Convert.ToDateTime(savTargetsFromSelect.Tables[0].Rows[i]["addedDate"]),
+                        Convert.ToDouble(savTargetsFromSelect.Tables[0].Rows[i]["neededAmount"])
+                        ));
+                }
+
+                return new Budget(note, name, password, payments, categories, savingsTargets, balanceLogs, balance, numberOfPeople, creationDate);
             }
-
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            // Opis budzetu
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            String note = "";
-            note = (string)SqlConnect.Instance.SelectQuery("SELECT note FROM Budget").Tables[0].Rows[0]["note"];
-
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            // Hasło budżetu
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            String password = "";
-            password = (string)SqlConnect.Instance.SelectQuery("SELECT password FROM Budget").Tables[0].Rows[0]["password"];
-
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            // Data powstania budżetu
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            DateTime creationDate;
-            creationDate = (DateTime)SqlConnect.Instance.SelectQuery("SELECT creation FROM Budget").Tables[0].Rows[0]["creation"];
-
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            // Liczba osób w budżecie
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            int numberOfPeople;
-            numberOfPeople = Convert.ToInt32(SqlConnect.Instance.SelectQuery("SELECT numberOfPeople FROM Budget").Tables[0].Rows[0]["numberOfPeople"]);
-
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            // Lista kategorii
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            Dictionary<int, Category> categories = new Dictionary<int, Category>();
-            System.Data.DataSet categoriesFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM Categories");
-            for (int i = 0; i < categoriesFromSelect.Tables[0].Rows.Count; i++)
+            catch (Exception ex)
             {
-                categories.Add(Convert.ToInt32(categoriesFromSelect.Tables[0].Rows[i]["id"]),
-                new Category(
-                    (string)categoriesFromSelect.Tables[0].Rows[i]["name"],
-                    (string)categoriesFromSelect.Tables[0].Rows[i]["note"],
-                    Convert.ToBoolean(categoriesFromSelect.Tables[0].Rows[i]["type"])
-                    ));
+                System.Windows.MessageBox.Show("Wystąpił błąd w FetchAll");
+                Console.WriteLine("\n" + ex.GetBaseException() + "\n");
+                return null;
             }
-
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            // Aktualny stan konta
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            System.Data.DataSet balanceFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM BalanceLogs");
-            BalanceLog balance;
-            if (balanceFromSelect.Tables[0].Rows.Count - 1 >= 0)
-            {
-                balance = new BalanceLog(
-                    //Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["id"]),
-                    Convert.ToDouble(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["balance"]),
-                    (DateTime)(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["date"]),
-                    Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["singlePaymentId"]),
-                    Convert.ToInt32(balanceFromSelect.Tables[0].Rows[balanceFromSelect.Tables[0].Rows.Count - 1]["periodPaymentId"])
-                    );
-            }
-            else
-                throw new System.Data.Entity.Core.ObjectNotFoundException("No balance in datebase");
-
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            // Lista płatności
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            Dictionary<int, Payment> payments = new Dictionary<int, Payment>();
-
-            System.Data.DataSet periodPayFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM PeriodPayments");
-            for (int i = 0; i < periodPayFromSelect.Tables[0].Rows.Count; i++)
-            {
-                payments.Add(Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["id"]),
-                    new PeriodPayment(
-                    Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["categoryId"]),
-                    Convert.ToDouble(periodPayFromSelect.Tables[0].Rows[i]["amount"]),
-                    (string)(periodPayFromSelect.Tables[0].Rows[i]["note"]),
-                    (bool)(periodPayFromSelect.Tables[0].Rows[i]["type"]),
-                    (string)(periodPayFromSelect.Tables[0].Rows[i]["name"]),
-                    Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["frequency"]),
-                    (string)(periodPayFromSelect.Tables[0].Rows[i]["period"]),
-                    (DateTime)(periodPayFromSelect.Tables[0].Rows[i]["lastUpdate"]),
-                    (DateTime)(periodPayFromSelect.Tables[0].Rows[i]["startDate"]),
-                    (DateTime)(periodPayFromSelect.Tables[0].Rows[i]["endDate"])
-                    ));
-            }
-
-            System.Data.DataSet singlePayFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM SinglePayments");
-            for (int i = 0; i < singlePayFromSelect.Tables[0].Rows.Count; i++)
-            {
-                payments.Add(Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["id"]),
-                    new SinglePayment(
-                    (string)(singlePayFromSelect.Tables[0].Rows[i]["note"]),
-                    Convert.ToDouble(singlePayFromSelect.Tables[0].Rows[i]["amount"]),
-                    Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["categoryId"]),
-                    (bool)(singlePayFromSelect.Tables[0].Rows[i]["type"]),
-                    (string)(singlePayFromSelect.Tables[0].Rows[i]["name"]),
-                    (DateTime)(singlePayFromSelect.Tables[0].Rows[i]["date"])
-                    ));
-            }
-
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            // Cele oszczędzania
-            /////////////////////////////////////////////////////////////////////////////////////////////
-            Dictionary<int, SavingsTarget> savingsTargets = new Dictionary<int, SavingsTarget>();
-            System.Data.DataSet savTargetsFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM SavingsTargets");
-            for (int i = 0; i < savTargetsFromSelect.Tables[0].Rows.Count; i++)
-            {
-                savingsTargets.Add(Convert.ToInt32(savTargetsFromSelect.Tables[0].Rows[i]["id"]),
-                    new SavingsTarget(
-                    (string)(savTargetsFromSelect.Tables[0].Rows[i]["target"]),
-                    (string)(savTargetsFromSelect.Tables[0].Rows[i]["note"]),
-                    (DateTime)(savTargetsFromSelect.Tables[0].Rows[i]["deadLine"]),
-                    Convert.ToInt32(savTargetsFromSelect.Tables[0].Rows[i]["priority"]),
-                    Convert.ToDouble(savTargetsFromSelect.Tables[0].Rows[i]["moneyHoldings"]),
-                    (DateTime)(savTargetsFromSelect.Tables[0].Rows[i]["addedDate"]),
-                    Convert.ToDouble(savTargetsFromSelect.Tables[0].Rows[i]["neededAmount"])
-                    ));
-            }
-            return new Budget(note, name, password, payments, categories,
-                                    savingsTargets, balance, numberOfPeople, creationDate);
         }
 
         public Boolean DumpAll()
@@ -335,75 +340,83 @@ namespace Budget
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // budzet
                 /////////////////////////////////////////////////////////////////////////////////////////////
-                SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO( name,note,creationdate,numberofpeople,password) values('" +
-                                   this.name + "'," + this.note + this.creationDate +
-                                   "'," + this.numberOfPeople + ",'" + this.password + "')");
 
+                //SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Budget(name, balance, note, creation, numberofpeople, password) values('" +
+                //                    this.name + "'," + this.balance + ",'" + this.note + "','" + this.creationDate +
+                //                    "'," + this.numberOfPeople + ",'" + this.password + "')");
 
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // Lista kategorii
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
-                for (int i = 0; i < this.categories.Count; i++)
+                foreach (Category category in this.categories.Values)
                 {
-                    SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Categories(name,note) values('" + 
-                                        this.categories[i + 1].Name +
-                                       "','" + this.categories[i + 1].Note + "'," + categories[i + 1].Type + ")");
+                    SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Categories(name, note, type) values('" + 
+                                    category.Name + "','" + category.Note + "','" + category.Type + "')");
                 }
-
 
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // Aktualny stan konta
                 /////////////////////////////////////////////////////////////////////////////////////////////
-                SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(balance,date,singlePaymentId,periodPaymentId) values(" +
-                                   this.balance.Balance + ",' " + this.balance.Date + "'," +
-                                   this.balance.SinglePaymentID + "," + this.balance.PeriodPaymentID + ")");
-
+                
+                foreach(BalanceLog balanceLog in this.balanceLogs.Values)
+                {
+                    SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(balance, date, singlePaymentId, periodPaymentId) values('" +
+                                   balanceLog.Balance + "','" + balanceLog.Date + "','" + balanceLog.SinglePaymentID + 
+                                   "','" + balanceLog.PeriodPaymentID + "')");
+                }
+               
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // Lista płatności
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
-                for (int i = 0; i < this.payments.Count; i++)
+                Boolean temp;
+                foreach (Payment payment in this.payments.Values)
                 {
-                    if (payments[i + 1].Type)
+                    if (payment.Amount > 0)
                     {
-                        PeriodPayment p = (PeriodPayment) (this.payments[i + 1]);
-                        SqlConnect.Instance.ExecuteSqlNonQuery(
-                            "INSERT INTO PeriodPayments(categoryId,amount,note,type,name,frequency,period,lastUpdate,startDate,endDate) values(" +
-                            p.CategoryID + ", " + p.Amount + ",'" + p.Note + "',1,'" + p.LastUpdate + "','" +
-                            p.StartDate +
-                            "','" + p.EndDate + "')");
+                        temp = false;
                     }
                     else
                     {
-                        SinglePayment p = (SinglePayment)(this.payments[i + 1]);
-                        SqlConnect.Instance.ExecuteSqlNonQuery(
-                            "INSERT INTO SinglePayments(categoryId,amount,note,type,name,date) values(" +
-                            p.CategoryID + ", " + p.Amount + ",'" + p.Note + "',0,'" + p.Date + "')");
+                        temp = true;
                     }
-
+                    if (payment.GetType() == typeof(PeriodPayment))
+                    {
+                        PeriodPayment p = (PeriodPayment)payment;
+                        SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO PeriodPayments(categoryId, amount, note, type, name, frequency, period, lastUpdate, startDate, endDate) values('" +
+                            p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + temp + "','" + p.Name + "','" + p.Frequency + "','" + p.Period + "','" + p.LastUpdate + "','" + 
+                            p.StartDate + "','" + p.EndDate + "')");
+                    }
+                    else if (payment.GetType() == typeof(SinglePayment))
+                    {
+                        SinglePayment p = (SinglePayment)payment;
+                        SqlConnect.Instance.ExecuteSqlNonQuery(
+                            "INSERT INTO SinglePayments(categoryId, amount, note, type, name, date) values('" +
+                            p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + temp + "','" + 
+                            p.Name + "','" + p.Date + "')");
+                    }
                 }
 
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // Cele oszczędzania
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
-                for (int i = 0; i < this.savingsTargets.Count; i++)
+                foreach (SavingsTarget savingsTarget in this.savingsTargets.Values)
                 {
                     SqlConnect.Instance.ExecuteSqlNonQuery(
-                        "INSERT INTO(target,note,deadline,priority,moneyHoldings,addedDate,neededAmount) values('" +
-                        this.savingsTargets[i + 1].Target + "','" + this.savingsTargets[i + 1].Note + "','" +
-                        this.savingsTargets[i + 1].Deadline + "','" + this.savingsTargets[i + 1].Priority + "'," +
-                        this.savingsTargets[i + 1].MoneyHoldings + ",'" + this.savingsTargets[i + 1].AddedDate +
-                        "'," + this.savingsTargets[i + 1].NeededAmount + ")");
+                        "INSERT INTO SavingsTargets(target, note, deadLine, priority, moneyHoldings, addedDate, neededAmount) values('" +
+                        savingsTarget.Target + "','" + savingsTarget.Note + "','" + savingsTarget.Deadline + "','" + savingsTarget.Priority + "','" +
+                        savingsTarget.MoneyHoldings + "','" + savingsTarget.AddedDate + "','" + savingsTarget.NeededAmount + "')");
                 }
 
+                instance = null;
                 return true;
             }
-            catch (System.Data.SQLite.SQLiteException ex)
+            catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Błąd");
-                Console.WriteLine(ex.ToString());
+                System.Windows.MessageBox.Show("Wystąpił błąd w DumbAll");
+                Console.WriteLine("\n" + ex.GetBaseException() + "\n");
                 return false;
             }
         }
