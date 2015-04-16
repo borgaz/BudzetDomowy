@@ -64,7 +64,8 @@ namespace Budget
 
         public Boolean CheckPassword(String budget, String Password)
         {
-            DataSet result = SelectQuery("Select count(*) where name = '" + budget + "' AND password = '" + Password + "'");
+            System.Console.WriteLine(budget + " " + Password);
+            DataSet result = SelectQuery("Select count(*) from Budget where name = '" + budget + "' AND password = '" + Password + "'");
             return result.Tables[0].Rows.Count != 0;
         }
 
