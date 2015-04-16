@@ -29,9 +29,8 @@ namespace Budget.LoginWindow
 
         private void LogInButton_Click_1(object sender, RoutedEventArgs e)
         {
-            if (BudgetsComboBox.SelectedIndex != -1 &&
-                SqlConnect.Instance.CheckPassword(BudgetsComboBox.SelectedValue.ToString(),
-                    SqlConnect.Instance.HashPasswordMd5(PassTextBox.Text)))
+            if (BudgetsComboBox.SelectedIndex != -1 && 
+                SqlConnect.Instance.CheckPassword(BudgetsComboBox.SelectedValue.ToString(), SqlConnect.Instance.HashPasswordMd5(PassTextBox.Text)))
             {
                 Close();
             }

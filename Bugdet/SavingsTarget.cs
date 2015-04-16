@@ -27,8 +27,8 @@ namespace Budget
 
         public override string ToString()
         {
-            return "TARGET: " + target + " NOTE: " + note + " DEADLINE: " + deadline + " DAYS_LEFT: " + daysLeft + " PRIORITY: " + priority
-                + " MONEY_HOLDINGS: " + moneyHoldings + " ADDED_DATE: " + addedDate + " NEEDED_AMOUNT: " + neededAmount + "\n";
+            return "TARGET: " + target + ", NOTE: " + note + ", DEADLINE: " + deadline + ", DAYS_LEFT: " + daysLeft + ", PRIORITY: " + priority
+                + ", MONEY_HOLDINGS: " + moneyHoldings + ", ADDED_DATE: " + addedDate + ", NEEDED_AMOUNT: " + neededAmount + "\n";
         }
 
         public SavingsTarget(String target, String note, DateTime deadline, int priority, double moneyHoldings, DateTime addedDate, double neededAmount)
@@ -36,7 +36,7 @@ namespace Budget
             this.target = target;
             this.note = note;
             this.deadline = deadline;
-            CountDaysLeft();
+            this.daysLeft = (int)(deadline - DateTime.Today).TotalDays;
             this.priority = (Priorities)priority;
             this.moneyHoldings = moneyHoldings;
             this.addedDate = addedDate;
@@ -52,24 +52,33 @@ namespace Budget
         {
             this.moneyHoldings += amount;
             if (CountMoneyLeft() == 0.0)
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }      
         }
 
-        public int CountDaysLeft()
-        {
-            int days = (int)(deadline - DateTime.Today).TotalDays;
-            this.daysLeft = days;
-            return days;
-        }
-
+        /// <summary>
+        /// Obliczanie, jakiej kwoty brakuje
+        /// </summary>
+        /// <returns>Zwraca liczbę, która jeśli jest dodatnia, oznacza, ile brakuje do celu, a jak jest ujemna, to ile za dużo odłożyliśmy </returns>
         public double CountMoneyLeft()
         {
-            if (this.NeededAmount - this.moneyHoldings <= 0)
-                return 0.0;
-            else
+            if (this.NeededAmount - this.moneyHoldings < 0)
+            {
+                return (this.NeededAmount - (this.NeededAmount + this.moneyHoldings));
+            }
+            else if (this.NeededAmount - this.moneyHoldings > 0)
+            {
                 return this.NeededAmount - this.moneyHoldings;
+            }
+            else
+            {
+                return 0.0;
+            }   
         }
 
         public String Target

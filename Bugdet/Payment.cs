@@ -16,7 +16,7 @@ namespace Budget
 
         public override string ToString()
         {
-            return "CATEGORY_ID: " + categoryID + " AMOUNT: " + amount + " NAME: " + name + " TYPE: " + type + " NOTE: " + note + "\n";
+            return "CATEGORY_ID: " + categoryID + ", AMOUNT: " + amount + ", NAME: " + name + ", TYPE: " + type + ", NOTE: " + note + "\n";
         }
 
         public Payment(int categoryID, double amount, String note, bool type, String name)

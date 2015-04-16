@@ -15,7 +15,7 @@ namespace Budget
 
         public override string ToString()
         {
-            return "DATE: " + date + " BALANCE: " + balance + " SINGLE_PAYMENT_ID: " + singlePaymentID + " PERIOD_PAYMENT_ID: " + periodPaymentID + "\n";
+            return "DATE: " + date + ", BALANCE: " + balance + ", SINGLE_PAYMENT_ID: " + singlePaymentID + ", PERIOD_PAYMENT_ID: " + periodPaymentID + "\n";
         }
 
         public BalanceLog(double balance, DateTime date, int singlepaymentid, int periodpaymentid)

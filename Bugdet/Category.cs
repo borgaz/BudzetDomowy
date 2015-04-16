@@ -14,7 +14,7 @@ namespace Budget
 
         public override string ToString()
         {
-            return "NAME: " + name + " NOTE: " + note + " TYPE: " + type + "\n";
+            return "NAME: " + name + ", NOTE: " + note + ", TYPE: " + type + "\n";
         }
 
         public Category(string name, string note, bool type)

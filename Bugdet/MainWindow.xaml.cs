@@ -1,5 +1,4 @@
-﻿
-using System.Windows;
+﻿using System.Windows;
 using Budget.Nowy_budzet;
 using Budget.zarzadzanie_wydatkami_i_przychodami;
 

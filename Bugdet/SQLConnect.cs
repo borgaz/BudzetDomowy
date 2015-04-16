@@ -12,6 +12,7 @@ namespace Budget
     public sealed class SqlConnect
     {
         private static SqlConnect _instance = null;
+
         private SQLiteConnection _mydb;
         private SQLiteCommand _command;
 
@@ -22,7 +23,10 @@ namespace Budget
 
         public static SqlConnect Instance
         {
-            get { return _instance ?? (_instance = new SqlConnect()); }
+            get
+            { 
+                return _instance ?? (_instance = new SqlConnect()); 
+            }
         }
 
         public Boolean Connect(String budget)
@@ -31,7 +35,7 @@ namespace Budget
             {
                 _mydb = new SQLiteConnection("Data Source=" + budget + ".sqlite;Version=3");
                 _mydb.Open();
-              //  MakeDb();
+                // MakeDb();
                 return true;
             }
             catch(SQLiteException)
@@ -73,7 +77,7 @@ namespace Budget
         {
             try
             {
-                //ExecuteSqlNonQuery("Delete FROM Budget");
+                ExecuteSqlNonQuery("Delete FROM Budget");
                 ExecuteSqlNonQuery("Delete FROM PeriodPayments");
                 ExecuteSqlNonQuery("Delete FROM SinglePayments");
                 ExecuteSqlNonQuery("Delete FROM Categories");
@@ -142,7 +146,6 @@ namespace Budget
 
                 //SetDefaultCategories();
                 return true;
-
             }
             catch(SQLiteException ex)
             {
@@ -150,15 +153,15 @@ namespace Budget
                 return false;
             }
         }
-        public Boolean DumpCreator(Dictionary<int, Category> _categories, Dictionary<int, PeriodPayment> _payments,
-                String _name, String _password, BalanceLog _balance,
-                int _numberOfPeople)
+        public Boolean DumpCreator(Dictionary<int, Category> _categories, Dictionary<int, PeriodPayment> _payments, 
+            String _name, String _password, BalanceLog _balance, int _numberOfPeople)
         {
             try
             {
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // budzet
                 /////////////////////////////////////////////////////////////////////////////////////////////
+
                 SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Budget(name,note,creation,numberofpeople,password) values('" +
                                    _name + "'," + "'note','" + DateTime.Now.ToString() +
                                    "'," + _numberOfPeople + ",'" + _password + "')");
@@ -179,6 +182,7 @@ namespace Budget
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // Aktualny stan konta
                 /////////////////////////////////////////////////////////////////////////////////////////////
+
                 SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(balance,date,singlePaymentId,periodPaymentId) values('" +
                                    _balance.Balance + "',' " + _balance.Date + "','" +
                                    _balance.SinglePaymentID + "','" + _balance.PeriodPaymentID + "')");
@@ -205,6 +209,7 @@ namespace Budget
                 return false;
             }
         }
+
         /// <summary>
         /// - wykonuje zapytanie, zwraca true jak sie uda
         /// </summary>
@@ -245,6 +250,7 @@ namespace Budget
                 return null;
             }
         }
+
         /// <summary>
         /// Hashuje string za pomocą MD5
         /// </summary>
@@ -269,8 +275,7 @@ namespace Budget
             {
                 _command = new SQLiteCommand
                 {
-                    CommandText =
-                        "INSERT INTO BalanceLogs(periodPaymentId,categoryId,income,date,note) values(null,@category,@income,date('now'),@note)"
+                    CommandText = "INSERT INTO BalanceLogs(periodPaymentId,categoryId,income,date,note) values(null,@category,@income,date('now'),@note)"
                 };
                 _command.Parameters.AddWithValue("@category", ++category);
                 _command.Parameters.AddWithValue("@income", value * (-1));
@@ -294,8 +299,7 @@ namespace Budget
             {
                 _command = new SQLiteCommand
                 {
-                    CommandText =
-                        "INSERT INTO BalanceLogs(periodPaymentId,categoryId,income,date,note) values(null,@category,@income,date('now'),@note)"
+                    CommandText = "INSERT INTO BalanceLogs(periodPaymentId,categoryId,income,date,note) values(null,@category,@income,date('now'),@note)"
                 };
                 _command.Parameters.AddWithValue("@category", ++category);
                 _command.Parameters.AddWithValue("@income", value);
@@ -312,7 +316,6 @@ namespace Budget
                 return false;
             }
         }
-
 
         public Dictionary<int, Category> AddDefaultCategories()
         {
@@ -338,6 +341,5 @@ namespace Budget
                 return null;
             }
         }
-        
     }
 }

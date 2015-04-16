@@ -25,7 +25,7 @@ namespace Budget
         public override string ToString()
         {
             return "NAME: " + name + ", NOTE: " + note + ", PASSWORD: " + password + ", NUMBER_OF_PEOPLE: " + numberOfPeople
-                + ", CREATION_DATE: " + creationDate + ", BALANCE: " + balance;
+                + ", CREATION_DATE: " + creationDate + ", BALANCE: " + balance + "\n";
         }
 
         private Budget(String note, String name, String password, Dictionary<int, Payment> payments, Dictionary<int, Category> categories,
@@ -50,7 +50,7 @@ namespace Budget
                 if (instance == null)
                 {
                     instance = FetchAll();
-                    //instance.SetDefaultCategories(); to musi byc tylko w przypadku, gdy tworzymy nowy budzet!
+                    // instance.SetDefaultCategories(); trzeba przerobic, zeby bylo tylko przy tworzeniu
                 }
                 return instance;
             }
@@ -271,7 +271,6 @@ namespace Budget
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
                 Dictionary<int, Payment> payments = new Dictionary<int, Payment>();
-
                 System.Data.DataSet periodPayFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM PeriodPayments");
                 for (int i = 0; i < periodPayFromSelect.Tables[0].Rows.Count; i++)
                 {
@@ -289,7 +288,7 @@ namespace Budget
                         ));
                 }
 
-                int nOPP = periodPayFromSelect.Tables[0].Rows.Count; // numberOfPeriodPayments
+                int nOPP = periodPayFromSelect.Tables[0].Rows.Count; // numberOfPeriodPayments - potrzebny, zeby nie pokrywaly sie ID pejmentsow
 
                 System.Data.DataSet singlePayFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM SinglePayments");
                 for (int i = 0; i < singlePayFromSelect.Tables[0].Rows.Count; i++)
@@ -315,7 +314,7 @@ namespace Budget
                     savingsTargets.Add(Convert.ToInt32(savTargetsFromSelect.Tables[0].Rows[i]["id"]),
                         new SavingsTarget(Convert.ToString(savTargetsFromSelect.Tables[0].Rows[i]["target"]),
                         Convert.ToString(savTargetsFromSelect.Tables[0].Rows[i]["note"]),
-                        (DateTime)(savTargetsFromSelect.Tables[0].Rows[i]["deadLine"]),
+                        Convert.ToDateTime(savTargetsFromSelect.Tables[0].Rows[i]["deadLine"]),
                         Convert.ToInt32(savTargetsFromSelect.Tables[0].Rows[i]["priority"]),
                         Convert.ToDouble(savTargetsFromSelect.Tables[0].Rows[i]["moneyHoldings"]),
                         Convert.ToDateTime(savTargetsFromSelect.Tables[0].Rows[i]["addedDate"]),
@@ -341,9 +340,9 @@ namespace Budget
                 // budzet
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
-                //SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Budget(name, balance, note, creation, numberofpeople, password) values('" +
-                //                    this.name + "'," + this.balance + ",'" + this.note + "','" + this.creationDate +
-                //                    "'," + this.numberOfPeople + ",'" + this.password + "')");
+                SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Budget(name, balance, note, creation, numberOfPeople, password) values('" +
+                                    this.name + "','" + this.balance + "','" + this.note + "','" + this.creationDate +
+                                    "','" + this.numberOfPeople + "','" + this.password + "')");
 
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // Lista kategorii
@@ -406,8 +405,9 @@ namespace Budget
                 {
                     SqlConnect.Instance.ExecuteSqlNonQuery(
                         "INSERT INTO SavingsTargets(target, note, deadLine, priority, moneyHoldings, addedDate, neededAmount) values('" +
-                        savingsTarget.Target + "','" + savingsTarget.Note + "','" + savingsTarget.Deadline + "','" + savingsTarget.Priority + "','" +
-                        savingsTarget.MoneyHoldings + "','" + savingsTarget.AddedDate + "','" + savingsTarget.NeededAmount + "')");
+                        savingsTarget.Target + "','" + savingsTarget.Note + "','" + savingsTarget.Deadline + "','" + 
+                        savingsTarget.Priority + "','" + savingsTarget.MoneyHoldings + "','" + savingsTarget.AddedDate + "','" + 
+                        savingsTarget.NeededAmount + "')");
                 }
 
                 instance = null;
