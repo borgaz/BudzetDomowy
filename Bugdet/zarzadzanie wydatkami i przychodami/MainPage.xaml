@@ -25,6 +25,6 @@
         <Button x:Name="LoadHistoryButton" Content="Historia" Margin="80,535,80,20" Width="120" Grid.Column="2" Click="LoadHistoryButton_Click" />
         <Button Content="Zapisz" HorizontalAlignment="Left" Margin="10,500,0,40" Width="120" Height="40" Grid.Column="1" />
         <Button x:Name ="NewBudgetButton"  Content="Nowy budżet" Margin="10,20,10,0" VerticalAlignment="Top" Click="NewBudgetButton_Click" Height="40" Grid.Column="1"/>
-        <Button x:Name="LoginWindowButton" Content="Login Window" Grid.Column="1" HorizontalAlignment="Left" Margin="10,201,0,0" VerticalAlignment="Top" Width="118" Click="LoginWindowButton_Click"/>
+        <Button x:Name="LoginWindowButton" Content="Okno logowania" Grid.Column="1" HorizontalAlignment="Left" Margin="10,201,0,0" VerticalAlignment="Top" Width="118" Click="LoginWindowButton_Click"/>
     </Grid>
 </Page>

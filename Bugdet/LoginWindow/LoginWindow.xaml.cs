@@ -33,7 +33,7 @@ namespace Budget.LoginWindow
                 SqlConnect.Instance.CheckPassword(BudgetsComboBox.SelectedValue.ToString(),
                     SqlConnect.Instance.HashPasswordMd5(PassTextBox.Text)))
             {
-                
+                Close();
             }
         }
 
