@@ -10,20 +10,15 @@ namespace Budget.Nowy_budzet
     /// </summary>
     public partial class MakeBudgetPage1 : Page
     {
-        private String name, password;
-        private double balance;
-        private int numberOfPeople;
+        private SalaryInfo salaryInfo;
         private LinearGradientBrush red = new LinearGradientBrush();
         private LinearGradientBrush white = new LinearGradientBrush();
         private LinearGradientBrush green = new LinearGradientBrush();
-        public MakeBudgetPage1(String name,String password,double balance,int numberOfPeople)
+        public MakeBudgetPage1(SalaryInfo s)
         {
             InitializeComponent();
             InsertColors();
-            this.name = name;
-            this.password = password;
-            this.balance = balance;
-            this.numberOfPeople = numberOfPeople;
+            salaryInfo = s;
         }
 
         private void InsertColors()
@@ -63,10 +58,10 @@ namespace Budget.Nowy_budzet
         {
             if(budgetBalance.Text != "" && budgetNameText.Text != "" && (passTextBox.Password.Equals(passRepeatTextBox.Password)) && passTextBox.Password != "" && NumberOfPplTextBox.Text != "")
             {
-                name = budgetNameText.Text;
-                balance = double.Parse(budgetBalance.Text);
-                password = SqlConnect.Instance.HashPasswordMd5((passTextBox.Password));
-                numberOfPeople = int.Parse(NumberOfPplTextBox.Text);
+                salaryInfo.Name = budgetNameText.Text;
+                salaryInfo.Amount = double.Parse(budgetBalance.Text);
+                salaryInfo.Password = SqlConnect.Instance.HashPasswordMd5((passTextBox.Password));
+                salaryInfo.NumberOfPeople = int.Parse(NumberOfPplTextBox.Text);
                 return true;
             }
             else

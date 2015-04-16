@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Windows;
+using Budget.Nowy_budzet;
 
 namespace Budget.LoginWindow
 {
@@ -11,28 +12,39 @@ namespace Budget.LoginWindow
         public LoginWindow()
         {
             InitializeComponent();
+            InsertBudgets();
         }
 
         private void InsertBudgets()
         {
+            BudgetsComboBox.Items.Clear();
             foreach (string file in Directory.GetFiles(Directory.GetCurrentDirectory(),"*.sqlite"))
             {
-                BudgetsComboBox.Items.Add(file.Replace(".sqlite", ""));
+                string name = file.Replace(Directory.GetCurrentDirectory(), "");
+                name = name.Replace(".sqlite", "");
+                name = name.Replace("\\", "");
+                BudgetsComboBox.Items.Add(name);
             }
         }
-        private void ExitButton_Click(object sender, RoutedEventArgs e)
+
+        private void LogInButton_Click_1(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            if (BudgetsComboBox.SelectedIndex != -1 &&
+                SqlConnect.Instance.CheckPassword(BudgetsComboBox.SelectedValue.ToString(),
+                    SqlConnect.Instance.HashPasswordMd5(PassTextBox.Text)))
+            {
+                
+            }
         }
 
-        private void LogInButton_Click(object sender, RoutedEventArgs e)
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-         //   new MainWindow().ShowDialog();
+            Close();
         }
 
         private void AddBudgetButton_Click(object sender, RoutedEventArgs e)
         {
-
+            new MakeBudgetWindow(1).ShowDialog();
         }
     }
 }

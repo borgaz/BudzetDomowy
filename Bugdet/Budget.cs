@@ -348,7 +348,7 @@ namespace Budget
                 {
                     SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Categories(name,note) values('" + 
                                         this.categories[i + 1].Name +
-                                       "','" + this.categories[i + 1].Note + "')");
+                                       "','" + this.categories[i + 1].Note + "'," + categories[i + 1].Type + ")");
                 }
 
 
@@ -365,11 +365,23 @@ namespace Budget
 
                 for (int i = 0; i < this.payments.Count; i++)
                 {
-                    PeriodPayment p = (PeriodPayment)(this.payments[i + 1]);
-                    SqlConnect.Instance.ExecuteSqlNonQuery(
-                        "INSERT INTO PeriodPayments(categoryId,amount,note,type,name,frequency,period,lastUpdate,startDate,endDate) values(" +
-                        p.CategoryID + ", " + p.Amount + ",'" + p.Note + "',1,'" + p.LastUpdate + "','" + p.StartDate +
-                        "','" + p.EndDate + "')");
+                    if (payments[i + 1].Type)
+                    {
+                        PeriodPayment p = (PeriodPayment) (this.payments[i + 1]);
+                        SqlConnect.Instance.ExecuteSqlNonQuery(
+                            "INSERT INTO PeriodPayments(categoryId,amount,note,type,name,frequency,period,lastUpdate,startDate,endDate) values(" +
+                            p.CategoryID + ", " + p.Amount + ",'" + p.Note + "',1,'" + p.LastUpdate + "','" +
+                            p.StartDate +
+                            "','" + p.EndDate + "')");
+                    }
+                    else
+                    {
+                        SinglePayment p = (SinglePayment)(this.payments[i + 1]);
+                        SqlConnect.Instance.ExecuteSqlNonQuery(
+                            "INSERT INTO SinglePayments(categoryId,amount,note,type,name,date) values(" +
+                            p.CategoryID + ", " + p.Amount + ",'" + p.Note + "',0,'" + p.Date + "')");
+                    }
+
                 }
 
                 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -395,6 +407,5 @@ namespace Budget
                 return false;
             }
         }
-
     }
 }

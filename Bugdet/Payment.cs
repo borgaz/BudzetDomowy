@@ -11,7 +11,7 @@ namespace Budget
         private int categoryID; // id kategorii, z ktorej jest dana platnosc
         private double amount; // kwota
         private String name; // nazwa platnosci
-        private bool type; // 0 - rozchod, 1 - przychod
+        private bool type; // 0 - Single, 1 - Period
         private String note; // notatka
 
         public override string ToString()

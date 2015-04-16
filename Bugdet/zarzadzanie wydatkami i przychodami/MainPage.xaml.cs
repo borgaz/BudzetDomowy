@@ -27,14 +27,19 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
             BtnsContentFrame.Content = _singleSalaryPage;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void NewBudgetButton_Click(object sender, RoutedEventArgs e)
         {
             new MakeBudgetWindow(1).ShowDialog();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void LoadHistoryButton_Click(object sender, RoutedEventArgs e)
         {
             dataGridView.ItemsSource = Budget.Instance.Payments.Values;
+        }
+
+        private void LoginWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            new LoginWindow.LoginWindow().ShowDialog();
         }
     }
 }

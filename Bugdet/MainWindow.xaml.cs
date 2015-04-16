@@ -14,7 +14,7 @@ namespace Budget
         public MainWindow()
         {
             InitializeComponent();
-            SqlConnect.Instance.Connect();
+            SqlConnect.Instance.Connect("budzet");
             
             InsertPage();
         }

@@ -22,8 +22,9 @@
         <Frame x:Name="BtnsContentFrame" Content="" Margin="10,60,10,60" NavigationUIVisibility="Hidden" Background="#FF888888"/>
         <Button x:Name="AddPaymentBtn" Content="Dodaj Rozchód" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="120" Click="addPaymentBtn_Click" Height="20" Grid.Column="1"/>
         <Button x:Name="AddSalaryBtn" Content="Dodaj Przychód" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Width="120" Click="addSalaryBtn_Click" Height="20" Grid.Column="1"/>
-        <Button Content="Historia" Margin="80,535,80,20" Width="120" Grid.Column="2" Click="Button_Click_1" />
+        <Button x:Name="LoadHistoryButton" Content="Historia" Margin="80,535,80,20" Width="120" Grid.Column="2" Click="LoadHistoryButton_Click" />
         <Button Content="Zapisz" HorizontalAlignment="Left" Margin="10,500,0,40" Width="120" Height="40" Grid.Column="1" />
-        <Button Content="Nowy budżet" Margin="10,20,10,0" VerticalAlignment="Top" Click="Button_Click" Height="40" Grid.Column="1"/>
+        <Button x:Name ="NewBudgetButton"  Content="Nowy budżet" Margin="10,20,10,0" VerticalAlignment="Top" Click="NewBudgetButton_Click" Height="40" Grid.Column="1"/>
+        <Button x:Name="LoginWindowButton" Content="Login Window" Grid.Column="1" HorizontalAlignment="Left" Margin="10,201,0,0" VerticalAlignment="Top" Width="118" Click="LoginWindowButton_Click"/>
     </Grid>
 </Page>

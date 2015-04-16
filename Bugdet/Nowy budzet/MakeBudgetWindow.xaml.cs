@@ -17,10 +17,7 @@ namespace Budget.Nowy_budzet
         private static Dictionary<int, PeriodPayment> _payments = new Dictionary<int, PeriodPayment>();
         private static Dictionary<int, PeriodPayment> _salaries = new Dictionary<int, PeriodPayment>(); 
         private int _actual = 1;
-        private static String name;
-        private static String password;
-        private static double balance;
-        private static int numberOfPeople;
+        private static SalaryInfo salaryInfo = new SalaryInfo();
         private MakeBudgetPage1 _page1;
         private MakeBudgetPage2 _page2;
         private MakeBudgetPage3 _page3;
@@ -51,7 +48,7 @@ namespace Budget.Nowy_budzet
                 case 1:
                     if (back == 1)
                         _page1.BackToThisPage();
-                    _page1 = new MakeBudgetPage1(name, password, balance, numberOfPeople); // strona pierwsza
+                    _page1 = new MakeBudgetPage1(salaryInfo); // strona pierwsza
                     PageFrame.Content = _page1;
                     ExitBtn.Content = "Wyjdz";
                     break;
@@ -120,7 +117,7 @@ namespace Budget.Nowy_budzet
         }
         private Boolean CompleteBudget()
         {
-            Dictionary<int,Payment> p = new Dictionary<int, Payment>();
+            Dictionary<int,PeriodPayment> p = new Dictionary<int, PeriodPayment>();
             for (int i = 1; i <= _payments.Count; i++)
             {
                 p.Add(i,_payments[i]);
@@ -129,7 +126,7 @@ namespace Budget.Nowy_budzet
             {
                 p.Add(i,_salaries[i-p.Count]);
             }
-            if (Budget.Instance.DumpAll())
+            if (SqlConnect.Instance.DumpCreator(_categories,p,salaryInfo.Name,salaryInfo.Password,new BalanceLog(salaryInfo.Amount,DateTime.Now,0,0),salaryInfo.NumberOfPeople))
                 return true;
             else
                 return false;

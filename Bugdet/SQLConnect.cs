@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity.Core;
 using System.Data.SQLite;
 using System.IO;
 using System.Security.Cryptography;
@@ -18,7 +17,7 @@ namespace Budget
 
         private SqlConnect()
         {
-            Connect();
+            Connect("budzet");
         }
 
         public static SqlConnect Instance
@@ -26,26 +25,47 @@ namespace Budget
             get { return _instance ?? (_instance = new SqlConnect()); }
         }
 
-        public void Connect()
+        public Boolean Connect(String budget)
         {
             try
             {
-                if (!File.Exists("./budzet.sqlite")) // sprawdzanie czy juz jest baza -  w pozniejszym projekcie sie inaczej zrobi
-                {
-                    SQLiteConnection.CreateFile("budzet.sqlite");
-                    _mydb = new SQLiteConnection("Data Source=budzet.sqlite;Version=3");
-                    _mydb.Open();
-                    MakeDb();
-                }
-                else
-                {
-                    _mydb = new SQLiteConnection("Data Source=budzet.sqlite;Version=3");
-                    _mydb.Open();
-                }
+                _mydb = new SQLiteConnection("Data Source=" + budget + ".sqlite;Version=3");
+                _mydb.Open();
+              //  MakeDb();
+                return true;
             }
             catch(SQLiteException)
-            {       
+            {
+                return false;
             }
+        }
+
+        public Boolean MakeBudget(String name)
+        {
+            try
+            {
+                if (!File.Exists("./" + name + ".sqlite")) // sprawdzanie czy juz jest baza o takiej nazwie
+                {
+                    SQLiteConnection.CreateFile(name + ".sqlite");
+                    _mydb = new SQLiteConnection("Data Source=" + name + ".sqlite;Version=3");
+                    _mydb.Open();
+                    MakeDb();
+                    return true;
+                }
+                MessageBox.Show("Istnieje już taki budzet");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.GetBaseException() + "");
+                return false;
+            }
+        }
+
+        public Boolean CheckPassword(String budget, String Password)
+        {
+            DataSet result = SelectQuery("Select count(*) where name = '" + budget + "' AND password = '" + Password + "'");
+            return result.Tables[0].Rows.Count != 0;
         }
 
         public Boolean MakeDb()
@@ -108,7 +128,61 @@ namespace Budget
                 return false;
             }
         }
+        public Boolean DumpCreator(Dictionary<int, Category> _categories, Dictionary<int, PeriodPayment> _payments,
+                String _name, String _password, BalanceLog _balance,
+                int _numberOfPeople)
+        {
+            try
+            {
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                // budzet
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Budget(name,note,creation,numberofpeople,password) values('" +
+                                   _name + "'," + "'note','" + DateTime.Now.ToString() +
+                                   "'," + _numberOfPeople + ",'" + _password + "')");
 
+
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                // Lista kategorii
+                /////////////////////////////////////////////////////////////////////////////////////////////
+
+                for (int i = 0; i < _categories.Count; i++)
+                {
+                    SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Categories(name,note,type) values('" +
+                                        _categories[i + 1].Name +
+                                       "','" + _categories[i + 1].Note + "','" + _categories[i + 1].Type + "')");
+                }
+
+
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                // Aktualny stan konta
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(balance,date,singlePaymentId,periodPaymentId) values('" +
+                                   _balance.Balance + "',' " + _balance.Date + "','" +
+                                   _balance.SinglePaymentID + "','" + _balance.PeriodPaymentID + "')");
+
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                // Lista płatności
+                /////////////////////////////////////////////////////////////////////////////////////////////
+
+                for (int i = 0; i < _payments.Count; i++)
+                {
+                    PeriodPayment p = _payments[i + 1];
+                    SqlConnect.Instance.ExecuteSqlNonQuery(
+                        "INSERT INTO PeriodPayments(categoryId,amount,note,type,name,frequency,period,lastUpdate,startDate,endDate) values(" +
+                        p.CategoryID + ", " + p.Amount + ",'" + p.Note + "',1,'" + p.Name + "'," + p.Frequency +",'" + p.Period + "','" + p.LastUpdate + "','" +
+                        p.StartDate +
+                        "','" + p.EndDate + "')");
+                }
+                return true;
+            }
+            catch (System.Data.SQLite.SQLiteException ex)
+            {
+                System.Windows.MessageBox.Show("Błąd");
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+        }
         /// <summary>
         /// - wykonuje zapytanie, zwraca true jak sie uda
         /// </summary>
@@ -149,7 +223,11 @@ namespace Budget
                 return null;
             }
         }
-
+        /// <summary>
+        /// Hashuje string za pomocą MD5
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public String HashPasswordMd5(String password)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
@@ -163,19 +241,7 @@ namespace Budget
             return hashedPassword.ToString(); 
         }
 
-        public Boolean CheckCategory(String category,String note)
-        {
-            int result = (int)SelectQuery("Select count(id) as count from Categories where name='"+ category +"'").Tables[0].Rows[0]["count"];
-            if (result == 0)
-            {
-                ExecuteSqlNonQuery("INSERT into Categories(name,note) values('" + category + "','" + note + "'"); 
-                return true;
-            }
-            else
-                return false;
-        }
-
-        public Boolean AddSinglePayment(String name,double value,int category,String note)
+        public Boolean AddSinglePayment(String name, double value, int category, String note) // do usuniecia w niedalekiej przyszlosci
         {
             try
             {
@@ -200,7 +266,7 @@ namespace Budget
             }
         }
 
-        public Boolean AddSingleSalary(String name,double value,int category,String note)
+        public Boolean AddSingleSalary(String name, double value, int category, String note)// do usuniecia w niedalekiej przyszlosci
         {
             try
             {
