@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Budget.Nowy_budzet
@@ -89,6 +90,14 @@ namespace Budget.Nowy_budzet
         private void PassRepeatTextBox_OnGotFocus(object sender, RoutedEventArgs e)
         {
             passRepeatTextBox.Background = passTextBox.Password.Equals(passRepeatTextBox.Password) ? green : red;
+        }
+
+        private void NumberOfPplTextBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!char.IsDigit(e.Text,e.Text.Length - 1) && !char.IsPunctuation(e.Text,e.Text.Length - 1))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

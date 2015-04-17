@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Budget.Nowy_budzet
@@ -107,6 +108,14 @@ namespace Budget.Nowy_budzet
         private void SalaryName_OnGotFocus(object sender, RoutedEventArgs e)
         {
             InfoLbl.Content = "";
+        }
+
+        private void SalaryValue_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!char.IsDigit(e.Text, e.Text.Length - 1) && !char.IsPunctuation(e.Text, e.Text.Length - 1))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

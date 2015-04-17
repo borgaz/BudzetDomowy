@@ -63,6 +63,8 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
         private void periodCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             PeriodInfoGrid.IsEnabled = true;
+            if (EndDateEnableCheckBox.IsChecked == false)
+                EndDatePicker.IsEnabled = false;
         }
 
         private void PeriodCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
