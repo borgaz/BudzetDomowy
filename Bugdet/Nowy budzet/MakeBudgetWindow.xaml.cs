@@ -86,8 +86,24 @@ namespace Budget.Nowy_budzet
                     return false;
                     
                 case 1:
-                    return _page1.CheckInfo();
-                    
+                    if (_page1.CheckInfo() == true)
+                    {
+                        if (!wizardQuestion())
+                        {
+                            CompleteBudget();
+                            ManagePages(0, 0);
+                            this.Close();
+                            return true;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    } 
                 case 2:
                     return _page2.CheckInfo();
                 case 3:
@@ -96,6 +112,19 @@ namespace Budget.Nowy_budzet
                     return false;
             }
         }
+
+        private Boolean wizardQuestion()
+        {
+            if (MessageBox.Show("Czy chcesz dodać pierwsze wydatki/przychody ?", "Kreator", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         private void exitBtn_Click(object sender, RoutedEventArgs e)
         {
             if (_actual == 1)
@@ -120,13 +149,13 @@ namespace Budget.Nowy_budzet
             Dictionary<int,PeriodPayment> p = new Dictionary<int, PeriodPayment>();
             for (int i = 1; i <= _payments.Count; i++)
             {
-                p.Add(i,_payments[i]);
+                p.Add(i, _payments[i]);
             }
-            for (int i = 1 +_payments.Count; i <= _payments.Count + _salaries.Count; i++)
+            for (int i = 1 + _payments.Count; i <= _payments.Count + _salaries.Count; i++)
             {
-                p.Add(i,_salaries[i-p.Count]);
+                p.Add(i, _salaries[i - p.Count]);
             }
-            if (SqlConnect.Instance.DumpCreator(_categories,p,salaryInfo.Name,salaryInfo.Password,new BalanceLog(salaryInfo.Amount,DateTime.Now,0,0),salaryInfo.NumberOfPeople))
+            if (SqlConnect.Instance.DumpCreator(_categories, p, salaryInfo.Name, salaryInfo.Password, new BalanceLog(salaryInfo.Amount, DateTime.Now, 0, 0), salaryInfo.NumberOfPeople))
                 return true;
             else
                 return false;

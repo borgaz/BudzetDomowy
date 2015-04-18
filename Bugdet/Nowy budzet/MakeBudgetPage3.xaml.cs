@@ -115,6 +115,11 @@ namespace Budget.Nowy_budzet
             if (!char.IsDigit(e.Text, e.Text.Length - 1) && !char.IsPunctuation(e.Text, e.Text.Length - 1))
             {
                 e.Handled = true;
+                SalaryValue.ToolTip = "Podaj kwotę liczbą."; 
+            }
+            else
+            {
+                SalaryValue.ToolTip = null;
             }
         }
     }

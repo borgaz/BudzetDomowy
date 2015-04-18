@@ -57,7 +57,7 @@ namespace Budget.Nowy_budzet
         /// </summary>
         public Boolean CheckInfo()
         {
-            if(budgetBalance.Text != "" && budgetNameText.Text != "" && (passTextBox.Password.Equals(passRepeatTextBox.Password)) && passTextBox.Password != "" && NumberOfPplTextBox.Text != "")
+            if (budgetBalance.Text != "" && budgetNameText.Text != "" && (passTextBox.Password.Equals(passRepeatTextBox.Password)) && passTextBox.Password != "" && NumberOfPplTextBox.Text != "")
             {
                 salaryInfo.Name = budgetNameText.Text;
                 salaryInfo.Amount = double.Parse(budgetBalance.Text);
@@ -67,11 +67,12 @@ namespace Budget.Nowy_budzet
             }
             else
             {
-                MessageBox.Show("uzupelnij wszystkie pola!");
-              //  CheckWindow();
+                MessageBox.Show("Uzupelnij wszystkie pola.");
+                //  CheckWindow();
                 return false;
             }
         }
+
         public Boolean BackToThisPage() //do usuniecia przy refaktoryzacji
         {
             return true;
@@ -97,6 +98,11 @@ namespace Budget.Nowy_budzet
             if (!char.IsDigit(e.Text,e.Text.Length - 1) && !char.IsPunctuation(e.Text,e.Text.Length - 1))
             {
                 e.Handled = true;
+                budgetBalance.ToolTip = "Wpisz kwotę liczbą";
+            }
+            else
+            {
+                budgetBalance.ToolTip = null;
             }
         }
     }

@@ -415,7 +415,7 @@ namespace Budget
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Wystąpił błąd w DumbAll");
+                System.Windows.MessageBox.Show("Wystąpił błąd w DumpAll");
                 Console.WriteLine("\n" + ex.GetBaseException() + "\n");
                 return false;
             }
