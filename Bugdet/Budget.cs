@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
 namespace Budget
@@ -183,6 +185,23 @@ namespace Budget
             balanceLogs.Remove(index);
         }
 
+        public void InsertCategories(ComboBox comboBox, bool type)
+        {
+            comboBox.Items.Clear();
+            try
+            {
+                for (int i = 0; i < categories.Count; i++)
+                {
+                    if (categories[i + 1].Type == type)
+                        comboBox.Items.Add(categories[i + 1].Name);
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(categories.Count + "");
+                Console.WriteLine(categories.ToArray());
+            }
+        }
         public void SetDefaultCategories()
         {
             try
@@ -255,7 +274,7 @@ namespace Budget
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
                 Dictionary<int, BalanceLog> balanceLogs = new Dictionary<int, BalanceLog>();
-                System.Data.DataSet balanceLogsFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM BalanceLogs");
+                System.Data.DataSet balanceLogsFromSelect = SqlConnect.Instance.SelectQuery("SELECT [id],[balance],[singlePaymentId],[periodPaymentId],[date] FROM BalanceLogs"); // TODO: Dziwny błąd z wyciąganiem danych które istnieją
                 for (int i = 0; i < balanceLogsFromSelect.Tables[0].Rows.Count; i++)
                 {
                     balanceLogs.Add(Convert.ToInt32(balanceLogsFromSelect.Tables[0].Rows[i]["id"]),

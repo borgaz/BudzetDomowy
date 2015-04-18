@@ -88,11 +88,10 @@ namespace Budget.Nowy_budzet
                 case 1:
                     if (_page1.CheckInfo() == true)
                     {
-                        if (!wizardQuestion())
+                        if (!WizardQuestion())
                         {
                             CompleteBudget();
                             ManagePages(0, 0);
-                            this.Close();
                             return true;
                         }
                         else
@@ -113,7 +112,7 @@ namespace Budget.Nowy_budzet
             }
         }
 
-        private Boolean wizardQuestion()
+        private Boolean WizardQuestion()
         {
             if (MessageBox.Show("Czy chcesz dodać pierwsze wydatki/przychody ?", "Kreator", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
             {

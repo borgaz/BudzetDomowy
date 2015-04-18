@@ -18,7 +18,7 @@ namespace Budget
 
         private SqlConnect()
         {
-            Connect("budzet");
+          //  Connect("budzet");
         }
 
         public static SqlConnect Instance
@@ -35,11 +35,11 @@ namespace Budget
             {
                 _mydb = new SQLiteConnection("Data Source=" + budget + ".sqlite;Version=3");
                 _mydb.Open();
-                // MakeDb();
                 return true;
             }
             catch(SQLiteException)
             {
+                MakeBudget(budget);
                 return false;
             }
         }
@@ -66,11 +66,15 @@ namespace Budget
             }
         }
 
-        public Boolean CheckPassword(String budget, String Password)
+        public Boolean CheckPassword(String budget, String password)
         {
-            System.Console.WriteLine(budget + " " + Password);
-            DataSet result = SelectQuery("Select count(*) from Budget where name = '" + budget + "' AND password = '" + Password + "'");
-            return result.Tables[0].Rows.Count != 0;
+            Connect(budget);
+            System.Console.WriteLine(budget + " " + password);
+            DataSet result = SelectQuery("Select count(*) as count from Budget where name = '" + budget + "' AND password = '" + password + "'");
+            if (Convert.ToInt32(result.Tables[0].Rows[0]["count"].ToString()) < 1)
+                return false;
+            else
+                return true;
         }
 
         public Boolean CleanDatabase()
@@ -100,7 +104,7 @@ namespace Budget
                 ExecuteSqlNonQuery("CREATE TABLE Budget (name varchar(50)," + 
                                                         "note varchar (200)," +
                                                         "password varchar (20)," +
-                                                        "balance double," +
+                                                        "balance double," + // TODO: Chyba trzeba usunąć i odwoływać się od BalanceLog
                                                         "creation date," +
                                                         "numberOfPeople integer)");
 
@@ -158,13 +162,14 @@ namespace Budget
         {
             try
             {
+                MakeBudget(_name);
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // budzet
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
-                SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Budget(name,note,creation,numberofpeople,password) values('" +
+                SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Budget(name,note,creation,numberofpeople,password,balance) values('" +
                                    _name + "'," + "'note','" + DateTime.Now.ToString() +
-                                   "'," + _numberOfPeople + ",'" + _password + "')");
+                                   "'," + _numberOfPeople + ",'" + _password + "'," + _balance.Balance + ")");
 
 
                 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -241,6 +246,7 @@ namespace Budget
             {
                 DataSet dataSet = new DataSet();
                 SQLiteDataAdapter result = new SQLiteDataAdapter {SelectCommand = new SQLiteCommand(query, _mydb)};
+                Console.WriteLine(result.ToString());
                 result.Fill(dataSet);
                 return dataSet;
             }
