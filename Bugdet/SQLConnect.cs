@@ -168,7 +168,7 @@ namespace Budget
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
                 SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Budget(name,note,creation,numberofpeople,password,balance) values('" +
-                                   _name + "'," + "'note','" + DateTime.Now.ToString() +
+                                   _name + "'," + "'note','" + DateTime.Now.ToShortDateString() +
                                    "'," + _numberOfPeople + ",'" + _password + "'," + _balance.Balance + ")");
 
 
@@ -189,7 +189,7 @@ namespace Budget
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
                 SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(balance,date,singlePaymentId,periodPaymentId) values('" +
-                                   _balance.Balance + "',' " + _balance.Date + "','" +
+                                   _balance.Balance + "',' " + _balance.Date.ToShortDateString() + "','" +
                                    _balance.SinglePaymentID + "','" + _balance.PeriodPaymentID + "')");
 
                 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -202,8 +202,8 @@ namespace Budget
                     SqlConnect.Instance.ExecuteSqlNonQuery(
                         "INSERT INTO PeriodPayments(categoryId,amount,note,type,name,frequency,period,lastUpdate,startDate,endDate) values(" +
                         p.CategoryID + ", " + p.Amount + ",'" + p.Note + "',1,'" + p.Name + "'," + p.Frequency +",'" + p.Period + "','" + p.LastUpdate + "','" +
-                        p.StartDate +
-                        "','" + p.EndDate + "')");
+                        p.StartDate.ToShortDateString() +
+                        "','" + p.EndDate.ToShortDateString() + "')");
                 }
                 return true;
             }

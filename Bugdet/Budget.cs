@@ -274,7 +274,7 @@ namespace Budget
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
                 Dictionary<int, BalanceLog> balanceLogs = new Dictionary<int, BalanceLog>();
-                System.Data.DataSet balanceLogsFromSelect = SqlConnect.Instance.SelectQuery("SELECT [id],[balance],[singlePaymentId],[periodPaymentId],[date] FROM BalanceLogs"); // TODO: Dziwny błąd z wyciąganiem danych które istnieją
+                System.Data.DataSet balanceLogsFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM BalanceLogs");
                 for (int i = 0; i < balanceLogsFromSelect.Tables[0].Rows.Count; i++)
                 {
                     balanceLogs.Add(Convert.ToInt32(balanceLogsFromSelect.Tables[0].Rows[i]["id"]),
@@ -360,7 +360,7 @@ namespace Budget
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
                 SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Budget(name, balance, note, creation, numberOfPeople, password) values('" +
-                                    this.name + "','" + this.balance + "','" + this.note + "','" + this.creationDate +
+                                    this.name + "','" + this.balance + "','" + this.note + "','" + this.creationDate.ToShortDateString() +
                                     "','" + this.numberOfPeople + "','" + this.password + "')");
 
                 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -380,7 +380,7 @@ namespace Budget
                 foreach(BalanceLog balanceLog in this.balanceLogs.Values)
                 {
                     SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(balance, date, singlePaymentId, periodPaymentId) values('" +
-                                   balanceLog.Balance + "','" + balanceLog.Date + "','" + balanceLog.SinglePaymentID + 
+                                   balanceLog.Balance + "','" + balanceLog.Date.ToShortDateString() + "','" + balanceLog.SinglePaymentID + 
                                    "','" + balanceLog.PeriodPaymentID + "')");
                 }
                
@@ -403,16 +403,16 @@ namespace Budget
                     {
                         PeriodPayment p = (PeriodPayment)payment;
                         SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO PeriodPayments(categoryId, amount, note, type, name, frequency, period, lastUpdate, startDate, endDate) values('" +
-                            p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + temp + "','" + p.Name + "','" + p.Frequency + "','" + p.Period + "','" + p.LastUpdate + "','" + 
-                            p.StartDate + "','" + p.EndDate + "')");
+                            p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + temp + "','" + p.Name + "','" + p.Frequency + "','" + p.Period + "','" + p.LastUpdate + "','" +
+                            p.StartDate.ToShortDateString() + "','" + p.EndDate.ToShortDateString() + "')");
                     }
                     else if (payment.GetType() == typeof(SinglePayment))
                     {
                         SinglePayment p = (SinglePayment)payment;
                         SqlConnect.Instance.ExecuteSqlNonQuery(
                             "INSERT INTO SinglePayments(categoryId, amount, note, type, name, date) values('" +
-                            p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + temp + "','" + 
-                            p.Name + "','" + p.Date + "')");
+                            p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + temp + "','" +
+                            p.Name + "','" + p.Date.ToShortDateString() + "')");
                     }
                 }
 
@@ -424,8 +424,8 @@ namespace Budget
                 {
                     SqlConnect.Instance.ExecuteSqlNonQuery(
                         "INSERT INTO SavingsTargets(target, note, deadLine, priority, moneyHoldings, addedDate, neededAmount) values('" +
-                        savingsTarget.Target + "','" + savingsTarget.Note + "','" + savingsTarget.Deadline + "','" + 
-                        savingsTarget.Priority + "','" + savingsTarget.MoneyHoldings + "','" + savingsTarget.AddedDate + "','" + 
+                        savingsTarget.Target + "','" + savingsTarget.Note + "','" + savingsTarget.Deadline.ToShortDateString() + "','" +
+                        savingsTarget.Priority + "','" + savingsTarget.MoneyHoldings + "','" + savingsTarget.AddedDate.ToShortDateString() + "','" + 
                         savingsTarget.NeededAmount + "')");
                 }
 
