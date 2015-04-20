@@ -15,6 +15,7 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
         public AddPaymentPage()
         {
             InitializeComponent();
+            AddSalaryPage.InsertDateTypes(TypeOfDayComboBox);
             Budget.Instance.InsertCategories(CategoryBox,false);
         }
 

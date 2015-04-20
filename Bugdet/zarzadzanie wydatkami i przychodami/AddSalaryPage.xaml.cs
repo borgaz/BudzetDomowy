@@ -17,7 +17,7 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
             InitializeComponent();
             //InsertCategories();
             Budget.Instance.InsertCategories(CategoryBox, true);
-            InsertDateTypes();
+            InsertDateTypes(TypeOfDayComboBox);
         }
         private void addSalaryBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -57,12 +57,12 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
             }
         }
 
-        private void InsertDateTypes()
+        public static void InsertDateTypes(ComboBox cBox)
         {
-            TypeOfDayComboBox.Items.Add("DZIEŃ");
-            TypeOfDayComboBox.Items.Add("TYDZIEŃ");
-            TypeOfDayComboBox.Items.Add("MIESIĄC");
-            TypeOfDayComboBox.Items.Add("ROK");
+            cBox.Items.Add("DZIEŃ");
+            cBox.Items.Add("TYDZIEŃ");
+            cBox.Items.Add("MIESIĄC");
+            cBox.Items.Add("ROK");
         }
         private void InsertCategories()
         {
