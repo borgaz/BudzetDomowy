@@ -6,6 +6,7 @@ using Budget.Nowy_budzet;
 using Budget.zarzadzanie_wydatkami_i_przychodami;
 using Budget.LoginWindow;
 using Budget.InterfacePage;
+using Budget.SettingsPage;
 
 namespace Budget
 {
@@ -17,7 +18,9 @@ namespace Budget
         private MainPage _mainPage;
         private InterfacePage.InterfacePage _interfacePage;
         readonly LoginWindow.LoginWindow _loginWindow = new LoginWindow.LoginWindow();
-        private static int _actualPage = 1;
+        private WelcomePage.WelcomePage _welcomePage;
+        private MainSettingsWindow _mainSettingsWindow;
+        private static int _actualPage = 3;
         private bool running = true;
         public MainWindow()
         {
@@ -30,6 +33,8 @@ namespace Budget
             InitializeComponent();
             _mainPage = new MainPage();
             _interfacePage = new InterfacePage.InterfacePage();
+            _welcomePage = new WelcomePage.WelcomePage();
+            _mainSettingsWindow = new MainSettingsWindow(1);
             InsertPage();
             new Thread(OnPageChange).Start();
         }
@@ -59,6 +64,12 @@ namespace Budget
                     break;
                 case 2:
                     this.MainContentFrame.Content = _interfacePage;
+                    break;
+                case 3:
+                    this.MainContentFrame.Content = _welcomePage;
+                    break;
+                case 4:
+                    this.MainContentFrame.Content = _mainSettingsWindow;
                     break;
             }
         }

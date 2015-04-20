@@ -29,5 +29,15 @@ namespace Budget.InterfacePage
         {
             MainWindow.ActualPage = 1;
         }
+
+        private void OptionsButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.ActualPage = 4;
+        }
+
+        private void WelcomePageButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.ActualPage = 3;
+        }
     }
 }
