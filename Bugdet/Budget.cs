@@ -188,12 +188,16 @@ namespace Budget
         public void InsertCategories(ComboBox comboBox, bool type)
         {
             comboBox.Items.Clear();
+            Console.WriteLine("Typ przekazany " + type);
             try
             {
                 for (int i = 0; i < categories.Count; i++)
                 {
                     if (categories[i + 1].Type == type)
-                        comboBox.Items.Add(new ComboBoxItem(i+1,categories[i + 1].Name));
+                    {
+                        Console.WriteLine(categories[i + 1].Type);
+                        comboBox.Items.Add(new ComboBoxItem(i + 1, categories[i + 1].Name));
+                    }
                 }
             }
             catch (Exception)
@@ -262,6 +266,7 @@ namespace Budget
                 System.Data.DataSet categoriesFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM Categories");
                 for (int i = 0; i < categoriesFromSelect.Tables[0].Rows.Count; i++)
                 {
+                    Console.WriteLine("W FETCH ALL: " + Convert.ToBoolean(categoriesFromSelect.Tables[0].Rows[i]["type"].ToString()));
                     categories.Add(Convert.ToInt32(categoriesFromSelect.Tables[0].Rows[i]["id"]),
                     new Category(Convert.ToString(categoriesFromSelect.Tables[0].Rows[i]["name"]),
                         Convert.ToString(categoriesFromSelect.Tables[0].Rows[i]["note"]),

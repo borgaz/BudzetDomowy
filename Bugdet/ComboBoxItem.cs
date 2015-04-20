@@ -9,9 +9,9 @@ namespace Budget
     class ComboBoxItem
     {
         private int id;
-        private Object value;
+        private string value;
 
-        public ComboBoxItem(int id,Object value)
+        public ComboBoxItem(int id,string value)
         {
             this.id = id;
             this.value = value;
@@ -22,9 +22,14 @@ namespace Budget
             get { return id; }
         }
 
-        public Object Value
+        public string Value
         {
             get { return value; }
+        }
+
+        public override string ToString()
+        {
+            return value;
         }
     }
 }

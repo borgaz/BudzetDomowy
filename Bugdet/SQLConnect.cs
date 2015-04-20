@@ -186,7 +186,7 @@ namespace Budget
                 {
                     SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Categories(name,note,type) values('" +
                                         _categories[i + 1].Name +
-                                       "','" + _categories[i + 1].Note + "','" + _categories[i + 1].Type + "')");
+                                       "','" + _categories[i + 1].Note + "','" + Convert.ToInt32(_categories[i + 1].Type) + "')");
                 }
 
 

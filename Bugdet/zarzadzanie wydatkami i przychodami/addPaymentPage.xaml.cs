@@ -27,7 +27,7 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
                 {
 
 
-                    Budget.Instance.AddPeriodPayment(Budget.Instance.Payments.Last().Key,
+                    Budget.Instance.AddPeriodPayment(Budget.Instance.Payments.Last().Key+1,
                         new PeriodPayment(categoryItem.Id, Convert.ToDouble(PaymentValue.Text), Note.Text, true,
                             PaymentName.Text, Convert.ToInt32(NumberOfTexBox.Text), TypeOfDayComboBox.Text,
                             StartDatePicker.DisplayDate, StartDatePicker.DisplayDate,
@@ -37,7 +37,7 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
                 }
                 else
                 {
-                    Budget.Instance.AddSinglePayment(Budget.Instance.Payments.Last().Key,
+                    Budget.Instance.AddSinglePayment(Budget.Instance.Payments.Last().Key+1,
                         new SinglePayment(Note.Text, Convert.ToDouble(PaymentValue.Text), categoryItem.Id, true,
                             PaymentName.Text, DateTime.Now));
 
