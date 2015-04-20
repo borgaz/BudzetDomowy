@@ -193,7 +193,7 @@ namespace Budget
                 for (int i = 0; i < categories.Count; i++)
                 {
                     if (categories[i + 1].Type == type)
-                        comboBox.Items.Add(categories[i + 1].Name);
+                        comboBox.Items.Add(new ComboBoxItem(i+1,categories[i + 1].Name));
                 }
             }
             catch (Exception)
@@ -274,12 +274,13 @@ namespace Budget
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
                 Dictionary<int, BalanceLog> balanceLogs = new Dictionary<int, BalanceLog>();
-                System.Data.DataSet balanceLogsFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM BalanceLogs");
+                System.Data.DataSet balanceLogsFromSelect = SqlConnect.Instance.SelectQuery("SELECT [id],[balance],[singlePaymentId],[periodPaymentId] FROM BalanceLogs");
                 for (int i = 0; i < balanceLogsFromSelect.Tables[0].Rows.Count; i++)
                 {
                     balanceLogs.Add(Convert.ToInt32(balanceLogsFromSelect.Tables[0].Rows[i]["id"]),
                         new BalanceLog(Convert.ToDouble(balanceLogsFromSelect.Tables[0].Rows[i]["balance"]),
-                        Convert.ToDateTime(balanceLogsFromSelect.Tables[0].Rows[i]["date"]),
+                            DateTime.Now,
+                      //  Convert.ToDateTime(balanceLogsFromSelect.Tables[0].Rows[i]["date"]),
                         Convert.ToInt32(balanceLogsFromSelect.Tables[0].Rows[i]["singlePaymentId"]),
                         Convert.ToInt32(balanceLogsFromSelect.Tables[0].Rows[i]["periodPaymentId"])
                         ));
@@ -346,7 +347,7 @@ namespace Budget
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Wystąpił błąd w FetchAll");
-                Console.WriteLine("\n" + ex.GetBaseException() + "\n");
+                SqlConnect.Instance.ErrLog(ex);
                 return null;
             }
         }

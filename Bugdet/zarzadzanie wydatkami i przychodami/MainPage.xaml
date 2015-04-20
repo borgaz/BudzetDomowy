@@ -20,7 +20,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <Frame x:Name="BtnsContentFrame" Content="" Margin="10,60,10,60" NavigationUIVisibility="Hidden" Background="#FF888888"/>
-        <Button x:Name="AddPaymentBtn" Content="Dodaj Rozchód" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="120" Click="addPaymentBtn_Click" Height="20" Grid.Column="1"/>
+        <Button x:Name="AddPaymentBtn" Content="Dodaj Wydatek" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="120" Click="addPaymentBtn_Click" Height="20" Grid.Column="1"/>
         <Button x:Name="AddSalaryBtn" Content="Dodaj Przychód" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Width="120" Click="addSalaryBtn_Click" Height="20" Grid.Column="1"/>
         <Button x:Name="LoadHistoryButton" Content="Historia" Margin="80,535,80,20" Width="120" Grid.Column="2" Click="LoadHistoryButton_Click" />
         <Button x:Name="DumpAllButton" Content="Zapisz" HorizontalAlignment="Left" Margin="10,500,0,40" Width="120" Height="40" Grid.Column="1" Click="DumpAllButton_Click" />

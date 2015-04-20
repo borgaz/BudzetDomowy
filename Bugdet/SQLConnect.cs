@@ -77,6 +77,12 @@ namespace Budget
                 return true;
         }
 
+        public void ErrLog(Exception ex)
+        {
+            MessageBox.Show("Wystąpił błąd skontaktuj się z Developerami!");
+            File.AppendAllText("./logs", "\n--------------------------\n" + DateTime.Now.ToString() + "\n--------------------------\n" + ex.ToString());
+        } // TODO: Przerobic wszystkie exception, zeby wchodzily do tej metody
+
         public Boolean CleanDatabase()
         {
             try
@@ -246,7 +252,6 @@ namespace Budget
             {
                 DataSet dataSet = new DataSet();
                 SQLiteDataAdapter result = new SQLiteDataAdapter {SelectCommand = new SQLiteCommand(query, _mydb)};
-                Console.WriteLine(result.ToString());
                 result.Fill(dataSet);
                 return dataSet;
             }
@@ -273,54 +278,6 @@ namespace Budget
                 hashedPassword.Append(resultChunk.ToString("x2"));
             }
             return hashedPassword.ToString(); 
-        }
-
-        public Boolean AddSinglePayment(String name, double value, int category, String note) // do usuniecia w niedalekiej przyszlosci
-        {
-            try
-            {
-                _command = new SQLiteCommand
-                {
-                    CommandText = "INSERT INTO BalanceLogs(periodPaymentId,categoryId,income,date,note) values(null,@category,@income,date('now'),@note)"
-                };
-                _command.Parameters.AddWithValue("@category", ++category);
-                _command.Parameters.AddWithValue("@income", value * (-1));
-                _command.Parameters.AddWithValue("@note", name + "|" + note);
-                _command.Connection = _mydb;
-                _command.ExecuteNonQuery();
-                _command.Dispose();
-                return true;
-            }
-            catch(SQLiteException ex)
-            {
-                MessageBox.Show("Błąd");
-                Console.WriteLine(ex.GetBaseException() + @"AddSinglePayment()");
-                return false;
-            }
-        }
-
-        public Boolean AddSingleSalary(String name, double value, int category, String note)// do usuniecia w niedalekiej przyszlosci
-        {
-            try
-            {
-                _command = new SQLiteCommand
-                {
-                    CommandText = "INSERT INTO BalanceLogs(periodPaymentId,categoryId,income,date,note) values(null,@category,@income,date('now'),@note)"
-                };
-                _command.Parameters.AddWithValue("@category", ++category);
-                _command.Parameters.AddWithValue("@income", value);
-                _command.Parameters.AddWithValue("@note", name + "|" + note);
-                _command.Connection = _mydb;
-                _command.ExecuteNonQuery();
-                _command.Dispose();
-                return true;
-            }
-            catch (SQLiteException ex)
-            {
-                MessageBox.Show("Błąd");
-                Console.WriteLine(ex.GetBaseException() + "\n AddSinglePayment()");
-                return false;
-            }
         }
 
         public Dictionary<int, Category> AddDefaultCategories()

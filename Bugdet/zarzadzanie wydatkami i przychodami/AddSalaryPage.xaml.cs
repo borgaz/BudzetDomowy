@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -20,19 +22,33 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
         {
             if (PaymentName.Text != "" && PaymentValue.Text != "" && CategoryBox.SelectedIndex != -1)
             {
-                if (SqlConnect.Instance.AddSingleSalary(PaymentName.Text, double.Parse(PaymentValue.Text), CategoryBox.SelectedIndex, Note.Text))
+                ComboBoxItem categoryItem = (ComboBoxItem)CategoryBox.SelectedValue;
+                if (PeriodCheckBox.IsChecked == true)
                 {
-                    InfoBox.Text = "Dodano";
-                    InfoBox.Foreground = Brushes.Green;
-                    PaymentName.Text = "";
-                    PaymentValue.Text = "";
-                    CategoryBox.SelectedIndex = -1;
+
+
+                    Budget.Instance.AddPeriodPayment(Budget.Instance.Payments.Last().Key,
+                        new PeriodPayment(categoryItem.Id, Convert.ToDouble(PaymentValue.Text), Note.Text, false,
+                            PaymentName.Text, Convert.ToInt32(NumberOfTexBox.Text), TypeOfDayComboBox.Text,
+                            StartDatePicker.DisplayDate, StartDatePicker.DisplayDate,
+                            (EndDateEnableCheckBox.IsChecked == true
+                                ? EndDatePicker.DisplayDate
+                                : StartDatePicker.DisplayDate.AddYears(10).Date)));
                 }
                 else
                 {
-                    InfoBox.Text = "Wystąpił Błąd";
-                    InfoBox.Foreground = Brushes.Red;
+                    Budget.Instance.AddSinglePayment(Budget.Instance.Payments.Last().Key,
+                        new SinglePayment(Note.Text, Convert.ToDouble(PaymentValue.Text), categoryItem.Id, false,
+                            PaymentName.Text, DateTime.Now));
+
                 }
+                InfoBox.Text = "Dodano";
+                InfoBox.Foreground = Brushes.Green;
+                PaymentName.Text = "";
+                PaymentValue.Text = "";
+                CategoryBox.SelectedIndex = -1;
+                TypeOfDayComboBox.SelectedIndex = -1;
+                NumberOfTexBox.Text = "";
             }
             else
             {
