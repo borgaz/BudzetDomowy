@@ -207,7 +207,7 @@ namespace Budget
                     //PeriodPayment p = _payments[i + 1];
                     SqlConnect.Instance.ExecuteSqlNonQuery(
                         "INSERT INTO PeriodPayments(categoryId,amount,note,type,name,frequency,period,lastUpdate,startDate,endDate) values(" +
-                        p.CategoryID + ", " + p.Amount + ",'" + p.Note + Convert.ToInt32(p.Type) + p.Name + "'," + p.Frequency + ",'" + p.Period + "','" + p.LastUpdate.ToShortDateString() + "','" +
+                        p.CategoryID + ", " + p.Amount + ",'" + p.Note + "'," + Convert.ToInt32(p.Type) + ",'" + p.Name + "'," + p.Frequency + ",'" + p.Period + "','" + p.LastUpdate.ToShortDateString() + "','" +
                         p.StartDate.ToShortDateString() +
                         "','" + p.EndDate.ToShortDateString() + "')");
                 }
