@@ -195,19 +195,19 @@ namespace Budget
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
                 SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(balance,date,singlePaymentId,periodPaymentId) values('" +
-                                   _balance.Balance + "',' " + _balance.Date.ToShortDateString() + "','" +
+                                   _balance.Balance + "','" + _balance.Date.ToShortDateString() + "','" +
                                    _balance.SinglePaymentID + "','" + _balance.PeriodPaymentID + "')");
 
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // Lista płatności
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
-                for (int i = 0; i < _payments.Count; i++)
+                foreach (PeriodPayment p in _payments.Values)
                 {
-                    PeriodPayment p = _payments[i + 1];
+                    //PeriodPayment p = _payments[i + 1];
                     SqlConnect.Instance.ExecuteSqlNonQuery(
                         "INSERT INTO PeriodPayments(categoryId,amount,note,type,name,frequency,period,lastUpdate,startDate,endDate) values(" +
-                        p.CategoryID + ", " + p.Amount + ",'" + p.Note + "',1,'" + p.Name + "'," + p.Frequency +",'" + p.Period + "','" + p.LastUpdate + "','" +
+                        p.CategoryID + ", " + p.Amount + ",'" + p.Note + Convert.ToInt32(p.Type) + p.Name + "'," + p.Frequency + ",'" + p.Period + "','" + p.LastUpdate.ToShortDateString() + "','" +
                         p.StartDate.ToShortDateString() +
                         "','" + p.EndDate.ToShortDateString() + "')");
                 }

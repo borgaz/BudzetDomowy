@@ -274,13 +274,12 @@ namespace Budget
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
                 Dictionary<int, BalanceLog> balanceLogs = new Dictionary<int, BalanceLog>();
-                System.Data.DataSet balanceLogsFromSelect = SqlConnect.Instance.SelectQuery("SELECT [id],[balance],[singlePaymentId],[periodPaymentId] FROM BalanceLogs");
+                System.Data.DataSet balanceLogsFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM BalanceLogs");
                 for (int i = 0; i < balanceLogsFromSelect.Tables[0].Rows.Count; i++)
                 {
                     balanceLogs.Add(Convert.ToInt32(balanceLogsFromSelect.Tables[0].Rows[i]["id"]),
                         new BalanceLog(Convert.ToDouble(balanceLogsFromSelect.Tables[0].Rows[i]["balance"]),
-                            DateTime.Now,
-                      //  Convert.ToDateTime(balanceLogsFromSelect.Tables[0].Rows[i]["date"]),
+                        Convert.ToDateTime(balanceLogsFromSelect.Tables[0].Rows[i]["date"]),
                         Convert.ToInt32(balanceLogsFromSelect.Tables[0].Rows[i]["singlePaymentId"]),
                         Convert.ToInt32(balanceLogsFromSelect.Tables[0].Rows[i]["periodPaymentId"])
                         ));

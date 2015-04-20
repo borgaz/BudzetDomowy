@@ -38,7 +38,7 @@ namespace Budget.Nowy_budzet
                 _periodPayments.Add(++_salaries,new PeriodPayment(CategoryComboBox.SelectedIndex + 1,
                     Double.Parse(SalaryValue.Text),
                     NoteTextBox.Text,
-                    true,SalaryName.Text,
+                    false,SalaryName.Text,
                     int.Parse(NumberOfTextBox.Text),
                     DateTypeBox.SelectedValue.ToString(),
                     StartDatePicker.DisplayDate,StartDatePicker.DisplayDate,
