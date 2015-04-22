@@ -46,8 +46,6 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
         {
             //SqlConnect.Instance.CleanDatabase();
             //Budget.Instance.DumpAll();
-            Budget.Instance.Payments[6].Name = "test";
-            Budget.Instance.ListOfEdts.Add(new Changes(Budget.Instance.Payments[6].GetType(),6));
             Budget.Instance.Dump();
         }
     }

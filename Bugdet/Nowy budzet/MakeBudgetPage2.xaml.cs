@@ -35,7 +35,10 @@ namespace Budget.Nowy_budzet
         {
             if(SalaryName.Text != "" && SalaryValue.Text != "" && NumberOfTextBox.Text != "" && DateTypeBox.SelectedIndex != -1 && CategoryComboBox.SelectedIndex != -1 )
             {
-                _periodPayments.Add(++_salaries,new PeriodPayment(CategoryComboBox.SelectedIndex + 1,
+                int temp = 1;
+                try { temp = _periodPayments.Last().Key + 1; }
+                catch { }
+                _periodPayments.Add(temp,new PeriodPayment(CategoryComboBox.SelectedIndex + 1,
                     Double.Parse(SalaryValue.Text),
                     NoteTextBox.Text,
                     false,SalaryName.Text,

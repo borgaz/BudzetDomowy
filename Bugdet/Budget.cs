@@ -26,6 +26,7 @@ namespace Budget
         private int numberOfPeople; // ilosc osob, dla ktorych prowadzony jest budzet domowy
         private List<Changes> listOfAdds;
         private List<Changes> listOfDels;
+        private List<Changes> listOfEdts;
 
         public override string ToString()
         {
@@ -48,6 +49,7 @@ namespace Budget
             this.creationDate = creationDate;
             listOfAdds = new List<Changes>();
             listOfDels = new List<Changes>();
+            listOfEdts = new List<Changes>();
         }
 
         public static Budget Instance
@@ -76,6 +78,14 @@ namespace Budget
             get
             {
                 return this.listOfDels;
+            }
+        }
+
+        public List<Changes> ListOfEdts
+        {
+            get
+            {
+                return this.listOfEdts;
             }
         }
 
@@ -225,27 +235,28 @@ namespace Budget
                 Console.WriteLine(categories.ToArray());
             }
         }
-        public void SetDefaultCategories()
-        {
-            try
-            {
-                this.categories.Add(1, new Category("Paliwo", "Benzyna do samochodu", false));
-                this.categories.Add(2, new Category("Jedzenie", "Zakupy okresowe", false));
-                this.categories.Add(3, new Category("Prąd", "Rachunki za energię", false));
-                this.categories.Add(4, new Category("Woda", "Rachunki za wodę", false));
-                this.categories.Add(5, new Category("Gaz", "Rachunki za gaz", false));
-                this.categories.Add(6, new Category("Internet", "Rachunki za internet", false));
-                this.categories.Add(7, new Category("Praca", "Wypłata", true));
-                this.categories.Add(8, new Category("Emerytura", "Emerytura", true));
-                this.categories.Add(9, new Category("Renta", "Renta", true));
-                this.categories.Add(10, new Category("Stypednium", "Stypendium, np. socjalne, naukowe itp.", true));
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show("Wystąpił błąd w addDefaultCategories");
-                Console.WriteLine("\n" + ex.GetBaseException() + "\n");
-            }
-        }
+
+        //public void SetDefaultCategories()
+        //{
+        //    try
+        //    {
+        //        this.categories.Add(1, new Category("Paliwo", "Benzyna do samochodu", false));
+        //        this.categories.Add(2, new Category("Jedzenie", "Zakupy okresowe", false));
+        //        this.categories.Add(3, new Category("Prąd", "Rachunki za energię", false));
+        //        this.categories.Add(4, new Category("Woda", "Rachunki za wodę", false));
+        //        this.categories.Add(5, new Category("Gaz", "Rachunki za gaz", false));
+        //        this.categories.Add(6, new Category("Internet", "Rachunki za internet", false));
+        //        this.categories.Add(7, new Category("Praca", "Wypłata", true));
+        //        this.categories.Add(8, new Category("Emerytura", "Emerytura", true));
+        //        this.categories.Add(9, new Category("Renta", "Renta", true));
+        //        this.categories.Add(10, new Category("Stypednium", "Stypendium, np. socjalne, naukowe itp.", true));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        System.Windows.MessageBox.Show("Wystąpił błąd w addDefaultCategories");
+        //        Console.WriteLine("\n" + ex.GetBaseException() + "\n");
+        //    }
+        //}
 
         /// <summary>
         /// Pobiera wszystkie dane z bazy do obiektu
@@ -374,7 +385,7 @@ namespace Budget
             }
         }
 
-        public Boolean AddToDB(List<Changes> listOfAdds)
+        private Boolean AddToDB(List<Changes> listOfAdds)
         {
             try
             {
@@ -383,16 +394,16 @@ namespace Budget
                     if (C.Type == typeof(BalanceLog))
                     {
                         BalanceLog b = Budget.Instance.BalanceLog[C.ID];
-                        SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(balance, date, singlePaymentId, periodPaymentId) values('" +
-                                       b.Balance + "','" + b.Date.ToShortDateString() + "','" + b.SinglePaymentID +
+                        SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(id, balance, date, singlePaymentId, periodPaymentId) values('" +
+                                       C.ID + "','" + b.Balance + "','" + b.Date.ToShortDateString() + "','" + b.SinglePaymentID +
                                        "','" + b.PeriodPaymentID + "')");
                     }
                     if (C.Type == typeof(PeriodPayment))
                     {
                         //((p.Amount > 0) ? false : true)
                         PeriodPayment p = (PeriodPayment)Budget.Instance.Payments[C.ID];
-                        SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO PeriodPayments(categoryId, amount, note, type, name, frequency, period, lastUpdate, startDate, endDate) values('" +
-                            p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + p.Type + "','" + p.Name + "','" + p.Frequency + "','" + p.Period + "','" + p.LastUpdate + "','" +
+                        SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO PeriodPayments(id, categoryId, amount, note, type, name, frequency, period, lastUpdate, startDate, endDate) values('" +
+                            C.ID + "','" + p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + Convert.ToInt32(p.Type) + "','" + p.Name + "','" + p.Frequency + "','" + p.Period + "','" + p.LastUpdate + "','" +
                             p.StartDate.ToShortDateString() + "','" + p.EndDate.ToShortDateString() + "')");
                     }
                     if (C.Type == typeof(SinglePayment))
@@ -400,22 +411,22 @@ namespace Budget
                         // ((p.Amount > 0) ? false : true) 
                         SinglePayment p = (SinglePayment)Budget.Instance.Payments[C.ID];
                         SqlConnect.Instance.ExecuteSqlNonQuery(
-                            "INSERT INTO SinglePayments(categoryId, amount, note, type, name, date) values('" +
-                            p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + p.Type + "','" +
+                            "INSERT INTO SinglePayments(id, categoryId, amount, note, type, name, date) values('" +
+                            C.ID + "','" + p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + Convert.ToInt32(p.Type) + "','" +
                             p.Name + "','" + p.Date.ToShortDateString() + "')");
                     }
                     if (C.Type == typeof(Category))
                     {
                         Category c = Budget.Instance.Categories[C.ID];
-                        SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Categories(name, note, type) values('" +
-                                        c.Name + "','" + c.Note + "','" + Convert.ToInt32(c.Type) + "')");
+                        SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Categories(id, name, note, type) values('" +
+                                        C.ID + "','" + c.Name + "','" + c.Note + "','" + Convert.ToInt32(c.Type) + "')");
                     }
                     if (C.Type == typeof(SavingsTarget))
                     {
                         SavingsTarget s = Budget.Instance.SavingsTargets[C.ID];
                         SqlConnect.Instance.ExecuteSqlNonQuery(
-                            "INSERT INTO SavingsTargets(target, note, deadLine, priority, moneyHoldings, addedDate, neededAmount) values('" +
-                            s.Target + "','" + s.Note + "','" + s.Deadline.ToShortDateString() + "','" +
+                            "INSERT INTO SavingsTargets(id, target, note, deadLine, priority, moneyHoldings, addedDate, neededAmount) values('" +
+                            C.ID + "','" + s.Target + "','" + s.Note + "','" + s.Deadline.ToShortDateString() + "','" +
                             s.Priority + "','" + s.MoneyHoldings + "','" + s.AddedDate.ToShortDateString() + "','" +
                             s.NeededAmount + "')");
                     }
@@ -425,11 +436,11 @@ namespace Budget
             {
                 return false;
             }
-            listOfAdds.Clear();
+            //listOfAdds.Clear();
             return true;
         }
 
-        public Boolean DeleteFromDB(List<Changes> listOfDels)
+        private Boolean DeleteFromDB(List<Changes> listOfDels)
         {
             try
             {
@@ -458,104 +469,124 @@ namespace Budget
             {
                 return false;
             }
-            listOfDels.Clear();
+            //listOfDels.Clear();
             return true;
+        }
+
+        private Boolean EditDB(List<Changes> listOfEdts)
+        {
+            if (DeleteFromDB(listOfEdts) && AddToDB(listOfEdts))
+            {
+                //listOfEdts.Clear();
+                return true;
+            }
+            return false;
         }
 
         public void Dump()
         {
-            Budget.Instance.AddToDB(Budget.Instance.ListOfAdds);
-            Budget.Instance.DeleteFromDB(Budget.Instance.ListOfDels);
-            instance = Budget.FetchAll();
+            if (Budget.Instance.AddToDB(Budget.Instance.ListOfAdds)
+                && Budget.Instance.DeleteFromDB(Budget.Instance.ListOfDels)
+                && Budget.Instance.EditDB(Budget.Instance.ListOfEdts))
+            {
+                MessageBox.Show("Poprawnie zapisana baza danych!");
+                listOfEdts.Clear();
+                listOfDels.Clear();
+                listOfAdds.Clear();
+                instance = Budget.FetchAll();
+            }
+            else
+                MessageBox.Show("Błąd w zapisie bazy danych!");
+            
         }
 
-        public Boolean DumpAll()
-        {
-            try
-            {
-                /////////////////////////////////////////////////////////////////////////////////////////////
-                // budzet
-                /////////////////////////////////////////////////////////////////////////////////////////////
+    //    public Boolean DumpAll()
+    //    {
+    //        try
+    //        {
+    //            /////////////////////////////////////////////////////////////////////////////////////////////
+    //            // budzet
+    //            /////////////////////////////////////////////////////////////////////////////////////////////
 
-                SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Budget(name, balance, note, creation, numberOfPeople, password) values('" +
-                                    this.name + "','" + this.balance + "','" + this.note + "','" + this.creationDate.ToShortDateString() +
-                                    "','" + this.numberOfPeople + "','" + this.password + "')");
+    //            SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Budget(name, balance, note, creation, numberOfPeople, password) values('" +
+    //                                this.name + "','" + this.balance + "','" + this.note + "','" + this.creationDate.ToShortDateString() +
+    //                                "','" + this.numberOfPeople + "','" + this.password + "')");
 
-                /////////////////////////////////////////////////////////////////////////////////////////////
-                // Lista kategorii
-                /////////////////////////////////////////////////////////////////////////////////////////////
+    //            /////////////////////////////////////////////////////////////////////////////////////////////
+    //            // Lista kategorii
+    //            /////////////////////////////////////////////////////////////////////////////////////////////
 
-                foreach (Category category in this.categories.Values)
-                {
-                    SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Categories(name, note, type) values('" + 
-                                    category.Name + "','" + category.Note + "','" + category.Type + "')");
-                }
+    //            foreach (Category category in this.categories.Values)
+    //            {
+    //                SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Categories(name, note, type) values('" + 
+    //                                category.Name + "','" + category.Note + "','" + category.Type + "')");
+    //            }
 
-                /////////////////////////////////////////////////////////////////////////////////////////////
-                // Aktualny stan konta
-                /////////////////////////////////////////////////////////////////////////////////////////////
+    //            /////////////////////////////////////////////////////////////////////////////////////////////
+    //            // Aktualny stan konta
+    //            /////////////////////////////////////////////////////////////////////////////////////////////
                 
-                foreach(BalanceLog balanceLog in this.balanceLogs.Values)
-                {
-                    SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(balance, date, singlePaymentId, periodPaymentId) values('" +
-                                   balanceLog.Balance + "','" + balanceLog.Date.ToShortDateString() + "','" + balanceLog.SinglePaymentID + 
-                                   "','" + balanceLog.PeriodPaymentID + "')");
-                }
+    //            foreach(BalanceLog balanceLog in this.balanceLogs.Values)
+    //            {
+    //                SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(balance, date, singlePaymentId, periodPaymentId) values('" +
+    //                               balanceLog.Balance + "','" + balanceLog.Date.ToShortDateString() + "','" + balanceLog.SinglePaymentID + 
+    //                               "','" + balanceLog.PeriodPaymentID + "')");
+    //            }
                
-                /////////////////////////////////////////////////////////////////////////////////////////////
-                // Lista płatności
-                /////////////////////////////////////////////////////////////////////////////////////////////
+    //            /////////////////////////////////////////////////////////////////////////////////////////////
+    //            // Lista płatności
+    //            /////////////////////////////////////////////////////////////////////////////////////////////
 
-                Boolean temp;
-                foreach (Payment payment in this.payments.Values)
-                {
-                    if (payment.Amount > 0)
-                    {
-                        temp = false;
-                    }
-                    else
-                    {
-                        temp = true;
-                    }
-                    if (payment.GetType() == typeof(PeriodPayment))
-                    {
-                        PeriodPayment p = (PeriodPayment)payment;
-                        SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO PeriodPayments(categoryId, amount, note, type, name, frequency, period, lastUpdate, startDate, endDate) values('" +
-                            p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + temp + "','" + p.Name + "','" + p.Frequency + "','" + p.Period + "','" + p.LastUpdate + "','" +
-                            p.StartDate.ToShortDateString() + "','" + p.EndDate.ToShortDateString() + "')");
-                    }
-                    else if (payment.GetType() == typeof(SinglePayment))
-                    {
-                        SinglePayment p = (SinglePayment)payment;
-                        SqlConnect.Instance.ExecuteSqlNonQuery(
-                            "INSERT INTO SinglePayments(categoryId, amount, note, type, name, date) values('" +
-                            p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + temp + "','" +
-                            p.Name + "','" + p.Date.ToShortDateString() + "')");
-                    }
-                }
+    //            Boolean temp;
+    //            foreach (Payment payment in this.payments.Values)
+    //            {
+    //                if (payment.Amount > 0)
+    //                {
+    //                    temp = false;
+    //                }
+    //                else
+    //                {
+    //                    temp = true;
+    //                }
+    //                if (payment.GetType() == typeof(PeriodPayment))
+    //                {
+    //                    PeriodPayment p = (PeriodPayment)payment;
+    //                    SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO PeriodPayments(categoryId, amount, note, type, name, frequency, period, lastUpdate, startDate, endDate) values('" +
+    //                        p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + temp + "','" + p.Name + "','" + p.Frequency + "','" + p.Period + "','" + p.LastUpdate + "','" +
+    //                        p.StartDate.ToShortDateString() + "','" + p.EndDate.ToShortDateString() + "')");
+    //                }
+    //                else if (payment.GetType() == typeof(SinglePayment))
+    //                {
+    //                    SinglePayment p = (SinglePayment)payment;
+    //                    SqlConnect.Instance.ExecuteSqlNonQuery(
+    //                        "INSERT INTO SinglePayments(categoryId, amount, note, type, name, date) values('" +
+    //                        p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + temp + "','" +
+    //                        p.Name + "','" + p.Date.ToShortDateString() + "')");
+    //                }
+    //            }
 
-                /////////////////////////////////////////////////////////////////////////////////////////////
-                // Cele oszczędzania
-                /////////////////////////////////////////////////////////////////////////////////////////////
+    //            /////////////////////////////////////////////////////////////////////////////////////////////
+    //            // Cele oszczędzania
+    //            /////////////////////////////////////////////////////////////////////////////////////////////
 
-                foreach (SavingsTarget savingsTarget in this.savingsTargets.Values)
-                {
-                    SqlConnect.Instance.ExecuteSqlNonQuery(
-                        "INSERT INTO SavingsTargets(target, note, deadLine, priority, moneyHoldings, addedDate, neededAmount) values('" +
-                        savingsTarget.Target + "','" + savingsTarget.Note + "','" + savingsTarget.Deadline.ToShortDateString() + "','" +
-                        savingsTarget.Priority + "','" + savingsTarget.MoneyHoldings + "','" + savingsTarget.AddedDate.ToShortDateString() + "','" + 
-                        savingsTarget.NeededAmount + "')");
-                }
+    //            foreach (SavingsTarget savingsTarget in this.savingsTargets.Values)
+    //            {
+    //                SqlConnect.Instance.ExecuteSqlNonQuery(
+    //                    "INSERT INTO SavingsTargets(target, note, deadLine, priority, moneyHoldings, addedDate, neededAmount) values('" +
+    //                    savingsTarget.Target + "','" + savingsTarget.Note + "','" + savingsTarget.Deadline.ToShortDateString() + "','" +
+    //                    savingsTarget.Priority + "','" + savingsTarget.MoneyHoldings + "','" + savingsTarget.AddedDate.ToShortDateString() + "','" + 
+    //                    savingsTarget.NeededAmount + "')");
+    //            }
 
-                instance = null;
-                return true;
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show("Wystąpił błąd w DumpAll");
-                Console.WriteLine("\n" + ex.GetBaseException() + "\n");
-                return false;
-            }
-        }
+    //            instance = null;
+    //            return true;
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            System.Windows.MessageBox.Show("Wystąpił błąd w DumpAll");
+    //            Console.WriteLine("\n" + ex.GetBaseException() + "\n");
+    //            return false;
+    //        }
+    //    }
     }
 }

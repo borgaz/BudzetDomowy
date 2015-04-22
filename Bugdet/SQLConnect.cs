@@ -202,12 +202,12 @@ namespace Budget
                 // Lista płatności
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
-                foreach (PeriodPayment p in _payments.Values)
+                foreach (KeyValuePair<int, PeriodPayment> pay in _payments)
                 {
-                    //PeriodPayment p = _payments[i + 1];
+                    PeriodPayment p = pay.Value;
                     SqlConnect.Instance.ExecuteSqlNonQuery(
-                        "INSERT INTO PeriodPayments(categoryId,amount,note,type,name,frequency,period,lastUpdate,startDate,endDate) values(" +
-                        p.CategoryID + ", " + p.Amount + ",'" + p.Note + "'," + Convert.ToInt32(p.Type) + ",'" + p.Name + "'," + p.Frequency + ",'" + p.Period + "','" + p.LastUpdate.ToShortDateString() + "','" +
+                        "INSERT INTO PeriodPayments(id, categoryId,amount,note,type,name,frequency,period,lastUpdate,startDate,endDate) values(" +
+                        pay.Key*(-1) + "," + p.CategoryID + "," + p.Amount + ",'" + p.Note + "'," + Convert.ToInt32(p.Type) + ",'" + p.Name + "'," + p.Frequency + ",'" + p.Period + "','" + p.LastUpdate.ToShortDateString() + "','" +
                         p.StartDate.ToShortDateString() +
                         "','" + p.EndDate.ToShortDateString() + "')");
                 }

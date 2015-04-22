@@ -30,6 +30,10 @@ namespace Budget
             {
                 return name;
             }
+            set
+            {
+                name = value;
+            }
         }
 
         public string Note

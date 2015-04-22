@@ -25,11 +25,12 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
             if (PaymentName.Text != "" && PaymentValue.Text != "" && CategoryBox.SelectedIndex != -1)
             {
                 ComboBoxItem categoryItem = (ComboBoxItem)CategoryBox.SelectedValue;
-                int temp_id = 1;
+                
                 if (PeriodCheckBox.IsChecked == true)
                 {
+                    int temp_id = -1;
                     try
-                    { temp_id = Budget.Instance.Payments.Last().Key+1; }
+                    { temp_id = Budget.Instance.Payments.First().Key-1; }
                     catch (Exception ex)
                     { } //gdy brak elementów w tablicy temp_id = 1
                     Budget.Instance.ListOfAdds.Add(new Changes(typeof(PeriodPayment), temp_id));
@@ -43,10 +44,12 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
                 }
                 else
                 {
+                    int temp_id = 1;
                     try
                     { temp_id = Budget.Instance.Payments.Last().Key + 1; }
                     catch (Exception ex)
                     { } //gdy brak elementów w tablicy temp_id = 1
+                    Console.WriteLine(temp_id);
                     Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
                     Budget.Instance.AddSinglePayment(temp_id,
                         new SinglePayment(Note.Text, Convert.ToDouble(PaymentValue.Text), categoryItem.Id, true,
