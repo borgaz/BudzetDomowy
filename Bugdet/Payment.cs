@@ -66,6 +66,10 @@ namespace Budget
             {
                 return name;
             }
+            set
+            {
+                name = value;
+            }
         }
     }
 }

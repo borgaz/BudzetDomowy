@@ -83,25 +83,25 @@ namespace Budget
             File.AppendAllText("./logs", "\n--------------------------\n" + DateTime.Now.ToString() + "\n--------------------------\n" + ex.ToString());
         } // TODO: Przerobic wszystkie exception, zeby wchodzily do tej metody
 
-        public Boolean CleanDatabase()
-        {
-            try
-            {
-                ExecuteSqlNonQuery("Delete FROM Budget");
-                ExecuteSqlNonQuery("Delete FROM PeriodPayments");
-                ExecuteSqlNonQuery("Delete FROM SinglePayments");
-                ExecuteSqlNonQuery("Delete FROM Categories");
-                ExecuteSqlNonQuery("Delete FROM SavingsTargets");
-                ExecuteSqlNonQuery("Delete FROM BalanceLogs");
+        //public Boolean CleanDatabase()
+        //{
+        //    try
+        //    {
+        //        ExecuteSqlNonQuery("Delete FROM Budget");
+        //        ExecuteSqlNonQuery("Delete FROM PeriodPayments");
+        //        ExecuteSqlNonQuery("Delete FROM SinglePayments");
+        //        ExecuteSqlNonQuery("Delete FROM Categories");
+        //        ExecuteSqlNonQuery("Delete FROM SavingsTargets");
+        //        ExecuteSqlNonQuery("Delete FROM BalanceLogs");
 
-                return true;
-            }
-            catch (SQLiteException ex)
-            {
-                MessageBox.Show(ex.GetBaseException() + "\n" + "SQLConnect.CleanDatabase()");
-                return false;
-            }
-        }
+        //        return true;
+        //    }
+        //    catch (SQLiteException ex)
+        //    {
+        //        MessageBox.Show(ex.GetBaseException() + "\n" + "SQLConnect.CleanDatabase()");
+        //        return false;
+        //    }
+        //}
 
         public Boolean MakeDb()
         {
