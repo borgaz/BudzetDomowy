@@ -46,7 +46,10 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
         {
             //SqlConnect.Instance.CleanDatabase();
             //Budget.Instance.DumpAll();
-            Budget.Instance.AddToDB();
+            Budget.Instance.ListOfDels.Add(new Changes(typeof(SavingsTarget), 1));
+            Budget.Instance.ListOfDels.Add(new Changes(typeof(PeriodPayment), 2));
+            Budget.Instance.ListOfDels.Add(new Changes(typeof(SinglePayment), 16));
+            Budget.Instance.Dump();
         }
     }
 }

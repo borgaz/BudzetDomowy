@@ -25,6 +25,7 @@ namespace Budget
         private DateTime creationDate; // data stworzenia budzetu
         private int numberOfPeople; // ilosc osob, dla ktorych prowadzony jest budzet domowy
         private List<Changes> listOfAdds;
+        private List<Changes> listOfDels;
 
         public override string ToString()
         {
@@ -46,6 +47,7 @@ namespace Budget
             this.balance = balance;
             this.creationDate = creationDate;
             listOfAdds = new List<Changes>();
+            listOfDels = new List<Changes>();
         }
 
         public static Budget Instance
@@ -66,6 +68,14 @@ namespace Budget
             get
             {
                 return this.listOfAdds;
+            }
+        }
+
+        public List<Changes> ListOfDels
+        {
+            get
+            {
+                return this.listOfDels;
             }
         }
 
@@ -201,11 +211,11 @@ namespace Budget
             comboBox.Items.Clear();
             try
             {
-                for (int i = 0; i < categories.Count; i++)
+                foreach (KeyValuePair<int,Category> c in categories)
                 {
-                    if (categories[i + 1].Type == type)
+                    if (c.Value.Type == type)
                     {
-                        comboBox.Items.Add(new ComboBoxItem(i + 1, categories[i + 1].Name));
+                        comboBox.Items.Add(new ComboBoxItem(c.Key, c.Value.Name));
                     }
                 }
             }
@@ -364,7 +374,7 @@ namespace Budget
             }
         }
 
-        public Boolean AddToDB()
+        public Boolean AddToDB(List<Changes> listOfAdds)
         {
             try
             {
@@ -416,8 +426,47 @@ namespace Budget
                 return false;
             }
             listOfAdds.Clear();
-            instance = Budget.FetchAll();
             return true;
+        }
+
+        public Boolean DeleteFromDB(List<Changes> listOfDels)
+        {
+            try
+            {
+                foreach (Changes C in listOfDels)
+                {
+                    if (C.Type == typeof(Category))
+                    {
+                        SqlConnect.Instance.ExecuteSqlNonQuery("DELETE FROM CATEGORIES WHERE id = " + C.ID);
+                    }
+                    if (C.Type == typeof(PeriodPayment))
+                    {
+                        SqlConnect.Instance.ExecuteSqlNonQuery("DELETE FROM PERIODPAYMENTS WHERE id = " + C.ID);
+                    }
+                    if (C.Type == typeof(SinglePayment))
+                    {
+                        SqlConnect.Instance.ExecuteSqlNonQuery("DELETE FROM SINGLEPAYMENTS WHERE id = " + C.ID);
+                    }
+                    if (C.Type == typeof(SavingsTarget))
+                    {
+                        SqlConnect.Instance.ExecuteSqlNonQuery("DELETE FROM SAVINGSTARGETS WHERE id = " + C.ID);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            listOfDels.Clear();
+            return true;
+        }
+
+        public void Dump()
+        {
+            Budget.Instance.AddToDB(Budget.Instance.ListOfAdds);
+            Budget.Instance.DeleteFromDB(Budget.Instance.ListOfDels);
+            instance = Budget.FetchAll();
         }
 
         public Boolean DumpAll()
