@@ -14,7 +14,7 @@
         <TextBox x:Name="PaymentValue" HorizontalAlignment="Left" Height="25" Margin="140,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.95,0.478"/>
         <ComboBox x:Name="CategoryBox" HorizontalAlignment="Left" Margin="110,130,0,0" Height="25" VerticalAlignment="Top" Width="140"/>
         <Label Content="Kategoria" HorizontalAlignment="Left" Margin="10,130,0,0" Width="80" Height="25" VerticalAlignment="Top"/>
-        <Button x:Name="AddCategoryBtn" Content="+" HorizontalAlignment="Left" Margin="255,130,0,0" VerticalAlignment="Top" Width="25" Height="25" ToolTip="Dodaj kategorie"/>
+        <Button x:Name="AddCategoryBtn" Content="+" HorizontalAlignment="Left" Margin="255,130,0,0" VerticalAlignment="Top" Width="25" Height="25" ToolTip="Dodaj kategorie" Click="AddCategoryBtn_Click"/>
         <Label Content="Dodatkowa notatka" HorizontalAlignment="Left" Margin="10,340,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="Note" HorizontalAlignment="Left" Height="40" Margin="10,370,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280"/>
         <Button x:Name="AddPaymentBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="10,420,0,0" VerticalAlignment="Top" Width="70" Height="20" RenderTransformOrigin="0.2,-0.091" Click="addPaymentBtn_Click"/>

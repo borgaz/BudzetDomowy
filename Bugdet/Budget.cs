@@ -398,7 +398,7 @@ namespace Budget
                     {
                         Category c = Budget.Instance.Categories[C.ID];
                         SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Categories(name, note, type) values('" +
-                                        c.Name + "','" + c.Note + "','" + c.Type + "')");
+                                        c.Name + "','" + c.Note + "','" + Convert.ToInt32(c.Type) + "')");
                     }
                     if (C.Type == typeof(SavingsTarget))
                     {

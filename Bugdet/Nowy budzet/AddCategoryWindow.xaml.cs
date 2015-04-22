@@ -20,10 +20,17 @@ namespace Budget.Nowy_budzet
     public partial class AddCategoryWindow : Window
     {
         private Dictionary<int, Category> _categories;
-        public AddCategoryWindow(Dictionary<int,Category> c)
+        private bool creator = false; //czy dodajemy w kreatorze
+        public AddCategoryWindow()
+        {
+            InitializeComponent();
+        }
+
+        public AddCategoryWindow(Dictionary<int,Category> c) //konstruktor dla kreatora
         {
             InitializeComponent();
             _categories = c;
+            creator = true;
         }
 
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
@@ -34,8 +41,18 @@ namespace Budget.Nowy_budzet
 
                 if (categoryTypes.SelectedIndex == 1)
                     category = true;
-                _categories.Add(_categories.Last().Key + 1,
-                    new Category(CategoryNameTextBox.Text, CategoryNoteTextBox.Text, category));
+                if (!creator)
+                {
+                    Budget.Instance.ListOfAdds.Add(new Changes(typeof(Category), Budget.Instance.Categories.Last().Key + 1));
+                    Budget.Instance.Categories.Add(Budget.Instance.Categories.Last().Key + 1,
+                        new Category(CategoryNameTextBox.Text, CategoryNoteTextBox.Text, category));
+                }
+                else
+                {
+                    _categories.Add(_categories.Last().Key + 1,
+                        new Category(CategoryNameTextBox.Text, CategoryNoteTextBox.Text, category));
+                }
+                
             }
             else
             {

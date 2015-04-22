@@ -16,7 +16,6 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
         public AddSalaryPage()
         {
             InitializeComponent();
-            //InsertCategories();
             Budget.Instance.InsertCategories(CategoryBox, true);
             InsertDateTypes(TypeOfDayComboBox);
         }
@@ -34,7 +33,6 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
                     catch (Exception ex)
                     { } //gdy brak elementów w tablicy temp_id = 1
                     Budget.Instance.ListOfAdds.Add(new Changes(typeof(PeriodPayment), temp_id));
-
                     Budget.Instance.AddPeriodPayment(temp_id,
                         new PeriodPayment(categoryItem.Id, Convert.ToDouble(PaymentValue.Text), Note.Text, false,
                             PaymentName.Text, Convert.ToInt32(NumberOfTexBox.Text), TypeOfDayComboBox.Text,
@@ -49,10 +47,17 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
                     { temp_id = Budget.Instance.Payments.Last().Key + 1; }
                     catch (Exception ex)
                     { } //gdy brak elementów w tablicy temp_id = 1
+                    int temp_id_balance = Budget.Instance.BalanceLog.Last().Key + 1;
+
                     Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
                     Budget.Instance.AddSinglePayment(temp_id,
                         new SinglePayment(Note.Text, Convert.ToDouble(PaymentValue.Text), categoryItem.Id, false,
                             PaymentName.Text, DateTime.Now));
+                    // uwaga tutaj dodajemy
+                    double currentBalance = Budget.Instance.BalanceLog.Last().Value.Balance + Convert.ToDouble(PaymentValue.Text);
+                    Budget.Instance.AddBalanceLog(temp_id_balance,
+                        new BalanceLog(currentBalance, DateTime.Today, temp_id, 0));
+                    Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));
 
                 }
                 InfoBox.Text = "Dodano";
@@ -76,17 +81,6 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
             cBox.Items.Add("TYDZIEŃ");
             cBox.Items.Add("MIESIĄC");
             cBox.Items.Add("ROK");
-        }
-        private void InsertCategories()
-        {
-            DataSet result = SqlConnect.Instance.SelectQuery("Select id,name from Categories order by id asc");
-            foreach (DataTable table in result.Tables)
-            {
-                foreach (DataRow row in table.Rows)
-                {
-                    CategoryBox.Items.Add(row["name"]);
-                }
-            }
         }
 
         private void periodCheckBox_Checked(object sender, RoutedEventArgs e)
@@ -113,8 +107,8 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
 
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
-            //new AddCategoryWindow().ShowDialog();
-            //InsertCategories();
+            new AddCategoryWindow().ShowDialog();
+            Budget.Instance.InsertCategories(CategoryBox, true);
         }
     }
 }
