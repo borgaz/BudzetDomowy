@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using System.Collections;
 
 namespace Budget
 {
@@ -23,6 +24,7 @@ namespace Budget
         private double balance; // saldo
         private DateTime creationDate; // data stworzenia budzetu
         private int numberOfPeople; // ilosc osob, dla ktorych prowadzony jest budzet domowy
+        private List<Changes> listOfAdds;
 
         public override string ToString()
         {
@@ -43,6 +45,7 @@ namespace Budget
             this.numberOfPeople = numberOfPeople;
             this.balance = balance;
             this.creationDate = creationDate;
+            listOfAdds = new List<Changes>();
         }
 
         public static Budget Instance
@@ -55,6 +58,14 @@ namespace Budget
                     // instance.SetDefaultCategories(); trzeba przerobic, zeby bylo tylko przy tworzeniu
                 }
                 return instance;
+            }
+        }
+
+        public List<Changes> ListOfAdds
+        {
+            get
+            {
+                return this.listOfAdds;
             }
         }
 
@@ -188,14 +199,12 @@ namespace Budget
         public void InsertCategories(ComboBox comboBox, bool type)
         {
             comboBox.Items.Clear();
-            Console.WriteLine("Typ przekazany " + type);
             try
             {
                 for (int i = 0; i < categories.Count; i++)
                 {
                     if (categories[i + 1].Type == type)
                     {
-                        Console.WriteLine(categories[i + 1].Type);
                         comboBox.Items.Add(new ComboBoxItem(i + 1, categories[i + 1].Name));
                     }
                 }
@@ -266,7 +275,6 @@ namespace Budget
                 System.Data.DataSet categoriesFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM Categories");
                 for (int i = 0; i < categoriesFromSelect.Tables[0].Rows.Count; i++)
                 {
-                    Console.WriteLine("W FETCH ALL: " + Convert.ToBoolean(categoriesFromSelect.Tables[0].Rows[i]["type"].ToString()));
                     categories.Add(Convert.ToInt32(categoriesFromSelect.Tables[0].Rows[i]["id"]),
                     new Category(Convert.ToString(categoriesFromSelect.Tables[0].Rows[i]["name"]),
                         Convert.ToString(categoriesFromSelect.Tables[0].Rows[i]["note"]),
@@ -354,6 +362,62 @@ namespace Budget
                 SqlConnect.Instance.ErrLog(ex);
                 return null;
             }
+        }
+
+        public Boolean AddToDB()
+        {
+            try
+            {
+                foreach (Changes C in listOfAdds)
+                {
+                    if (C.Type == typeof(BalanceLog))
+                    {
+                        BalanceLog b = Budget.Instance.BalanceLog[C.ID];
+                        SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(balance, date, singlePaymentId, periodPaymentId) values('" +
+                                       b.Balance + "','" + b.Date.ToShortDateString() + "','" + b.SinglePaymentID +
+                                       "','" + b.PeriodPaymentID + "')");
+                    }
+                    if (C.Type == typeof(PeriodPayment))
+                    {
+                        //((p.Amount > 0) ? false : true)
+                        PeriodPayment p = (PeriodPayment)Budget.Instance.Payments[C.ID];
+                        SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO PeriodPayments(categoryId, amount, note, type, name, frequency, period, lastUpdate, startDate, endDate) values('" +
+                            p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + p.Type + "','" + p.Name + "','" + p.Frequency + "','" + p.Period + "','" + p.LastUpdate + "','" +
+                            p.StartDate.ToShortDateString() + "','" + p.EndDate.ToShortDateString() + "')");
+                    }
+                    if (C.Type == typeof(SinglePayment))
+                    {
+                        // ((p.Amount > 0) ? false : true) 
+                        SinglePayment p = (SinglePayment)Budget.Instance.Payments[C.ID];
+                        SqlConnect.Instance.ExecuteSqlNonQuery(
+                            "INSERT INTO SinglePayments(categoryId, amount, note, type, name, date) values('" +
+                            p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + p.Type + "','" +
+                            p.Name + "','" + p.Date.ToShortDateString() + "')");
+                    }
+                    if (C.Type == typeof(Category))
+                    {
+                        Category c = Budget.Instance.Categories[C.ID];
+                        SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Categories(name, note, type) values('" +
+                                        c.Name + "','" + c.Note + "','" + c.Type + "')");
+                    }
+                    if (C.Type == typeof(SavingsTarget))
+                    {
+                        SavingsTarget s = Budget.Instance.SavingsTargets[C.ID];
+                        SqlConnect.Instance.ExecuteSqlNonQuery(
+                            "INSERT INTO SavingsTargets(target, note, deadLine, priority, moneyHoldings, addedDate, neededAmount) values('" +
+                            s.Target + "','" + s.Note + "','" + s.Deadline.ToShortDateString() + "','" +
+                            s.Priority + "','" + s.MoneyHoldings + "','" + s.AddedDate.ToShortDateString() + "','" +
+                            s.NeededAmount + "')");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            listOfAdds.Clear();
+            instance = Budget.FetchAll();
+            return true;
         }
 
         public Boolean DumpAll()

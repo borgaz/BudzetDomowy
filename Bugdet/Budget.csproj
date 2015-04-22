@@ -72,6 +72,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Budget.cs" />
+    <Compile Include="Changes.cs" />
     <Compile Include="ComboBoxItem.cs" />
     <Compile Include="InterfacePage\InterfacePage.xaml.cs">
       <DependentUpon>InterfacePage.xaml</DependentUpon>

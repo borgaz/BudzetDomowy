@@ -44,8 +44,9 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
 
         private void DumpAllButton_Click(object sender, RoutedEventArgs e)
         {
-            SqlConnect.Instance.CleanDatabase();
-            Budget.Instance.DumpAll();
+            //SqlConnect.Instance.CleanDatabase();
+            //Budget.Instance.DumpAll();
+            Budget.Instance.AddToDB();
         }
     }
 }

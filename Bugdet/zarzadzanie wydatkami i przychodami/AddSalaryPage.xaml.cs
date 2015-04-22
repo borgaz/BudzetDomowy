@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Budget.Nowy_budzet;
+using System;
 using System.Data;
 using System.Linq;
 using System.Windows;
@@ -24,10 +25,17 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
             if (PaymentName.Text != "" && PaymentValue.Text != "" && CategoryBox.SelectedIndex != -1)
             {
                 ComboBoxItem categoryItem = (ComboBoxItem)CategoryBox.SelectedValue;
+                int temp_id = 1;
+
                 if (PeriodCheckBox.IsChecked == true)
                 {
+                    try
+                    { temp_id = Budget.Instance.Payments.Last().Key + 1; }
+                    catch (Exception ex)
+                    { } //gdy brak elementów w tablicy temp_id = 1
+                    Budget.Instance.ListOfAdds.Add(new Changes(typeof(PeriodPayment), temp_id));
 
-                    Budget.Instance.AddPeriodPayment(Budget.Instance.Payments.Last().Key+1,
+                    Budget.Instance.AddPeriodPayment(temp_id,
                         new PeriodPayment(categoryItem.Id, Convert.ToDouble(PaymentValue.Text), Note.Text, false,
                             PaymentName.Text, Convert.ToInt32(NumberOfTexBox.Text), TypeOfDayComboBox.Text,
                             StartDatePicker.DisplayDate, StartDatePicker.DisplayDate,
@@ -37,7 +45,12 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
                 }
                 else
                 {
-                    Budget.Instance.AddSinglePayment(Budget.Instance.Payments.Last().Key+1,
+                    try
+                    { temp_id = Budget.Instance.Payments.Last().Key + 1; }
+                    catch (Exception ex)
+                    { } //gdy brak elementów w tablicy temp_id = 1
+                    Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
+                    Budget.Instance.AddSinglePayment(temp_id,
                         new SinglePayment(Note.Text, Convert.ToDouble(PaymentValue.Text), categoryItem.Id, false,
                             PaymentName.Text, DateTime.Now));
 
@@ -96,6 +109,12 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
         private void EndDateEnableCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
         {
             EndDatePicker.IsEnabled = false;
+        }
+
+        private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //new AddCategoryWindow().ShowDialog();
+            //InsertCategories();
         }
     }
 }
