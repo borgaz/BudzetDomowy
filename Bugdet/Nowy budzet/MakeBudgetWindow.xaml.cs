@@ -32,6 +32,14 @@ namespace Budget.Nowy_budzet
             }
         }
 
+        protected override void OnClosed(EventArgs e)
+        {
+            if (_actualPage == 2 || _actualPage == 3)
+            {
+                CompleteBudget();
+            }
+        }
+
         public MakeBudgetWindow(int page)
         {
             InitializeComponent();
@@ -75,8 +83,9 @@ namespace Budget.Nowy_budzet
                         
                     _page2 = new MakeBudgetPage2(_salaries, _categories); // strona druga
                     PageFrame.Content = _page2;
-                    ExitBtn.Content = "Wroć";
-                    ForwardBtn.Content = "Dalej";
+                    ExitBtn.IsEnabled = false;
+                    ExitBtn.Content = "Wyjdź";
+                    ForwardBtn.Content = "Dodaj wydatki";
                     break;
                 }
                     
@@ -89,6 +98,8 @@ namespace Budget.Nowy_budzet
                     
                     _page3 = new MakeBudgetPage3(_payments, _categories); // strona trzecia
                     PageFrame.Content = _page3;
+                    ExitBtn.IsEnabled = true;
+                    ExitBtn.Content = "Dodaj przychody";
                     ForwardBtn.Content = "Zakończ";
                     break;
                 }
@@ -209,6 +220,5 @@ namespace Budget.Nowy_budzet
                 return false;
             }
         }
-
     }
 }

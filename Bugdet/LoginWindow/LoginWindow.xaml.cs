@@ -93,5 +93,10 @@ namespace Budget.LoginWindow
                 PasswordTextBox.Password = "";
             }
         }
+
+        private void BudgetsComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            PasswordTextBox.Password = "";
+        }
     }
 }

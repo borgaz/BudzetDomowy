@@ -21,6 +21,8 @@ namespace Budget
         private MainSettingsWindow _mainSettingsWindow;
         private static int _actualPage = 3;
         private bool running = true;
+        private Thread th;
+
         public MainWindow()
         {
             LoginWindow.LoginWindow.Instance.ShowDialog();
@@ -36,13 +38,33 @@ namespace Budget
             _welcomePage = new WelcomePage.WelcomePage();
             _mainSettingsWindow = new MainSettingsWindow(1);
             InsertPage();
-            new Thread(OnPageChange).Start();
+            th = new Thread(OnPageChange);
+            th.Start();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            if (LoginWindow.LoginWindow.Instance.IsLogged == true)
+            {
+                if (Budget.Instance.ListOfAdds.Count != 0 || Budget.Instance.ListOfEdts.Count != 0 || Budget.Instance.ListOfDels.Count != 0)
+                {
+                    if (MessageBox.Show("Czy chcesz zapisać zmiany przed zamknięciem?", "Zapisz dane", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        Budget.Instance.Dump();
+                    }
+                }
+                if (th.IsAlive)
+                {
+                    th.Abort();
+                }           
+            }
         }
 
         ~MainWindow()
         {
             running = false;
         }
+
         private void OnPageChange()
         {
             int page = _actualPage;
