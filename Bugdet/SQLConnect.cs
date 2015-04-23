@@ -56,8 +56,11 @@ namespace Budget
                     MakeDb();
                     return true;
                 }
-                MessageBox.Show("Istnieje już taki budzet");
-                return false;
+                else
+                {
+                    MessageBox.Show("Istnieje już taki budzet.");
+                    return false;
+                }
             }
             catch (Exception ex)
             {
@@ -72,9 +75,13 @@ namespace Budget
             System.Console.WriteLine(budget + " " + password);
             DataSet result = SelectQuery("Select count(*) as count from Budget where name = '" + budget + "' AND password = '" + password + "'");
             if (Convert.ToInt32(result.Tables[0].Rows[0]["count"].ToString()) < 1)
+            {
                 return false;
+            }   
             else
+            {
                 return true;
+            }     
         }
 
         public void ErrLog(Exception ex)

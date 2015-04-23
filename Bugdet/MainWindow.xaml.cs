@@ -17,19 +17,19 @@ namespace Budget
     {
         private MainPage _mainPage;
         private InterfacePage.InterfacePage _interfacePage;
-        readonly LoginWindow.LoginWindow _loginWindow = new LoginWindow.LoginWindow();
         private WelcomePage.WelcomePage _welcomePage;
         private MainSettingsWindow _mainSettingsWindow;
         private static int _actualPage = 3;
         private bool running = true;
         public MainWindow()
         {
-            _loginWindow.ShowDialog();
-            if (!_loginWindow.IsLogged)
+            LoginWindow.LoginWindow.Instance.ShowDialog();
+            if (!LoginWindow.LoginWindow.Instance.IsLogged)
             {
                 Close();
                 return;
             }
+
             InitializeComponent();
             _mainPage = new MainPage();
             _interfacePage = new InterfacePage.InterfacePage();
@@ -61,6 +61,7 @@ namespace Budget
             {
                 case 1:
                     this.MainContentFrame.Content = _mainPage;
+                    _mainPage.dataGridView.ItemsSource = null;
                     break;
                 case 2:
                     this.MainContentFrame.Content = _interfacePage;

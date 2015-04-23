@@ -12,12 +12,13 @@ namespace Budget.Nowy_budzet
     /// </summary>
     public partial class MakeBudgetWindow : Window
     {
-        private static MakeBudgetWindow _instance = null; // jako ze Frame nie jest statyczny, trzeba bylo jakos z Page'ow wywolywac zmiane
-        private static Dictionary<int, Category> _categories = SqlConnect.Instance.AddDefaultCategories();
+        private static MakeBudgetWindow _instance = null;
+        private static Dictionary<int, Category> _categories = SqlConnect.Instance.AddDefaultCategories(); // 'adddefaultcategories' mozna przeniesc tutaj, bo i tak tylko tutaj jest uzywana
         private static Dictionary<int, PeriodPayment> _payments = new Dictionary<int, PeriodPayment>();
-        private static Dictionary<int, PeriodPayment> _salaries = new Dictionary<int, PeriodPayment>(); 
-        private int _actual = 1;
+        private static Dictionary<int, PeriodPayment> _salaries = new Dictionary<int, PeriodPayment>();
         private static SalaryInfo salaryInfo = new SalaryInfo();
+
+        private int _actualPage = 1;
         private MakeBudgetPage1 _page1;
         private MakeBudgetPage2 _page2;
         private MakeBudgetPage3 _page3;
@@ -25,88 +26,128 @@ namespace Budget.Nowy_budzet
 
         public static MakeBudgetWindow Instance
         {
-            get { return _instance ?? (_instance = new MakeBudgetWindow(1)); }
+            get 
+            { 
+                return _instance ?? (_instance = new MakeBudgetWindow(1)); 
+            }
         }
 
         public MakeBudgetWindow(int page)
         {
             InitializeComponent();
-            ManagePages(page,0);
+            ManagePages(page, 0);
         }
-        public void ManagePages(int page,int back)
+
+        public void ManagePages(int page, int back)
         {
             switch (page)
             {
                 case 0:
-                    PageFrame.Content = null; // 
+                {
+                    PageFrame.Content = null;
                     _instance = null;
                     _page1 = null;
                     _page2 = null;
                     _page3 = null;
-                    this.Close(); // 
+                    this.Close();
                     break;
+                }
+                    
                 case 1:
+                {
                     if (back == 1)
+                    {
                         _page1.BackToThisPage();
+                    }
+                    
                     _page1 = new MakeBudgetPage1(salaryInfo); // strona pierwsza
                     PageFrame.Content = _page1;
                     ExitBtn.Content = "Wyjdz";
                     break;
+                }
+                    
                 case 2:
+                {
                     if (back == 1)
+                    {
                         _page2.BackToThisPage();
+                    }
+                        
                     _page2 = new MakeBudgetPage2(_salaries, _categories); // strona druga
                     PageFrame.Content = _page2;
-                    ExitBtn.Content = "Wroc";
+                    ExitBtn.Content = "Wroć";
                     ForwardBtn.Content = "Dalej";
                     break;
+                }
+                    
                 case 3:
+                {
                     if (back == 1)
+                    {
                         _page3.BackToThisPage();
+                    }
+                    
                     _page3 = new MakeBudgetPage3(_payments, _categories); // strona trzecia
                     PageFrame.Content = _page3;
                     ForwardBtn.Content = "Zakończ";
                     break;
+                }
+                    
                 case 4:
+                {
                     if (CompleteBudget())
                     {
                         ManagePages(0, 0);
                     }
                     else
-                        MessageBox.Show("Nie przeszlo w CompleteBudget()");
+                    {
+                        MessageBox.Show("Nie przeszło w CompleteBudget()");
+                    } 
                     break;
-                default: break;
+                }
+                    
+                default: 
+                    break;
             }
         }
+
         private Boolean CheckPage(int pageNr)
         {
             switch (pageNr)
             {
                 case 0:
+                {
                     return false;
-                    
+                }  
+    
                 case 1:
+                {
                     if (_page1.CheckInfo() == true)
                     {
                         if (!WizardQuestion())
                         {
                             CompleteBudget();
                             ManagePages(0, 0);
-                            return true;
+                                
                         }
-                        else
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                     else
                     {
                         return false;
-                    } 
+                    }
+                } 
+
                 case 2:
+                {
                     return _page2.CheckInfo();
+                }
+
                 case 3:
+                {
                     return _page3.CheckInfo();
+                }
+
                 default:
                     return false;
             }
@@ -114,7 +155,7 @@ namespace Budget.Nowy_budzet
 
         private Boolean WizardQuestion()
         {
-            if (MessageBox.Show("Czy chcesz dodać pierwsze wydatki/przychody ?", "Kreator", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+            if (MessageBox.Show("Czy chcesz dodać pierwsze wydatki/przychody?", "Kreator", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
             {
                 return false;
             }
@@ -126,26 +167,29 @@ namespace Budget.Nowy_budzet
 
         private void exitBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (_actual == 1)
+            if (_actualPage == 1)
             {
                 _page1 = null;
                 _page2 = null;
                 this.Close();
             }
             else
-                ManagePages(--_actual,1);
+            {
+                ManagePages(--_actualPage, 1);
+            }   
         }
 
         private void forwardBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(CheckPage(_actual))
+            if (CheckPage(_actualPage))
             {
-                ManagePages(++_actual,0);
+                ManagePages(++_actualPage, 0);
             }
         }
+
         private Boolean CompleteBudget()
         {
-            Dictionary<int,PeriodPayment> p = new Dictionary<int, PeriodPayment>();
+            Dictionary<int, PeriodPayment> p = new Dictionary<int, PeriodPayment>();
             for (int i = 1; i <= _payments.Count; i++)
             {
                 p.Add(i, _payments[i]);
@@ -154,10 +198,16 @@ namespace Budget.Nowy_budzet
             {
                 p.Add(i, _salaries[i - p.Count]);
             }
+
             if (SqlConnect.Instance.DumpCreator(_categories, p, salaryInfo.Name, salaryInfo.Password, new BalanceLog(salaryInfo.Amount, DateTime.Now, 0, 0), salaryInfo.NumberOfPeople))
+            {
+                LoginWindow.LoginWindow.Instance.IsLogged = true;
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
     }
 }

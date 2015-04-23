@@ -24,29 +24,35 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
             if (PaymentName.Text != "" && PaymentValue.Text != "" && CategoryBox.SelectedIndex != -1)
             {
                 ComboBoxItem categoryItem = (ComboBoxItem)CategoryBox.SelectedValue;
-               
-
                 if (PeriodCheckBox.IsChecked == true)
                 {
                     int temp_id = -1;
                     try
-                    { temp_id = Budget.Instance.Payments.First().Key - 1; }
+                    {
+                        temp_id = Budget.Instance.Payments.First().Key - 1;
+                    }
                     catch (Exception ex)
                     { } //gdy brak elementów w tablicy temp_id = 1
                     Budget.Instance.ListOfAdds.Add(new Changes(typeof(PeriodPayment), temp_id));
                     Budget.Instance.AddPeriodPayment(temp_id,
-                        new PeriodPayment(categoryItem.Id, Convert.ToDouble(PaymentValue.Text), Note.Text, false,
-                            PaymentName.Text, Convert.ToInt32(NumberOfTexBox.Text), TypeOfDayComboBox.Text,
-                            StartDatePicker.DisplayDate, StartDatePicker.DisplayDate,
-                            (EndDateEnableCheckBox.IsChecked == true
-                                ? EndDatePicker.DisplayDate
-                                : StartDatePicker.DisplayDate.AddYears(10).Date)));
+                        new PeriodPayment(categoryItem.Id,
+                            Convert.ToDouble(PaymentValue.Text),
+                            Note.Text,
+                            false,
+                            PaymentName.Text,
+                            Convert.ToInt32(NumberOfTexBox.Text),
+                            TypeOfDayComboBox.Text,
+                            Convert.ToDateTime(StartDatePicker.Text),
+                            Convert.ToDateTime(StartDatePicker.Text),
+                            (EndDatePicker.IsEnabled == true ? Convert.ToDateTime(EndDatePicker.Text) : DateTime.MaxValue)));
                 }
                 else
                 {
                     int temp_id = 1;
                     try
-                    { temp_id = Budget.Instance.Payments.Last().Key + 1; }
+                    {
+                        temp_id = Budget.Instance.Payments.Last().Key + 1;
+                    }
                     catch (Exception ex)
                     { } //gdy brak elementów w tablicy temp_id = 1
                     int temp_id_balance = Budget.Instance.BalanceLog.Last().Key + 1;
@@ -62,17 +68,22 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
                     Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));
 
                 }
-                InfoBox.Text = "Dodano";
+
+                InfoBox.Text = "Dodano!";
                 InfoBox.Foreground = Brushes.Green;
                 PaymentName.Text = "";
                 PaymentValue.Text = "";
                 CategoryBox.SelectedIndex = -1;
-                TypeOfDayComboBox.SelectedIndex = -1;
                 NumberOfTexBox.Text = "";
+                TypeOfDayComboBox.SelectedIndex = -1;
+                PeriodCheckBox.IsChecked = false;
+                StartDatePicker.Text = "";
+                EndDateEnableCheckBox.IsChecked = false;
+                EndDatePicker.Text = "";
             }
             else
             {
-                InfoBox.Text = "Uzupełnij Wszystko";
+                InfoBox.Text = "Uzupełnij wymagane pola.";
                 InfoBox.Foreground = Brushes.Red;
             }
         }

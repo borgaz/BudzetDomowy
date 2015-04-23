@@ -33,18 +33,26 @@ namespace Budget.Nowy_budzet
         }
         private void addSalaryBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(SalaryName.Text != "" && SalaryValue.Text != "" && NumberOfTextBox.Text != "" && DateTypeBox.SelectedIndex != -1 && CategoryComboBox.SelectedIndex != -1 )
+            if (SalaryName.Text != "" && SalaryValue.Text != "" && NumberOfTextBox.Text != "" && DateTypeBox.SelectedIndex != -1 && CategoryComboBox.SelectedIndex != -1)
             {
                 int temp = 1;
-                try {temp = _periodPayments.Last().Key + 1;} catch { }
-                _periodPayments.Add(temp,new PeriodPayment(CategoryComboBox.SelectedIndex + 1,
-                    Double.Parse(SalaryValue.Text),
+                try
+                {
+                    temp = _periodPayments.Last().Key + 1;
+                }
+                catch { }
+                System.Console.WriteLine(StartDatePicker.Text);
+                System.Console.WriteLine(StartDatePicker.DisplayDate);
+                _periodPayments.Add(temp, new PeriodPayment(CategoryComboBox.SelectedIndex + 1,
+                    Convert.ToDouble(SalaryValue.Text),
                     NoteTextBox.Text,
-                    true,SalaryName.Text,
-                    int.Parse(NumberOfTextBox.Text),
+                    true,
+                    SalaryName.Text,
+                    Convert.ToInt32(NumberOfTextBox.Text),
                     DateTypeBox.SelectedValue.ToString(),
-                    StartDatePicker.DisplayDate,StartDatePicker.DisplayDate,
-                    (EndDateCheckBox.IsEnabled == true ? EndDatePicker.DisplayDate : StartDatePicker.DisplayDate)));
+                    Convert.ToDateTime(StartDatePicker.Text),
+                    Convert.ToDateTime(StartDatePicker.Text),
+                    (EndDatePicker.IsEnabled == true ? Convert.ToDateTime(EndDatePicker.Text) : DateTime.MaxValue)));
                 InfoLbl.Content = "Dodano";
                 InfoLbl.Foreground = Brushes.Green;// ="#00FF0000";
                 SalaryName.Text = "";

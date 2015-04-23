@@ -12,7 +12,7 @@
             <ColumnDefinition Width="140*"/>
             <ColumnDefinition Width="290*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid Margin="25,25,25,50" Grid.Column="2" Name="dataGridView" ItemsSource="{Binding}" AutoGenerateColumns="False" >
+        <DataGrid Margin="25,25,25,50" Grid.Column="2" Name="dataGridView" ItemsSource="{Binding}" AutoGenerateColumns="False" Loaded="dataGridView_Loaded">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nazwa" Width="80"  CanUserSort="False" IsReadOnly="True" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn Header="Kwota" Width="80" IsReadOnly="True" Binding="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"/>
@@ -20,10 +20,9 @@
             </DataGrid.Columns>
         </DataGrid>
         <Frame x:Name="BtnsContentFrame" Content="" Margin="10,60,10,60" NavigationUIVisibility="Hidden" Background="#FF888888"/>
-        <Button x:Name="AddPaymentBtn" Content="Dodaj Wydatek" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="120" Click="addPaymentBtn_Click" Height="20" Grid.Column="1"/>
-        <Button x:Name="AddSalaryBtn" Content="Dodaj Przychód" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Width="120" Click="addSalaryBtn_Click" Height="20" Grid.Column="1"/>
+        <Button x:Name="AddPaymentBtn" Content="Dodaj Wydatek" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Width="120" Click="addPaymentBtn_Click" Height="20" Grid.Column="1"/>
+        <Button x:Name="AddSalaryBtn" Content="Dodaj Przychód" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="120" Click="addSalaryBtn_Click" Height="20" Grid.Column="1"/>
         <Button x:Name="LoadHistoryButton" Content="Historia" Margin="80,535,80,20" Width="120" Grid.Column="2" Click="LoadHistoryButton_Click" />
         <Button x:Name="DumpAllButton" Content="Zapisz" HorizontalAlignment="Left" Margin="10,500,0,40" Width="120" Height="40" Grid.Column="1" Click="DumpAllButton_Click" />
-        <Button x:Name ="NewBudgetButton"  Content="Nowy budżet" Margin="10,20,10,0" VerticalAlignment="Top" Click="NewBudgetButton_Click" Height="40" Grid.Column="1"/>
     </Grid>
 </Page>

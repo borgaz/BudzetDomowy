@@ -8,7 +8,7 @@
 	Title="AddSalaryPage">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Width="280" TextWrapping="Wrap" Text="Dodaj przychód (jednorazowy/okresowy), który później będziesz mógł edytować/usunąć w zakładce zarządzania." VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Width="280" TextWrapping="Wrap" Text="Dodaj przychód(jednorazowy/okresowy), który później będziesz mógł edytować/usunąć w zakładce zarządzania." VerticalAlignment="Top"/>
         <TextBox x:Name="PaymentName" HorizontalAlignment="Left" Height="25" Margin="140,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Nazwa przychodu" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="105" Height="25"/>
         <Label Content="Kwota przychodu" HorizontalAlignment="Left" Margin="10,90,0,0" Height="25" Width="115" VerticalAlignment="Top"/>

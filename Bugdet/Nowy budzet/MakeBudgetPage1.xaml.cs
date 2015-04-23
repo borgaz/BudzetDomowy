@@ -15,6 +15,7 @@ namespace Budget.Nowy_budzet
         private LinearGradientBrush red = new LinearGradientBrush();
         private LinearGradientBrush white = new LinearGradientBrush();
         private LinearGradientBrush green = new LinearGradientBrush();
+
         public MakeBudgetPage1(SalaryInfo s)
         {
             InitializeComponent();
@@ -41,34 +42,37 @@ namespace Budget.Nowy_budzet
                 foreach (TextBox box in Page1Grid.Children)
                 {
                     if (box.Text == "")
+                    {
                         box.Background = Brushes.Red;
+                    }
                     else
+                    {
                         box.Background = white;
+                    }   
                 }
             }
             catch (Exception)
             {
                 // tymczasowy ducktape
             }
-
         }
+
         /// <summary>
         /// - sprawdza czy wypelnione pola oraz wrzuca na stos informacje
         /// </summary>
         public Boolean CheckInfo()
         {
-            if (budgetBalance.Text != "" && budgetNameText.Text != "" && (passTextBox.Password.Equals(passRepeatTextBox.Password)) && passTextBox.Password != "" && NumberOfPplTextBox.Text != "")
+            if (budgetBalance.Text != "" && budgetNameText.Text != "" && (passTextBox.Password.Equals(passRepeatTextBox.Password)) && passTextBox.Password != "" && NumberOfPeopleTextBox.Text != "")
             {
                 salaryInfo.Name = budgetNameText.Text;
                 salaryInfo.Amount = double.Parse(budgetBalance.Text);
                 salaryInfo.Password = SqlConnect.Instance.HashPasswordMd5((passTextBox.Password));
-                salaryInfo.NumberOfPeople = int.Parse(NumberOfPplTextBox.Text);
+                salaryInfo.NumberOfPeople = int.Parse(NumberOfPeopleTextBox.Text);
                 return true;
             }
             else
             {
-                MessageBox.Show("Uzupelnij wszystkie pola.");
-                //  CheckWindow();
+                MessageBox.Show("Uzupełnij puste pola.");
                 return false;
             }
         }
@@ -93,9 +97,9 @@ namespace Budget.Nowy_budzet
             passRepeatTextBox.Background = passTextBox.Password.Equals(passRepeatTextBox.Password) ? green : red;
         }
 
-        private void NumberOfPplTextBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void NumberOfPeopleTextBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!char.IsDigit(e.Text,e.Text.Length - 1) && !char.IsPunctuation(e.Text,e.Text.Length - 1))
+            if (!char.IsDigit(e.Text, e.Text.Length - 1) && !char.IsPunctuation(e.Text, e.Text.Length - 1))
             {
                 e.Handled = true;
                 budgetBalance.ToolTip = "Wpisz kwotę liczbą";

@@ -37,16 +37,16 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
             dataGridView.ItemsSource = Budget.Instance.Payments.Values;
         }
 
-        private void LoginWindowButton_Click(object sender, RoutedEventArgs e)
-        {
-            new LoginWindow.LoginWindow().ShowDialog();
-        }
-
         private void DumpAllButton_Click(object sender, RoutedEventArgs e)
         {
             //SqlConnect.Instance.CleanDatabase();
             //Budget.Instance.DumpAll();
             Budget.Instance.Dump();
+        }
+
+        private void dataGridView_Loaded(object sender, RoutedEventArgs e)
+        {
+            dataGridView.ItemsSource = Budget.Instance.Payments.Values;
         }
     }
 }

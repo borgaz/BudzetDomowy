@@ -15,15 +15,16 @@ namespace Budget.Nowy_budzet
     {
         private Dictionary<int, PeriodPayment> _periodPayments;
         private Dictionary<int, Category> _categories;
-        private int _salaries = 0;
-        public MakeBudgetPage2(Dictionary<int,PeriodPayment> d,Dictionary<int,Category> c)
+
+        public MakeBudgetPage2(Dictionary<int, PeriodPayment> payments, Dictionary<int, Category> categories)
         {
             InitializeComponent();
-            _periodPayments = d;
-            _categories = c;
+            _periodPayments = payments;
+            _categories = categories;
             InsertDateTypes();
             InsertCategories();
         }
+
         private void InsertDateTypes()
         {
             DateTypeBox.Items.Add("DZIEŃ");
@@ -31,21 +32,27 @@ namespace Budget.Nowy_budzet
             DateTypeBox.Items.Add("MIESIĄC");
             DateTypeBox.Items.Add("ROK");
         }
+
         private void addSalaryBtn_Click(object sender, RoutedEventArgs e)
         {
-            if(SalaryName.Text != "" && SalaryValue.Text != "" && NumberOfTextBox.Text != "" && DateTypeBox.SelectedIndex != -1 && CategoryComboBox.SelectedIndex != -1 )
+            if(SalaryName.Text != "" && SalaryValue.Text != "" && NumberOfTextBox.Text != "" && DateTypeBox.SelectedIndex != -1 && CategoryComboBox.SelectedIndex != -1)
             {
                 int temp = 1;
-                try { temp = _periodPayments.Last().Key + 1; }
+                try
+                { 
+                    temp = _periodPayments.Last().Key + 1; 
+                }
                 catch { }
-                _periodPayments.Add(temp,new PeriodPayment(CategoryComboBox.SelectedIndex + 1,
-                    Double.Parse(SalaryValue.Text),
+                _periodPayments.Add(temp, new PeriodPayment(CategoryComboBox.SelectedIndex + 1,
+                    Convert.ToDouble(SalaryValue.Text),
                     NoteTextBox.Text,
-                    false,SalaryName.Text,
-                    int.Parse(NumberOfTextBox.Text),
+                    false,
+                    SalaryName.Text,
+                    Convert.ToInt32(NumberOfTextBox.Text),
                     DateTypeBox.SelectedValue.ToString(),
-                    StartDatePicker.DisplayDate,StartDatePicker.DisplayDate,
-                    (EndDateCheckBox.IsEnabled == true ? EndDatePicker.DisplayDate : StartDatePicker.DisplayDate)));
+                    Convert.ToDateTime(StartDatePicker.Text),
+                    Convert.ToDateTime(StartDatePicker.Text),
+                    (EndDatePicker.IsEnabled == true ? Convert.ToDateTime(EndDatePicker.Text) : DateTime.MaxValue)));
                 InfoLbl.Content = "Dodano";
                 InfoLbl.Foreground = Brushes.Green;// ="#00FF0000";
                 SalaryName.Text = "";
@@ -62,8 +69,9 @@ namespace Budget.Nowy_budzet
 
         private void addedSalariesBtn_Click(object sender, RoutedEventArgs e)
         {
-            new AddedSalariesWindow(1,_periodPayments,_categories).ShowDialog();
+            new AddedSalariesWindow(1, _periodPayments, _categories).ShowDialog();
         }
+
         /// <summary>
         /// Inserts categories in CategoryComboBox
         /// </summary>
@@ -75,15 +83,18 @@ namespace Budget.Nowy_budzet
                 for (int i = 0; i < _categories.Count; i++)
                 {
                     if (_categories[i + 1].Type == true)
+                    {
                         CategoryComboBox.Items.Add(_categories[i + 1].Name);
+                    }
                 }
             }
             catch (Exception)
             {
-                MessageBox.Show(_categories.Count + "");
+                MessageBox.Show(_categories.Count + " ");
                 Console.WriteLine(_categories.ToArray());
             }
         }
+
         /// <summary>
         /// After going to next site, gets all information to primary class
         /// </summary>
