@@ -33,6 +33,18 @@ namespace Budget.Nowy_budzet
             DateTypeBox.Items.Add("ROK");
         }
 
+        public Boolean CheckInfo()
+        {
+            try
+            {
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         private void addSalaryBtn_Click(object sender, RoutedEventArgs e)
         {
             if(SalaryName.Text != "" && SalaryValue.Text != "" && NumberOfTextBox.Text != "" && DateTypeBox.SelectedIndex != -1 && CategoryComboBox.SelectedIndex != -1)
@@ -95,21 +107,6 @@ namespace Budget.Nowy_budzet
             }
         }
 
-        /// <summary>
-        /// After going to next site, gets all information to primary class
-        /// </summary>
-        /// <returns> true if no errors</returns>
-        public Boolean CheckInfo()
-        {
-            try
-            {
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
         public Boolean BackToThisPage() // do usuniecia po refaktoryzacji
         {
             return true;

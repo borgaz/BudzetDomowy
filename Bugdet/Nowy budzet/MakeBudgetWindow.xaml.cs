@@ -209,5 +209,6 @@ namespace Budget.Nowy_budzet
                 return false;
             }
         }
+
     }
 }

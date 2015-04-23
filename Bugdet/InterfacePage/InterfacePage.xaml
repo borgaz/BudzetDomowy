@@ -17,8 +17,8 @@
         <Button x:Name="WelcomePageButton" HorizontalAlignment="Left" Margin="126,278,0,0" VerticalAlignment="Top" Width="118" Height="48" Click="WelcomePageButton_Click">
             <TextBlock Text="Podstawowe informacje" TextWrapping="Wrap"/>
         </Button>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="126,348,0,0" VerticalAlignment="Top" Width="118" Height="48"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="126,420,0,0" VerticalAlignment="Top" Width="118" Height="48"/>
+        <Button Content="" HorizontalAlignment="Left" Margin="126,348,0,0" VerticalAlignment="Top" Width="118" Height="48"/>
+        <Button Content="" HorizontalAlignment="Left" Margin="126,420,0,0" VerticalAlignment="Top" Width="118" Height="48"/>
         <Button x:Name="AddPaymentsButton"  HorizontalAlignment="Left" Margin="349,208,0,0" VerticalAlignment="Top" Width="118" Height="48" Click="AddPaymentsButton_Click">
             <TextBlock Text="Dodaj przychody i wydatki" TextWrapping="Wrap"/>
             </Button>

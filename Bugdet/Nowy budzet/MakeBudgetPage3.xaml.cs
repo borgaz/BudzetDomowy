@@ -24,6 +24,7 @@ namespace Budget.Nowy_budzet
             InsertDateTypes();
             InsertCategories();
         }
+
         private void InsertDateTypes()
         {
             DateTypeBox.Items.Add("DZIEŃ");
@@ -31,6 +32,19 @@ namespace Budget.Nowy_budzet
             DateTypeBox.Items.Add("MIESIĄC");
             DateTypeBox.Items.Add("ROK");
         }
+
+        public Boolean CheckInfo()
+        {
+            try
+            {
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         private void addSalaryBtn_Click(object sender, RoutedEventArgs e)
         {
             if (SalaryName.Text != "" && SalaryValue.Text != "" && NumberOfTextBox.Text != "" && DateTypeBox.SelectedIndex != -1 && CategoryComboBox.SelectedIndex != -1)
@@ -90,10 +104,6 @@ namespace Budget.Nowy_budzet
             }
         }
 
-        public Boolean CheckInfo()
-        {
-            return true;
-        }
         public Boolean BackToThisPage()
         {
             return true;
