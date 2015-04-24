@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
 namespace Budget.Nowy_budzet
@@ -151,12 +152,12 @@ namespace Budget.Nowy_budzet
 
                 case 2:
                 {
-                    return _page2.CheckInfo();
+                    return CheckInfo();
                 }
 
                 case 3:
                 {
-                    return _page3.CheckInfo();
+                    return CheckInfo();
                 }
 
                 default:
@@ -201,7 +202,7 @@ namespace Budget.Nowy_budzet
         private Boolean CompleteBudget()
         {
             Dictionary<int, PeriodPayment> p = new Dictionary<int, PeriodPayment>();
-            for (int i = 1; i <= _payments.Count; i++)
+            for (int i = 1; i <= _payments.Count; i++)      //Problem: w wypadku dodania więcej niż jednego wydatku okresowego dodaje kilka takich samych jak pierwszy. 
             {
                 p.Add(i, _payments[i]);
             }
@@ -216,6 +217,52 @@ namespace Budget.Nowy_budzet
                 return true;
             }
             else
+            {
+                return false;
+            }
+        }
+
+        public static void InsertDateTypes(ComboBox dataBox)
+        {
+            dataBox.Items.Add("DZIEŃ");
+            dataBox.Items.Add("TYDZIEŃ");
+            dataBox.Items.Add("MIESIĄC");
+            dataBox.Items.Add("ROK");
+        }
+
+        /// <summary>
+        /// Inserts categories in CategoryComboBox
+        /// </summary>
+        public static List<int> InsertCategories(ComboBox categoryBox, Dictionary<int, Category>cat, Boolean type)
+        {
+            categoryBox.Items.Clear();
+            List<int> originalID = new List<int>();
+            try
+            {
+                for (int i = 0; i < cat.Count; i++)
+                {
+                    if (cat[i + 1].Type == type)
+                    {
+                        categoryBox.Items.Add(cat[i + 1].Name);
+                        originalID.Add(i+1);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(cat.Count + "");
+                Console.WriteLine(cat.Values.ToString());
+            }
+            return originalID;
+        }
+
+        public static Boolean CheckInfo()
+        {
+            try
+            {
+                return true;
+            }
+            catch (Exception)
             {
                 return false;
             }

@@ -15,34 +15,15 @@ namespace Budget.Nowy_budzet
     {
         private Dictionary<int, PeriodPayment> _periodPayments;
         private Dictionary<int, Category> _categories;
+        List<int> originalCategoryID;
       //  private int _salaries;
         public MakeBudgetPage3(Dictionary<int,PeriodPayment> d,Dictionary<int,Category> c)
         {
             InitializeComponent();
             _periodPayments = d;
             _categories = c;
-            InsertDateTypes();
-            InsertCategories();
-        }
-
-        private void InsertDateTypes()
-        {
-            DateTypeBox.Items.Add("DZIEŃ");
-            DateTypeBox.Items.Add("TYDZIEŃ");
-            DateTypeBox.Items.Add("MIESIĄC");
-            DateTypeBox.Items.Add("ROK");
-        }
-
-        public Boolean CheckInfo()
-        {
-            try
-            {
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            MakeBudgetWindow.InsertDateTypes(DateTypeBox);
+            originalCategoryID = MakeBudgetWindow.InsertCategories(CategoryComboBox, _categories, false);
         }
 
         private void addSalaryBtn_Click(object sender, RoutedEventArgs e)
@@ -55,9 +36,9 @@ namespace Budget.Nowy_budzet
                     temp = _periodPayments.Last().Key + 1;
                 }
                 catch { }
-                System.Console.WriteLine(StartDatePicker.Text);
-                System.Console.WriteLine(StartDatePicker.DisplayDate);
-                _periodPayments.Add(temp, new PeriodPayment(CategoryComboBox.SelectedIndex + 1,
+                //System.Console.WriteLine(StartDatePicker.Text);
+                //System.Console.WriteLine(StartDatePicker.DisplayDate);
+                _periodPayments.Add(temp, new PeriodPayment(originalCategoryID[CategoryComboBox.SelectedIndex],
                     Convert.ToDouble(SalaryValue.Text),
                     NoteTextBox.Text,
                     true,
@@ -86,24 +67,6 @@ namespace Budget.Nowy_budzet
             new AddedSalariesWindow(2,_periodPayments,_categories).ShowDialog();
         }
 
-        public void InsertCategories()
-        {
-            CategoryComboBox.Items.Clear();
-            try
-            {
-                for (int i = 0; i < _categories.Count; i++)
-                {
-                    if (_categories[i + 1].Type == false)
-                        CategoryComboBox.Items.Add(_categories[i + 1].Name);
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(_categories.Count + "");
-                Console.WriteLine(_categories.ToArray());
-            }
-        }
-
         public Boolean BackToThisPage()
         {
             return true;
@@ -112,7 +75,7 @@ namespace Budget.Nowy_budzet
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
             new AddCategoryWindow(_categories).ShowDialog();
-            InsertCategories();
+            originalCategoryID = MakeBudgetWindow.InsertCategories(CategoryComboBox, _categories, false);
         }
 
         private void EndDateCheckBox_OnChecked(object sender, RoutedEventArgs e)
