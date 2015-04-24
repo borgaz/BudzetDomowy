@@ -74,6 +74,9 @@
     <Compile Include="Budget.cs" />
     <Compile Include="Changes.cs" />
     <Compile Include="ComboBoxItem.cs" />
+    <Compile Include="History\HistoryMainPage.xaml.cs">
+      <DependentUpon>HistoryMainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InterfacePage\InterfacePage.xaml.cs">
       <DependentUpon>InterfacePage.xaml</DependentUpon>
     </Compile>
@@ -130,6 +133,10 @@
     <Compile Include="zarzadzanie wydatkami i przychodami\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="History\HistoryMainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="InterfacePage\InterfacePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

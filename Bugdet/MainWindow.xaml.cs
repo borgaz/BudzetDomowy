@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
+using Budget.History;
 using Budget.Nowy_budzet;
 using Budget.zarzadzanie_wydatkami_i_przychodami;
 using Budget.LoginWindow;
@@ -19,6 +20,7 @@ namespace Budget
         private InterfacePage.InterfacePage _interfacePage;
         private WelcomePage.WelcomePage _welcomePage;
         private MainSettingsWindow _mainSettingsWindow;
+        private HistoryMainPage _historyPage;
         private static int _actualPage = 3;
         private bool running = true;
         private Thread th;
@@ -37,6 +39,7 @@ namespace Budget
             _interfacePage = new InterfacePage.InterfacePage();
             _welcomePage = new WelcomePage.WelcomePage();
             _mainSettingsWindow = new MainSettingsWindow(1);
+            _historyPage = new HistoryMainPage();
             InsertPage();
             th = new Thread(OnPageChange);
             th.Start();
@@ -93,6 +96,9 @@ namespace Budget
                     break;
                 case 4:
                     this.MainContentFrame.Content = _mainSettingsWindow;
+                    break;
+                case 5:
+                    this.MainContentFrame.Content = _historyPage;
                     break;
             }
         }

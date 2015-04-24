@@ -8,7 +8,7 @@
 	Title="WelcomePage">
 
     <Grid>
-        <Image Source="../Resources/Pie-Chart-icon.png" HorizontalAlignment="Left" Height="156" Margin="516,132,0,0" VerticalAlignment="Top" Width="180"/>
+        <Image Source="../Resources/Pie-Chart-icon.png" HorizontalAlignment="Left" Height="156" Margin="493,98,0,0" VerticalAlignment="Top" Width="180"/>
         <DataGrid HorizontalAlignment="Left" Margin="32,132,0,0" VerticalAlignment="Top" Height="358" Width="326"/>
     </Grid>
 </Page>

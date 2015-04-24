@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Collections.Generic;
+using System.Data;
 using System.Windows.Controls;
 using Budget.Nowy_budzet;
 
@@ -34,9 +36,25 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
 
         private void LoadHistoryButton_Click(object sender, RoutedEventArgs e)
         {
-            dataGridView.ItemsSource = Budget.Instance.Payments.Values;
+          //  dataGridView.Items.Clear();
+            RefreshTable();
+
+            //dataGridView.ItemsSource = Budget.Instance.Payments.Values;
         }
 
+        private void RefreshTable()
+        {
+            DataTable history = new DataTable();
+            history.Columns.Add("Nazwa", typeof(string));
+            history.Columns.Add("Kwota", typeof(int));
+            history.Columns.Add("Kategoria", typeof(string));
+            foreach(Payment p in Budget.Instance.Payments.Values)
+            {
+               // Payment p = Budget.Instance.Payments[i];
+                history.Rows.Add(p.Name, p.Amount, Budget.Instance.Categories[p.CategoryID].Name);
+            }
+            dataGridView.ItemsSource = history.DefaultView; 
+        }
         private void DumpAllButton_Click(object sender, RoutedEventArgs e)
         {
             //SqlConnect.Instance.CleanDatabase();
@@ -46,7 +64,10 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
 
         private void dataGridView_Loaded(object sender, RoutedEventArgs e)
         {
-            dataGridView.ItemsSource = Budget.Instance.Payments.Values;
+          //  dataGridView.Items.Clear();
+            RefreshTable();
+
+           // dataGridView.ItemsSource = Budget.Instance.Payments.Values;
         }
     }
 }

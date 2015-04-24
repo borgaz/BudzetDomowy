@@ -39,5 +39,10 @@ namespace Budget.InterfacePage
         {
             MainWindow.ActualPage = 3;
         }
+
+        private void HistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.ActualPage = 5;
+        }
     }
 }

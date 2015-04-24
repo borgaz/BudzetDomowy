@@ -1,0 +1,27 @@
+﻿<Page x:Class="Budget.History.HistoryMainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="725"
+	Title="HistoryMainPage">
+
+    <Grid>
+        <DataGrid x:Name="HistoryDataGrid" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Height="485" Width="528" LoadingRow="HistoryDataGrid_OnLoadingRow">
+            <Menu>
+                <MenuItem>
+                    
+                </MenuItem>
+            </Menu>
+        </DataGrid>
+        <StackPanel HorizontalAlignment="Left" Height="116" Margin="543,72,0,0" VerticalAlignment="Top" Width="172">
+            <CheckBox x:Name="PeriodPaymentCheckBox" Margin="5" Content="Wydatki okresowe"/>
+            <CheckBox x:Name="PeriodSalaryCheckBox" Margin="5" Content="Przychody okresowe"/>
+            <CheckBox x:Name="SinglePaymentCheckBox" Margin="5" Content="Wydatki pojedyncze"/>
+            <CheckBox x:Name="SingleSalaryCheckBox" Margin="5" Content="Przychody pojedyncze"/>
+        </StackPanel>
+        <Button x:Name="RefreshTableButton" Content="Odśwież wyszukiwanie" HorizontalAlignment="Left" Margin="543,193,0,0" VerticalAlignment="Top" Width="172" Click="RefreshTableButton_Click"/>
+
+    </Grid>
+</Page>

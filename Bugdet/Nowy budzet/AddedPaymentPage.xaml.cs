@@ -50,7 +50,7 @@ namespace Budget.Nowy_budzet
             for (int i = 0; i < d.Count; i++)
             {
                 PeriodPayment p = d[i + 1];
-                salary.Rows.Add(i + 1, p.Name, p.Amount,_categories[p.CategoryID].Name, "Co " + p.Frequency + " " + p.Period, p.StartDate.ToString(), p.EndDate.ToString());
+                salary.Rows.Add(i + 1, p.Name, p.Amount, _categories[p.CategoryID].Name, "Co " + p.Frequency + " " + p.Period, p.StartDate.ToString(), (p.EndDate.Equals(DateTime.MaxValue) ? "Nie zdefiniowano" : p.EndDate.ToString()));
             }
             PaymentTable.ItemsSource = salary.DefaultView;
             //  salaryTable.Columns[0].Visibility = Visibility.Hidden;
