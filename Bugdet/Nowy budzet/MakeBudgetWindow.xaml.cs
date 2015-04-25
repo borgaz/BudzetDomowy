@@ -202,13 +202,14 @@ namespace Budget.Nowy_budzet
         private Boolean CompleteBudget()
         {
             Dictionary<int, PeriodPayment> p = new Dictionary<int, PeriodPayment>();
-            for (int i = 1; i <= _payments.Count; i++)      //Problem: w wypadku dodania więcej niż jednego wydatku okresowego dodaje kilka takich samych jak pierwszy. 
+
+            for (int i = 1; i <= _salaries.Count; i++)     
             {
-                p.Add(i, _payments[i]);
+                p.Add(i, _salaries[i]);
             }
-            for (int i = 1 + _payments.Count; i <= _payments.Count + _salaries.Count; i++)
+            for (int i = 1 + _salaries.Count; i <= _payments.Count + _salaries.Count; i++)
             {
-                p.Add(i, _salaries[i - p.Count]);
+                p.Add(i, _payments[i - _salaries.Count]);
             }
 
             if (SqlConnect.Instance.DumpCreator(_categories, p, salaryInfo.Name, salaryInfo.Password, new BalanceLog(salaryInfo.Amount, DateTime.Now, 0, 0), salaryInfo.NumberOfPeople))
