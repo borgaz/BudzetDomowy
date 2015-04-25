@@ -17,12 +17,11 @@
             </DataGrid.ContextMenu>
         </DataGrid>
         <StackPanel HorizontalAlignment="Left" Height="116" Margin="543,72,0,0" VerticalAlignment="Top" Width="172">
-            <CheckBox x:Name="PeriodPaymentCheckBox" Margin="5" Content="Wydatki okresowe"/>
-            <CheckBox x:Name="PeriodSalaryCheckBox" Margin="5" Content="Przychody okresowe"/>
-            <CheckBox x:Name="SinglePaymentCheckBox" Margin="5" Content="Wydatki pojedyncze"/>
-            <CheckBox x:Name="SingleSalaryCheckBox" Margin="5" Content="Przychody pojedyncze"/>
+            <CheckBox x:Name="PeriodPaymentCheckBox" Margin="5" Content="Wydatki okresowe" Click="PeriodPaymentCheckBox_OnClick"/>
+            <CheckBox x:Name="PeriodSalaryCheckBox" Margin="5" Content="Przychody okresowe" Click="PeriodPaymentCheckBox_OnClick"/>
+            <CheckBox x:Name="SinglePaymentCheckBox" Margin="5" Content="Wydatki pojedyncze" Click="PeriodPaymentCheckBox_OnClick"/>
+            <CheckBox x:Name="SingleSalaryCheckBox" Margin="5" Content="Przychody pojedyncze" Click="PeriodPaymentCheckBox_OnClick"/>
         </StackPanel>
-        <Button x:Name="RefreshTableButton" Content="Odśwież wyszukiwanie" HorizontalAlignment="Left" Margin="543,193,0,0" VerticalAlignment="Top" Width="172" Click="RefreshTableButton_Click"/>
 
     </Grid>
 </Page>

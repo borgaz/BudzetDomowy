@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,7 +26,7 @@ namespace Budget.History
         public HistoryMainPage()
         {
             InitializeComponent();
-           // Dispatcher.Invoke(RefreshTable);
+            RefreshTable();
         }
 
         private void RefreshTableButton_Click(object sender, RoutedEventArgs e)
@@ -78,6 +79,18 @@ namespace Budget.History
             }
             HistoryDataGrid.ItemsSource = history.DefaultView;
 
+            new Thread(HideThread).Start();
+        }
+
+        private void HideThread()
+        {
+            while (HistoryDataGrid.Columns.Count == 0)
+            { }
+            Dispatcher.Invoke(HideColumns);
+        }
+        private void HideColumns()
+        {
+            
             HistoryDataGrid.Columns[0].Visibility = Visibility.Hidden;
             HistoryDataGrid.Columns[1].Visibility = Visibility.Hidden;
         }
@@ -121,6 +134,11 @@ namespace Budget.History
         private void UpdateItem_OnClick(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
+        }
+
+        private void PeriodPaymentCheckBox_OnClick(object sender, RoutedEventArgs e)
+        {
+            RefreshTable();
         }
     }
 }
