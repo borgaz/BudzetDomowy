@@ -18,7 +18,7 @@ namespace Budget
         private String name; // nazwa budzetu
         private String note; // notatka
         private String password; // haslo do budzetu
-        private Dictionary<int, Payment> payments; // slownik platnosci
+        private Dictionary<int, Payment> payments; // slownik platnosci // minus dla period, plus dla single
         private Dictionary<int, Category> categories; // slownik kategorii
         private Dictionary<int, SavingsTarget> savingsTargets; //slownik celow, na ktore oszczedzamy
         private Dictionary<int, BalanceLog> balanceLogs; // słownik logow
@@ -351,12 +351,12 @@ namespace Budget
                         ));
                 }
 
-                int nOPP = periodPayFromSelect.Tables[0].Rows.Count; // numberOfPeriodPayments - potrzebny, zeby nie pokrywaly sie ID pejmentsow
+             //   int nOPP = periodPayFromSelect.Tables[0].Rows.Count; // numberOfPeriodPayments - potrzebny, zeby nie pokrywaly sie ID pejmentsow
 
                 System.Data.DataSet singlePayFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM SinglePayments");
                 for (int i = 0; i < singlePayFromSelect.Tables[0].Rows.Count; i++)
                 {
-                    payments.Add(Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["id"]) + nOPP,
+                    payments.Add(Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["id"]),
                         new SinglePayment(Convert.ToString(singlePayFromSelect.Tables[0].Rows[i]["note"]),
                         Convert.ToDouble(singlePayFromSelect.Tables[0].Rows[i]["amount"]),
                         Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["categoryId"]),

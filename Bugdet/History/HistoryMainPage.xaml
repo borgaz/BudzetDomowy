@@ -8,19 +8,24 @@
 	Title="HistoryMainPage">
 
     <Grid>
-        <DataGrid x:Name="HistoryDataGrid" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Height="485" Width="528" LoadingRow="HistoryDataGrid_OnLoadingRow">
+        <DataGrid x:Name="HistoryDataGrid" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Height="485" Width="343" LoadingRow="HistoryDataGrid_OnLoadingRow">
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Usuń rekord" Click="DeleteItem_OnClick"/>
                     <MenuItem Header="Edytuj rekord" Click="UpdateItem_OnClick"/>
+                    <MenuItem Header="Więcej Informacji" Click="InfoItem_OnClick"></MenuItem>
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <StackPanel HorizontalAlignment="Left" Height="116" Margin="543,72,0,0" VerticalAlignment="Top" Width="172">
+        <StackPanel HorizontalAlignment="Left" Height="255" Margin="358,55,0,0" VerticalAlignment="Top" Width="172">
             <CheckBox x:Name="PeriodPaymentCheckBox" Margin="5" Content="Wydatki okresowe" Click="PeriodPaymentCheckBox_OnClick"/>
             <CheckBox x:Name="PeriodSalaryCheckBox" Margin="5" Content="Przychody okresowe" Click="PeriodPaymentCheckBox_OnClick"/>
             <CheckBox x:Name="SinglePaymentCheckBox" Margin="5" Content="Wydatki pojedyncze" Click="PeriodPaymentCheckBox_OnClick"/>
             <CheckBox x:Name="SingleSalaryCheckBox" Margin="5" Content="Przychody pojedyncze" Click="PeriodPaymentCheckBox_OnClick"/>
+            <CheckBox x:Name="StartDateCheckBox" Margin="5,15,98,15" Content="Od Kiedy" Click="StartDateCheckBox_OnClick"/>
+            <DatePicker x:Name="StartDatePicker" Margin="85,-35,5,15" IsEnabled="False"/>
+            <CheckBox x:Name="EndDateCheckBox" Margin="5,5,98,5" Content="Do Kiedy" Click="EndDateCheckBox_OnClick"/>
+            <DatePicker x:Name="EndDatePicker" Margin="85,-25,5,0" IsEnabled="False"/>
         </StackPanel>
 
     </Grid>
