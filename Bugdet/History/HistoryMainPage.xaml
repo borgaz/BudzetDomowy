@@ -9,11 +9,12 @@
 
     <Grid>
         <DataGrid x:Name="HistoryDataGrid" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Height="485" Width="528" LoadingRow="HistoryDataGrid_OnLoadingRow">
-            <Menu>
-                <MenuItem>
-                    
-                </MenuItem>
-            </Menu>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Usuń rekord" Click="DeleteItem_OnClick"/>
+                    <MenuItem Header="Edytuj rekord" Click="UpdateItem_OnClick"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
         <StackPanel HorizontalAlignment="Left" Height="116" Margin="543,72,0,0" VerticalAlignment="Top" Width="172">
             <CheckBox x:Name="PeriodPaymentCheckBox" Margin="5" Content="Wydatki okresowe"/>

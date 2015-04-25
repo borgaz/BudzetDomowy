@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using System.Collections;
+using System.Windows.Navigation;
 
 namespace Budget
 {
@@ -179,41 +180,50 @@ namespace Budget
         public void AddSinglePayment(int index, SinglePayment payment)
         {
             payments.Add(index, payment);
+            ListOfAdds.Add(new Changes(typeof(SinglePayment), index));
         }
 
         public void DeleteSinglePayment(int index)
         {
             payments.Remove(index);
+            ListOfDels.Add(new Changes(typeof(SinglePayment),index));
         }
 
         public void AddSavingsTarget(int index, SavingsTarget target)
         {
             savingsTargets.Add(index, target);
+            ListOfAdds.Add(new Changes(typeof(SavingsTarget), index));
+
         }
 
         public void DeleteSavingsTarget(int index)
         {
             savingsTargets.Remove(index);
+            ListOfDels.Add(new Changes(typeof(SavingsTarget), index));
         }
 
         public void AddPeriodPayment(int index, PeriodPayment payment)
         {
             payments.Add(index, payment);
+            ListOfAdds.Add(new Changes(typeof(PeriodPayment), index));
         }
 
         public void DeletePeriodPayment(int index)
         {
             payments.Remove(index);
+            ListOfDels.Add(new Changes(typeof(PeriodPayment), index));
         }
 
         public void AddBalanceLog(int index, BalanceLog log)
         {
             balanceLogs.Add(index, log);
+            ListOfAdds.Add(new Changes(typeof(BalanceLog), index));
         }
 
         public void DeleteBalanceLog(int index)
         {
             balanceLogs.Remove(index);
+            ListOfDels.Add(new Changes(typeof(BalanceLog), index));
         }
 
         public void InsertCategories(ComboBox comboBox, bool type)

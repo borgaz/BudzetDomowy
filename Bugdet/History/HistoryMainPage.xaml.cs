@@ -25,47 +25,53 @@ namespace Budget.History
         public HistoryMainPage()
         {
             InitializeComponent();
+           // Dispatcher.Invoke(RefreshTable);
         }
 
         private void RefreshTableButton_Click(object sender, RoutedEventArgs e)
         {
+           RefreshTable();
+        }
+
+        private void RefreshTable()
+        {
             DataTable history = new DataTable();
-           // history.Columns.Add("id", typeof(int));
             history.Columns.Add("Type", typeof(bool));
+            history.Columns.Add("Id", typeof(int));
             history.Columns.Add("Nazwa", typeof(string));
             history.Columns.Add("Wynagrodzenie", typeof(int));
             history.Columns.Add("Kategoria", typeof(string));
             history.Columns.Add("Powtarzalność", typeof(string));
             history.Columns.Add("Od Kiedy", typeof(string));
             history.Columns.Add("Do Kiedy", typeof(string));
-            history.Columns.Add("Saldo", typeof (double));
-            foreach(Payment p in Budget.Instance.Payments.Values)
+            history.Columns.Add("Saldo", typeof(double));
+            foreach (KeyValuePair<int, Payment> p in Budget.Instance.Payments)
             {
-                if (p.Type && p.GetType() == typeof(PeriodPayment) && PeriodPaymentCheckBox.IsChecked == true)
+                if (p.Value.Type && p.Value.GetType() == typeof(PeriodPayment) && PeriodPaymentCheckBox.IsChecked == true)
                 {
-                    PeriodPayment pp = (PeriodPayment) p;
-                    history.Rows.Add(pp.Type,"[OKRESOWE]" + pp.Name, pp.Amount, Budget.Instance.Categories[pp.CategoryID].Name,
+                    PeriodPayment pp = (PeriodPayment)p.Value;
+                    history.Rows.Add(pp.Type, p.Key, "[OKRESOWE]" + pp.Name, pp.Amount, Budget.Instance.Categories[pp.CategoryID].Name,
                         "Co " + pp.Frequency + " " + pp.Period, pp.StartDate,
                         (pp.EndDate.Equals(DateTime.MaxValue) ? "Nie zdefiniowano" : pp.EndDate.ToString()));
                 }
-                if (p.Type && p.GetType() == typeof (SinglePayment) && SinglePaymentCheckBox.IsChecked == true)
+                if (p.Value.Type && p.Value.GetType() == typeof(SinglePayment) && SinglePaymentCheckBox.IsChecked == true)
                 {
-                    SinglePayment pp = (SinglePayment)p;
-                    history.Rows.Add(pp.Type,pp.Name, pp.Amount, Budget.Instance.Categories[pp.CategoryID].Name,
+                    SinglePayment pp = (SinglePayment)p.Value;
+                    history.Rows.Add(pp.Type, p.Key, pp.Name, pp.Amount, Budget.Instance.Categories[pp.CategoryID].Name,
                         "Brak", pp.Date,
                         "Brak");
                 }
-                if (!p.Type && p.GetType() == typeof(PeriodPayment) && PeriodSalaryCheckBox.IsChecked == true)
+                if (!p.Value.Type && p.Value.GetType() == typeof(PeriodPayment) && PeriodSalaryCheckBox.IsChecked == true)
                 {
-                    PeriodPayment pp = (PeriodPayment)p;
-                    history.Rows.Add(pp.Type,"[OKRESOWE]" + pp.Name, pp.Amount, Budget.Instance.Categories[pp.CategoryID].Name,
+                    PeriodPayment pp = (PeriodPayment)p.Value;
+                    history.Rows.Add(pp.Type, p.Key, "[OKRESOWE]" + pp.Name, pp.Amount, Budget.Instance.Categories[pp.CategoryID].Name,
                         "Co " + pp.Frequency + " " + pp.Period, pp.StartDate,
                         (pp.EndDate.Equals(DateTime.MaxValue) ? "Nie zdefiniowano" : pp.EndDate.ToString()));
                 }
-                if (!p.Type && p.GetType() == typeof(SinglePayment) && SingleSalaryCheckBox.IsChecked == true)
+                if (!p.Value.Type && p.Value.GetType() == typeof(SinglePayment) && SingleSalaryCheckBox.IsChecked == true)
                 {
-                    SinglePayment pp = (SinglePayment)p;
-                    history.Rows.Add(pp.Type,pp.Name, pp.Amount, Budget.Instance.Categories[pp.CategoryID].Name,
+                    SinglePayment pp = (SinglePayment)p.Value;
+                    history.Rows.Add(pp.Type, p.Key, pp.Name, pp.Amount, Budget.Instance.Categories[pp.CategoryID].Name,
                         "Brak", pp.Date,
                         "Brak");
                 }
@@ -73,8 +79,8 @@ namespace Budget.History
             HistoryDataGrid.ItemsSource = history.DefaultView;
 
             HistoryDataGrid.Columns[0].Visibility = Visibility.Hidden;
+            HistoryDataGrid.Columns[1].Visibility = Visibility.Hidden;
         }
-
         private void HistoryDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
         {
             DataRowView dataRow = e.Row.DataContext as DataRowView;
@@ -88,6 +94,33 @@ namespace Budget.History
             {
                 e.Row.Background = Brushes.ForestGreen;
             }
+        }
+
+        private void DeleteItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            DataRowView dataRow;
+            try
+            {
+                dataRow = (DataRowView)HistoryDataGrid.SelectedItem;
+                if (dataRow.Row.ItemArray[2].ToString().Contains("[OKRESOWE]"))
+                {
+                    Budget.Instance.DeletePeriodPayment(Convert.ToInt32(dataRow.Row.ItemArray[1]));
+                }
+                else
+                {
+                    Budget.Instance.DeleteSinglePayment(Convert.ToInt32(dataRow.Row.ItemArray[1]));
+                }
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Zaznacz poprawny rekord!");
+            }
+            RefreshTable();
+        }
+
+        private void UpdateItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -32,11 +32,11 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
                     int temp_id = -1;
                     try
                     { 
-                        temp_id = Budget.Instance.Payments.First().Key-1; 
+                        temp_id = Budget.Instance.Payments.First().Key - 1; 
                     }
                     catch (Exception ex)
                     { } //gdy brak elementów w tablicy temp_id = 1
-                    Budget.Instance.ListOfAdds.Add(new Changes(typeof(PeriodPayment), temp_id));
+                  //  Budget.Instance.ListOfAdds.Add(new Changes(typeof(PeriodPayment), temp_id));
                     Budget.Instance.AddPeriodPayment(temp_id,
                         new PeriodPayment(categoryItem.Id, 
                             Convert.ToDouble(PaymentValue.Text), 
@@ -59,7 +59,7 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
                     catch (Exception ex)
                     { } //gdy brak elementów w tablicy temp_id = 1
                     Console.WriteLine(temp_id);
-                    Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
+                    //Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
                     Budget.Instance.AddSinglePayment(temp_id,
                         new SinglePayment(Note.Text, Convert.ToDouble(PaymentValue.Text), categoryItem.Id, true,
                             PaymentName.Text, DateTime.Now));
@@ -69,7 +69,7 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
                     double currentBalance = Budget.Instance.BalanceLog.Last().Value.Balance - Convert.ToDouble(PaymentValue.Text);
                     Budget.Instance.AddBalanceLog(temp_id_balance,
                         new BalanceLog(currentBalance, DateTime.Today, temp_id, 0));
-                    Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));
+                    //Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));
 
                 }
 
