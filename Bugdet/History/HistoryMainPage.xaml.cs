@@ -42,7 +42,7 @@ namespace Budget.History
             history.Columns.Add("Nazwa", typeof(string));
             history.Columns.Add("Kategoria", typeof(string));
             history.Columns.Add("Data", typeof(string));
-            history.Columns.Add("Saldo", typeof(double));
+            history.Columns.Add("Kwota", typeof(double));
             foreach (KeyValuePair<int, BalanceLog> p in Budget.Instance.BalanceLog)
             {
                 //if (p.Value.Type && p.Value.GetType() == typeof(PeriodPayment) && PeriodPaymentCheckBox.IsChecked == true)
@@ -75,16 +75,18 @@ namespace Budget.History
                 //}
                 if (p.Value.PeriodPaymentID == 0)
                 {
+                    if (p.Value.SinglePaymentID == 0)
+                        continue;
                     SinglePayment pp = (SinglePayment)Budget.Instance.Payments[p.Value.SinglePaymentID];
                     if (pp.Type && SinglePaymentCheckBox.IsChecked == true)
                     {
                         history.Rows.Add(pp.Type, p.Key, pp.Name, Budget.Instance.Categories[pp.CategoryID].Name,
-                            p.Value.Date, p.Value.Balance);
+                            p.Value.Date, pp.Amount);
                     }
                     if (!pp.Type && SingleSalaryCheckBox.IsChecked == true)
                     {
                         history.Rows.Add(pp.Type, p.Key, pp.Name, Budget.Instance.Categories[pp.CategoryID].Name,
-                            p.Value.Date, p.Value.Balance);
+                            p.Value.Date, pp.Amount);
                     }
                 }
                 else
@@ -93,12 +95,12 @@ namespace Budget.History
                     if (pp.Type && PeriodPaymentCheckBox.IsChecked == true)
                     {
                         history.Rows.Add(pp.Type, p.Key, "[OKRESOWE]" + pp.Name, Budget.Instance.Categories[pp.CategoryID].Name,
-                            p.Value.Date, p.Value.Balance);
+                            p.Value.Date, pp.Amount);
                     }
                     if (!pp.Type && PeriodSalaryCheckBox.IsChecked == true)
                     {
                         history.Rows.Add(pp.Type, p.Key, "[OKRESOWE]" + pp.Name, Budget.Instance.Categories[pp.CategoryID].Name,
-                            p.Value.Date, p.Value.Balance);
+                            p.Value.Date, pp.Amount);
                     }
                 }
             }
@@ -173,11 +175,11 @@ namespace Budget.History
                 DataRowView dataRow = (DataRowView)HistoryDataGrid.SelectedItem;
                 if ((int)dataRow.Row.ItemArray[1] < 0) // Dla Period -- wydaja sie ze to samo,ale to po prostu taka furtka jakby w przyszlosci sie wyswietlalo rozne wiadomosci
                 {
-                    MessageBox.Show("Opis: " + Budget.Instance.Payments[Budget.Instance.BalanceLog[(int)dataRow.Row.ItemArray[1]].PeriodPaymentID].Note);
+                    MessageBox.Show("Opis: " + Budget.Instance.Payments[Budget.Instance.BalanceLog[(int)dataRow.Row.ItemArray[1]].PeriodPaymentID].Note + "\n Saldo w trakcie tej transakcji: " + Budget.Instance.BalanceLog[(int)dataRow.Row.ItemArray[1]].Balance);
                 }
                 else // dla single
                 {
-                    MessageBox.Show("Opis: " + Budget.Instance.Payments[Budget.Instance.BalanceLog[(int)dataRow.Row.ItemArray[1]].SinglePaymentID].Note); // wiem ze ladny lancuszek
+                    MessageBox.Show("Opis: " + Budget.Instance.Payments[Budget.Instance.BalanceLog[(int)dataRow.Row.ItemArray[1]].SinglePaymentID].Note + "\n Saldo w trakcie tej transakcji: " + Budget.Instance.BalanceLog[(int)dataRow.Row.ItemArray[1]].Balance); // wiem ze ladny lancuszek
                 }
             }
             catch (NullReferenceException)
