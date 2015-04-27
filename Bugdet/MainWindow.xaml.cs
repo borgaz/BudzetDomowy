@@ -21,7 +21,7 @@ namespace Budget
         private WelcomePage.WelcomePage _welcomePage;
         private MainSettingsWindow _mainSettingsWindow;
         private HistoryMainPage _historyPage;
-        private static int _actualPage = 3;
+        private static int _actualPage = 2;
         private bool running = true;
         private Thread th;
 
@@ -88,16 +88,16 @@ namespace Budget
                     this.MainContentFrame.Content = _mainPage;
                     _mainPage.dataGridView.ItemsSource = null;
                     break;
+                //case 2:
+                //    this.MainContentFrame.Content = _interfacePage;
+                //    break;
                 case 2:
-                    this.MainContentFrame.Content = _interfacePage;
-                    break;
-                case 3:
                     this.MainContentFrame.Content = _welcomePage;
                     break;
-                case 4:
+                case 3:
                     this.MainContentFrame.Content = _mainSettingsWindow;
                     break;
-                case 5:
+                case 4:
                     this.MainContentFrame.Content = _historyPage;
                     break;
             }
@@ -111,9 +111,27 @@ namespace Budget
             }
         }
 
-        private void AdditionalBtn_Click(object sender, RoutedEventArgs e)
+        private void CreatorButton_Click(object sender, RoutedEventArgs e)
+        {
+            _actualPage = 1;
+            InsertPage();
+        }
+
+        private void WelcomePageButton_Click(object sender, RoutedEventArgs e)
         {
             _actualPage = 2;
+            InsertPage();
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            _actualPage = 3;
+            InsertPage();
+        }
+
+        private void HistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            _actualPage = 4;
             InsertPage();
         }
 
