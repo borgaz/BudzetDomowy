@@ -23,9 +23,9 @@
             <CheckBox x:Name="SinglePaymentCheckBox" Margin="5" Content="Wydatki pojedyncze" Click="PeriodPaymentCheckBox_OnClick"/>
             <CheckBox x:Name="SingleSalaryCheckBox" Margin="5" Content="Przychody pojedyncze" Click="PeriodPaymentCheckBox_OnClick"/>
             <CheckBox x:Name="StartDateCheckBox" Margin="5,15,98,15" Content="Od Kiedy" Click="StartDateCheckBox_OnClick"/>
-            <DatePicker x:Name="StartDatePicker" Margin="85,-35,5,15" IsEnabled="False"/>
+            <DatePicker x:Name="StartDatePicker" Margin="85,-35,5,15" IsEnabled="False" SelectedDateChanged="PeriodPaymentCheckBox_OnClick"/>
             <CheckBox x:Name="EndDateCheckBox" Margin="5,5,98,5" Content="Do Kiedy" Click="EndDateCheckBox_OnClick"/>
-            <DatePicker x:Name="EndDatePicker" Margin="85,-25,5,0" IsEnabled="False"/>
+            <DatePicker x:Name="EndDatePicker" Margin="85,-25,5,0" IsEnabled="False" SelectedDateChanged="PeriodPaymentCheckBox_OnClick"/>
         </StackPanel>
 
     </Grid>
