@@ -8,16 +8,16 @@
 	Title="AddSalaryPage">
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Width="280" TextWrapping="Wrap" Text="Dodaj przychód(jednorazowy/okresowy), który później będziesz mógł edytować/usunąć w zakładce zarządzania." VerticalAlignment="Top"/>
-        <TextBox x:Name="PaymentName" HorizontalAlignment="Left" Height="27" Margin="120,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
+        <TextBox x:Name="SalaryName" HorizontalAlignment="Left" Height="27" Margin="120,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" PreviewTextInput="SalaryName_PreviewTextInput"/>
         <Label Content="Nazwa przychodu" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="105" Height="27"/>
         <Label Content="Kwota przychodu" HorizontalAlignment="Left" Margin="10,92,0,0" Height="27" Width="115" VerticalAlignment="Top"/>
-        <TextBox x:Name="PaymentValue" HorizontalAlignment="Left" Height="27" Margin="120,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" RenderTransformOrigin="0.95,0.478"/>
+        <TextBox x:Name="SalaryValue" HorizontalAlignment="Left" Height="27" Margin="120,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" RenderTransformOrigin="0.95,0.478" PreviewTextInput="SalaryValue_PreviewTextInput"/>
         <ComboBox x:Name="CategoryBox" HorizontalAlignment="Left" Margin="120,124,0,0" Height="27" VerticalAlignment="Top" Width="128"/>
         <Label Content="Kategoria" HorizontalAlignment="Left" Margin="10,124,0,0" Width="80" Height="27" VerticalAlignment="Top"/>
         <Button x:Name="AddCategoryBtn" Content="+" HorizontalAlignment="Left" Margin="253,124,0,0" VerticalAlignment="Top" Width="27" Height="27" ToolTip="Dodaj kategorie" Click="AddCategoryBtn_Click" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
         <Label Content="Dodatkowa notatka" HorizontalAlignment="Left" Margin="10,295,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="Note" HorizontalAlignment="Left" Height="40" Margin="10,321,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="270"/>
-        <Button x:Name="AddSalaryBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="10,372,0,0" VerticalAlignment="Top" Width="80" Height="27" RenderTransformOrigin="0.2,-0.091" Click="addSalaryBtn_Click"/>
+        <Button x:Name="AddPaymentBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="10,372,0,0" VerticalAlignment="Top" Width="80" Height="27" RenderTransformOrigin="0.2,-0.091" Click="addPaymentBtn_Click"/>
         <CheckBox x:Name="PeriodCheckBox" HorizontalAlignment="Left" Width="14" Height="14" Margin="124,162,0,0" VerticalAlignment="Top" Checked="periodCheckBox_Checked" Unchecked="PeriodCheckBox_OnUnchecked"/>
         <TextBox x:Name="InfoBox" HorizontalAlignment="Left" Height="27" Margin="100,372,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" IsEnabled="False"/>
         <Grid x:Name="PeriodInfoGrid" HorizontalAlignment="Left" Height="102" Margin="10,188,0,0" VerticalAlignment="Top" Width="280" IsEnabled="False">

@@ -18,10 +18,12 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
             InitializeComponent();
             Budget.Instance.InsertCategories(CategoryBox, true);
             InsertDateTypes(TypeOfDayComboBox);
+            StartDatePicker.Text = DateTime.Now.Date.ToString();
         }
-        private void addSalaryBtn_Click(object sender, RoutedEventArgs e)
+
+        private void addPaymentBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (PaymentName.Text != "" && PaymentValue.Text != "" && CategoryBox.SelectedIndex != -1)
+            if (SalaryName.Text != "" && SalaryValue.Text != "" && CategoryBox.SelectedIndex != -1)
             {
                 ComboBoxItem categoryItem = (ComboBoxItem)CategoryBox.SelectedValue;
                 if (PeriodCheckBox.IsChecked == true)
@@ -33,13 +35,13 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
                     }
                     catch (Exception ex)
                     { } //gdy brak elementów w tablicy temp_id = 1
-                   // Budget.Instance.ListOfAdds.Add(new Changes(typeof(PeriodPayment), temp_id));
+                    // Budget.Instance.ListOfAdds.Add(new Changes(typeof(PeriodPayment), temp_id));
                     Budget.Instance.AddPeriodPayment(temp_id,
                         new PeriodPayment(categoryItem.Id,
-                            Convert.ToDouble(PaymentValue.Text),
+                            Convert.ToDouble(SalaryValue.Text),
                             Note.Text,
                             false,
-                            PaymentName.Text,
+                            SalaryName.Text,
                             Convert.ToInt32(NumberOfTexBox.Text),
                             TypeOfDayComboBox.Text,
                             Convert.ToDateTime(StartDatePicker.Text),
@@ -59,20 +61,20 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
 
                     //Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
                     Budget.Instance.AddSinglePayment(temp_id,
-                        new SinglePayment(Note.Text, Convert.ToDouble(PaymentValue.Text), categoryItem.Id, false,
-                            PaymentName.Text, DateTime.Now));
+                        new SinglePayment(Note.Text, Convert.ToDouble(SalaryValue.Text), categoryItem.Id, false,
+                            SalaryName.Text, DateTime.Now));
                     // uwaga tutaj dodajemy
-                    double currentBalance = Budget.Instance.BalanceLog.Last().Value.Balance + Convert.ToDouble(PaymentValue.Text);
+                    double currentBalance = Budget.Instance.BalanceLog.Last().Value.Balance + Convert.ToDouble(SalaryValue.Text);
                     Budget.Instance.AddBalanceLog(temp_id_balance,
                         new BalanceLog(currentBalance, DateTime.Today, temp_id, 0));
-                   // Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));
+                    // Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));
 
                 }
 
                 InfoBox.Text = "Dodano!";
                 InfoBox.Foreground = Brushes.Green;
-                PaymentName.Text = "";
-                PaymentValue.Text = "";
+                SalaryName.Text = "";
+                SalaryValue.Text = "";
                 CategoryBox.SelectedIndex = -1;
                 NumberOfTexBox.Text = "";
                 TypeOfDayComboBox.SelectedIndex = -1;
@@ -123,5 +125,33 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
             new AddCategoryWindow().ShowDialog();
             Budget.Instance.InsertCategories(CategoryBox, true);
         }
+
+        private void SalaryName_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            if (SalaryName.Text.Length == 50)
+            {
+                SalaryName.Text = SalaryName.Text.Substring(0, 50);
+                e.Handled = true;
+                SalaryName.ToolTip = "Nazwa nie może byc dłuższa niż 50 znaków.";
+            }
+            else
+            {
+                SalaryName.ToolTip = null;
+            }
+        }
+
+        private void SalaryValue_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            if (!char.IsDigit(e.Text, e.Text.Length - 1) && !char.IsPunctuation(e.Text, e.Text.Length - 1))
+            {
+                e.Handled = true;
+                SalaryValue.ToolTip = "Podaj kwotę liczbą.";
+            }
+            else
+            {
+                SalaryValue.ToolTip = null;
+            }
+        }
+      
     }
 }

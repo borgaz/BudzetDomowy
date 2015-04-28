@@ -24,11 +24,12 @@ namespace Budget.Nowy_budzet
             _categories = c;
             MakeBudgetWindow.InsertDateTypes(DateTypeBox);
             originalCategoryID = MakeBudgetWindow.InsertCategories(CategoryComboBox, _categories, false);
+            StartDatePicker.Text = DateTime.Now.Date.ToString();
         }
 
-        private void addSalaryBtn_Click(object sender, RoutedEventArgs e)
+        private void addPaymentBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (SalaryName.Text != "" && SalaryValue.Text != "" && NumberOfTextBox.Text != "" && DateTypeBox.SelectedIndex != -1 && CategoryComboBox.SelectedIndex != -1)
+            if (PaymentName.Text != "" && PaymentValue.Text != "" && NumberOfTextBox.Text != "" && DateTypeBox.SelectedIndex != -1 && CategoryComboBox.SelectedIndex != -1)
             {
                 int temp = 1;
                 try
@@ -39,10 +40,10 @@ namespace Budget.Nowy_budzet
                 //System.Console.WriteLine(StartDatePicker.Text);
                 //System.Console.WriteLine(StartDatePicker.DisplayDate);
                 _periodPayments.Add(temp, new PeriodPayment(originalCategoryID[CategoryComboBox.SelectedIndex],
-                    Convert.ToDouble(SalaryValue.Text),
+                    Convert.ToDouble(PaymentValue.Text),
                     NoteTextBox.Text,
                     true,
-                    SalaryName.Text,
+                    PaymentName.Text,
                     Convert.ToInt32(NumberOfTextBox.Text),
                     DateTypeBox.SelectedValue.ToString(),
                     Convert.ToDateTime(StartDatePicker.Text),
@@ -50,8 +51,8 @@ namespace Budget.Nowy_budzet
                     (EndDatePicker.IsEnabled == true ? Convert.ToDateTime(EndDatePicker.Text) : DateTime.MaxValue)));
                 InfoLbl.Content = "Dodano";
                 InfoLbl.Foreground = Brushes.Green;// ="#00FF0000";
-                SalaryName.Text = "";
-                SalaryValue.Text = "";
+                PaymentName.Text = "";
+                PaymentValue.Text = "";
                 NumberOfTextBox.Text = "";
             }
             else
@@ -60,11 +61,6 @@ namespace Budget.Nowy_budzet
                 InfoLbl.Content = "Nie Dodano";
                 InfoLbl.Foreground = Brushes.Red;// ="#FF000000";
             }
-        }
-
-        private void addedSalariesBtn_Click(object sender, RoutedEventArgs e)
-        {
-            new AddedSalariesWindow(2,_periodPayments,_categories).ShowDialog();
         }
 
         public Boolean BackToThisPage()
@@ -88,22 +84,43 @@ namespace Budget.Nowy_budzet
             EndDatePicker.IsEnabled = false;
         }
 
-        private void SalaryName_OnGotFocus(object sender, RoutedEventArgs e)
+        private void PaymentName_OnGotFocus(object sender, RoutedEventArgs e)
         {
             InfoLbl.Content = "";
         }
 
-        private void SalaryValue_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void PaymentValue_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!char.IsDigit(e.Text, e.Text.Length - 1) && !char.IsPunctuation(e.Text, e.Text.Length - 1))
             {
                 e.Handled = true;
-                SalaryValue.ToolTip = "Podaj kwotę liczbą."; 
+                PaymentValue.ToolTip = "Podaj kwotę liczbą.";
             }
             else
             {
-                SalaryValue.ToolTip = null;
+                PaymentValue.ToolTip = null;
             }
         }
+
+        private void PaymentName_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (PaymentName.Text.Length == 50)
+            {
+                PaymentName.Text = PaymentName.Text.Substring(0, 50);
+                e.Handled = true;
+                PaymentName.ToolTip = "Nazwa nie może byc dłuższa niż 50 znaków.";
+            }
+            else
+            {
+                PaymentName.ToolTip = null;
+            }
+        }
+
+        private void addedPaymentsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            new AddedSalariesWindow(2, _periodPayments, _categories).ShowDialog();
+        }
+
+        
     }
 }

@@ -24,6 +24,7 @@ namespace Budget.Nowy_budzet
             _categories = categories;
             MakeBudgetWindow.InsertDateTypes(DateTypeBox);
             originalCategoryID = MakeBudgetWindow.InsertCategories(CategoryComboBox, _categories, true);
+            StartDatePicker.Text = DateTime.Now.Date.ToString();
         }
 
         private void addSalaryBtn_Click(object sender, RoutedEventArgs e)
@@ -103,5 +104,20 @@ namespace Budget.Nowy_budzet
                 SalaryValue.ToolTip = null;
             }
         }
+
+        private void SalaryName_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (SalaryName.Text.Length == 50)
+            {
+                SalaryName.Text = SalaryName.Text.Substring(0, 50);
+                e.Handled = true;
+                SalaryName.ToolTip = "Nazwa nie może byc dłuższa niż 50 znaków.";
+            }
+            else
+            {
+                SalaryName.ToolTip = null;
+            }
+        }
+
     }
 }

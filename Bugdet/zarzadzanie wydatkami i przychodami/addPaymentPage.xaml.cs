@@ -18,7 +18,8 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
             InitializeComponent();
             AddSalaryPage.InsertDateTypes(TypeOfDayComboBox);
             Budget.Instance.InsertCategories(CategoryBox, false);
-            System.Console.WriteLine("asd: " + StartDatePicker.Text + " .");
+            StartDatePicker.Text = DateTime.Now.Date.ToString();
+            //System.Console.WriteLine("asd: " + StartDatePicker.Text + " .");
         }
 
         private void addPaymentBtn_Click(object sender, RoutedEventArgs e)
@@ -119,6 +120,33 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
         {
             new AddCategoryWindow().ShowDialog();
             Budget.Instance.InsertCategories(CategoryBox, false);
+        }
+
+        private void PaymentName_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            if (PaymentName.Text.Length == 50)
+            {
+                PaymentName.Text = PaymentName.Text.Substring(0, 50);
+                e.Handled = true;
+                PaymentName.ToolTip = "Nazwa nie może byc dłuższa niż 50 znaków.";
+            }
+            else
+            {
+                PaymentName.ToolTip = null;
+            }
+        }
+
+        private void PaymentValue_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            if (!char.IsDigit(e.Text, e.Text.Length - 1) && !char.IsPunctuation(e.Text, e.Text.Length - 1))
+            {
+                e.Handled = true;
+                PaymentValue.ToolTip = "Podaj kwotę liczbą.";
+            }
+            else
+            {
+                PaymentValue.ToolTip = null;
+            }
         }
     }
 }
