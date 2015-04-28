@@ -73,6 +73,9 @@ namespace Budget.History
                 //        "Brak", pp.Date,
                 //        "Brak");
                 //}
+                if (!((p.Value.Date >= (StartDateCheckBox.IsChecked == true ? StartDatePicker.SelectedDate : DateTime.MinValue)) &&
+                      (p.Value.Date <= (EndDateCheckBox.IsChecked == true ? EndDatePicker.SelectedDate : DateTime.MaxValue))))
+                    continue;
                 if (p.Value.PeriodPaymentID == 0)
                 {
                     if (p.Value.SinglePaymentID == 0)
@@ -81,12 +84,12 @@ namespace Budget.History
                     if (pp.Type && SinglePaymentCheckBox.IsChecked == true)
                     {
                         history.Rows.Add(pp.Type, p.Key, pp.Name, Budget.Instance.Categories[pp.CategoryID].Name,
-                            p.Value.Date, pp.Amount);
+                            p.Value.Date.ToShortDateString(), pp.Amount);
                     }
                     if (!pp.Type && SingleSalaryCheckBox.IsChecked == true)
                     {
                         history.Rows.Add(pp.Type, p.Key, pp.Name, Budget.Instance.Categories[pp.CategoryID].Name,
-                            p.Value.Date, pp.Amount);
+                            p.Value.Date.ToShortDateString(), pp.Amount);
                     }
                 }
                 else
@@ -95,12 +98,12 @@ namespace Budget.History
                     if (pp.Type && PeriodPaymentCheckBox.IsChecked == true)
                     {
                         history.Rows.Add(pp.Type, p.Key, "[OKRESOWE]" + pp.Name, Budget.Instance.Categories[pp.CategoryID].Name,
-                            p.Value.Date, pp.Amount);
+                            p.Value.Date.ToShortDateString(), pp.Amount);
                     }
                     if (!pp.Type && PeriodSalaryCheckBox.IsChecked == true)
                     {
                         history.Rows.Add(pp.Type, p.Key, "[OKRESOWE]" + pp.Name, Budget.Instance.Categories[pp.CategoryID].Name,
-                            p.Value.Date, pp.Amount);
+                            p.Value.Date.ToShortDateString(), pp.Amount);
                     }
                 }
             }
@@ -192,11 +195,13 @@ namespace Budget.History
         private void StartDateCheckBox_OnClick(object sender, RoutedEventArgs e)
         {
             StartDatePicker.IsEnabled = StartDateCheckBox.IsChecked == true;
+            RefreshTable();
         }
 
         private void EndDateCheckBox_OnClick(object sender, RoutedEventArgs e)
         {
             EndDatePicker.IsEnabled = EndDateCheckBox.IsChecked == true;
+            RefreshTable();
         }
     }
 }
