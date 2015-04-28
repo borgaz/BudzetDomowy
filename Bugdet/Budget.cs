@@ -505,8 +505,8 @@ namespace Budget
         public void Dump()
         {
             if (Budget.Instance.AddToDB(Budget.Instance.ListOfAdds)
-                && Budget.Instance.DeleteFromDB(Budget.Instance.ListOfDels)
-                && Budget.Instance.EditDB(Budget.Instance.ListOfEdts))
+                && Budget.Instance.EditDB(Budget.Instance.ListOfEdts)
+                && Budget.Instance.DeleteFromDB(Budget.Instance.ListOfDels))
             {
                 MessageBox.Show("Poprawnie zapisana baza danych!");
                 listOfEdts.Clear();

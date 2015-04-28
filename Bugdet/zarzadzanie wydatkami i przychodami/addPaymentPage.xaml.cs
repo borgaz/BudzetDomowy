@@ -55,11 +55,13 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
                     int temp_id = 1;
                     try
                     { 
-                        temp_id = Budget.Instance.Payments.Last().Key + 1; 
+                        temp_id = Budget.Instance.Payments.Last().Key + 1;
+                        Console.WriteLine(temp_id);
+                        if (temp_id == 0) // w bazie chcemy singlePays indeksowane od 1
+                            temp_id = 1;
                     }
                     catch (Exception ex)
                     { } //gdy brak elementów w tablicy temp_id = 1
-                    Console.WriteLine(temp_id);
                     //Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
                     Budget.Instance.AddSinglePayment(temp_id,
                         new SinglePayment(Note.Text, Convert.ToDouble(PaymentValue.Text), categoryItem.Id, true,

@@ -54,6 +54,9 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
                     try
                     {
                         temp_id = Budget.Instance.Payments.Last().Key + 1;
+                        if (temp_id == 0) // w bazie chcemy singlePays indeksowane od 1
+                            temp_id = 1;
+
                     }
                     catch (Exception ex)
                     { } //gdy brak elementów w tablicy temp_id = 1
