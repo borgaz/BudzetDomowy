@@ -86,7 +86,7 @@ namespace Budget
             {
                 case 1:
                     this.MainContentFrame.Content = _mainPage;
-                    _mainPage.dataGridView.ItemsSource = null;
+                    //_mainPage.dataGridView.ItemsSource = null;
                     break;
                 //case 2:
                 //    this.MainContentFrame.Content = _interfacePage;
