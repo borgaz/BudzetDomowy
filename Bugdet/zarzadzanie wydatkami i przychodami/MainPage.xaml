@@ -11,12 +11,7 @@
             <ColumnDefinition Width="32*"/>
             <ColumnDefinition Width="43*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid Margin="10,40,10,50" Name="dataGridView" Loaded="dataGridView_Loaded" Grid.Column="1">
-            <!--<DataGrid.Columns>
-                <DataGridTextColumn Header="Nazwa" Width="80"  CanUserSort="False" IsReadOnly="True" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Kwota" Width="80" IsReadOnly="True" Binding="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Kategoria" Width="80" IsReadOnly="True" Binding="{Binding CategoryID, UpdateSourceTrigger=PropertyChanged}"/>
-            </DataGrid.Columns>-->
+        <DataGrid Margin="10,40,10,50" Name="dataGridView" Loaded="dataGridView_Loaded" Grid.Column="1" IsEnabled="False">
         </DataGrid>
         <Frame x:Name="BtnsContentFrame" Content="" Margin="10,40,0,0" Height="410" Width="300" VerticalAlignment="Top" HorizontalAlignment="Left" NavigationUIVisibility="Hidden" Background="#FF888888"/>
         <Button x:Name="AddPaymentBtn" Content="Dodaj Wydatek" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" Click="addPaymentBtn_Click" Height="25"/>

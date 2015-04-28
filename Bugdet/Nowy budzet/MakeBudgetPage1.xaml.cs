@@ -64,6 +64,8 @@ namespace Budget.Nowy_budzet
         {
             if (budgetBalance.Text != "" && budgetNameText.Text != "" && (passTextBox.Password.Equals(passRepeatTextBox.Password)) && passTextBox.Password != "" && NumberOfPeopleTextBox.Text != "")
             {
+                if (!SqlConnect.Instance.CheckBaseName(budgetNameText.Text))
+                    return false;
                 salaryInfo.Name = budgetNameText.Text;
                 salaryInfo.Amount = double.Parse(budgetBalance.Text);
                 salaryInfo.Password = SqlConnect.Instance.HashPasswordMd5((passTextBox.Password));

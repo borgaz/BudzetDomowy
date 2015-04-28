@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
+using System.Windows.Input;
 using Budget.History;
 using Budget.Nowy_budzet;
 using Budget.zarzadzanie_wydatkami_i_przychodami;
@@ -40,6 +41,7 @@ namespace Budget
             _welcomePage = new WelcomePage.WelcomePage();
             _mainSettingsWindow = new MainSettingsWindow(1);
             _historyPage = new HistoryMainPage();
+            WelcomePageButton.IsEnabled = false;
             InsertPage();
             th = new Thread(OnPageChange);
             th.Start();
@@ -113,33 +115,56 @@ namespace Budget
 
         private void CreatorButton_Click(object sender, RoutedEventArgs e)
         {
+            CreatorButton.IsEnabled = false;
+            WelcomePageButton.IsEnabled = true;
+            SettingsButton.IsEnabled = true;
+            HistoryButton.IsEnabled = true;
             _actualPage = 1;
             InsertPage();
         }
 
         private void WelcomePageButton_Click(object sender, RoutedEventArgs e)
         {
+            CreatorButton.IsEnabled = true;
+            WelcomePageButton.IsEnabled = false;
+            SettingsButton.IsEnabled = true;
+            HistoryButton.IsEnabled = true;
             _actualPage = 2;
             InsertPage();
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
+            CreatorButton.IsEnabled = true;
+            WelcomePageButton.IsEnabled = true;
+            SettingsButton.IsEnabled = false;
+            HistoryButton.IsEnabled = true;
             _actualPage = 3;
             InsertPage();
         }
 
         private void HistoryButton_Click(object sender, RoutedEventArgs e)
         {
+            CreatorButton.IsEnabled = true;
+            WelcomePageButton.IsEnabled = true;
+            SettingsButton.IsEnabled = true;
+            HistoryButton.IsEnabled = false;
             _actualPage = 4;
             InsertPage();
         }
 
-        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
+        protected override void OnClosing(CancelEventArgs e)
         {
-            _mainPage = null;
-            running = false;
-            _interfacePage = null;
+            base.OnClosing(e);
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
+                if (e.Key.Equals(Key.S))
+                    Budget.Instance.Dump();
+            }
         }
     }
 }

@@ -26,18 +26,7 @@ namespace Budget.History
         public HistoryMainPage()
         {
             InitializeComponent();
-            InitializeTable();
-            Budget.Instance.InsertCategories(CategoryComboBox,true);
-        }
-
-        private void InitializeTable()
-        {
-            DataTable history = new DataTable();
-            history.Columns.Add("Nazwa", typeof(string));
-            history.Columns.Add("Kategoria", typeof(string));
-            history.Columns.Add("Data", typeof(string));
-            history.Columns.Add("Kwota", typeof(double));
-            HistoryDataGrid.ItemsSource = history.DefaultView;
+            Budget.Instance.InsertCategories(CategoryComboBox,Budget.CategoryTypeEnum.ANY);
         }
         private void RefreshTable()
         {
@@ -98,7 +87,7 @@ namespace Budget.History
             {
                 if ((bool)dataRow.Row.ItemArray[0])
                 {
-                    e.Row.Background = Brushes.Firebrick;
+                    e.Row.Background = Brushes.Red;
                 }
                 else
                 {
@@ -119,7 +108,7 @@ namespace Budget.History
             try
             {
                 dataRow = (DataRowView)HistoryDataGrid.SelectedItem;
-                if ((int)dataRow.Row.ItemArray[0] < 0)
+                if ((int)dataRow.Row.ItemArray[1] < 0)
                 {
                     Budget.Instance.DeletePeriodPayment(Convert.ToInt32(dataRow.Row.ItemArray[1]));
                 }
@@ -192,6 +181,11 @@ namespace Budget.History
         private void CategoryCheckBox_OnClick(object sender, RoutedEventArgs e)
         {
             CategoryComboBox.IsEnabled = CategoryCheckBox.IsChecked == true;
+            RefreshTable();
+        }
+
+        private void HistoryDataGrid_OnLoaded(object sender, RoutedEventArgs e)
+        {
             RefreshTable();
         }
     }

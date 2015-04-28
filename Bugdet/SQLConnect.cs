@@ -44,23 +44,28 @@ namespace Budget
             }
         }
 
+        public Boolean CheckBaseName(String name)
+        {
+            if (!File.Exists("./" + name + ".sqlite")) // sprawdzanie czy juz jest baza o takiej nazwie
+            {
+                return true;
+            }
+                MessageBox.Show("Istnieje już taki budzet.");
+                return false;
+
+        }
         public Boolean MakeBudget(String name)
         {
             try
             {
-                if (!File.Exists("./" + name + ".sqlite")) // sprawdzanie czy juz jest baza o takiej nazwie
+                if (CheckBaseName(name))
                 {
                     SQLiteConnection.CreateFile(name + ".sqlite");
                     _mydb = new SQLiteConnection("Data Source=" + name + ".sqlite;Version=3");
                     _mydb.Open();
                     MakeDb();
-                    return true;
                 }
-                else
-                {
-                    MessageBox.Show("Istnieje już taki budzet.");
-                    return false;
-                }
+                return false;
             }
             catch (Exception ex)
             {

@@ -16,7 +16,7 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
         public AddSalaryPage()
         {
             InitializeComponent();
-            Budget.Instance.InsertCategories(CategoryBox, true);
+            Budget.Instance.InsertCategories(CategoryBox, Budget.CategoryTypeEnum.SALARY);
             InsertDateTypes(TypeOfDayComboBox);
             StartDatePicker.Text = DateTime.Now.Date.ToString();
         }
@@ -123,7 +123,7 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
             new AddCategoryWindow().ShowDialog();
-            Budget.Instance.InsertCategories(CategoryBox, true);
+            Budget.Instance.InsertCategories(CategoryBox, Budget.CategoryTypeEnum.SALARY);
         }
 
         private void SalaryName_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)

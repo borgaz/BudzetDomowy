@@ -29,6 +29,9 @@ namespace Budget
         private List<Changes> listOfDels;
         private List<Changes> listOfEdts;
 
+        public enum CategoryTypeEnum
+        {
+          PAYMENT,SALARY,ANY }
         public override string ToString()
         {
             return "NAME: " + name + ", NOTE: " + note + ", PASSWORD: " + password + ", NUMBER_OF_PEOPLE: " + numberOfPeople
@@ -225,15 +228,20 @@ namespace Budget
             balanceLogs.Remove(index);
             ListOfDels.Add(new Changes(typeof(BalanceLog), index));
         }
-
-        public void InsertCategories(ComboBox comboBox, bool type)
+        /// <summary>
+        /// Inserts Categories to ComboBox
+        /// </summary>
+        /// <param name="comboBox"></param>
+        /// <param name="type"></param>
+        public void InsertCategories(ComboBox comboBox, CategoryTypeEnum type)
         {
             comboBox.Items.Clear();
             try
             {
+                bool catType = false || type == CategoryTypeEnum.SALARY;
                 foreach (KeyValuePair<int,Category> c in categories)
                 {
-                    if (c.Value.Type == type)
+                    if (c.Value.Type == catType || type == CategoryTypeEnum.ANY)
                     {
                         comboBox.Items.Add(new ComboBoxItem(c.Key, c.Value.Name));
                     }
@@ -477,6 +485,7 @@ namespace Budget
             }
             catch (Exception ex)
             {
+                SqlConnect.Instance.ErrLog(ex);
                 return false;
             }
             //listOfDels.Clear();

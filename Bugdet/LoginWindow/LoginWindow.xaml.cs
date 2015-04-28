@@ -1,6 +1,7 @@
 ﻿using System.Data.SQLite;
 using System.IO;
 using System.Windows;
+using System.Windows.Input;
 using Budget.Nowy_budzet;
 
 namespace Budget.LoginWindow
@@ -97,6 +98,12 @@ namespace Budget.LoginWindow
         private void BudgetsComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             PasswordTextBox.Password = "";
+        }
+
+        private void UIElement_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+                LogInButton_Click(new object(),new RoutedEventArgs());
         }
     }
 }
