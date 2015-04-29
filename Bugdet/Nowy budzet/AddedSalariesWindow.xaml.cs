@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
-using Budget.Classes;
+using Budget.Main_Classes;
 
 namespace Budget.Nowy_budzet
 {

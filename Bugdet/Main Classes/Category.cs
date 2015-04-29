@@ -1,4 +1,4 @@
-﻿namespace Budget.Classes
+﻿namespace Budget.Main_Classes
 {
     public class Category
     {

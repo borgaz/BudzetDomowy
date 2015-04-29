@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Budget.Classes;
+using Budget.Main_Classes;
 
 namespace Budget.Nowy_budzet
 {
@@ -102,7 +102,7 @@ namespace Budget.Nowy_budzet
 
         private void NumberOfPeopleTextBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!char.IsDigit(e.Text, e.Text.Length - 1) && !char.IsPunctuation(e.Text, e.Text.Length - 1))
+            if (!char.IsDigit(e.Text, e.Text.Length - 1) && !char.IsPunctuation(e.Text, e.Text.Length - 1) && char.IsPunctuation(e.Text, e.Text.Length - 2))
             {
                 e.Handled = true;
                 budgetBalance.ToolTip = "Wpisz kwotę liczbą";
@@ -110,6 +110,19 @@ namespace Budget.Nowy_budzet
             else
             {
                 budgetBalance.ToolTip = null;
+            }
+        }
+
+        private void BudgetNameText_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!char.IsLetterOrDigit(e.Text, e.Text.Length - 1))
+            {
+                e.Handled = true;
+                budgetNameText.ToolTip = "Nazwa moze sie skladac jedynie z liter i liczb";
+            }
+            else
+            {
+                budgetNameText.ToolTip = null;
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Budget.Classes
+namespace Budget.Main_Classes
 {
     public class SavingsTarget
     {
@@ -47,14 +47,7 @@ namespace Budget.Classes
         public Boolean AddMoney (double amount)
         {
             this.moneyHoldings += amount;
-            if (CountMoneyLeft() == 0.0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }      
+            return CountMoneyLeft() == 0.0;
         }
 
         /// <summary>

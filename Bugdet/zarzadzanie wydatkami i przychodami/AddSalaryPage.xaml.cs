@@ -5,8 +5,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Budget.Classes;
-using ComboBoxItem = Budget.Classes.ComboBoxItem;
+using Budget.Main_Classes;
+using ComboBoxItem = Budget.Utility_Classes.ComboBoxItem;
 
 namespace Budget.zarzadzanie_wydatkami_i_przychodami
 {
@@ -18,7 +18,7 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
         public AddSalaryPage()
         {
             InitializeComponent();
-            Classes.Budget.Instance.InsertCategories(CategoryBox, Classes.Budget.CategoryTypeEnum.SALARY);
+            Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.SALARY);
             InsertDateTypes(TypeOfDayComboBox);
             StartDatePicker.Text = DateTime.Now.Date.ToString();
         }
@@ -33,12 +33,12 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
                     int temp_id = -1;
                     try
                     {
-                        temp_id = Classes.Budget.Instance.Payments.First().Key - 1;
+                        temp_id = Main_Classes.Budget.Instance.Payments.First().Key - 1;
                     }
                     catch (Exception ex)
                     { } //gdy brak elementów w tablicy temp_id = 1
                     // Budget.Instance.ListOfAdds.Add(new Changes(typeof(PeriodPayment), temp_id));
-                    Classes.Budget.Instance.AddPeriodPayment(temp_id,
+                    Main_Classes.Budget.Instance.AddPeriodPayment(temp_id,
                         new PeriodPayment(categoryItem.Id,
                             Convert.ToDouble(SalaryValue.Text),
                             Note.Text,
@@ -55,22 +55,22 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
                     int temp_id = 1;
                     try
                     {
-                        temp_id = Classes.Budget.Instance.Payments.Last().Key + 1;
+                        temp_id = Main_Classes.Budget.Instance.Payments.Last().Key + 1;
                         if (temp_id == 0) // w bazie chcemy singlePays indeksowane od 1
                             temp_id = 1;
 
                     }
                     catch (Exception ex)
                     { } //gdy brak elementów w tablicy temp_id = 1
-                    int temp_id_balance = Classes.Budget.Instance.BalanceLog.Last().Key + 1;
+                    int temp_id_balance = Main_Classes.Budget.Instance.BalanceLog.Last().Key + 1;
 
                     //Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
-                    Classes.Budget.Instance.AddSinglePayment(temp_id,
+                    Main_Classes.Budget.Instance.AddSinglePayment(temp_id,
                         new SinglePayment(Note.Text, Convert.ToDouble(SalaryValue.Text), categoryItem.Id, false,
                             SalaryName.Text, DateTime.Now));
                     // uwaga tutaj dodajemy
-                    double currentBalance = Classes.Budget.Instance.BalanceLog.Last().Value.Balance + Convert.ToDouble(SalaryValue.Text);
-                    Classes.Budget.Instance.AddBalanceLog(temp_id_balance,
+                    double currentBalance = Main_Classes.Budget.Instance.BalanceLog.Last().Value.Balance + Convert.ToDouble(SalaryValue.Text);
+                    Main_Classes.Budget.Instance.AddBalanceLog(temp_id_balance,
                         new BalanceLog(currentBalance, DateTime.Today, temp_id, 0));
                     // Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));
 
@@ -128,7 +128,7 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
             new AddCategoryWindow().ShowDialog();
-            Classes.Budget.Instance.InsertCategories(CategoryBox, Classes.Budget.CategoryTypeEnum.SALARY);
+            Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.SALARY);
         }
 
         private void SalaryName_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)

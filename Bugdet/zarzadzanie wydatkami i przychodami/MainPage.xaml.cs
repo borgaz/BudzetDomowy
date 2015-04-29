@@ -3,8 +3,9 @@ using System.Windows;
 using System.Collections.Generic;
 using System.Data;
 using System.Windows.Controls;
-using Budget.Classes;
 using Budget.Nowy_budzet;
+using System.Windows.Media;
+using Budget.Main_Classes;
 
 namespace Budget.zarzadzanie_wydatkami_i_przychodami
 {
@@ -37,38 +38,51 @@ namespace Budget.zarzadzanie_wydatkami_i_przychodami
 
         private void LoadHistoryButton_Click(object sender, RoutedEventArgs e)
         {
-          //  dataGridView.Items.Clear();
             RefreshTable();
-
-            //dataGridView.ItemsSource = Budget.Instance.Payments.Values;
         }
 
         private void RefreshTable()
         {
-            DataTable history = new DataTable();
+            var history = new DataTable();
+            history.Columns.Add("Id", typeof (int));
+            history.Columns.Add("Type", typeof(int));
             history.Columns.Add("Nazwa", typeof(string));
             history.Columns.Add("Kwota", typeof(int));
             history.Columns.Add("Kategoria", typeof(string));
-            foreach(Payment p in Classes.Budget.Instance.Payments.Values)
+            foreach(KeyValuePair<int,Payment> p in Main_Classes.Budget.Instance.Payments)
             {
-               // Payment p = Budget.Instance.Payments[i];
-                history.Rows.Add(p.Name, p.Amount, Classes.Budget.Instance.Categories[p.CategoryID].Name);
+                if (p.Value.GetType() != typeof (PeriodPayment))
+                    continue;
+                var pp = (PeriodPayment)p.Value;
+                history.Rows.Add(p.Key,pp.Type,pp.Name, pp.Amount, Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name);
             }
-            dataGridView.ItemsSource = history.DefaultView; 
+            PeriodPaymentsTable.ItemsSource = history.DefaultView;
+            PeriodPaymentsTable.Columns[0].Visibility = Visibility.Hidden;
+            PeriodPaymentsTable.Columns[1].Visibility = Visibility.Hidden;
         }
         private void DumpAllButton_Click(object sender, RoutedEventArgs e)
         {
-            //SqlConnect.Instance.CleanDatabase();
-            //Budget.Instance.DumpAll();
-            Classes.Budget.Instance.Dump();
+            Main_Classes.Budget.Instance.Dump();
         }
 
         private void dataGridView_Loaded(object sender, RoutedEventArgs e)
         {
-          //  dataGridView.Items.Clear();
             RefreshTable();
+        }
 
-           // dataGridView.ItemsSource = Budget.Instance.Payments.Values;
+        private void DataGridView_OnLoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            var dataRow = e.Row.DataContext as DataRowView;
+            if (dataRow == null)
+                return;
+            try
+            {
+                e.Row.Background = (int)dataRow.Row.ItemArray[1] == 1 ? Brushes.Red : Brushes.ForestGreen;
+            }
+            catch (InvalidCastException)
+            {
+                
+            }
         }
     }
 }

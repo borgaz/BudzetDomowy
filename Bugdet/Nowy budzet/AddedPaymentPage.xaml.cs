@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using Budget.Classes;
+using Budget.Main_Classes;
 
 namespace Budget.Nowy_budzet
 {

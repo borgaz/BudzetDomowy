@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using Budget.Classes;
+using Budget.Main_Classes;
 using Budget.Nowy_budzet;
 
 namespace Budget.LoginWindow

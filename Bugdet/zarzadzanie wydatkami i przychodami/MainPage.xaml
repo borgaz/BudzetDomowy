@@ -3,20 +3,24 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d" d:DesignWidth="750"
-	Title="MainPage" Height="500">
+      mc:Ignorable="d" d:DesignWidth="725"
+	Title="MainPage" Height="550">
 
-    <Grid Background="White" HorizontalAlignment="Left" Width="750">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="32*"/>
-            <ColumnDefinition Width="43*"/>
-        </Grid.ColumnDefinitions>
-        <DataGrid Margin="10,40,10,50" Name="dataGridView" Loaded="dataGridView_Loaded" Grid.Column="1" IsEnabled="False">
+    <Grid Background="White" HorizontalAlignment="Left" Width="725" Margin="10,0,-10,0">
+
+        <DataGrid Margin="380,40,10,100" Name="PeriodPaymentsTable" Loaded="dataGridView_Loaded" IsReadOnly="True" LoadingRow="DataGridView_OnLoadingRow">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Usuń rekord"/>
+                    <MenuItem Header="Edytuj rekord"/>
+                    <MenuItem Header="Więcej Informacji"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
         <Frame x:Name="BtnsContentFrame" Content="" Margin="10,40,0,0" Height="410" Width="300" VerticalAlignment="Top" HorizontalAlignment="Left" NavigationUIVisibility="Hidden" Background="#FF888888"/>
-        <Button x:Name="AddPaymentBtn" Content="Dodaj Wydatek" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" Click="addPaymentBtn_Click" Height="25"/>
-        <Button x:Name="AddSalaryBtn" Content="Dodaj Przychód" HorizontalAlignment="Left" Margin="190,10,0,0" VerticalAlignment="Top" Width="120" Click="addSalaryBtn_Click" Height="25"/>
-        <Button x:Name="LoadHistoryButton" Content="Historia" HorizontalAlignment="Left" Margin="155,455,0,5" Width="120" Grid.Column="1" Click="LoadHistoryButton_Click" />
-        <Button x:Name="DumpAllButton" Content="Zapisz" HorizontalAlignment="Left" Margin="100,455,0,5" Width="120" Click="DumpAllButton_Click" />
+        <Button x:Name="AddPaymentBtn" Content="Dodaj Wydatek" HorizontalAlignment="Left" Margin="155,10,0,0" VerticalAlignment="Top" Width="120" Click="addPaymentBtn_Click" Height="25"/>
+        <Button x:Name="AddSalaryBtn" Content="Dodaj Przychód" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="120" Click="addSalaryBtn_Click" Height="25" Grid.Column="1"/>
+        <Button x:Name="LoadHistoryButton" Content="Historia" HorizontalAlignment="Left" Margin="523,474,0,47" Width="120" Click="LoadHistoryButton_Click" />
+        <Button x:Name="DumpAllButton" Content="Zapisz" HorizontalAlignment="Left" Margin="114,474,0,44" Width="120" Click="DumpAllButton_Click" />
     </Grid>
 </Page>

@@ -11,7 +11,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="54" Width="267"><Run Text="Witaj w kreatorze budzetu, przejdz pare krokow do stworzenia swojego wlasnego budzetu."/><LineBreak/><Run Text="Czerwone pola to pola obowiązkowe."/><LineBreak/><Run/></TextBlock>
         <Label Content="Nazwa twojego budzetu" HorizontalAlignment="Left" Margin="13,80,0,0" VerticalAlignment="Top"/>
         <Label Content="Obecnie posiadana kwota" HorizontalAlignment="Left" Margin="13,192,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="budgetNameText" HorizontalAlignment="Left" Height="23" Margin="168,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" TextChanged="BudgetNameText_OnTextChanged">
+        <TextBox x:Name="budgetNameText" HorizontalAlignment="Left" Height="23" Margin="168,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" TextChanged="BudgetNameText_OnTextChanged" PreviewTextInput="BudgetNameText_OnPreviewTextInput">
             <TextBox.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFEC1717" Offset="0"/>

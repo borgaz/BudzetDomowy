@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 
-namespace Budget.Classes
+namespace Budget.Main_Classes
 {
     public sealed class SqlConnect
     {

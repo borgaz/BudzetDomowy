@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Budget.Classes
+namespace Budget.Utility_Classes
 {
     public class Changes
     {

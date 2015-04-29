@@ -1,4 +1,4 @@
-﻿namespace Budget.Classes
+﻿namespace Budget.Utility_Classes
 {
     class ComboBoxItem
     {

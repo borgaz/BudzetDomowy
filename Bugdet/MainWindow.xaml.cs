@@ -51,11 +51,11 @@ namespace Budget
         {
             if (LoginWindow.LoginWindow.Instance.IsLogged == true)
             {
-                if (Classes.Budget.Instance.ListOfAdds.Count != 0 || Classes.Budget.Instance.ListOfEdts.Count != 0 || Classes.Budget.Instance.ListOfDels.Count != 0)
+                if (Main_Classes.Budget.Instance.ListOfAdds.Count != 0 || Main_Classes.Budget.Instance.ListOfEdts.Count != 0 || Main_Classes.Budget.Instance.ListOfDels.Count != 0)
                 {
                     if (MessageBox.Show("Czy chcesz zapisać zmiany przed zamknięciem?", "Zapisz dane", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-                        Classes.Budget.Instance.Dump();
+                        Main_Classes.Budget.Instance.Dump();
                     }
                 }
                 if (th.IsAlive)
@@ -88,7 +88,7 @@ namespace Budget
             {
                 case 1:
                     this.MainContentFrame.Content = _mainPage;
-                    //_mainPage.dataGridView.ItemsSource = null;
+                    //_mainPage.PeriodPaymentsTable.ItemsSource = null;
                     break;
                 //case 2:
                 //    this.MainContentFrame.Content = _interfacePage;
@@ -107,10 +107,7 @@ namespace Budget
 
         public static int ActualPage
         {
-            set
-            {
-                _actualPage = value;
-            }
+            set { _actualPage = value; }
         }
 
         private void CreatorButton_Click(object sender, RoutedEventArgs e)
@@ -155,16 +152,14 @@ namespace Budget
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            base.OnClosing(e);
+
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (Keyboard.IsKeyDown(Key.LeftCtrl))
-            {
-                if (e.Key.Equals(Key.S))
-                    Classes.Budget.Instance.Dump();
-            }
+            if (!Keyboard.IsKeyDown(Key.LeftCtrl)) return;
+            if (e.Key.Equals(Key.S))
+                Main_Classes.Budget.Instance.Dump();
         }
     }
 }

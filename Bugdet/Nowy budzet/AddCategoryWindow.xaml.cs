@@ -11,7 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Budget.Classes;
+using Budget.Main_Classes;
+using Budget.Utility_Classes;
 
 namespace Budget.Nowy_budzet
 {
@@ -44,8 +45,8 @@ namespace Budget.Nowy_budzet
                     category = true;
                 if (!creator)
                 {
-                    Classes.Budget.Instance.ListOfAdds.Add(new Changes(typeof(Category), Classes.Budget.Instance.Categories.Last().Key + 1));
-                    Classes.Budget.Instance.Categories.Add(Classes.Budget.Instance.Categories.Last().Key + 1,
+                    Main_Classes.Budget.Instance.ListOfAdds.Add(new Changes(typeof(Category), Main_Classes.Budget.Instance.Categories.Last().Key + 1));
+                    Main_Classes.Budget.Instance.Categories.Add(Main_Classes.Budget.Instance.Categories.Last().Key + 1,
                         new Category(CategoryNameTextBox.Text, CategoryNoteTextBox.Text, category));
                 }
                 else

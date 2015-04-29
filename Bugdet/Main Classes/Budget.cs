@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Budget.Utility_Classes;
+using ComboBoxItem = Budget.Utility_Classes.ComboBoxItem;
 
-namespace Budget.Classes
+namespace Budget.Main_Classes
 {
     public sealed class Budget
     {

@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
-using Budget.Classes;
+using Budget.Main_Classes;
 
 namespace Budget.Nowy_budzet
 {
