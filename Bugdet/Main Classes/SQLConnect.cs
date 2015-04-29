@@ -316,5 +316,11 @@ namespace Budget.Main_Classes
                 return null;
             }
         }
+
+        public static String RemoveUnnecessarySymbols(String str)
+        {
+            string replacedString = System.Text.RegularExpressions.Regex.Replace(str, @"[?<>!;:*+-_&@#%^()='/]", "");
+            return replacedString;
+        }
     }
 }
