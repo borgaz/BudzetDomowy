@@ -71,9 +71,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Budget.cs" />
-    <Compile Include="Changes.cs" />
-    <Compile Include="ComboBoxItem.cs" />
+    <Compile Include="Classes\Budget.cs" />
+    <Compile Include="Classes\Changes.cs" />
+    <Compile Include="Classes\ComboBoxItem.cs" />
     <Compile Include="History\HistoryMainPage.xaml.cs">
       <DependentUpon>HistoryMainPage.xaml</DependentUpon>
     </Compile>
@@ -101,8 +101,8 @@
     <Compile Include="Nowy budzet\AddedSalariesWindow.xaml.cs">
       <DependentUpon>AddedSalariesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BalanceLog.cs" />
-    <Compile Include="Category.cs" />
+    <Compile Include="Classes\BalanceLog.cs" />
+    <Compile Include="Classes\Category.cs" />
     <Compile Include="Nowy budzet\SalaryInfo.cs" />
     <Compile Include="Nowy budzet\MakeBudgetPage2.xaml.cs">
       <DependentUpon>MakeBudgetPage2.xaml</DependentUpon>
@@ -113,17 +113,17 @@
     <Compile Include="Nowy budzet\MakeBudgetWindow.xaml.cs">
       <DependentUpon>MakeBudgetWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Payment.cs" />
-    <Compile Include="PeriodPayment.cs" />
-    <Compile Include="SavingsTarget.cs" />
+    <Compile Include="Classes\Payment.cs" />
+    <Compile Include="Classes\PeriodPayment.cs" />
+    <Compile Include="Classes\SavingsTarget.cs" />
     <Compile Include="SettingsPage\GeneralOptionsPage.xaml.cs">
       <DependentUpon>GeneralOptionsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingsPage\MainSettingsWindow.xaml.cs">
       <DependentUpon>MainSettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SinglePayment.cs" />
-    <Compile Include="SQLConnect.cs" />
+    <Compile Include="Classes\SinglePayment.cs" />
+    <Compile Include="Classes\SQLConnect.cs" />
     <Compile Include="WelcomePage\WelcomePage.xaml.cs">
       <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>

@@ -51,11 +51,11 @@ namespace Budget
         {
             if (LoginWindow.LoginWindow.Instance.IsLogged == true)
             {
-                if (Budget.Instance.ListOfAdds.Count != 0 || Budget.Instance.ListOfEdts.Count != 0 || Budget.Instance.ListOfDels.Count != 0)
+                if (Classes.Budget.Instance.ListOfAdds.Count != 0 || Classes.Budget.Instance.ListOfEdts.Count != 0 || Classes.Budget.Instance.ListOfDels.Count != 0)
                 {
                     if (MessageBox.Show("Czy chcesz zapisać zmiany przed zamknięciem?", "Zapisz dane", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-                        Budget.Instance.Dump();
+                        Classes.Budget.Instance.Dump();
                     }
                 }
                 if (th.IsAlive)
@@ -163,7 +163,7 @@ namespace Budget
             if (Keyboard.IsKeyDown(Key.LeftCtrl))
             {
                 if (e.Key.Equals(Key.S))
-                    Budget.Instance.Dump();
+                    Classes.Budget.Instance.Dump();
             }
         }
     }

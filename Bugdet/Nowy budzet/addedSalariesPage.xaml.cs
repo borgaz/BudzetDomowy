@@ -4,6 +4,7 @@ using System.Data;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using Budget.Classes;
 
 namespace Budget.Nowy_budzet
 {
@@ -19,7 +20,6 @@ namespace Budget.Nowy_budzet
             InitializeComponent();
             _salaries = d;
             _categories = c;
-            Refresh(_salaries);
         }
 
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
@@ -50,22 +50,15 @@ namespace Budget.Nowy_budzet
             for(int i = 0; i < d.Count;i++)
             {
                 PeriodPayment p = d[i + 1];
-                salary.Rows.Add(i + 1, p.Name, p.Amount, _categories[p.CategoryID].Name, "Co " + p.Frequency + " " + p.Period, p.StartDate.ToString(),(p.EndDate.Equals(DateTime.MaxValue) ? "Nie zdefiniowano" : p.EndDate.ToString()));
+                salary.Rows.Add(i + 1, p.Name, p.Amount, _categories[p.CategoryID].Name, "Co " + p.Frequency + " " + p.Period, p.StartDate.ToShortDateString(),(p.EndDate.Equals(DateTime.MaxValue) ? "Nie zdefiniowano" : p.EndDate.ToString()));
             }
             SalaryTable.ItemsSource = salary.DefaultView;
-          //  salaryTable.Columns[0].Visibility = Visibility.Hidden;
-            new Thread(new ThreadStart(HideColumns)).Start();
-        }
-        private void HideColumns()
-        {
-            while (SalaryTable.Columns.Count == 0)
-            { }
-            this.Dispatcher.Invoke(HideColums2);
-        }
-        private void HideColums2()
-        {
             SalaryTable.Columns[0].Visibility = Visibility.Hidden;
+        }
 
+        private void SalaryTable_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            Refresh(_salaries);
         }
     }
 }

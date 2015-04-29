@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Budget.Classes;
 
 namespace Budget.History
 {
@@ -26,7 +27,7 @@ namespace Budget.History
         public HistoryMainPage()
         {
             InitializeComponent();
-            Budget.Instance.InsertCategories(CategoryComboBox,Budget.CategoryTypeEnum.ANY);
+            Classes.Budget.Instance.InsertCategories(CategoryComboBox,Classes.Budget.CategoryTypeEnum.ANY);
         }
         private void RefreshTable()
         {
@@ -37,7 +38,7 @@ namespace Budget.History
             history.Columns.Add("Kategoria", typeof(string));
             history.Columns.Add("Data", typeof(string));
             history.Columns.Add("Kwota", typeof(double));
-            foreach (KeyValuePair<int, BalanceLog> p in Budget.Instance.BalanceLog)
+            foreach (KeyValuePair<int, BalanceLog> p in Classes.Budget.Instance.BalanceLog)
             {
                 if (!((p.Value.Date >= (StartDateCheckBox.IsChecked == true ? StartDatePicker.SelectedDate : DateTime.MinValue)) &&
                       (p.Value.Date <= (EndDateCheckBox.IsChecked == true ? EndDatePicker.SelectedDate : DateTime.MaxValue))))
@@ -46,29 +47,29 @@ namespace Budget.History
                 {
                     if (p.Value.SinglePaymentID == 0)
                         continue;
-                    SinglePayment pp = (SinglePayment)Budget.Instance.Payments[p.Value.SinglePaymentID];
+                    SinglePayment pp = (SinglePayment)Classes.Budget.Instance.Payments[p.Value.SinglePaymentID];
                     if (pp.Type && SinglePaymentCheckBox.IsChecked == true)
                     {
-                        history.Rows.Add(pp.Type, p.Key, pp.Name, Budget.Instance.Categories[pp.CategoryID].Name,
+                        history.Rows.Add(pp.Type, p.Key, pp.Name, Classes.Budget.Instance.Categories[pp.CategoryID].Name,
                             p.Value.Date.ToShortDateString(), pp.Amount);
                     }
                     if (!pp.Type && SingleSalaryCheckBox.IsChecked == true)
                     {
-                        history.Rows.Add(pp.Type, p.Key, pp.Name, Budget.Instance.Categories[pp.CategoryID].Name,
+                        history.Rows.Add(pp.Type, p.Key, pp.Name, Classes.Budget.Instance.Categories[pp.CategoryID].Name,
                             p.Value.Date.ToShortDateString(), pp.Amount);
                     }
                 }
                 else
                 {
-                    PeriodPayment pp = (PeriodPayment)Budget.Instance.Payments[p.Value.PeriodPaymentID];
+                    PeriodPayment pp = (PeriodPayment)Classes.Budget.Instance.Payments[p.Value.PeriodPaymentID];
                     if (pp.Type && PeriodPaymentCheckBox.IsChecked == true)
                     {
-                        history.Rows.Add(pp.Type, p.Key, pp.Name, Budget.Instance.Categories[pp.CategoryID].Name,
+                        history.Rows.Add(pp.Type, p.Key, pp.Name, Classes.Budget.Instance.Categories[pp.CategoryID].Name,
                             p.Value.Date.ToShortDateString(), pp.Amount);
                     }
                     if (!pp.Type && PeriodSalaryCheckBox.IsChecked == true)
                     {
-                        history.Rows.Add(pp.Type, p.Key, pp.Name, Budget.Instance.Categories[pp.CategoryID].Name,
+                        history.Rows.Add(pp.Type, p.Key, pp.Name, Classes.Budget.Instance.Categories[pp.CategoryID].Name,
                             p.Value.Date.ToShortDateString(), pp.Amount);
                     }
                 }
@@ -110,11 +111,11 @@ namespace Budget.History
                 dataRow = (DataRowView)HistoryDataGrid.SelectedItem;
                 if ((int)dataRow.Row.ItemArray[1] < 0)
                 {
-                    Budget.Instance.DeletePeriodPayment(Convert.ToInt32(dataRow.Row.ItemArray[1]));
+                    Classes.Budget.Instance.DeletePeriodPayment(Convert.ToInt32(dataRow.Row.ItemArray[1]));
                 }
                 else
                 {
-                    Budget.Instance.DeleteSinglePayment(Convert.ToInt32(dataRow.Row.ItemArray[1]));
+                    Classes.Budget.Instance.DeleteSinglePayment(Convert.ToInt32(dataRow.Row.ItemArray[1]));
                 }
             }
             catch (NullReferenceException)
@@ -142,19 +143,19 @@ namespace Budget.History
                 if ((int)dataRow.Row.ItemArray[1] < 0) // Dla Period -- wydaja sie ze to samo,ale to po prostu taka furtka jakby w przyszlosci sie wyswietlalo rozne wiadomosci
                 {
                     MessageBox.Show("Opis: " +
-                                    Budget.Instance.Payments[
-                                        Budget.Instance.BalanceLog[(int) dataRow.Row.ItemArray[1]].PeriodPaymentID].Note +
+                                    Classes.Budget.Instance.Payments[
+                                        Classes.Budget.Instance.BalanceLog[(int) dataRow.Row.ItemArray[1]].PeriodPaymentID].Note +
                                     "\n Saldo w trakcie tej transakcji: " +
-                                    Budget.Instance.BalanceLog[(int) dataRow.Row.ItemArray[1]].Balance +
+                                    Classes.Budget.Instance.BalanceLog[(int) dataRow.Row.ItemArray[1]].Balance +
                                     "\nTyp Płatności: OKRESOWA");
                 }
                 else // dla single
                 {
                     MessageBox.Show("Opis: " +
-                                    Budget.Instance.Payments[
-                                        Budget.Instance.BalanceLog[(int) dataRow.Row.ItemArray[1]].SinglePaymentID].Note +
+                                    Classes.Budget.Instance.Payments[
+                                        Classes.Budget.Instance.BalanceLog[(int) dataRow.Row.ItemArray[1]].SinglePaymentID].Note +
                                     "\n Saldo w trakcie tej transakcji: " +
-                                    Budget.Instance.BalanceLog[(int) dataRow.Row.ItemArray[1]].Balance +
+                                    Classes.Budget.Instance.BalanceLog[(int) dataRow.Row.ItemArray[1]].Balance +
                                     "\nTyp Płatności: POJEDYNCZA");
                         // wiem ze ladny lancuszek
                 }

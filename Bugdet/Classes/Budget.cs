@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Animation;
-using System.Collections;
-using System.Windows.Navigation;
 
-namespace Budget
+namespace Budget.Classes
 {
     public sealed class Budget
     {
