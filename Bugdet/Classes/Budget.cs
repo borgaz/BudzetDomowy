@@ -20,9 +20,12 @@ namespace Budget.Classes
         private double balance; // saldo
         private DateTime creationDate; // data stworzenia budzetu
         private int numberOfPeople; // ilosc osob, dla ktorych prowadzony jest budzet domowy
-        private List<Changes> listOfAdds;
-        private List<Changes> listOfDels;
-        private List<Changes> listOfEdts;
+        private List<Changes> listOfAdds; //lista dodanych rekordów
+        private List<Changes> listOfDels; //lista usuniętych rekordów
+        private List<Changes> listOfEdts; //lista zedytowanych rekordów
+        private DateTime minDate; // najwcześniejsza data płatności/wydatku w bazie
+        private DateTime maxDate; // najpóźniejsza data płatności/wydatku w bazie
+        private double maxAmount; // maksymalna kwota płatności/wydatku w bazie
 
         public enum CategoryTypeEnum
         {
@@ -33,8 +36,10 @@ namespace Budget.Classes
                 + ", CREATION_DATE: " + creationDate + ", BALANCE: " + balance + "\n";
         }
 
-        private Budget(String note, String name, String password, Dictionary<int, Payment> payments, Dictionary<int, Category> categories,
-            Dictionary<int, SavingsTarget> savingsTargets, Dictionary<int, BalanceLog> balanceLogs, double balance, int numberOfPeople, DateTime creationDate)
+        private Budget(String note, String name, String password, Dictionary<int, Payment> payments,
+            Dictionary<int, Category> categories, Dictionary<int, SavingsTarget> savingsTargets,
+            Dictionary<int, BalanceLog> balanceLogs, double balance, int numberOfPeople, DateTime creationDate,
+            DateTime minDate, DateTime maxDate, double maxAmount)
         {
             this.note = note;
             this.name = name;
@@ -49,6 +54,9 @@ namespace Budget.Classes
             listOfAdds = new List<Changes>();
             listOfDels = new List<Changes>();
             listOfEdts = new List<Changes>();
+            this.minDate = minDate;
+            this.maxDate = maxDate;
+            this.maxAmount = maxAmount;
         }
 
         public static Budget Instance
@@ -58,9 +66,32 @@ namespace Budget.Classes
                 if (instance == null)
                 {
                     instance = FetchAll();
-                    // instance.SetDefaultCategories(); trzeba przerobic, zeby bylo tylko przy tworzeniu
                 }
                 return instance;
+            }
+        }
+
+        public double MaxAmount
+        {
+            get
+            {
+                return maxAmount;
+            }
+        }
+
+        public DateTime MaxDate
+        {
+            get
+            {
+                return maxDate;
+            }
+        }
+
+        public DateTime MinDate
+        {
+            get
+            {
+                return minDate;
             }
         }
 
@@ -249,32 +280,6 @@ namespace Budget.Classes
             }
         }
 
-        //public void SetDefaultCategories()
-        //{
-        //    try
-        //    {
-        //        this.categories.Add(1, new Category("Paliwo", "Benzyna do samochodu", false));
-        //        this.categories.Add(2, new Category("Jedzenie", "Zakupy okresowe", false));
-        //        this.categories.Add(3, new Category("Prąd", "Rachunki za energię", false));
-        //        this.categories.Add(4, new Category("Woda", "Rachunki za wodę", false));
-        //        this.categories.Add(5, new Category("Gaz", "Rachunki za gaz", false));
-        //        this.categories.Add(6, new Category("Internet", "Rachunki za internet", false));
-        //        this.categories.Add(7, new Category("Praca", "Wypłata", true));
-        //        this.categories.Add(8, new Category("Emerytura", "Emerytura", true));
-        //        this.categories.Add(9, new Category("Renta", "Renta", true));
-        //        this.categories.Add(10, new Category("Stypednium", "Stypendium, np. socjalne, naukowe itp.", true));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        System.Windows.MessageBox.Show("Wystąpił błąd w addDefaultCategories");
-        //        Console.WriteLine("\n" + ex.GetBaseException() + "\n");
-        //    }
-        //}
-
-        /// <summary>
-        /// Pobiera wszystkie dane z bazy do obiektu
-        /// </summary>
-        /// <returns> Zwraca obiekt z wszystkimi danymi z bazy </returns>
         private static Budget FetchAll()
         {
             try
@@ -286,9 +291,12 @@ namespace Budget.Classes
                 String name = String.Empty;
                 String note = String.Empty;
                 String password = String.Empty;
+                double maximumAmount = 0;
                 DateTime creationDate = DateTime.Now;
                 int numberOfPeople = 0;
                 double balance = 0;
+                DateTime maximumDate = new DateTime(1900, 01, 01);
+                DateTime minimumDate = new DateTime(2100, 12, 31);
 
                 System.Data.DataSet nameFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM Budget");
                 if (nameFromSelect.Tables[0].Rows.Count > 0)
@@ -359,13 +367,24 @@ namespace Budget.Classes
                 System.Data.DataSet singlePayFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM SinglePayments");
                 for (int i = 0; i < singlePayFromSelect.Tables[0].Rows.Count; i++)
                 {
+                    double amount = Convert.ToDouble(singlePayFromSelect.Tables[0].Rows[i]["amount"]);
+                    if (amount > maximumAmount)
+                        maximumAmount = amount;
+
+                    DateTime date = Convert.ToDateTime(singlePayFromSelect.Tables[0].Rows[i]["date"]);
+                    if (DateTime.Compare(date,minimumDate) < 0)
+                        minimumDate = date;
+
+                    if (DateTime.Compare(date, maximumDate) > 0)
+                        maximumDate = date;
+
                     payments.Add(Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["id"]),
                         new SinglePayment(Convert.ToString(singlePayFromSelect.Tables[0].Rows[i]["note"]),
-                        Convert.ToDouble(singlePayFromSelect.Tables[0].Rows[i]["amount"]),
+                        amount,
                         Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["categoryId"]),
                         Convert.ToBoolean(singlePayFromSelect.Tables[0].Rows[i]["type"]),
                         Convert.ToString(singlePayFromSelect.Tables[0].Rows[i]["name"]),
-                        Convert.ToDateTime(singlePayFromSelect.Tables[0].Rows[i]["date"])
+                        date
                         ));
                 }
 
@@ -388,7 +407,13 @@ namespace Budget.Classes
                         ));
                 }
 
-                return new Budget(note, name, password, payments, categories, savingsTargets, balanceLogs, balance, numberOfPeople, creationDate);
+                if (DateTime.Compare(maximumDate, new DateTime(1900, 01, 01)) == 0)
+                    maximumDate = DateTime.Today; // gdy brak SinglePayments w bazie max i minDate = Today
+                if (DateTime.Compare(minimumDate, new DateTime(2100, 12, 31)) == 0)
+                    minimumDate = DateTime.Today;
+
+                return new Budget(note, name, password, payments, categories, savingsTargets, balanceLogs, balance, 
+                    numberOfPeople, creationDate,minimumDate,maximumDate,maximumAmount);
             }
             catch (Exception ex)
             {
@@ -513,94 +538,5 @@ namespace Budget.Classes
                 MessageBox.Show("Błąd w zapisie bazy danych!");
             
         }
-
-    //    public Boolean DumpAll()
-    //    {
-    //        try
-    //        {
-    //            /////////////////////////////////////////////////////////////////////////////////////////////
-    //            // budzet
-    //            /////////////////////////////////////////////////////////////////////////////////////////////
-
-    //            SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Budget(name, balance, note, creation, numberOfPeople, password) values('" +
-    //                                this.name + "','" + this.balance + "','" + this.note + "','" + this.creationDate.ToShortDateString() +
-    //                                "','" + this.numberOfPeople + "','" + this.password + "')");
-
-    //            /////////////////////////////////////////////////////////////////////////////////////////////
-    //            // Lista kategorii
-    //            /////////////////////////////////////////////////////////////////////////////////////////////
-
-    //            foreach (Category category in this.categories.Values)
-    //            {
-    //                SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Categories(name, note, type) values('" + 
-    //                                category.Name + "','" + category.Note + "','" + category.Type + "')");
-    //            }
-
-    //            /////////////////////////////////////////////////////////////////////////////////////////////
-    //            // Aktualny stan konta
-    //            /////////////////////////////////////////////////////////////////////////////////////////////
-                
-    //            foreach(BalanceLog balanceLog in this.balanceLogs.Values)
-    //            {
-    //                SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(balance, date, singlePaymentId, periodPaymentId) values('" +
-    //                               balanceLog.Balance + "','" + balanceLog.Date.ToShortDateString() + "','" + balanceLog.SinglePaymentID + 
-    //                               "','" + balanceLog.PeriodPaymentID + "')");
-    //            }
-               
-    //            /////////////////////////////////////////////////////////////////////////////////////////////
-    //            // Lista płatności
-    //            /////////////////////////////////////////////////////////////////////////////////////////////
-
-    //            Boolean temp;
-    //            foreach (Payment payment in this.payments.Values)
-    //            {
-    //                if (payment.Amount > 0)
-    //                {
-    //                    temp = false;
-    //                }
-    //                else
-    //                {
-    //                    temp = true;
-    //                }
-    //                if (payment.GetType() == typeof(PeriodPayment))
-    //                {
-    //                    PeriodPayment p = (PeriodPayment)payment;
-    //                    SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO PeriodPayments(categoryId, amount, note, type, name, frequency, period, lastUpdate, startDate, endDate) values('" +
-    //                        p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + temp + "','" + p.Name + "','" + p.Frequency + "','" + p.Period + "','" + p.LastUpdate + "','" +
-    //                        p.StartDate.ToShortDateString() + "','" + p.EndDate.ToShortDateString() + "')");
-    //                }
-    //                else if (payment.GetType() == typeof(SinglePayment))
-    //                {
-    //                    SinglePayment p = (SinglePayment)payment;
-    //                    SqlConnect.Instance.ExecuteSqlNonQuery(
-    //                        "INSERT INTO SinglePayments(categoryId, amount, note, type, name, date) values('" +
-    //                        p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + temp + "','" +
-    //                        p.Name + "','" + p.Date.ToShortDateString() + "')");
-    //                }
-    //            }
-
-    //            /////////////////////////////////////////////////////////////////////////////////////////////
-    //            // Cele oszczędzania
-    //            /////////////////////////////////////////////////////////////////////////////////////////////
-
-    //            foreach (SavingsTarget savingsTarget in this.savingsTargets.Values)
-    //            {
-    //                SqlConnect.Instance.ExecuteSqlNonQuery(
-    //                    "INSERT INTO SavingsTargets(target, note, deadLine, priority, moneyHoldings, addedDate, neededAmount) values('" +
-    //                    savingsTarget.Target + "','" + savingsTarget.Note + "','" + savingsTarget.Deadline.ToShortDateString() + "','" +
-    //                    savingsTarget.Priority + "','" + savingsTarget.MoneyHoldings + "','" + savingsTarget.AddedDate.ToShortDateString() + "','" + 
-    //                    savingsTarget.NeededAmount + "')");
-    //            }
-
-    //            instance = null;
-    //            return true;
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            System.Windows.MessageBox.Show("Wystąpił błąd w DumpAll");
-    //            Console.WriteLine("\n" + ex.GetBaseException() + "\n");
-    //            return false;
-    //        }
-    //    }
     }
 }

@@ -145,7 +145,7 @@ namespace Budget.History
                     MessageBox.Show("Opis: " +
                                     Classes.Budget.Instance.Payments[
                                         Classes.Budget.Instance.BalanceLog[(int) dataRow.Row.ItemArray[1]].PeriodPaymentID].Note +
-                                    "\n Saldo w trakcie tej transakcji: " +
+                                    "\nSaldo po operacji: " +
                                     Classes.Budget.Instance.BalanceLog[(int) dataRow.Row.ItemArray[1]].Balance +
                                     "\nTyp Płatności: OKRESOWA");
                 }
@@ -154,7 +154,7 @@ namespace Budget.History
                     MessageBox.Show("Opis: " +
                                     Classes.Budget.Instance.Payments[
                                         Classes.Budget.Instance.BalanceLog[(int) dataRow.Row.ItemArray[1]].SinglePaymentID].Note +
-                                    "\n Saldo w trakcie tej transakcji: " +
+                                    "\nSaldo po operacji: " +
                                     Classes.Budget.Instance.BalanceLog[(int) dataRow.Row.ItemArray[1]].Balance +
                                     "\nTyp Płatności: POJEDYNCZA");
                         // wiem ze ladny lancuszek
