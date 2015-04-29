@@ -4,9 +4,9 @@
         Title="CustomMessageBox" Height="200" Width="350">
     <Grid>
         <StackPanel x:Name="ButtonsStackPanel" Orientation="Horizontal" HorizontalAlignment="Center" Height="32" Margin="10,128,0,0" VerticalAlignment="Top" Width="322">
-            <Button Content="Button" Width="75" Margin="15,0,10"/>
-            <Button Content="Button" Width="75"/>
-            <Button Content="Button" Width="75"/>
+            <Button x:Name="YesButton" Content="Button" Width="75" Margin="15,0" Click="YesButton_OnClick"/>
+            <Button x:Name="CancelButton" Content="Button" Width="75" Margin="15,0" Click="CancelButton_OnClick"/>
+            <Button x:Name="NoButton" Content="Button" Width="75" Margin="15,0" Click="NoButton_OnClick"/>
         </StackPanel>
         <TextBlock x:Name="MessageBoxText" HorizontalAlignment="Left" Margin="15,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="113" Width="308"/>
 
