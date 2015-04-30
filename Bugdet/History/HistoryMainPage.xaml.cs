@@ -110,11 +110,14 @@ namespace Budget.History
                 dataRow = (DataRowView)HistoryDataGrid.SelectedItem;
                 if ((int)dataRow.Row.ItemArray[1] < 0)
                 {
-                    Main_Classes.Budget.Instance.DeletePeriodPayment(Convert.ToInt32(dataRow.Row.ItemArray[1]));
+                    Main_Classes.Budget.Instance.DeletePeriodPayment(
+                        Main_Classes.Budget.Instance.BalanceLog[(int)dataRow.Row.ItemArray[1]].PeriodPaymentID
+                        );
                 }
                 else
                 {
-                    Main_Classes.Budget.Instance.DeleteSinglePayment(Convert.ToInt32(dataRow.Row.ItemArray[1]));
+                    Main_Classes.Budget.Instance.DeleteSinglePayment(
+                        Main_Classes.Budget.Instance.BalanceLog[(int)dataRow.Row.ItemArray[1]].SinglePaymentID, (int)dataRow.Row.ItemArray[1]);
                 }
             }
             catch (NullReferenceException)
@@ -150,6 +153,7 @@ namespace Budget.History
                 }
                 else // dla single
                 {
+                    Console.WriteLine((int)dataRow.Row.ItemArray[1]);
                     MessageBox.Show("Opis: " +
                                     Main_Classes.Budget.Instance.Payments[
                                         Main_Classes.Budget.Instance.BalanceLog[(int) dataRow.Row.ItemArray[1]].SinglePaymentID].Note +

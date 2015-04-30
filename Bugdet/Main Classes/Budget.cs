@@ -218,10 +218,11 @@ namespace Budget.Main_Classes
             ListOfAdds.Add(new Changes(typeof(SinglePayment), index));
         }
 
-        public void DeleteSinglePayment(int index)
+        public void DeleteSinglePayment(int indexSinglePayment, int indexBalanceLog)
         {
-            payments.Remove(index);
-            ListOfDels.Add(new Changes(typeof(SinglePayment),index));
+            payments.Remove(indexSinglePayment);
+            balanceLogs.Remove(indexBalanceLog);
+            ListOfDels.Add(new Changes(typeof(SinglePayment), indexSinglePayment));
         }
 
         public void AddSavingsTarget(int index, SavingsTarget target)
@@ -500,7 +501,16 @@ namespace Budget.Main_Classes
                     }
                     if (C.Type == typeof(SinglePayment))
                     {
+                        System.Data.DataSet tempSelect = SqlConnect.Instance.SelectQuery("SELECT amount,type FROM SinglePayments WHERE id = " + C.ID);
+                        double amountToRefactor = (double)tempSelect.Tables[0].Rows[0]["amount"];
+                        // niezbyt eleganckie rozwiazanie - jeszcze to poprawie (ale działa)
+                        if ((bool)tempSelect.Tables[0].Rows[0]["type"] == false)
+                            SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE BALANCELOGS SET BALANCE = (BALANCE - " + amountToRefactor + ") WHERE singlePaymentid > " + C.ID);
+                        if ((bool)tempSelect.Tables[0].Rows[0]["type"] == true)
+                            SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE BALANCELOGS SET BALANCE = (BALANCE + " + amountToRefactor + ") WHERE singlePaymentid > " + C.ID);
+
                         SqlConnect.Instance.ExecuteSqlNonQuery("DELETE FROM SINGLEPAYMENTS WHERE id = " + C.ID);
+                        SqlConnect.Instance.ExecuteSqlNonQuery("DELETE FROM BALANCELOGS WHERE singlePaymentId = " + C.ID);
                     }
                     if (C.Type == typeof(SavingsTarget))
                     {
