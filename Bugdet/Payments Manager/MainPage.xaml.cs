@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Windows;
 using System.Collections.Generic;
 using System.Data;
+using System.Windows;
 using System.Windows.Controls;
-using Budget.Nowy_budzet;
 using System.Windows.Media;
 using Budget.Main_Classes;
+using Budget.New_Budget;
 
-namespace Budget.zarzadzanie_wydatkami_i_przychodami
+namespace Budget.Payments_Manager
 {
     /// <summary>
     /// Interaction logic for MainPage.xaml

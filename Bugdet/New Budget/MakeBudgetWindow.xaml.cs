@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Animation;
 using Budget.Main_Classes;
 
-namespace Budget.Nowy_budzet
+namespace Budget.New_Budget
 {
     /// <summary>
     /// Interaction logic for MakeBudzetWindow.xaml

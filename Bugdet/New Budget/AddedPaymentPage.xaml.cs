@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using Budget.Main_Classes;
 
-namespace Budget.Nowy_budzet
+namespace Budget.New_Budget
 {
     /// <summary>
     /// Interaction logic for AddedPaymentPage.xaml

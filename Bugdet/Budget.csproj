@@ -86,31 +86,31 @@
     <Compile Include="LoginWindow\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Nowy budzet\AddCategoryWindow.xaml.cs">
+    <Compile Include="New Budget\AddCategoryWindow.xaml.cs">
       <DependentUpon>AddCategoryWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Nowy budzet\AddedPaymentPage.xaml.cs">
+    <Compile Include="New Budget\AddedPaymentPage.xaml.cs">
       <DependentUpon>AddedPaymentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Nowy budzet\MakeBudgetPage3.xaml.cs">
+    <Compile Include="New Budget\MakeBudgetPage3.xaml.cs">
       <DependentUpon>MakeBudgetPage3.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Nowy budzet\AddedSalariesPage.xaml.cs">
+    <Compile Include="New Budget\AddedSalariesPage.xaml.cs">
       <DependentUpon>AddedSalariesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Nowy budzet\AddedSalariesWindow.xaml.cs">
+    <Compile Include="New Budget\AddedSalariesWindow.xaml.cs">
       <DependentUpon>AddedSalariesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Main Classes\BalanceLog.cs" />
     <Compile Include="Main Classes\Category.cs" />
-    <Compile Include="Nowy budzet\SalaryInfo.cs" />
-    <Compile Include="Nowy budzet\MakeBudgetPage2.xaml.cs">
+    <Compile Include="New Budget\SalaryInfo.cs" />
+    <Compile Include="New Budget\MakeBudgetPage2.xaml.cs">
       <DependentUpon>MakeBudgetPage2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Nowy budzet\MakeBudgetPage1.xaml.cs">
+    <Compile Include="New Budget\MakeBudgetPage1.xaml.cs">
       <DependentUpon>MakeBudgetPage1.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Nowy budzet\MakeBudgetWindow.xaml.cs">
+    <Compile Include="New Budget\MakeBudgetWindow.xaml.cs">
       <DependentUpon>MakeBudgetWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Main Classes\Payment.cs" />
@@ -130,13 +130,13 @@
     <Compile Include="WelcomePage\WelcomePage.xaml.cs">
       <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="zarzadzanie wydatkami i przychodami\AddPaymentPage.xaml.cs">
+    <Compile Include="Payments Manager\AddPaymentPage.xaml.cs">
       <DependentUpon>AddPaymentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="zarzadzanie wydatkami i przychodami\AddSalaryPage.xaml.cs">
+    <Compile Include="Payments Manager\AddSalaryPage.xaml.cs">
       <DependentUpon>AddSalaryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="zarzadzanie wydatkami i przychodami\MainPage.xaml.cs">
+    <Compile Include="Payments Manager\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Page Include="History\HistoryMainPage.xaml">
@@ -155,23 +155,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Nowy budzet\AddCategoryWindow.xaml">
+    <Page Include="New Budget\AddCategoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Nowy budzet\AddedPaymentPage.xaml">
+    <Page Include="New Budget\AddedPaymentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Nowy budzet\MakeBudgetPage3.xaml">
+    <Page Include="New Budget\MakeBudgetPage3.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Nowy budzet\AddedSalariesPage.xaml">
+    <Page Include="New Budget\AddedSalariesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Nowy budzet\AddedSalariesWindow.xaml">
+    <Page Include="New Budget\AddedSalariesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,15 +187,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Nowy budzet\MakeBudgetPage2.xaml">
+    <Page Include="New Budget\MakeBudgetPage2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Nowy budzet\MakeBudgetPage1.xaml">
+    <Page Include="New Budget\MakeBudgetPage1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Nowy budzet\MakeBudgetWindow.xaml">
+    <Page Include="New Budget\MakeBudgetWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -215,15 +215,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="zarzadzanie wydatkami i przychodami\AddPaymentPage.xaml">
+    <Page Include="Payments Manager\AddPaymentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="zarzadzanie wydatkami i przychodami\AddSalaryPage.xaml">
+    <Page Include="Payments Manager\AddSalaryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="zarzadzanie wydatkami i przychodami\MainPage.xaml">
+    <Page Include="Payments Manager\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

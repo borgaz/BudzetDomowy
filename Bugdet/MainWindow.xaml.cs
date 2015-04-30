@@ -4,10 +4,9 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using Budget.History;
-using Budget.Nowy_budzet;
-using Budget.zarzadzanie_wydatkami_i_przychodami;
 using Budget.LoginWindow;
 using Budget.InterfacePage;
+using Budget.Payments_Manager;
 using Budget.SettingsPage;
 using Budget.Utility_Classes;
 

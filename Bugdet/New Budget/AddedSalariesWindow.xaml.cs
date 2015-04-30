@@ -2,7 +2,7 @@
 using System.Windows;
 using Budget.Main_Classes;
 
-namespace Budget.Nowy_budzet
+namespace Budget.New_Budget
 {
     /// <summary>
     /// Interaction logic for AddedSalariesWindow.xaml

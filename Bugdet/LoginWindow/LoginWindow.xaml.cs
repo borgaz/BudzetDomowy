@@ -3,7 +3,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using Budget.Main_Classes;
-using Budget.Nowy_budzet;
+using Budget.New_Budget;
 
 namespace Budget.LoginWindow
 {

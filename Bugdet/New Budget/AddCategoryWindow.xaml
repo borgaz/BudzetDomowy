@@ -1,4 +1,4 @@
-﻿<Window x:Class="Budget.Nowy_budzet.AddCategoryWindow"
+﻿<Window x:Class="Budget.New_Budget.AddCategoryWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Dodaj kategorię" Height="256" Width="300">
