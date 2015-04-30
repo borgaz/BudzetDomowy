@@ -27,6 +27,7 @@ namespace Budget.LoginWindow
             {
                 return _instance ?? (_instance = new LoginWindow());
             }
+            set { _instance = value; }
         }
 
         private void InsertBudgets()

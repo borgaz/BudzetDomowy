@@ -8,7 +8,7 @@
 
     <Grid Background="White" HorizontalAlignment="Left" Width="725" Margin="10,0,-10,0">
 
-        <DataGrid Margin="380,40,10,100" Name="PeriodPaymentsTable" Loaded="dataGridView_Loaded" IsReadOnly="True" LoadingRow="DataGridView_OnLoadingRow">
+        <DataGrid Margin="369,40,21,100" Name="PeriodPaymentsTable" Loaded="dataGridView_Loaded" IsReadOnly="True" LoadingRow="DataGridView_OnLoadingRow">
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Usuń rekord"/>
@@ -20,7 +20,7 @@
         <Frame x:Name="BtnsContentFrame" Content="" Margin="10,40,0,0" Height="410" Width="300" VerticalAlignment="Top" HorizontalAlignment="Left" NavigationUIVisibility="Hidden" Background="#FF888888"/>
         <Button x:Name="AddPaymentBtn" Content="Dodaj Wydatek" HorizontalAlignment="Left" Margin="155,10,0,0" VerticalAlignment="Top" Width="120" Click="addPaymentBtn_Click" Height="25"/>
         <Button x:Name="AddSalaryBtn" Content="Dodaj Przychód" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="120" Click="addSalaryBtn_Click" Height="25" Grid.Column="1"/>
-        <Button x:Name="LoadHistoryButton" Content="Historia" HorizontalAlignment="Left" Margin="523,474,0,47" Width="120" Click="LoadHistoryButton_Click" />
-        <Button x:Name="DumpAllButton" Content="Zapisz" HorizontalAlignment="Left" Margin="114,474,0,44" Width="120" Click="DumpAllButton_Click" />
+        <Button x:Name="LoadHistoryButton" Content="Historia" HorizontalAlignment="Left" Margin="482,474,0,47" Width="120" Click="LoadHistoryButton_Click" />
+        <Button x:Name="DumpAllButton" Content="Zapisz" HorizontalAlignment="Left" Margin="99,472,0,46" Width="120" Click="DumpAllButton_Click" />
     </Grid>
 </Page>

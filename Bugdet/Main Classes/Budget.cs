@@ -73,6 +73,10 @@ namespace Budget.Main_Classes
             }
         }
 
+        public static void ResetInstance()
+        {
+            instance = FetchAll();
+        }
         public double MaxAmount
         {
             get

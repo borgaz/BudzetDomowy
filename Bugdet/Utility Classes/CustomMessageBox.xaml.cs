@@ -25,10 +25,14 @@ namespace Budget.Utility_Classes
             YesNo,
             YesNoCanel
         };
-        public CustomMessageBox(MessageBoxType type,String text) // TODO: Dokonczyc
+
+        private readonly MessageBoxType windowType;
+        public int result;
+        public CustomMessageBox(MessageBoxType type,String text) // 
         {
             InitializeComponent();
-            LoadButtons(type);
+            windowType = type;
+            LoadButtons(windowType);
             Text(text);
         }
 
@@ -37,11 +41,21 @@ namespace Budget.Utility_Classes
             switch (type)
             {
                 case MessageBoxType.Ok:
+                    CancelButton.Content = "Ok";
+                    YesButton.Visibility = Visibility.Hidden;
+                    NoButton.Visibility = Visibility.Hidden;
                     break;
                 case MessageBoxType.YesNo:
+                    CancelButton.Visibility = Visibility.Hidden;
+                    YesButton.Content = "Tak";
+                    NoButton.Content = "Nie";
                     break;
                 case MessageBoxType.YesNoCanel:
+                    YesButton.Content = "Anuluj";
+                    CancelButton.Content = "Wyloguj";
+                    NoButton.Content = "Wyjdź";
                     break;
+                    
             }
         }
 
@@ -49,20 +63,49 @@ namespace Budget.Utility_Classes
         {
             MessageBoxText.Text = text;
         }
-
         private void YesButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            switch(windowType)
+            {
+                case MessageBoxType.Ok:
+                    break;
+                case MessageBoxType.YesNo:
+                    break;
+                case MessageBoxType.YesNoCanel:
+                    result = 1;
+                    this.Close();
+                    break;
+            }
         }
 
         private void CancelButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            switch (windowType)
+            {
+                case MessageBoxType.Ok:
+                    break;
+                case MessageBoxType.YesNo:
+                    break;
+                case MessageBoxType.YesNoCanel:
+                    result = 2;
+                    this.Close();
+                    break;
+            }
         }
 
         private void NoButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            switch (windowType)
+            {
+                case MessageBoxType.Ok:
+                    break;
+                case MessageBoxType.YesNo:
+                    break;
+                case MessageBoxType.YesNoCanel:
+                    result = 3;
+                    this.Close();
+                    break;
+            }
         }
     }
 }

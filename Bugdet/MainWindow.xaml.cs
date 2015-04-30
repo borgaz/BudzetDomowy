@@ -9,6 +9,7 @@ using Budget.zarzadzanie_wydatkami_i_przychodami;
 using Budget.LoginWindow;
 using Budget.InterfacePage;
 using Budget.SettingsPage;
+using Budget.Utility_Classes;
 
 namespace Budget
 {
@@ -36,34 +37,30 @@ namespace Budget
             }
 
             InitializeComponent();
+            InitializeObjects();
+        }
+
+        private void InitializeObjects()
+        {
             _mainPage = new MainPage();
             _interfacePage = new InterfacePage.InterfacePage();
             _welcomePage = new WelcomePage.WelcomePage();
             _mainSettingsWindow = new MainSettingsWindow(1);
             _historyPage = new HistoryMainPage();
             WelcomePageButton.IsEnabled = false;
+            _actualPage = 2;
+            CreatorButton.IsEnabled = true;
+            SettingsButton.IsEnabled = true;
+            HistoryButton.IsEnabled = true;
             InsertPage();
+            running = true;
             th = new Thread(OnPageChange);
             th.Start();
         }
-
-        protected override void OnClosed(EventArgs e)
-        {
-            if (LoginWindow.LoginWindow.Instance.IsLogged == true)
-            {
-                if (Main_Classes.Budget.Instance.ListOfAdds.Count != 0 || Main_Classes.Budget.Instance.ListOfEdts.Count != 0 || Main_Classes.Budget.Instance.ListOfDels.Count != 0)
-                {
-                    if (MessageBox.Show("Czy chcesz zapisać zmiany przed zamknięciem?", "Zapisz dane", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                    {
-                        Main_Classes.Budget.Instance.Dump();
-                    }
-                }
-                if (th.IsAlive)
-                {
-                    th.Abort();
-                }           
-            }
-        }
+        //protected override void OnClosed(EventArgs e)
+        //{
+   
+        //}
 
         ~MainWindow()
         {
@@ -152,9 +149,53 @@ namespace Budget
 
         protected override void OnClosing(CancelEventArgs e)
         {
-
+            if (LoginWindow.LoginWindow.Instance.IsLogged == true)
+            {
+                var msgBox = new CustomMessageBox(CustomMessageBox.MessageBoxType.YesNoCanel,
+                    "Czy chcesz zamknąć program?");
+                msgBox.ShowDialog();
+                switch (msgBox.result)
+                {
+                    case 1:
+                        msgBox = null;
+                        e.Cancel = true;
+                        break;
+                    case 2:
+                            running = false;
+                            CheckSavings();
+                            this.Visibility = Visibility.Hidden;
+                            LoginWindow.LoginWindow.Instance.IsLogged = false;
+                            LoginWindow.LoginWindow.Instance = null;
+                            LoginWindow.LoginWindow.Instance.ShowDialog();
+                            if (!LoginWindow.LoginWindow.Instance.IsLogged)
+                            {
+                                e.Cancel = false;
+                                return;
+                            }
+                            e.Cancel = true;
+                            Main_Classes.Budget.ResetInstance();
+                            InitializeObjects();
+                            this.Visibility = Visibility.Visible;
+                        break;
+                    case 3:
+                            running = false;
+                            CheckSavings();
+                            e.Cancel = false;
+                        break;
+                    }
+            }
         }
 
+        private void CheckSavings()
+        {
+            if (Main_Classes.Budget.Instance.ListOfAdds.Count != 0 || Main_Classes.Budget.Instance.ListOfEdts.Count != 0 || Main_Classes.Budget.Instance.ListOfDels.Count != 0)
+            {
+                if (MessageBox.Show("Czy chcesz zapisać zmiany przed zamknięciem?", "Zapisz dane", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    Main_Classes.Budget.Instance.Dump();
+                }
+            }
+        }
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (!Keyboard.IsKeyDown(Key.LeftCtrl)) return;
