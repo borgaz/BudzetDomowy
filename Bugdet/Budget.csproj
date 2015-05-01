@@ -72,6 +72,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Main Classes\Budget.cs" />
+    <Compile Include="Main Classes\Budget2.cs" />
     <Compile Include="Utility Classes\Changes.cs" />
     <Compile Include="Utility Classes\ComboBoxItem.cs" />
     <Compile Include="History\HistoryMainPage.xaml.cs">
