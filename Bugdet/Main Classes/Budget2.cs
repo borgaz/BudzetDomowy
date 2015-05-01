@@ -92,9 +92,6 @@ namespace Budget.Main_Classes
                         Convert.ToDateTime(periodPayFromSelect.Tables[0].Rows[i]["endDate"])
                         ));
                 }
-
-                //   int nOPP = periodPayFromSelect.Tables[0].Rows.Count; // numberOfPeriodPayments - potrzebny, zeby nie pokrywaly sie ID pejmentsow
-
                 System.Data.DataSet singlePayFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM SinglePayments");
                 for (int i = 0; i < singlePayFromSelect.Tables[0].Rows.Count; i++)
                 {
@@ -169,7 +166,6 @@ namespace Budget.Main_Classes
                     }
                     if (C.Type == typeof(PeriodPayment))
                     {
-                        //((p.Amount > 0) ? false : true)
                         PeriodPayment p = (PeriodPayment)Budget.Instance.Payments[C.ID];
                         SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO PeriodPayments(id, categoryId, amount, note, type, name, frequency, period, lastUpdate, startDate, endDate) values('" +
                             C.ID + "','" + p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + Convert.ToInt32(p.Type) + "','" + p.Name + "','" + p.Frequency + "','" + p.Period + "','" + p.LastUpdate + "','" +
@@ -177,7 +173,6 @@ namespace Budget.Main_Classes
                     }
                     if (C.Type == typeof(SinglePayment))
                     {
-                        // ((p.Amount > 0) ? false : true) 
                         SinglePayment p = (SinglePayment)Budget.Instance.Payments[C.ID];
                         SqlConnect.Instance.ExecuteSqlNonQuery(
                             "INSERT INTO SinglePayments(id, categoryId, amount, note, type, name, date) values('" +
@@ -205,11 +200,12 @@ namespace Budget.Main_Classes
             {
                 return false;
             }
-            //listOfAdds.Clear();
             return true;
         }
 
-        private Boolean DeleteFromDB(List<Changes> listOfDels)
+        private Boolean DeleteFromDB(List<Changes> listOfDels, bool isPartOfEdts) //troche to dziwne rozwiazanie, 
+            //ale funkcja troche inaczej zachowuje sie gdy usuwanie jest czescia edytowania - wtedy nie usuwamy balanceloga 
+            // tylko go uaktualniamy
         {
             try
             {
@@ -225,16 +221,17 @@ namespace Budget.Main_Classes
                     }
                     if (C.Type == typeof(SinglePayment))
                     {
-                        System.Data.DataSet tempSelect = SqlConnect.Instance.SelectQuery("SELECT amount,type FROM SinglePayments WHERE id = " + C.ID);
-                        double amountToRefactor = (double)tempSelect.Tables[0].Rows[0]["amount"];
-                        // niezbyt eleganckie rozwiazanie - jeszcze to poprawie (ale działa)
-                        if ((bool)tempSelect.Tables[0].Rows[0]["type"] == false)
-                            SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE BALANCELOGS SET BALANCE = (BALANCE - " + amountToRefactor + ") WHERE singlePaymentid > " + C.ID);
-                        if ((bool)tempSelect.Tables[0].Rows[0]["type"] == true)
-                            SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE BALANCELOGS SET BALANCE = (BALANCE + " + amountToRefactor + ") WHERE singlePaymentid > " + C.ID);
+                        if (!isPartOfEdts)
+                        {
+                            System.Data.DataSet tempSelect = SqlConnect.Instance.SelectQuery("SELECT amount,type FROM SinglePayments WHERE id = " + C.ID);
+                            double amountToRefactor = (double)tempSelect.Tables[0].Rows[0]["amount"];
+                            if ((bool)tempSelect.Tables[0].Rows[0]["type"] == false)
+                                amountToRefactor = (-1) * amountToRefactor;
 
+                            SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE BALANCELOGS SET BALANCE = (BALANCE + '" + amountToRefactor + "') WHERE singlePaymentid > " + C.ID);
+                            SqlConnect.Instance.ExecuteSqlNonQuery("DELETE FROM BALANCELOGS WHERE singlePaymentId = " + C.ID);
+                        }
                         SqlConnect.Instance.ExecuteSqlNonQuery("DELETE FROM SINGLEPAYMENTS WHERE id = " + C.ID);
-                        SqlConnect.Instance.ExecuteSqlNonQuery("DELETE FROM BALANCELOGS WHERE singlePaymentId = " + C.ID);
                     }
                     if (C.Type == typeof(SavingsTarget))
                     {
@@ -248,15 +245,31 @@ namespace Budget.Main_Classes
                 SqlConnect.Instance.ErrLog(ex);
                 return false;
             }
-            //listOfDels.Clear();
             return true;
         }
 
         private Boolean EditDB(List<Changes> listOfEdts)
         {
-            if (DeleteFromDB(listOfEdts) && AddToDB(listOfEdts))
+            foreach (Changes C in listOfEdts)
             {
-                //listOfEdts.Clear();
+                if (C.Type == typeof(SinglePayment))
+                {
+                    System.Data.DataSet tempSelect = SqlConnect.Instance.SelectQuery("SELECT amount,type FROM SinglePayments WHERE id = " + C.ID);
+                    if (payments[C.ID].Amount != (double)tempSelect.Tables[0].Rows[0]["amount"])
+                    {
+                        double amountToRefactor;
+                        if ((bool)tempSelect.Tables[0].Rows[0]["type"] == false)
+                            amountToRefactor = payments[C.ID].Amount - (double)tempSelect.Tables[0].Rows[0]["amount"];
+                        else
+                            amountToRefactor = (double)tempSelect.Tables[0].Rows[0]["amount"] - payments[C.ID].Amount;
+
+                       SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE BALANCELOGS SET BALANCE = (BALANCE + '" + amountToRefactor + "') WHERE singlePaymentid >= " + C.ID);
+                    }
+                }
+            }
+
+            if (DeleteFromDB(listOfEdts,true) && AddToDB(listOfEdts))
+            {
                 return true;
             }
             return false;
@@ -266,7 +279,7 @@ namespace Budget.Main_Classes
         {
             if (Budget.Instance.AddToDB(Budget.Instance.ListOfAdds)
                 && Budget.Instance.EditDB(Budget.Instance.ListOfEdts)
-                && Budget.Instance.DeleteFromDB(Budget.Instance.ListOfDels))
+                && Budget.Instance.DeleteFromDB(Budget.Instance.ListOfDels,false))
             {
                 MessageBox.Show("Poprawnie zapisana baza danych!");
                 listOfEdts.Clear();

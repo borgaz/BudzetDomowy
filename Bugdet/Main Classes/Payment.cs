@@ -38,6 +38,10 @@ namespace Budget.Main_Classes
             {
                 return amount;
             }
+            set
+            {
+                amount = value;
+            }
         }
 
         public String Note

@@ -215,6 +215,27 @@ namespace Budget.Main_Classes
 
         public void AddSinglePayment(int index, SinglePayment payment)
         {
+            // prace nad dodawaniem singlepays z inną datą
+
+            //int key = 1;
+            //foreach (KeyValuePair<int, Payment>s in payments.Reverse() )
+            //{
+            //    if (s.Value.GetType() == typeof(SinglePayment))
+            //    {
+            //        SinglePayment sp = (SinglePayment)s.Value;
+            //        if (DateTime.Compare(sp.Date, payment.Date) <= 0)
+            //        {
+            //            key = s.Key + 1;
+            //            break;
+            //        }
+            //        else
+            //    }
+            //}
+            //Console.WriteLine(key);
+            //payments.Add(key, payment);
+            //ListOfAdds.Add(new Changes(typeof(SinglePayment), key));
+
+
             payments.Add(index, payment);
             ListOfAdds.Add(new Changes(typeof(SinglePayment), index));
         }
@@ -257,11 +278,14 @@ namespace Budget.Main_Classes
             ListOfAdds.Add(new Changes(typeof(BalanceLog), index));
         }
 
-        public void DeleteBalanceLog(int index)
-        {
-            balanceLogs.Remove(index);
-            ListOfDels.Add(new Changes(typeof(BalanceLog), index));
-        }
+        // BalanceLog usuwa sie automatycznie po usunieciu skojarzonego singlepaymentid
+
+        //public void DeleteBalanceLog(int index)
+        //{
+        //    balanceLogs.Remove(index);
+        //    ListOfDels.Add(new Changes(typeof(BalanceLog), index));
+        //}
+
         /// <summary>
         /// Inserts Categories to ComboBox
         /// </summary>
