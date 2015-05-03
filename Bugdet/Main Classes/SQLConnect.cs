@@ -184,10 +184,10 @@ namespace Budget.Main_Classes
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // budzet
                 /////////////////////////////////////////////////////////////////////////////////////////////
-
+                string balanceWithDot = _balance.Balance.ToString().Replace(",", ".");
                 SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Budget(name,note,creation,numberofpeople,password,balance) values('" +
                                    _name + "'," + "'note','" + DateTime.Now.ToShortDateString() +
-                                   "'," + _numberOfPeople + ",'" + _password + "'," + _balance.Balance + ")");
+                                   "'," + _numberOfPeople + ",'" + _password + "','" + balanceWithDot + "')");
 
 
                 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -205,9 +205,9 @@ namespace Budget.Main_Classes
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // Aktualny stan konta
                 /////////////////////////////////////////////////////////////////////////////////////////////
-
+                
                 SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(balance,date,singlePaymentId,periodPaymentId) values('" +
-                                   _balance.Balance + "','" + _balance.Date.ToShortDateString() + "','" +
+                                   balanceWithDot + "','" + _balance.Date.ToShortDateString() + "','" +
                                    _balance.SinglePaymentID + "','" + _balance.PeriodPaymentID + "')");
 
                 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -217,9 +217,10 @@ namespace Budget.Main_Classes
                 foreach (KeyValuePair<int, PeriodPayment> pay in _payments)
                 {
                     PeriodPayment p = pay.Value;
+                    String amountWithDot = p.Amount.ToString().Replace(",", ".");
                     SqlConnect.Instance.ExecuteSqlNonQuery(
                         "INSERT INTO PeriodPayments(id, categoryId,amount,note,type,name,frequency,period,lastUpdate,startDate,endDate) values(" +
-                        pay.Key*(-1) + "," + p.CategoryID + "," + p.Amount + ",'" + p.Note + "'," + Convert.ToInt32(p.Type) + ",'" + p.Name + "'," + p.Frequency + ",'" + p.Period + "','" + p.LastUpdate.ToShortDateString() + "','" +
+                        pay.Key*(-1) + "," + p.CategoryID + ",'" + amountWithDot + "','" + p.Note + "'," + Convert.ToInt32(p.Type) + ",'" + p.Name + "'," + p.Frequency + ",'" + p.Period + "','" + p.LastUpdate.ToShortDateString() + "','" +
                         p.StartDate.ToShortDateString() +
                         "','" + p.EndDate.ToShortDateString() + "')");
                 }

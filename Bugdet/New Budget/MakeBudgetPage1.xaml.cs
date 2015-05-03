@@ -68,7 +68,7 @@ namespace Budget.New_Budget
                 if (!SqlConnect.Instance.CheckBaseName(budgetNameText.Text))
                     return false;
                 salaryInfo.Name = budgetNameText.Text;
-                salaryInfo.Amount = double.Parse(budgetBalance.Text);
+                salaryInfo.Amount = double.Parse(budgetBalance.Text.Replace(".", ","));
                 salaryInfo.Password = SqlConnect.Instance.HashPasswordMd5((passTextBox.Password));
                 salaryInfo.NumberOfPeople = int.Parse(NumberOfPeopleTextBox.Text);
                 return true;

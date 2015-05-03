@@ -39,7 +39,7 @@ namespace Budget.Payments_Manager
                     // Budget.Instance.ListOfAdds.Add(new Changes(typeof(PeriodPayment), temp_id));
                     Main_Classes.Budget.Instance.AddPeriodPayment(temp_id,
                         new PeriodPayment(categoryItem.Id,
-                            Convert.ToDouble(SalaryValue.Text),
+                            Convert.ToDouble(SalaryValue.Text.Replace(".", ",")),
                             Note.Text,
                             false,
                             SalaryName.Text,
@@ -65,10 +65,10 @@ namespace Budget.Payments_Manager
 
                     //Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
                     Main_Classes.Budget.Instance.AddSinglePayment(temp_id,
-                        new SinglePayment(Note.Text, Convert.ToDouble(SalaryValue.Text), categoryItem.Id, false,
+                        new SinglePayment(Note.Text, Convert.ToDouble(SalaryValue.Text.Replace(".", ",")), categoryItem.Id, false,
                             SalaryName.Text, DateTime.Now));
                     // uwaga tutaj dodajemy
-                    double currentBalance = Main_Classes.Budget.Instance.BalanceLog.Last().Value.Balance + Convert.ToDouble(SalaryValue.Text);
+                    double currentBalance = Main_Classes.Budget.Instance.BalanceLog.Last().Value.Balance + Convert.ToDouble(SalaryValue.Text.Replace(".", ","));
                     Main_Classes.Budget.Instance.AddBalanceLog(temp_id_balance,
                         new BalanceLog(currentBalance, DateTime.Today, temp_id, 0));
                     // Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));

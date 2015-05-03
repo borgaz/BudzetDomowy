@@ -160,23 +160,26 @@ namespace Budget.Main_Classes
                     if (C.Type == typeof(BalanceLog))
                     {
                         BalanceLog b = Budget.Instance.BalanceLog[C.ID];
+                        string balanceWithDot = b.Balance.ToString().Replace(",", ".");
                         SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(id, balance, date, singlePaymentId, periodPaymentId) values('" +
-                                       C.ID + "','" + b.Balance + "','" + b.Date.ToShortDateString() + "','" + b.SinglePaymentID +
+                                       C.ID + "','" + balanceWithDot + "','" + b.Date.ToShortDateString() + "','" + b.SinglePaymentID +
                                        "','" + b.PeriodPaymentID + "')");
                     }
                     if (C.Type == typeof(PeriodPayment))
                     {
                         PeriodPayment p = (PeriodPayment)Budget.Instance.Payments[C.ID];
+                        string amountWithDot = p.Amount.ToString().Replace(",", ".");
                         SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO PeriodPayments(id, categoryId, amount, note, type, name, frequency, period, lastUpdate, startDate, endDate) values('" +
-                            C.ID + "','" + p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + Convert.ToInt32(p.Type) + "','" + p.Name + "','" + p.Frequency + "','" + p.Period + "','" + p.LastUpdate + "','" +
+                            C.ID + "','" + p.CategoryID + "','" + amountWithDot + "','" + p.Note + "','" + Convert.ToInt32(p.Type) + "','" + p.Name + "','" + p.Frequency + "','" + p.Period + "','" + p.LastUpdate + "','" +
                             p.StartDate.ToShortDateString() + "','" + p.EndDate.ToShortDateString() + "')");
                     }
                     if (C.Type == typeof(SinglePayment))
                     {
                         SinglePayment p = (SinglePayment)Budget.Instance.Payments[C.ID];
+                        string amountWithDot = p.Amount.ToString().Replace(",", ".");
                         SqlConnect.Instance.ExecuteSqlNonQuery(
                             "INSERT INTO SinglePayments(id, categoryId, amount, note, type, name, date) values('" +
-                            C.ID + "','" + p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + Convert.ToInt32(p.Type) + "','" +
+                            C.ID + "','" + p.CategoryID + "','" + amountWithDot + "','" + p.Note + "','" + Convert.ToInt32(p.Type) + "','" +
                             p.Name + "','" + p.Date.ToShortDateString() + "')");
                     }
                     if (C.Type == typeof(Category))
@@ -188,11 +191,13 @@ namespace Budget.Main_Classes
                     if (C.Type == typeof(SavingsTarget))
                     {
                         SavingsTarget s = Budget.Instance.SavingsTargets[C.ID];
+                        string moneyHoldingsWithDot = s.MoneyHoldings.ToString().Replace(",", ".");
+                        string neededAmountWithDot = s.NeededAmount.ToString().Replace(",", ".");
                         SqlConnect.Instance.ExecuteSqlNonQuery(
                             "INSERT INTO SavingsTargets(id, target, note, deadLine, priority, moneyHoldings, addedDate, neededAmount) values('" +
                             C.ID + "','" + s.Target + "','" + s.Note + "','" + s.Deadline.ToShortDateString() + "','" +
-                            s.Priority + "','" + s.MoneyHoldings + "','" + s.AddedDate.ToShortDateString() + "','" +
-                            s.NeededAmount + "')");
+                            s.Priority + "','" + moneyHoldingsWithDot + "','" + s.AddedDate.ToShortDateString() + "','" +
+                            neededAmountWithDot + "')");
                     }
                 }
             }
@@ -227,7 +232,6 @@ namespace Budget.Main_Classes
                             double amountToRefactor = (double)tempSelect.Tables[0].Rows[0]["amount"];
                             if ((bool)tempSelect.Tables[0].Rows[0]["type"] == false)
                                 amountToRefactor = (-1) * amountToRefactor;
-
                             SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE BALANCELOGS SET BALANCE = (BALANCE + '" + amountToRefactor + "') WHERE singlePaymentid > " + C.ID);
                             SqlConnect.Instance.ExecuteSqlNonQuery("DELETE FROM BALANCELOGS WHERE singlePaymentId = " + C.ID);
                         }
@@ -262,8 +266,8 @@ namespace Budget.Main_Classes
                             amountToRefactor = payments[C.ID].Amount - (double)tempSelect.Tables[0].Rows[0]["amount"];
                         else
                             amountToRefactor = (double)tempSelect.Tables[0].Rows[0]["amount"] - payments[C.ID].Amount;
-
-                       SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE BALANCELOGS SET BALANCE = (BALANCE + '" + amountToRefactor + "') WHERE singlePaymentid >= " + C.ID);
+                        string amountToRefactorWithDot = amountToRefactor.ToString().Replace(",", ".");
+                       SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE BALANCELOGS SET BALANCE = (BALANCE + '" + amountToRefactorWithDot + "') WHERE singlePaymentid >= " + C.ID);
                     }
                 }
             }
