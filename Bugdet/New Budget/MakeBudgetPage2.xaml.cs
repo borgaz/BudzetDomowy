@@ -40,7 +40,7 @@ namespace Budget.New_Budget
                 }
                 catch { }
                 _periodPayments.Add(temp, new PeriodPayment(originalCategoryID[CategoryComboBox.SelectedIndex],
-                    Convert.ToDouble(SalaryValue.Text),
+                    Convert.ToDouble(SalaryValue.Text.Replace(".", ",")),
                     NoteTextBox.Text,
                     false,
                     SalaryName.Text,

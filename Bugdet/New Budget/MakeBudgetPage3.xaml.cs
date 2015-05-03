@@ -42,7 +42,7 @@ namespace Budget.New_Budget
                 //System.Console.WriteLine(StartDatePicker.Text);
                 //System.Console.WriteLine(StartDatePicker.DisplayDate);
                 _periodPayments.Add(temp, new PeriodPayment(originalCategoryID[CategoryComboBox.SelectedIndex],
-                    Convert.ToDouble(PaymentValue.Text),
+                    Convert.ToDouble(PaymentValue.Text.Replace(".", ",")),
                     NoteTextBox.Text,
                     true,
                     PaymentName.Text,
