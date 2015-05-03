@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Budget.Main_Classes;
+using Budget.Utility_Classes;
 
 namespace Budget.New_Budget
 {
@@ -47,11 +48,12 @@ namespace Budget.New_Budget
                     DateTypeBox.SelectedValue.ToString(),
                     Convert.ToDateTime(StartDatePicker.Text),
                     Convert.ToDateTime(StartDatePicker.Text),
-                    (EndDatePicker.IsEnabled == true ? Convert.ToDateTime(EndDatePicker.Text) : DateTime.MaxValue)));
+                    (EndDatePicker.IsEnabled ? Convert.ToDateTime(EndDatePicker.Text) : DateTime.MaxValue)));
                 InfoLbl.Content = "Dodano";
                 InfoLbl.Foreground = Brushes.Green;// ="#00FF0000";
                 SalaryName.Text = "";
                 SalaryValue.Text = "";
+                NoteTextBox.Text = "";
                 NumberOfTextBox.Text = "";
             }
             else
@@ -74,8 +76,8 @@ namespace Budget.New_Budget
 
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
-            new AddCategoryWindow(_categories).ShowDialog();
-            originalCategoryID = MakeBudgetWindow.InsertCategories(CategoryComboBox, _categories, true);
+            new AddCategoryWindow(_categories,CategoryComboBox,true,originalCategoryID).ShowDialog();
+            
         }
 
         private void EndDateCheckBox_OnChecked(object sender, RoutedEventArgs e)

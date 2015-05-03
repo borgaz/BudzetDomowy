@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Budget.Main_Classes;
 using Budget.New_Budget;
+using Budget.Utility_Classes;
 
 namespace Budget.Payments_Manager
 {
@@ -40,7 +41,7 @@ namespace Budget.Payments_Manager
         {
             RefreshTable();
             Main_Classes.Budget.Instance.Payments[2].Amount = 12.22;
-            Main_Classes.Budget.Instance.ListOfEdts.Add(new Utility_Classes.Changes(typeof(SinglePayment), 2));
+            Main_Classes.Budget.Instance.ListOfEdts.Add(new Changes(typeof(SinglePayment), 2));
         }
 
         private void RefreshTable()

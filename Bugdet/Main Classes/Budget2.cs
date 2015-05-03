@@ -1,10 +1,8 @@
-﻿using Budget.Utility_Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 using System.Windows;
+using Budget.Utility_Classes;
 
 // Second part of Budget class - FetchAll() and Dump()
 namespace Budget.Main_Classes
@@ -29,7 +27,7 @@ namespace Budget.Main_Classes
                 DateTime maximumDate = new DateTime(1900, 01, 01);
                 DateTime minimumDate = new DateTime(2100, 12, 31);
 
-                System.Data.DataSet nameFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM Budget");
+                DataSet nameFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM Budget");
                 if (nameFromSelect.Tables[0].Rows.Count > 0)
                 {
                     name = Convert.ToString(nameFromSelect.Tables[0].Rows[0]["name"]);
@@ -45,7 +43,7 @@ namespace Budget.Main_Classes
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
                 Dictionary<int, Category> categories = new Dictionary<int, Category>();
-                System.Data.DataSet categoriesFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM Categories");
+                DataSet categoriesFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM Categories");
                 for (int i = 0; i < categoriesFromSelect.Tables[0].Rows.Count; i++)
                 {
                     categories.Add(Convert.ToInt32(categoriesFromSelect.Tables[0].Rows[i]["id"]),
@@ -60,7 +58,7 @@ namespace Budget.Main_Classes
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
                 Dictionary<int, BalanceLog> balanceLogs = new Dictionary<int, BalanceLog>();
-                System.Data.DataSet balanceLogsFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM BalanceLogs");
+                DataSet balanceLogsFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM BalanceLogs order by date desc");
                 for (int i = 0; i < balanceLogsFromSelect.Tables[0].Rows.Count; i++)
                 {
                     balanceLogs.Add(Convert.ToInt32(balanceLogsFromSelect.Tables[0].Rows[i]["id"]),
@@ -76,7 +74,7 @@ namespace Budget.Main_Classes
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
                 Dictionary<int, Payment> payments = new Dictionary<int, Payment>();
-                System.Data.DataSet periodPayFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM PeriodPayments");
+                DataSet periodPayFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM PeriodPayments");
                 for (int i = 0; i < periodPayFromSelect.Tables[0].Rows.Count; i++)
                 {
                     payments.Add(Convert.ToInt32(periodPayFromSelect.Tables[0].Rows[i]["id"]),
@@ -92,7 +90,7 @@ namespace Budget.Main_Classes
                         Convert.ToDateTime(periodPayFromSelect.Tables[0].Rows[i]["endDate"])
                         ));
                 }
-                System.Data.DataSet singlePayFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM SinglePayments");
+                DataSet singlePayFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM SinglePayments");
                 for (int i = 0; i < singlePayFromSelect.Tables[0].Rows.Count; i++)
                 {
                     double amount = Convert.ToDouble(singlePayFromSelect.Tables[0].Rows[i]["amount"]);
@@ -121,7 +119,7 @@ namespace Budget.Main_Classes
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
                 Dictionary<int, SavingsTarget> savingsTargets = new Dictionary<int, SavingsTarget>();
-                System.Data.DataSet savTargetsFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM SavingsTargets");
+                DataSet savTargetsFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM SavingsTargets");
                 for (int i = 0; i < savTargetsFromSelect.Tables[0].Rows.Count; i++)
                 {
                     savingsTargets.Add(Convert.ToInt32(savTargetsFromSelect.Tables[0].Rows[i]["id"]),
@@ -145,7 +143,7 @@ namespace Budget.Main_Classes
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Wystąpił błąd w FetchAll");
+                MessageBox.Show("Wystąpił błąd w FetchAll");
                 SqlConnect.Instance.ErrLog(ex);
                 return null;
             }
@@ -159,21 +157,21 @@ namespace Budget.Main_Classes
                 {
                     if (C.Type == typeof(BalanceLog))
                     {
-                        BalanceLog b = Budget.Instance.BalanceLog[C.ID];
+                        BalanceLog b = Instance.BalanceLog[C.ID];
                         SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(id, balance, date, singlePaymentId, periodPaymentId) values('" +
                                        C.ID + "','" + b.Balance + "','" + b.Date.ToShortDateString() + "','" + b.SinglePaymentID +
                                        "','" + b.PeriodPaymentID + "')");
                     }
                     if (C.Type == typeof(PeriodPayment))
                     {
-                        PeriodPayment p = (PeriodPayment)Budget.Instance.Payments[C.ID];
+                        PeriodPayment p = (PeriodPayment)Instance.Payments[C.ID];
                         SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO PeriodPayments(id, categoryId, amount, note, type, name, frequency, period, lastUpdate, startDate, endDate) values('" +
                             C.ID + "','" + p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + Convert.ToInt32(p.Type) + "','" + p.Name + "','" + p.Frequency + "','" + p.Period + "','" + p.LastUpdate + "','" +
                             p.StartDate.ToShortDateString() + "','" + p.EndDate.ToShortDateString() + "')");
                     }
                     if (C.Type == typeof(SinglePayment))
                     {
-                        SinglePayment p = (SinglePayment)Budget.Instance.Payments[C.ID];
+                        SinglePayment p = (SinglePayment)Instance.Payments[C.ID];
                         SqlConnect.Instance.ExecuteSqlNonQuery(
                             "INSERT INTO SinglePayments(id, categoryId, amount, note, type, name, date) values('" +
                             C.ID + "','" + p.CategoryID + "','" + p.Amount + "','" + p.Note + "','" + Convert.ToInt32(p.Type) + "','" +
@@ -181,13 +179,13 @@ namespace Budget.Main_Classes
                     }
                     if (C.Type == typeof(Category))
                     {
-                        Category c = Budget.Instance.Categories[C.ID];
+                        Category c = Instance.Categories[C.ID];
                         SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Categories(id, name, note, type) values('" +
                                         C.ID + "','" + c.Name + "','" + c.Note + "','" + Convert.ToInt32(c.Type) + "')");
                     }
                     if (C.Type == typeof(SavingsTarget))
                     {
-                        SavingsTarget s = Budget.Instance.SavingsTargets[C.ID];
+                        SavingsTarget s = Instance.SavingsTargets[C.ID];
                         SqlConnect.Instance.ExecuteSqlNonQuery(
                             "INSERT INTO SavingsTargets(id, target, note, deadLine, priority, moneyHoldings, addedDate, neededAmount) values('" +
                             C.ID + "','" + s.Target + "','" + s.Note + "','" + s.Deadline.ToShortDateString() + "','" +
@@ -223,7 +221,7 @@ namespace Budget.Main_Classes
                     {
                         if (!isPartOfEdts)
                         {
-                            System.Data.DataSet tempSelect = SqlConnect.Instance.SelectQuery("SELECT amount,type FROM SinglePayments WHERE id = " + C.ID);
+                            DataSet tempSelect = SqlConnect.Instance.SelectQuery("SELECT amount,type FROM SinglePayments WHERE id = " + C.ID);
                             double amountToRefactor = (double)tempSelect.Tables[0].Rows[0]["amount"];
                             if ((bool)tempSelect.Tables[0].Rows[0]["type"] == false)
                                 amountToRefactor = (-1) * amountToRefactor;
@@ -254,7 +252,7 @@ namespace Budget.Main_Classes
             {
                 if (C.Type == typeof(SinglePayment))
                 {
-                    System.Data.DataSet tempSelect = SqlConnect.Instance.SelectQuery("SELECT amount,type FROM SinglePayments WHERE id = " + C.ID);
+                    DataSet tempSelect = SqlConnect.Instance.SelectQuery("SELECT amount,type FROM SinglePayments WHERE id = " + C.ID);
                     if (payments[C.ID].Amount != (double)tempSelect.Tables[0].Rows[0]["amount"])
                     {
                         double amountToRefactor;
@@ -277,15 +275,15 @@ namespace Budget.Main_Classes
 
         public void Dump()
         {
-            if (Budget.Instance.AddToDB(Budget.Instance.ListOfAdds)
-                && Budget.Instance.EditDB(Budget.Instance.ListOfEdts)
-                && Budget.Instance.DeleteFromDB(Budget.Instance.ListOfDels,false))
+            if (Instance.AddToDB(Instance.ListOfAdds)
+                && Instance.EditDB(Instance.ListOfEdts)
+                && Instance.DeleteFromDB(Instance.ListOfDels,false))
             {
                 MessageBox.Show("Poprawnie zapisana baza danych!");
                 listOfEdts.Clear();
                 listOfDels.Clear();
                 listOfAdds.Clear();
-                instance = Budget.FetchAll();
+                instance = FetchAll();
             }
             else
                 MessageBox.Show("Błąd w zapisie bazy danych!");

@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Budget.Main_Classes;
+using Budget.Utility_Classes;
 
 namespace Budget.New_Budget
 {
@@ -54,6 +55,7 @@ namespace Budget.New_Budget
                 InfoLbl.Foreground = Brushes.Green;// ="#00FF0000";
                 PaymentName.Text = "";
                 PaymentValue.Text = "";
+                NoteTextBox.Text = "";
                 NumberOfTextBox.Text = "";
             }
             else
@@ -71,8 +73,8 @@ namespace Budget.New_Budget
 
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
-            new AddCategoryWindow(_categories).ShowDialog();
-            originalCategoryID = MakeBudgetWindow.InsertCategories(CategoryComboBox, _categories, false);
+            new AddCategoryWindow(_categories,CategoryComboBox,false,originalCategoryID).ShowDialog();
+            //originalCategoryID = MakeBudgetWindow.InsertCategories(CategoryComboBox, _categories, false);
         }
 
         private void EndDateCheckBox_OnChecked(object sender, RoutedEventArgs e)

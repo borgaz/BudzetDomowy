@@ -1,11 +1,8 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using Budget.History;
-using Budget.LoginWindow;
-using Budget.InterfacePage;
 using Budget.Payments_Manager;
 using Budget.SettingsPage;
 using Budget.Utility_Classes;

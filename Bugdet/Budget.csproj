@@ -54,6 +54,7 @@
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.96.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -73,6 +74,12 @@
     </ApplicationDefinition>
     <Compile Include="Main Classes\Budget.cs" />
     <Compile Include="Main Classes\Budget2.cs" />
+    <Compile Include="Payments Manager\PeriodDateGrid.xaml.cs">
+      <DependentUpon>PeriodDateGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Payments Manager\SingleDateGrid.xaml.cs">
+      <DependentUpon>SingleDateGrid.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility Classes\Changes.cs" />
     <Compile Include="Utility Classes\ComboBoxItem.cs" />
     <Compile Include="History\HistoryMainPage.xaml.cs">
@@ -87,7 +94,7 @@
     <Compile Include="LoginWindow\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="New Budget\AddCategoryWindow.xaml.cs">
+    <Compile Include="Utility Classes\AddCategoryWindow.xaml.cs">
       <DependentUpon>AddCategoryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="New Budget\AddedPaymentPage.xaml.cs">
@@ -156,7 +163,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="New Budget\AddCategoryWindow.xaml">
+    <Page Include="Payments Manager\PeriodDateGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Payments Manager\SingleDateGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utility Classes\AddCategoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

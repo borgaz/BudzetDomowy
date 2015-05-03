@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Budget.Main_Classes;
 using Budget.New_Budget;
+using Budget.Utility_Classes;
 using ComboBoxItem = Budget.Utility_Classes.ComboBoxItem;
 
 namespace Budget.Payments_Manager
@@ -14,27 +15,30 @@ namespace Budget.Payments_Manager
     /// </summary>
     public partial class AddSalaryPage : Page
     {
+        private PeriodDateGrid _periodDateGrid = new PeriodDateGrid(Main_Classes.Budget.CategoryTypeEnum.SALARY);
+        private SingleDateGrid _singleDateGrid = new SingleDateGrid(Main_Classes.Budget.CategoryTypeEnum.SALARY);
         public AddSalaryPage()
         {
             InitializeComponent();
             Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.SALARY);
-            InsertDateTypes(TypeOfDayComboBox);
-            StartDatePicker.Text = DateTime.Now.Date.ToString();
+            InsertDateTypes(_periodDateGrid.TypeOfDayComboBox);
+            _periodDateGrid.StartDatePicker.Text = DateTime.Now.Date.ToString();
+            DateTypeFrame.Content = _singleDateGrid;
         }
 
         private void addPaymentBtn_Click(object sender, RoutedEventArgs e)
         {
             if (SalaryName.Text != "" && SalaryValue.Text != "" && CategoryBox.SelectedIndex != -1)
             {
-                ComboBoxItem categoryItem = (ComboBoxItem)CategoryBox.SelectedValue;
-                if (PeriodCheckBox.IsChecked == true)
+                var categoryItem = (ComboBoxItem)CategoryBox.SelectedValue;
+                if (_periodDateGrid.EndDateChecker)
                 {
-                    int temp_id = -1;
+                    var temp_id = -1;
                     try
                     {
                         temp_id = Main_Classes.Budget.Instance.Payments.First().Key - 1;
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     { } //gdy brak elementów w tablicy temp_id = 1
                     // Budget.Instance.ListOfAdds.Add(new Changes(typeof(PeriodPayment), temp_id));
                     Main_Classes.Budget.Instance.AddPeriodPayment(temp_id,
@@ -43,15 +47,15 @@ namespace Budget.Payments_Manager
                             Note.Text,
                             false,
                             SalaryName.Text,
-                            Convert.ToInt32(NumberOfTexBox.Text),
-                            TypeOfDayComboBox.Text,
-                            Convert.ToDateTime(StartDatePicker.Text),
-                            Convert.ToDateTime(StartDatePicker.Text),
-                            (EndDatePicker.IsEnabled == true ? Convert.ToDateTime(EndDatePicker.Text) : DateTime.MaxValue)));
+                            _periodDateGrid.NumberOf,
+                            _periodDateGrid.TypeOfDay,
+                            _periodDateGrid.StartDate,
+                            _periodDateGrid.StartDate,
+                            (_periodDateGrid.EndDateChecker ? Convert.ToDateTime(_periodDateGrid.EndDate) : DateTime.MaxValue)));
                 }
                 else
                 {
-                    int temp_id = 1;
+                    var temp_id = 1;
                     try
                     {
                         temp_id = Main_Classes.Budget.Instance.Payments.Last().Key + 1;
@@ -59,7 +63,7 @@ namespace Budget.Payments_Manager
                             temp_id = 1;
 
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     { } //gdy brak elementów w tablicy temp_id = 1
                     int temp_id_balance = Main_Classes.Budget.Instance.BalanceLog.Last().Key + 1;
 
@@ -80,12 +84,9 @@ namespace Budget.Payments_Manager
                 SalaryName.Text = "";
                 SalaryValue.Text = "";
                 CategoryBox.SelectedIndex = -1;
-                NumberOfTexBox.Text = "";
-                TypeOfDayComboBox.SelectedIndex = -1;
-                PeriodCheckBox.IsChecked = false;
-                StartDatePicker.Text = "";
-                EndDateEnableCheckBox.IsChecked = false;
-                EndDatePicker.Text = "";
+                _periodDateGrid.ClearComponents();
+                Note.Text = "";
+
             }
             else
             {
@@ -101,33 +102,10 @@ namespace Budget.Payments_Manager
             cBox.Items.Add("MIESIĄC");
             cBox.Items.Add("ROK");
         }
-
-        private void periodCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            PeriodInfoGrid.IsEnabled = true;
-            if (EndDateEnableCheckBox.IsChecked == false)
-                EndDatePicker.IsEnabled = false;
-        }
-
-        private void PeriodCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
-        {
-            PeriodInfoGrid.IsEnabled = false;
-        }
-
-        private void EndDateEnableCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            EndDatePicker.IsEnabled = true;
-        }
-
-        private void EndDateEnableCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
-        {
-            EndDatePicker.IsEnabled = false;
-        }
-
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
-            new AddCategoryWindow().ShowDialog();
-            Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.SALARY);
+            new AddCategoryWindow(CategoryBox,Main_Classes.Budget.CategoryTypeEnum.SALARY).ShowDialog();
+         //   Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.SALARY);
         }
 
         private void SalaryName_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
@@ -156,6 +134,15 @@ namespace Budget.Payments_Manager
                 SalaryValue.ToolTip = null;
             }
         }
-      
+
+        private void SinglePaymentRadio_OnChecked(object sender, RoutedEventArgs e)
+        {
+            DateTypeFrame.Content = _singleDateGrid;
+        }
+
+        private void PeriodPaymentRadio_OnChecked(object sender, RoutedEventArgs e)
+        {
+            DateTypeFrame.Content = _periodDateGrid;
+        }
     }
 }

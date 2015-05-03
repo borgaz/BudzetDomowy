@@ -2,9 +2,10 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Budget.Main_Classes;
-using Budget.New_Budget;
+using Budget.Utility_Classes;
 using ComboBoxItem = Budget.Utility_Classes.ComboBoxItem;
 
 namespace Budget.Payments_Manager
@@ -14,12 +15,16 @@ namespace Budget.Payments_Manager
     /// </summary>
     public partial class AddPaymentPage : Page
     {
+        private PeriodDateGrid _periodDateGrid = new PeriodDateGrid(Main_Classes.Budget.CategoryTypeEnum.PAYMENT);
+        private SingleDateGrid _singleDateGrid = new SingleDateGrid(Main_Classes.Budget.CategoryTypeEnum.PAYMENT);
         public AddPaymentPage()
         {
             InitializeComponent();
-            AddSalaryPage.InsertDateTypes(TypeOfDayComboBox);
+            AddSalaryPage.InsertDateTypes(_periodDateGrid.TypeOfDayComboBox);
             Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.PAYMENT);
-            StartDatePicker.Text = DateTime.Now.Date.ToString();
+            _periodDateGrid.StartDatePicker.Text = DateTime.Now.Date.ToString();
+            _singleDateGrid.SingleDatePicker.Text = DateTime.Now.Date.ToString();
+            DateTypeFrame.Content = _singleDateGrid;
             //System.Console.WriteLine("asd: " + StartDatePicker.Text + " .");
         }
 
@@ -27,16 +32,16 @@ namespace Budget.Payments_Manager
         {
             if (PaymentName.Text != "" && PaymentValue.Text != "" && CategoryBox.SelectedIndex != -1)
             {
-                ComboBoxItem categoryItem = (ComboBoxItem)CategoryBox.SelectedValue;
+                var categoryItem = (ComboBoxItem)CategoryBox.SelectedValue;
                 
-                if (PeriodCheckBox.IsChecked == true)
+                if (PeriodPaymentRadio.IsChecked == true)
                 {
-                    int temp_id = -1;
+                    var temp_id = -1;
                     try
                     { 
                         temp_id = Main_Classes.Budget.Instance.Payments.First().Key - 1; 
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     { } //gdy brak elementów w tablicy temp_id = 1
                   //  Budget.Instance.ListOfAdds.Add(new Changes(typeof(PeriodPayment), temp_id));
                     Main_Classes.Budget.Instance.AddPeriodPayment(temp_id,
@@ -45,11 +50,11 @@ namespace Budget.Payments_Manager
                             Note.Text, 
                             true,
                             PaymentName.Text, 
-                            Convert.ToInt32(NumberOfTexBox.Text), 
-                            TypeOfDayComboBox.Text,
-                            Convert.ToDateTime(StartDatePicker.Text),
-                            Convert.ToDateTime(StartDatePicker.Text),
-                            (EndDatePicker.IsEnabled == true ? Convert.ToDateTime(EndDatePicker.Text) : DateTime.MaxValue)));
+                            _periodDateGrid.NumberOf, 
+                            _periodDateGrid.TypeOfDay,
+                            _periodDateGrid.StartDate,
+                            _periodDateGrid.StartDate,
+                            (_periodDateGrid.EndDateChecker == true ? Convert.ToDateTime(_periodDateGrid.EndDate) : DateTime.MaxValue)));
                 }
                 else
                 {
@@ -61,12 +66,12 @@ namespace Budget.Payments_Manager
                         if (temp_id == 0) // w bazie chcemy singlePays indeksowane od 1
                             temp_id = 1;
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     { } //gdy brak elementów w tablicy temp_id = 1
                     //Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
                     Main_Classes.Budget.Instance.AddSinglePayment(temp_id,
                         new SinglePayment(Note.Text, Convert.ToDouble(PaymentValue.Text), categoryItem.Id, true,
-                            PaymentName.Text, DateTime.Now));
+                            PaymentName.Text, _singleDateGrid.SelectedDate));
 
                     int temp_id_balance = Main_Classes.Budget.Instance.BalanceLog.Last().Key + 1;
                     // uwaga tutaj odejmujemy
@@ -82,12 +87,8 @@ namespace Budget.Payments_Manager
                 PaymentName.Text = "";
                 PaymentValue.Text = "";
                 CategoryBox.SelectedIndex = -1;
-                NumberOfTexBox.Text = "";
-                TypeOfDayComboBox.SelectedIndex = -1;
-                PeriodCheckBox.IsChecked = false;
-                StartDatePicker.Text = "";
-                EndDateEnableCheckBox.IsChecked = false;
-                EndDatePicker.Text = "";    
+                _periodDateGrid.ClearComponents();
+                Note.Text = "";
             }
             else
             {
@@ -95,37 +96,13 @@ namespace Budget.Payments_Manager
                 InfoBox.Foreground = Brushes.Red;
             }
         }
-        private void periodCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            PeriodInfoGrid.IsEnabled = true;
-            if (EndDateEnableCheckBox.IsChecked == false)
-            {
-                EndDatePicker.IsEnabled = false;
-            }    
-        }
-
-        private void PeriodCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
-        {
-            PeriodInfoGrid.IsEnabled = false;
-        }
-
-        private void EndDateEnableCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            EndDatePicker.IsEnabled = true;
-        }
-
-        private void EndDateEnableCheckBox_OnUnchecked(object sender, RoutedEventArgs e)
-        {
-            EndDatePicker.IsEnabled = false;
-        }
-
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
-            new AddCategoryWindow().ShowDialog();
-            Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.PAYMENT);
+            new AddCategoryWindow(CategoryBox,Main_Classes.Budget.CategoryTypeEnum.PAYMENT).ShowDialog();
+         //   Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.PAYMENT);
         }
 
-        private void PaymentName_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        private void PaymentName_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (PaymentName.Text.Length == 50)
             {
@@ -139,7 +116,7 @@ namespace Budget.Payments_Manager
             }
         }
 
-        private void PaymentValue_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        private void PaymentValue_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!char.IsDigit(e.Text, e.Text.Length - 1) && !char.IsPunctuation(e.Text, e.Text.Length - 1))
             {
@@ -150,6 +127,16 @@ namespace Budget.Payments_Manager
             {
                 PaymentValue.ToolTip = null;
             }
+        }
+
+        private void SinglePaymentRadio_OnChecked(object sender, RoutedEventArgs e)
+        {
+            DateTypeFrame.Content = _singleDateGrid;
+        }
+
+        private void PeriodPaymentRadio_OnChecked(object sender, RoutedEventArgs e)
+        {
+            DateTypeFrame.Content = _periodDateGrid;
         }
     }
 }
