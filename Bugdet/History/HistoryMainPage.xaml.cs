@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Budget.Main_Classes;
+using ComboBoxItem = Budget.Utility_Classes.ComboBoxItem;
 
 namespace Budget.History
 {
@@ -35,9 +37,23 @@ namespace Budget.History
                     continue;
                 if (p.Value.PeriodPaymentID == 0)
                 {
+                    // oba id sa 0 to nie bierzemy pod uwage - zepsute rekordy przy dodawaniu w kreatorze
                     if (p.Value.SinglePaymentID == 0)
                         continue;
                     var pp = (SinglePayment)Main_Classes.Budget.Instance.Payments[p.Value.SinglePaymentID];
+                    // jesli wartosc nie zawiera sie w sliderze to nie bierzemy pod uwage
+                    if (
+                        !((pp.Amount < AmountSlider.Value && LowerRadio.IsChecked == true) ||
+                          (pp.Amount > AmountSlider.Value && GreaterRadio.IsChecked == true)))
+                        continue;
+                    // jesli kategoria jest ustawiona i nie jest taka sama to nie bierzemy pod uwage.
+                    if (CategoryCheckBox.IsChecked == true && CategoryComboBox.SelectedIndex != -1)
+                    {
+                        var categoryItem = (ComboBoxItem)CategoryComboBox.SelectedValue;
+                        if (categoryItem.Id != pp.CategoryID)
+                            continue;
+                    }
+                    
                     if (pp.Type && SinglePaymentCheckBox.IsChecked == true)
                     {
                         history.Rows.Add(pp.Type, p.Key, pp.Name, Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name,
@@ -52,6 +68,14 @@ namespace Budget.History
                 else
                 {
                     var pp = (PeriodPayment)Main_Classes.Budget.Instance.Payments[p.Value.PeriodPaymentID];
+                    if (
+                        !((pp.Amount < AmountSlider.Value && LowerRadio.IsChecked == true) ||
+                          (pp.Amount > AmountSlider.Value && GreaterRadio.IsChecked == true)))
+                        continue;
+                    if (CategoryCheckBox.IsChecked == true &&
+                        !Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name.Equals(
+                            CategoryComboBox.SelectedValue.ToString()))
+                        continue;
                     if (pp.Type && PeriodPaymentCheckBox.IsChecked == true)
                     {
                         history.Rows.Add(pp.Type, p.Key, pp.Name, Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name,
@@ -181,6 +205,29 @@ namespace Budget.History
         private void HistoryDataGrid_OnLoaded(object sender, RoutedEventArgs e)
         {
             RefreshTable();
+        }
+
+        private void AmountSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            SliderValueTextBox.Text = Convert.ToInt32(AmountSlider.Value).ToString();
+            RefreshTable();
+        }
+
+        private void SliderValueTextBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+           if (!char.IsDigit(e.Text, e.Text.Length - 1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void SliderValueTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!SliderValueTextBox.IsFocused)
+                return;
+            if (SliderValueTextBox.Text == "")
+                AmountSlider.Value = 0;
+            AmountSlider.Value = Convert.ToInt32(SliderValueTextBox.Text);
         }
     }
 }

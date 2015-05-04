@@ -17,17 +17,23 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <StackPanel HorizontalAlignment="Left" Height="255" Margin="358,55,0,0" VerticalAlignment="Top" Width="215">
+        <StackPanel HorizontalAlignment="Left" Height="386" Margin="358,55,0,0" VerticalAlignment="Top" Width="226">
             <CheckBox x:Name="PeriodPaymentCheckBox" Margin="5" Content="Wydatki okresowe" Click="PeriodPaymentCheckBox_OnClick" IsChecked="True"/>
             <CheckBox x:Name="PeriodSalaryCheckBox" Margin="5" Content="Przychody okresowe" Click="PeriodPaymentCheckBox_OnClick" IsChecked="True"/>
             <CheckBox x:Name="SinglePaymentCheckBox" Margin="5" Content="Wydatki pojedyncze" Click="PeriodPaymentCheckBox_OnClick" IsChecked="True"/>
             <CheckBox x:Name="SingleSalaryCheckBox" Margin="5" Content="Przychody pojedyncze" Click="PeriodPaymentCheckBox_OnClick" IsChecked="True"/>
             <CheckBox x:Name="StartDateCheckBox" Margin="5,15,98,15" Content="Od Kiedy" Click="StartDateCheckBox_OnClick"/>
+
+
             <DatePicker x:Name="StartDatePicker" Margin="85,-35,5,15" IsEnabled="False" SelectedDateChanged="PeriodPaymentCheckBox_OnClick"/>
             <CheckBox x:Name="EndDateCheckBox" Margin="5,5,98,5" Content="Do Kiedy" Click="EndDateCheckBox_OnClick"/>
             <DatePicker x:Name="EndDatePicker" Margin="85,-25,5,0" IsEnabled="False" SelectedDateChanged="PeriodPaymentCheckBox_OnClick"/>
-            <ComboBox x:Name="CategoryComboBox" Margin="85,40,5,0" SelectionChanged="PeriodPaymentCheckBox_OnClick"/>
-            <CheckBox x:Name="CategoryCheckBox" Content="Kategoria" Margin="0,-20,130,0" Click="CategoryCheckBox_OnClick" RenderTransformOrigin="0.494,0.5"/>
+            <ComboBox x:Name="CategoryComboBox" Margin="85,40,5,0" SelectionChanged="PeriodPaymentCheckBox_OnClick" IsEnabled="False"/>
+            <CheckBox x:Name="CategoryCheckBox" Content="Kategoria" Margin="5,-20,144,0" Click="CategoryCheckBox_OnClick" RenderTransformOrigin="0.494,0.5"/>
+            <RadioButton x:Name="LowerRadio" Content="Mniejsze niż" Margin="5,10,138,0" Click="PeriodPaymentCheckBox_OnClick"/>
+            <RadioButton x:Name="GreaterRadio" Content="Większe niż" Margin="100,-15,10,0" IsChecked="True" Click="PeriodPaymentCheckBox_OnClick"/>
+            <Slider x:Name="AmountSlider" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" Width="206" Maximum="2000" Minimum="0" Value="0" TickFrequency="200" ValueChanged="AmountSlider_OnValueChanged"/>
+            <TextBox x:Name="SliderValueTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="85,0,86,0" Width="55" PreviewTextInput="SliderValueTextBox_OnPreviewTextInput" TextChanged="SliderValueTextBox_OnTextChanged" Text="0" TextAlignment="Center"/>
         </StackPanel>
 
     </Grid>
