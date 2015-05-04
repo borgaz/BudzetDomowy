@@ -25,5 +25,10 @@ namespace Budget.Main_Classes
                 return date;
             }
         }
+
+        override public int CompareDate()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -10,6 +10,8 @@ namespace Budget.Main_Classes
         private bool type; // 0 - przychod, 1 - wydatek
         private String note; // notatka
 
+        abstract public int CompareDate();
+
         public override string ToString()
         {
             return "CATEGORY_ID: " + categoryID + ", AMOUNT: " + amount + ", NAME: " + name + ", TYPE: " + type + ", NOTE: " + note + "\n";
@@ -70,6 +72,6 @@ namespace Budget.Main_Classes
             {
                 name = value;
             }
-        }
+        }     
     }
 }

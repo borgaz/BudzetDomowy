@@ -67,5 +67,13 @@ namespace Budget.Main_Classes
             }
 
         }
+
+        override public int CompareDate()
+        {
+            return DateTime.Compare(this.lastUpdate, DateTime.Now);
+            //Mniej niż zero - lastUpdate jest wcześniejsza niż Now.
+            //Zero - lastUpdate jest taka sama jak Now.
+            //Większe od zera - lastUpdate jest późniejsza niż Now. 
+        }
     }
 }

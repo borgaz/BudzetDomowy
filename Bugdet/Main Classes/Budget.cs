@@ -312,5 +312,34 @@ namespace Budget.Main_Classes
             }
         }
 
+        /// <summary>
+        /// Checks which period payments should be transformed into a single payments.
+        /// </summary>
+        /// <returns>
+        /// List of payments to transform.
+        /// </returns>
+        public List<Payment> CheckPeriodPayments()
+        {
+            List<Payment> editList = new List<Payment>();
+            foreach (KeyValuePair<int, Payment> p in payments)
+            {
+                if (p.GetType() == typeof(PeriodPayment))
+                {
+                    try
+                    {
+                        if(p.Value.CompareDate()<=0)
+                        {
+                            editList.Add(p.Value);
+                        }         
+                    }
+                    catch (NotImplementedException ex)
+                    {
+                        Console.WriteLine("Błąd typu.");
+                    }
+                }
+            }
+            return editList;
+        }
+
     }
 }
