@@ -23,7 +23,7 @@ namespace Budget.Payments_Manager
             Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.SALARY);
             InsertDateTypes(_periodDateGrid.TypeOfDayComboBox);
             _periodDateGrid.StartDatePicker.Text = DateTime.Now.Date.ToString();
-            DateTypeFrame.Content = _singleDateGrid;
+        //    DateTypeFrame.Content = _singleDateGrid;
         }
 
         private void addPaymentBtn_Click(object sender, RoutedEventArgs e)
@@ -137,11 +137,15 @@ namespace Budget.Payments_Manager
 
         private void SinglePaymentRadio_OnChecked(object sender, RoutedEventArgs e)
         {
+            if (DateTypeFrame == null)
+                return;
             DateTypeFrame.Content = _singleDateGrid;
         }
 
         private void PeriodPaymentRadio_OnChecked(object sender, RoutedEventArgs e)
         {
+            if (DateTypeFrame == null)
+                return;
             DateTypeFrame.Content = _periodDateGrid;
         }
     }

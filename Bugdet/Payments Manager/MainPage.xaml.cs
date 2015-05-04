@@ -25,11 +25,13 @@ namespace Budget.Payments_Manager
         private void addPaymentBtn_Click(object sender, RoutedEventArgs e)
         {
             BtnsContentFrame.Content = _singlePaymentPage;
+            _singlePaymentPage.SinglePaymentRadio.IsChecked = true;
         }
 
         private void addSalaryBtn_Click(object sender, RoutedEventArgs e)
         {
             BtnsContentFrame.Content = _singleSalaryPage;
+            _singleSalaryPage.SinglePaymentRadio.IsChecked = true;
         }
 
         private void NewBudgetButton_Click(object sender, RoutedEventArgs e)
