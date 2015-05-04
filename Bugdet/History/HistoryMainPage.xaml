@@ -32,7 +32,7 @@
             <CheckBox x:Name="CategoryCheckBox" Content="Kategoria" Margin="5,-20,144,0" Click="CategoryCheckBox_OnClick" RenderTransformOrigin="0.494,0.5"/>
             <RadioButton x:Name="LowerRadio" Content="Mniejsze niż" Margin="5,10,138,0" Click="PeriodPaymentCheckBox_OnClick"/>
             <RadioButton x:Name="GreaterRadio" Content="Większe niż" Margin="100,-15,10,0" IsChecked="True" Click="PeriodPaymentCheckBox_OnClick"/>
-            <Slider x:Name="AmountSlider" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" Width="206" Maximum="2000" Minimum="0" Value="0" TickFrequency="200" ValueChanged="AmountSlider_OnValueChanged"/>
+            <Slider x:Name="AmountSlider" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" Width="206" Maximum="2000" Minimum="0" Value="0" TickFrequency="200" ValueChanged="AmountSlider_OnValueChanged" Loaded="AmountSlider_Loaded"/>
             <TextBox x:Name="SliderValueTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="85,0,86,0" Width="55" PreviewTextInput="SliderValueTextBox_OnPreviewTextInput" TextChanged="SliderValueTextBox_OnTextChanged" Text="0" TextAlignment="Center"/>
         </StackPanel>
 

@@ -240,6 +240,7 @@ namespace Budget.Main_Classes
         /// <param name="query">zapytanie (insert, create itp )</param>
         public Boolean ExecuteSqlNonQuery(String query)
         {
+            Console.WriteLine(query);
             try
             {
                 _command = new SQLiteCommand(query, _mydb);

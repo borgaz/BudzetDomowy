@@ -229,5 +229,11 @@ namespace Budget.History
                 AmountSlider.Value = 0;
             AmountSlider.Value = Convert.ToInt32(SliderValueTextBox.Text);
         }
+
+        private void AmountSlider_Loaded(object sender, RoutedEventArgs e)
+        {
+            AmountSlider.Value = 0;
+            AmountSlider.Maximum = Main_Classes.Budget.Instance.MaxAmount;
+        }
     }
 }

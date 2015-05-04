@@ -42,8 +42,8 @@ namespace Budget.Payments_Manager
         private void LoadHistoryButton_Click(object sender, RoutedEventArgs e)
         {
             RefreshTable();
-            Main_Classes.Budget.Instance.Payments[2].Amount = 12.22;
-            Main_Classes.Budget.Instance.ListOfEdts.Add(new Changes(typeof(SinglePayment), 2));
+            //Main_Classes.Budget.Instance.Payments[2].Amount = 12.22;
+            //Main_Classes.Budget.Instance.ListOfEdts.Add(new Changes(typeof(SinglePayment), 2));
         }
 
         private void RefreshTable()

@@ -46,7 +46,7 @@ namespace Budget.Payments_Manager
                   //  Budget.Instance.ListOfAdds.Add(new Changes(typeof(PeriodPayment), temp_id));
                     Main_Classes.Budget.Instance.AddPeriodPayment(temp_id,
                         new PeriodPayment(categoryItem.Id, 
-                            Convert.ToDouble(PaymentValue.Text), 
+                            Convert.ToDouble(PaymentValue.Text.Replace(".",",")), 
                             Note.Text, 
                             true,
                             PaymentName.Text, 
@@ -70,12 +70,12 @@ namespace Budget.Payments_Manager
                     { } //gdy brak elementów w tablicy temp_id = 1
                     //Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
                     Main_Classes.Budget.Instance.AddSinglePayment(temp_id,
-                        new SinglePayment(Note.Text, Convert.ToDouble(PaymentValue.Text), categoryItem.Id, true,
+                        new SinglePayment(Note.Text, Convert.ToDouble(PaymentValue.Text.Replace(".",",")), categoryItem.Id, true,
                             PaymentName.Text, _singleDateGrid.SelectedDate));
 
                     int temp_id_balance = Main_Classes.Budget.Instance.BalanceLog.Last().Key + 1;
                     // uwaga tutaj odejmujemy
-                    double currentBalance = Main_Classes.Budget.Instance.BalanceLog.Last().Value.Balance - Convert.ToDouble(PaymentValue.Text);
+                    double currentBalance = Main_Classes.Budget.Instance.BalanceLog.Last().Value.Balance - Convert.ToDouble(PaymentValue.Text.Replace(".",","));
                     Main_Classes.Budget.Instance.AddBalanceLog(temp_id_balance,
                         new BalanceLog(currentBalance, DateTime.Today, temp_id, 0));
                     //Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));
