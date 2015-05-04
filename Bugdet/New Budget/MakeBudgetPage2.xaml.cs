@@ -77,6 +77,7 @@ namespace Budget.New_Budget
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
             new AddCategoryWindow(_categories,CategoryComboBox,true,originalCategoryID).ShowDialog();
+            originalCategoryID = MakeBudgetWindow.InsertCategories(CategoryComboBox, _categories, true);
             
         }
 

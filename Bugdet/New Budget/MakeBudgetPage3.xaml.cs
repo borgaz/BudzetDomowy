@@ -74,7 +74,7 @@ namespace Budget.New_Budget
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
             new AddCategoryWindow(_categories,CategoryComboBox,false,originalCategoryID).ShowDialog();
-            //originalCategoryID = MakeBudgetWindow.InsertCategories(CategoryComboBox, _categories, false);
+            originalCategoryID = MakeBudgetWindow.InsertCategories(CategoryComboBox, _categories, false);
         }
 
         private void EndDateCheckBox_OnChecked(object sender, RoutedEventArgs e)
