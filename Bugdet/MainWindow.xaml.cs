@@ -194,7 +194,7 @@ namespace Budget
         }
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (!Keyboard.IsKeyDown(Key.LeftCtrl)) return;
+            if (!Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightAlt) || Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightCtrl)) return;
             if (e.Key.Equals(Key.S))
                 Main_Classes.Budget.Instance.Dump();
         }

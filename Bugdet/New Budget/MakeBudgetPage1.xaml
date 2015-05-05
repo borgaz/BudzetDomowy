@@ -19,7 +19,7 @@
                 </LinearGradientBrush>
             </TextBox.Background>
         </TextBox>
-        <PasswordBox x:Name="passTextBox" HorizontalAlignment="Left" Margin="168,121,0,0" VerticalAlignment="Top" Height="23" Width="109">
+        <PasswordBox x:Name="passTextBox" HorizontalAlignment="Left" Margin="168,121,0,0" VerticalAlignment="Top" Height="23" Width="109" PasswordChanged="PassRepeatTextBox_OnGotFocus">
         <PasswordBox.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 

@@ -7,6 +7,8 @@ using System.Windows.Media;
 using Budget.Main_Classes;
 using Budget.New_Budget;
 using Budget.Utility_Classes;
+using Budget = Budget.Main_Classes.Budget;
+
 
 namespace Budget.Payments_Manager
 {
@@ -26,17 +28,39 @@ namespace Budget.Payments_Manager
         {
             BtnsContentFrame.Content = _singlePaymentPage;
             _singlePaymentPage.SinglePaymentRadio.IsChecked = true;
+            Main_Classes.Budget.Instance.InsertCategories(_singlePaymentPage.CategoryBox,Main_Classes.Budget.CategoryTypeEnum.PAYMENT);
         }
 
         private void addSalaryBtn_Click(object sender, RoutedEventArgs e)
         {
             BtnsContentFrame.Content = _singleSalaryPage;
             _singleSalaryPage.SinglePaymentRadio.IsChecked = true;
+            Main_Classes.Budget.Instance.InsertCategories(_singleSalaryPage.CategoryBox, Main_Classes.Budget.CategoryTypeEnum.SALARY);
         }
 
-        private void NewBudgetButton_Click(object sender, RoutedEventArgs e)
+        private void LoadAddedGrid()
         {
-            new MakeBudgetWindow(1).ShowDialog();
+            var history = new DataTable();
+            history.Columns.Add("Id", typeof(int));
+            history.Columns.Add("Type", typeof(int));
+            history.Columns.Add("Nazwa", typeof(string));
+            history.Columns.Add("Kwota", typeof(int));
+            history.Columns.Add("Kategoria", typeof(string));
+            foreach (var ch in Main_Classes.Budget.Instance.ListOfAdds)
+            {
+                if (ch.Type == typeof (SinglePayment))
+                {
+                    var p = (SinglePayment) Main_Classes.Budget.Instance.Payments[ch.ID];
+                    history.Rows.Add(ch.ID, p.Type, p.Name, p.Amount,
+                        Main_Classes.Budget.Instance.Categories[p.CategoryID].Name);
+                }
+                if (ch.Type == typeof (PeriodPayment))
+                {
+                    var p = (PeriodPayment) Main_Classes.Budget.Instance.Payments[ch.ID];
+                    history.Rows.Add(ch.ID, p.Type, p.Name, p.Amount,
+                        Main_Classes.Budget.Instance.Categories[p.CategoryID].Name);
+                }
+            }
         }
 
         private void LoadHistoryButton_Click(object sender, RoutedEventArgs e)
@@ -88,6 +112,16 @@ namespace Budget.Payments_Manager
             {
                 
             }
+        }
+
+        private void LastAddedDataGrid_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            LoadAddedGrid();
+        }
+
+        private void UIElement_OnFocusableChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            LoadAddedGrid();
         }
     }
 }

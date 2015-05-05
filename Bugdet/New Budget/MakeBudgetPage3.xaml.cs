@@ -66,11 +66,6 @@ namespace Budget.New_Budget
             }
         }
 
-        public Boolean BackToThisPage()
-        {
-            return true;
-        }
-
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
             new AddCategoryWindow(_categories,CategoryComboBox,false,originalCategoryID).ShowDialog();

@@ -8,19 +8,27 @@
 
     <Grid Background="White" HorizontalAlignment="Left" Width="725" Margin="10,0,-10,0">
 
-        <DataGrid Margin="369,40,21,100" Name="PeriodPaymentsTable" Loaded="dataGridView_Loaded" IsReadOnly="True" LoadingRow="DataGridView_OnLoadingRow">
-            <DataGrid.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Usuń rekord"/>
-                    <MenuItem Header="Edytuj rekord"/>
-                    <MenuItem Header="Więcej Informacji"/>
-                </ContextMenu>
-            </DataGrid.ContextMenu>
-        </DataGrid>
         <Frame x:Name="BtnsContentFrame" Content="" Margin="10,40,0,0" Height="410" Width="300" VerticalAlignment="Top" HorizontalAlignment="Left" NavigationUIVisibility="Hidden" Background="#FF888888"/>
         <Button x:Name="AddPaymentBtn" Content="Dodaj Wydatek" HorizontalAlignment="Left" Margin="155,10,0,0" VerticalAlignment="Top" Width="120" Click="addPaymentBtn_Click" Height="25"/>
         <Button x:Name="AddSalaryBtn" Content="Dodaj Przychód" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="120" Click="addSalaryBtn_Click" Height="25" Grid.Column="1"/>
         <Button x:Name="LoadHistoryButton" Content="Historia" HorizontalAlignment="Left" Margin="482,474,0,47" Width="120" Click="LoadHistoryButton_Click" />
         <Button x:Name="DumpAllButton" Content="Zapisz" HorizontalAlignment="Left" Margin="99,472,0,46" Width="120" Click="DumpAllButton_Click" />
+        <TabControl HorizontalAlignment="Left" Height="410" Margin="377,40,0,0" VerticalAlignment="Top" Width="338">
+            <TabItem Header="Wydatki i przychody okresowe">
+                <DataGrid x:Name="PeriodPaymentsTable" Loaded="dataGridView_Loaded" IsReadOnly="True" LoadingRow="DataGridView_OnLoadingRow" Height="410" Width="335">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Usuń rekord"/>
+                            <MenuItem Header="Edytuj rekord"/>
+                            <MenuItem Header="Więcej Informacji"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Ostatnio dodane" FocusableChanged="UIElement_OnFocusableChanged">
+                <DataGrid x:Name="LastAddedDataGrid" Loaded="LastAddedDataGrid_OnLoaded" IsReadOnly="True" />
+            </TabItem>
+            
+        </TabControl>
     </Grid>
 </Page>

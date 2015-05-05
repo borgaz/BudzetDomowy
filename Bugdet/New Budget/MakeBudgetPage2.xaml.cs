@@ -69,11 +69,6 @@ namespace Budget.New_Budget
             new AddedSalariesWindow(1, _periodPayments, _categories).ShowDialog();
         }
 
-        public Boolean BackToThisPage() // do usuniecia po refaktoryzacji
-        {
-            return true;
-        }
-
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
             new AddCategoryWindow(_categories,CategoryComboBox,true,originalCategoryID).ShowDialog();

@@ -62,11 +62,6 @@ namespace Budget.New_Budget
                     
                 case 1:
                 {
-                    if (back == 1)
-                    {
-                        _page1.BackToThisPage();
-                    }
-                    
                     _page1 = new MakeBudgetPage1(salaryInfo); // strona pierwsza
                     PageFrame.Content = _page1;
                     ExitBtn.Content = "Wyjdz";
@@ -75,12 +70,9 @@ namespace Budget.New_Budget
                     
                 case 2:
                 {
-                    if (back == 1)
-                    {
-                        _page2.BackToThisPage();
-                    }
-                        
-                    _page2 = new MakeBudgetPage2(_salaries, _categories); // strona druga
+                    if(_page2 == null)
+                        _page2 = new MakeBudgetPage2(_salaries, _categories); // strona druga
+                    InsertCategories(_page2.CategoryComboBox, _categories, false);
                     PageFrame.Content = _page2;
                     ExitBtn.IsEnabled = false;
                     ExitBtn.Content = "Wyjdź";
@@ -90,12 +82,9 @@ namespace Budget.New_Budget
                     
                 case 3:
                 {
-                    if (back == 1)
-                    {
-                        _page3.BackToThisPage();
-                    }
-                    
-                    _page3 = new MakeBudgetPage3(_payments, _categories); // strona trzecia
+                    if (_page3 == null)
+                        _page3 = new MakeBudgetPage3(_payments, _categories); // strona trzecia
+                    InsertCategories(_page3.CategoryComboBox, _categories, true);
                     PageFrame.Content = _page3;
                     ExitBtn.IsEnabled = true;
                     ExitBtn.Content = "Dodaj przychody";

@@ -80,11 +80,6 @@ namespace Budget.New_Budget
             }
         }
 
-        public Boolean BackToThisPage() //do usuniecia przy refaktoryzacji
-        {
-            return true;
-        }
-
         private void BudgetNameText_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             budgetNameText.Background = budgetNameText.Text == "" ? red : green;
@@ -97,6 +92,8 @@ namespace Budget.New_Budget
 
         private void PassRepeatTextBox_OnGotFocus(object sender, RoutedEventArgs e)
         {
+            if (passTextBox.Password == "")
+                return;
             passRepeatTextBox.Background = passTextBox.Password.Equals(passRepeatTextBox.Password) ? green : red;
         }
 

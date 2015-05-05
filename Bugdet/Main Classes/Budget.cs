@@ -341,5 +341,16 @@ namespace Budget.Main_Classes
             return editList;
         }
 
+        public Boolean CheckCategory(string name)
+        {
+            var contains = false;
+            foreach (Category c in categories.Values)
+            {
+                if (c.Name.ToLowerInvariant().Equals(name.ToLowerInvariant()))
+                    contains = true;
+            }
+            return contains;
+        }
+
     }
 }

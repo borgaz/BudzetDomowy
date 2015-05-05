@@ -142,5 +142,10 @@ namespace Budget.Payments_Manager
                 return;
             DateTypeFrame.Content = _periodDateGrid;
         }
+
+        private void PaymentName_OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            InfoBox.Text = "";  
+        }
     }
 }
