@@ -7,7 +7,6 @@ using System.Windows.Media;
 using Budget.Main_Classes;
 using Budget.New_Budget;
 using Budget.Utility_Classes;
-using Budget = Budget.Main_Classes.Budget;
 
 
 namespace Budget.Payments_Manager
@@ -40,34 +39,38 @@ namespace Budget.Payments_Manager
 
         private void LoadAddedGrid()
         {
-            var history = new DataTable();
-            history.Columns.Add("Id", typeof(int));
-            history.Columns.Add("Type", typeof(int));
-            history.Columns.Add("Nazwa", typeof(string));
-            history.Columns.Add("Kwota", typeof(int));
-            history.Columns.Add("Kategoria", typeof(string));
+            var added = new DataTable();
+            added.Columns.Add("Id", typeof(int));
+            added.Columns.Add("Type", typeof(int));
+            added.Columns.Add("Nazwa", typeof(string));
+            added.Columns.Add("Kwota", typeof(int));
+            added.Columns.Add("Kategoria", typeof(string));
             foreach (var ch in Main_Classes.Budget.Instance.ListOfAdds)
             {
                 if (ch.Type == typeof (SinglePayment))
                 {
                     var p = (SinglePayment) Main_Classes.Budget.Instance.Payments[ch.ID];
-                    history.Rows.Add(ch.ID, p.Type, p.Name, p.Amount,
+                    added.Rows.Add(ch.ID, p.Type, p.Name, p.Amount,
                         Main_Classes.Budget.Instance.Categories[p.CategoryID].Name);
                 }
                 if (ch.Type == typeof (PeriodPayment))
                 {
                     var p = (PeriodPayment) Main_Classes.Budget.Instance.Payments[ch.ID];
-                    history.Rows.Add(ch.ID, p.Type, p.Name, p.Amount,
+                    added.Rows.Add(ch.ID, p.Type, p.Name, p.Amount,
                         Main_Classes.Budget.Instance.Categories[p.CategoryID].Name);
                 }
             }
+            LastAddedDataGrid.ItemsSource = added.DefaultView;
         }
 
         private void LoadHistoryButton_Click(object sender, RoutedEventArgs e)
         {
             RefreshTable();
-            //Main_Classes.Budget.Instance.Payments[2].Amount = 12.22;
-            //Main_Classes.Budget.Instance.ListOfEdts.Add(new Changes(typeof(SinglePayment), 2));
+            LoadAddedGrid();
+            if (LastAddedDataGrid.Columns.Count < 1)
+                return;
+            LastAddedDataGrid.Columns[0].Visibility = Visibility.Hidden;
+            LastAddedDataGrid.Columns[1].Visibility = Visibility.Hidden;
         }
 
         private void RefreshTable()
@@ -109,19 +112,38 @@ namespace Budget.Payments_Manager
                 e.Row.Background = (int)dataRow.Row.ItemArray[1] == 1 ? Brushes.Red : Brushes.ForestGreen;
             }
             catch (InvalidCastException)
-            {
-                
-            }
-        }
-
-        private void LastAddedDataGrid_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            LoadAddedGrid();
+            { }
         }
 
         private void UIElement_OnFocusableChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             LoadAddedGrid();
+            if (LastAddedDataGrid.Columns.Count < 1)
+                return;
+            LastAddedDataGrid.Columns[0].Visibility = Visibility.Hidden;
+            LastAddedDataGrid.Columns[1].Visibility = Visibility.Hidden;
+        }
+
+        private void LastAddedDataGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadAddedGrid();
+            if (LastAddedDataGrid.Columns.Count < 1)
+                return;
+            LastAddedDataGrid.Columns[0].Visibility = Visibility.Hidden;
+            LastAddedDataGrid.Columns[1].Visibility = Visibility.Hidden;
+        }
+
+        private void LastAddedDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            var dataRow = e.Row.DataContext as DataRowView;
+            if (dataRow == null)
+                return;
+            try
+            {
+                e.Row.Background = (int)dataRow.Row.ItemArray[1] == 1 ? Brushes.Tomato : Brushes.SeaGreen;
+            }
+            catch (InvalidCastException)
+            { }
         }
     }
 }

@@ -26,9 +26,8 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="Ostatnio dodane" FocusableChanged="UIElement_OnFocusableChanged">
-                <DataGrid x:Name="LastAddedDataGrid" Loaded="LastAddedDataGrid_OnLoaded" IsReadOnly="True" />
-            </TabItem>
-            
+                <DataGrid x:Name="LastAddedDataGrid" Loaded="LastAddedDataGrid_Loaded" IsReadOnly="True" Height="410" Width="335" LoadingRow="LastAddedDataGrid_OnLoadingRow"/>
+            </TabItem> 
         </TabControl>
     </Grid>
 </Page>
