@@ -24,6 +24,8 @@ namespace Budget.Payments_Manager
         {
             InitializeComponent();
             ChangeNotes(type);
+            EndDateEnableCheckBox.IsChecked = false;
+            EndDatePicker.IsEnabled = false;
         }
 
         private void EndDateEnableCheckBox_Checked(object sender, RoutedEventArgs e)
@@ -38,36 +40,64 @@ namespace Budget.Payments_Manager
 
         public DateTime EndDate
         {
-            get { return StartDatePicker.SelectedDate.Value; }
+            get 
+            {
+                if (EndDatePicker.Text == "")
+                {
+                    return DateTime.MaxValue;
+                }
+                else
+                {
+                    return EndDatePicker.SelectedDate.Value;
+                }
+            }
         }
 
         public DateTime StartDate
         {
-            get { return StartDatePicker.SelectedDate.Value; }     
+            get 
+            {
+                if (StartDatePicker.Text == "")
+                {
+                    return DateTime.Now;
+                }
+                else
+                {
+                    return StartDatePicker.SelectedDate.Value; 
+                }
+            }     
         }
 
-        public ComboBox TypeofBox
+        public ComboBox TypeOfBox
         {
-            get { return TypeOfDayComboBox; }
+            get 
+            { 
+                return TypeOfDayComboBox; 
+            }
         }
-        public bool EndDateChecker
-        {
-            get { return EndDateEnableCheckBox.IsChecked == true ; }
-        }
+
         /// <summary>
         /// gets int from NumberOfTextBox
         /// </summary>
         public int NumberOf
         {
-            get { return Convert.ToInt32(NumberOfTexBox.Text); }
+            get 
+            { 
+                return Convert.ToInt32(NumberOfTextBox.Text);
+            }
         }
+
         /// <summary>
         /// gets Type of day from ComboBox
         /// </summary>
         public string TypeOfDay
         {
-            get { return TypeOfDayComboBox.Text; }
+            get 
+            { 
+                return TypeOfDayComboBox.Text; 
+            }
         }
+
         private void ChangeNotes(Main_Classes.Budget.CategoryTypeEnum type)
         {
             switch (type)
@@ -76,15 +106,18 @@ namespace Budget.Payments_Manager
                     InfoLbl.Content = "Opłata co:";
                     break;
                 case Main_Classes.Budget.CategoryTypeEnum.SALARY:
-                    InfoLbl.Content = "przychód co:";
+                    InfoLbl.Content = "Przychód co:";
                     break;
                 default:
                     break;
             }
         }
+
         public void ClearComponents()
         {
-            NumberOfTexBox.Text = "";
+            NumberOfTextBox.Text = "";
+            StartDatePicker.Text = "";
+            EndDatePicker.Text = "";
             TypeOfDayComboBox.SelectedIndex = -1;
             EndDateEnableCheckBox.IsChecked = false;
         }

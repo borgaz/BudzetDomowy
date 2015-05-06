@@ -75,5 +75,19 @@ namespace Budget.Main_Classes
             //Zero - lastUpdate jest taka sama jak Now.
             //Większe od zera - lastUpdate jest późniejsza niż Now. 
         }
+
+       public DateTime countNextDate()
+        {
+            if (period == "MIESIĄC")
+                return lastUpdate.AddMonths(frequency);
+            else if (period == "DZIEŃ")
+                return lastUpdate.AddDays(frequency);
+            else if (period == "TYDZIEŃ")
+                return lastUpdate.AddDays(7 * frequency);
+            else if (period == "ROK")
+                return lastUpdate.AddYears(frequency);
+            else
+                return DateTime.Now;
+        }
     }
 }

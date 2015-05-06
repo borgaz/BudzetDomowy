@@ -9,8 +9,8 @@
     <Grid Background="White" HorizontalAlignment="Left" Width="725" Margin="10,0,-10,0">
 
         <Frame x:Name="BtnsContentFrame" Content="" Margin="10,40,0,0" Height="410" Width="300" VerticalAlignment="Top" HorizontalAlignment="Left" NavigationUIVisibility="Hidden" Background="#FF888888"/>
-        <Button x:Name="AddPaymentBtn" Content="Dodaj Wydatek" HorizontalAlignment="Left" Margin="155,10,0,0" VerticalAlignment="Top" Width="120" Click="addPaymentBtn_Click" Height="25"/>
-        <Button x:Name="AddSalaryBtn" Content="Dodaj Przychód" HorizontalAlignment="Left" Margin="7,10,0,0" VerticalAlignment="Top" Width="120" Click="addSalaryBtn_Click" Height="25" Grid.Column="1"/>
+        <Button x:Name="AddPaymentBtn" Content="Dodaj Wydatek" HorizontalAlignment="Left" Margin="150,10,0,0" VerticalAlignment="Top" Width="120" Click="addPaymentBtn_Click" Height="25"/>
+        <Button x:Name="AddSalaryBtn" Content="Dodaj Przychód" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" Click="addSalaryBtn_Click" Height="25" Grid.Column="1"/>
         <Button x:Name="LoadHistoryButton" Content="Historia" HorizontalAlignment="Left" Margin="482,474,0,47" Width="120" Click="LoadHistoryButton_Click" />
         <Button x:Name="DumpAllButton" Content="Zapisz" HorizontalAlignment="Left" Margin="99,472,0,46" Width="120" Click="DumpAllButton_Click" />
         <TabControl HorizontalAlignment="Left" Height="410" Margin="377,40,0,0" VerticalAlignment="Top" Width="338">

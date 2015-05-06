@@ -22,8 +22,10 @@ namespace Budget.Payments_Manager
             InitializeComponent();
             Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.SALARY);
             InsertDateTypes(_periodDateGrid.TypeOfDayComboBox);
-            _periodDateGrid.StartDatePicker.Text = DateTime.Now.Date.ToString();
-        //    DateTypeFrame.Content = _singleDateGrid;
+
+            //_periodDateGrid.StartDatePicker.Text = DateTime.Now.Date.ToString();
+            //_periodDateGrid.EndDatePicker.Text = DateTime.MaxValue.ToString();
+            //_singleDateGrid.SingleDatePicker.Text = DateTime.Now.Date.ToString();
         }
 
         private void addPaymentBtn_Click(object sender, RoutedEventArgs e)
@@ -31,7 +33,7 @@ namespace Budget.Payments_Manager
             if (SalaryName.Text != "" && SalaryValue.Text != "" && CategoryBox.SelectedIndex != -1)
             {
                 var categoryItem = (ComboBoxItem)CategoryBox.SelectedValue;
-                if (_periodDateGrid.EndDateChecker)
+                if (PeriodPaymentRadio.IsChecked == true)
                 {
                     var temp_id = -1;
                     try
@@ -39,8 +41,8 @@ namespace Budget.Payments_Manager
                         temp_id = Main_Classes.Budget.Instance.Payments.First().Key - 1;
                     }
                     catch (Exception)
-                    { } //gdy brak elementów w tablicy temp_id = 1
-                    // Budget.Instance.ListOfAdds.Add(new Changes(typeof(PeriodPayment), temp_id));
+                    { }
+
                     Main_Classes.Budget.Instance.AddPeriodPayment(temp_id,
                         new PeriodPayment(categoryItem.Id,
                             Convert.ToDouble(SalaryValue.Text.Replace(".", ",")),
@@ -51,7 +53,8 @@ namespace Budget.Payments_Manager
                             _periodDateGrid.TypeOfDay,
                             _periodDateGrid.StartDate,
                             _periodDateGrid.StartDate,
-                            (_periodDateGrid.EndDateChecker ? Convert.ToDateTime(_periodDateGrid.EndDate) : DateTime.MaxValue)));
+                            _periodDateGrid.EndDate));
+                    _periodDateGrid.ClearComponents();
                 }
                 else
                 {
@@ -69,14 +72,13 @@ namespace Budget.Payments_Manager
 
                     //Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
                     Main_Classes.Budget.Instance.AddSinglePayment(temp_id,
-                        new SinglePayment(Note.Text, Convert.ToDouble(SalaryValue.Text.Replace(".", ",")), categoryItem.Id, false,
-                            SalaryName.Text, DateTime.Now));
+                        new SinglePayment(Note.Text, Convert.ToDouble(SalaryValue.Text.Replace(".", ",")), categoryItem.Id, false, SalaryName.Text, _singleDateGrid.SelectedDate));
                     // uwaga tutaj dodajemy
                     double currentBalance = Main_Classes.Budget.Instance.BalanceLog.Last().Value.Balance + Convert.ToDouble(SalaryValue.Text.Replace(".", ","));
                     Main_Classes.Budget.Instance.AddBalanceLog(temp_id_balance,
                         new BalanceLog(currentBalance, DateTime.Today, temp_id, 0));
                     // Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));
-
+                    _singleDateGrid.SingleDatePicker.Text = "";
                 }
 
                 InfoBox.Text = "Dodano!";
@@ -84,9 +86,8 @@ namespace Budget.Payments_Manager
                 SalaryName.Text = "";
                 SalaryValue.Text = "";
                 CategoryBox.SelectedIndex = -1;
-                _periodDateGrid.ClearComponents();
                 Note.Text = "";
-
+               
             }
             else
             {

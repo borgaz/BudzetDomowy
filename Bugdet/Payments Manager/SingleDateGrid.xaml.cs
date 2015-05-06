@@ -30,7 +30,17 @@ namespace Budget.Payments_Manager
         /// </summary>
         public DateTime SelectedDate
         {
-            get { return SingleDatePicker.SelectedDate.Value; }
+            get 
+            {
+                if (SingleDatePicker.Text == "")
+                {
+                    return DateTime.Now;
+                }
+                else
+                {
+                    return SingleDatePicker.SelectedDate.Value;
+                }
+            }
         }
 
         private void ChangeNotes(Main_Classes.Budget.CategoryTypeEnum type)
@@ -38,7 +48,7 @@ namespace Budget.Payments_Manager
             switch (type)
             {
                 case Main_Classes.Budget.CategoryTypeEnum.PAYMENT:
-                    InfoLabel.Content = "Data Wydatku:";
+                    InfoLabel.Content = "Data wydatku:";
                     break;
                 case Main_Classes.Budget.CategoryTypeEnum.SALARY:
                     InfoLabel.Content = "Data przychodu:";

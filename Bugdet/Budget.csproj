@@ -80,6 +80,7 @@
     <Compile Include="Payments Manager\SingleDateGrid.xaml.cs">
       <DependentUpon>SingleDateGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingsPage\Settings.cs" />
     <Compile Include="Utility Classes\Changes.cs" />
     <Compile Include="Utility Classes\ComboBoxItem.cs" />
     <Compile Include="History\HistoryMainPage.xaml.cs">
@@ -135,6 +136,7 @@
     <Compile Include="Utility Classes\CustomMessageBox.xaml.cs">
       <DependentUpon>CustomMessageBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WelcomePage\ProvidedPayment.cs" />
     <Compile Include="WelcomePage\WelcomePage.xaml.cs">
       <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>

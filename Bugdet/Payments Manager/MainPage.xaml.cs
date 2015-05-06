@@ -18,6 +18,7 @@ namespace Budget.Payments_Manager
     {
         private AddPaymentPage _singlePaymentPage = new AddPaymentPage();
         private AddSalaryPage _singleSalaryPage = new AddSalaryPage();
+
         public MainPage()
         {
             InitializeComponent();
@@ -50,14 +51,12 @@ namespace Budget.Payments_Manager
                 if (ch.Type == typeof (SinglePayment))
                 {
                     var p = (SinglePayment) Main_Classes.Budget.Instance.Payments[ch.ID];
-                    added.Rows.Add(ch.ID, p.Type, p.Name, p.Amount,
-                        Main_Classes.Budget.Instance.Categories[p.CategoryID].Name);
+                    added.Rows.Add(ch.ID, p.Type, p.Name, p.Amount, Main_Classes.Budget.Instance.Categories[p.CategoryID].Name);
                 }
                 if (ch.Type == typeof (PeriodPayment))
                 {
                     var p = (PeriodPayment) Main_Classes.Budget.Instance.Payments[ch.ID];
-                    added.Rows.Add(ch.ID, p.Type, p.Name, p.Amount,
-                        Main_Classes.Budget.Instance.Categories[p.CategoryID].Name);
+                    added.Rows.Add(ch.ID, p.Type, p.Name, p.Amount, Main_Classes.Budget.Instance.Categories[p.CategoryID].Name);
                 }
             }
             LastAddedDataGrid.ItemsSource = added.DefaultView;
@@ -68,7 +67,9 @@ namespace Budget.Payments_Manager
             RefreshTable();
             LoadAddedGrid();
             if (LastAddedDataGrid.Columns.Count < 1)
+            {
                 return;
+            } 
             LastAddedDataGrid.Columns[0].Visibility = Visibility.Hidden;
             LastAddedDataGrid.Columns[1].Visibility = Visibility.Hidden;
         }
@@ -84,7 +85,9 @@ namespace Budget.Payments_Manager
             foreach(KeyValuePair<int,Payment> p in Main_Classes.Budget.Instance.Payments)
             {
                 if (p.Value.GetType() != typeof (PeriodPayment))
+                {
                     continue;
+                }
                 var pp = (PeriodPayment)p.Value;
                 history.Rows.Add(p.Key,pp.Type,pp.Name, pp.Amount, Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name);
             }
@@ -92,6 +95,7 @@ namespace Budget.Payments_Manager
             PeriodPaymentsTable.Columns[0].Visibility = Visibility.Hidden;
             PeriodPaymentsTable.Columns[1].Visibility = Visibility.Hidden;
         }
+
         private void DumpAllButton_Click(object sender, RoutedEventArgs e)
         {
             Main_Classes.Budget.Instance.Dump();
@@ -106,7 +110,9 @@ namespace Budget.Payments_Manager
         {
             var dataRow = e.Row.DataContext as DataRowView;
             if (dataRow == null)
+            {
                 return;
+            }       
             try
             {
                 e.Row.Background = (int)dataRow.Row.ItemArray[1] == 1 ? Brushes.Red : Brushes.ForestGreen;
@@ -119,7 +125,9 @@ namespace Budget.Payments_Manager
         {
             LoadAddedGrid();
             if (LastAddedDataGrid.Columns.Count < 1)
+            {
                 return;
+            } 
             LastAddedDataGrid.Columns[0].Visibility = Visibility.Hidden;
             LastAddedDataGrid.Columns[1].Visibility = Visibility.Hidden;
         }
@@ -128,7 +136,9 @@ namespace Budget.Payments_Manager
         {
             LoadAddedGrid();
             if (LastAddedDataGrid.Columns.Count < 1)
+            {
                 return;
+            }
             LastAddedDataGrid.Columns[0].Visibility = Visibility.Hidden;
             LastAddedDataGrid.Columns[1].Visibility = Visibility.Hidden;
         }
@@ -137,7 +147,9 @@ namespace Budget.Payments_Manager
         {
             var dataRow = e.Row.DataContext as DataRowView;
             if (dataRow == null)
+            {
                 return;
+            }
             try
             {
                 e.Row.Background = (int)dataRow.Row.ItemArray[1] == 1 ? Brushes.Tomato : Brushes.SeaGreen;

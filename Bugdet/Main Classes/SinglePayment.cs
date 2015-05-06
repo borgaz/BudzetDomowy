@@ -28,7 +28,9 @@ namespace Budget.Main_Classes
 
         override public int CompareDate()
         {
-            throw new NotImplementedException();
+            return DateTime.Compare(this.date, DateTime.Now);
+            //Mniej niż zero - historia
+            //Większe od zera - przyszlosc
         }
     }
 }

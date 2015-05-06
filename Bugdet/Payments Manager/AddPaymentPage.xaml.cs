@@ -20,12 +20,12 @@ namespace Budget.Payments_Manager
         public AddPaymentPage()
         {
             InitializeComponent();
-            AddSalaryPage.InsertDateTypes(_periodDateGrid.TypeOfDayComboBox);
             Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.PAYMENT);
-            _periodDateGrid.StartDatePicker.Text = DateTime.Now.Date.ToString();
-            _singleDateGrid.SingleDatePicker.Text = DateTime.Now.Date.ToString();
-          //  DateTypeFrame.Content = _singleDateGrid;
-            //System.Console.WriteLine("asd: " + StartDatePicker.Text + " .");
+            AddSalaryPage.InsertDateTypes(_periodDateGrid.TypeOfDayComboBox);
+            
+            //_periodDateGrid.StartDatePicker.Text = DateTime.Now.Date.ToString();
+            //_periodDateGrid.EndDatePicker.Text = DateTime.MaxValue.ToString();
+            //_singleDateGrid.SingleDatePicker.Text = DateTime.Now.Date.ToString();
         }
 
         private void addPaymentBtn_Click(object sender, RoutedEventArgs e)
@@ -33,7 +33,6 @@ namespace Budget.Payments_Manager
             if (PaymentName.Text != "" && PaymentValue.Text != "" && CategoryBox.SelectedIndex != -1)
             {
                 var categoryItem = (ComboBoxItem)CategoryBox.SelectedValue;
-                
                 if (PeriodPaymentRadio.IsChecked == true)
                 {
                     var temp_id = -1;
@@ -42,11 +41,11 @@ namespace Budget.Payments_Manager
                         temp_id = Main_Classes.Budget.Instance.Payments.First().Key - 1; 
                     }
                     catch (Exception)
-                    { } //gdy brak elementów w tablicy temp_id = 1
-                  //  Budget.Instance.ListOfAdds.Add(new Changes(typeof(PeriodPayment), temp_id));
+                    { }
+
                     Main_Classes.Budget.Instance.AddPeriodPayment(temp_id,
                         new PeriodPayment(categoryItem.Id, 
-                            Convert.ToDouble(PaymentValue.Text.Replace(".",",")), 
+                            Convert.ToDouble(PaymentValue.Text.Replace(".", ",")), 
                             Note.Text, 
                             true,
                             PaymentName.Text, 
@@ -54,7 +53,8 @@ namespace Budget.Payments_Manager
                             _periodDateGrid.TypeOfDay,
                             _periodDateGrid.StartDate,
                             _periodDateGrid.StartDate,
-                            (_periodDateGrid.EndDateChecker == true ? Convert.ToDateTime(_periodDateGrid.EndDate) : DateTime.MaxValue)));
+                            _periodDateGrid.EndDate));
+                    _periodDateGrid.ClearComponents();
                 }
                 else
                 {
@@ -70,15 +70,15 @@ namespace Budget.Payments_Manager
                     { } //gdy brak elementów w tablicy temp_id = 1
                     //Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
                     Main_Classes.Budget.Instance.AddSinglePayment(temp_id,
-                        new SinglePayment(Note.Text, Convert.ToDouble(PaymentValue.Text.Replace(".",",")), categoryItem.Id, true,
-                            PaymentName.Text, _singleDateGrid.SelectedDate));
+                        new SinglePayment(Note.Text, Convert.ToDouble(PaymentValue.Text.Replace(".",",")), categoryItem.Id, true, PaymentName.Text, _singleDateGrid.SelectedDate));
 
                     int temp_id_balance = Main_Classes.Budget.Instance.BalanceLog.Last().Key + 1;
                     // uwaga tutaj odejmujemy
-                    double currentBalance = Main_Classes.Budget.Instance.BalanceLog.Last().Value.Balance - Convert.ToDouble(PaymentValue.Text.Replace(".",","));
+                    double currentBalance = Main_Classes.Budget.Instance.BalanceLog.Last().Value.Balance - Convert.ToDouble(PaymentValue.Text.Replace(".", ","));
                     Main_Classes.Budget.Instance.AddBalanceLog(temp_id_balance,
                         new BalanceLog(currentBalance, DateTime.Today, temp_id, 0));
                     //Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));
+                    _singleDateGrid.SingleDatePicker.Text = "";
 
                 }
 
@@ -87,7 +87,6 @@ namespace Budget.Payments_Manager
                 PaymentName.Text = "";
                 PaymentValue.Text = "";
                 CategoryBox.SelectedIndex = -1;
-                _periodDateGrid.ClearComponents();
                 Note.Text = "";
             }
             else
