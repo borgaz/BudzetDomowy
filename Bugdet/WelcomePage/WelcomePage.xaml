@@ -5,28 +5,28 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       Loaded="Page_Loaded"
       mc:Ignorable="d" 
-      d:DesignHeight="500" d:DesignWidth="725"
+      d:DesignHeight="550" d:DesignWidth="725"
 	Title="WelcomePage">
 
     <Grid>
-        <Image Source="../Resources/Pie-Chart-icon.png" HorizontalAlignment="Left" Height="115" Margin="595,10,0,0" VerticalAlignment="Top" Width="115"/>
-        <DataGrid HorizontalAlignment="Left" Name="historyDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" Margin="512,191,0,0" VerticalAlignment="Top" Height="286" Width="201" Loaded="Page_Loaded">
+        <Image Source="../Resources/Pie-Chart-icon.png" HorizontalAlignment="Left" Height="337" Margin="317,10,0,0" VerticalAlignment="Top" Width="398"/>
+        <DataGrid HorizontalAlignment="Left" Name="historyDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" Margin="10,306,0,0" VerticalAlignment="Top" Height="234" Width="260" Loaded="Page_Loaded">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nazwa" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Kwota" Binding="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Data" Binding="{Binding Date, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Nazwa" Width="120" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Kwota" Width="60" Binding="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Data" Width="80" Binding="{Binding Date, UpdateSourceTrigger=PropertyChanged}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid HorizontalAlignment="Left" Name="providedPaymentsDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeColumns="False" Margin="12,43,0,0" VerticalAlignment="Top" Height="249" Width="260" SelectionMode="Single">
+        <DataGrid HorizontalAlignment="Left" Name="providedPaymentsDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeColumns="False" Margin="10,38,0,0" VerticalAlignment="Top" Height="234" Width="260" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nazwa" Width="120" IsReadOnly="True" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Kwota" Width="50" IsReadOnly="True" Binding="{Binding Amount}"/>
+                <DataGridTextColumn Header="Kwota" Width="60" IsReadOnly="True" Binding="{Binding Amount}"/>
                 <DataGridTextColumn Header="Data" Width="80" IsReadOnly="True" Binding="{Binding Date}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid HorizontalAlignment="Left" Margin="14,347,0,0" VerticalAlignment="Top" Height="145" Width="283"/>
-        <Label Content="Najbliższe przychody i wydatki" HorizontalAlignment="Left" Height="31" Margin="46,6,0,0" VerticalAlignment="Top" Width="191"/>
-        <Label Content="Cele oszczędzania:" HorizontalAlignment="Left" Height="33" Margin="13,310,0,0" VerticalAlignment="Top" Width="199"/>
-        <Label Content="Skrócona historia:" HorizontalAlignment="Left" Height="28" Margin="535,156,0,0" VerticalAlignment="Top" Width="164"/>
+        <DataGrid HorizontalAlignment="Left" Margin="317,380,0,0" VerticalAlignment="Top" Height="160" Width="260"/>
+        <Label Content="Najbliższe przychody i wydatki" HorizontalAlignment="Left" Height="28" Margin="10,10,0,0" VerticalAlignment="Top" Width="191"/>
+        <Label Content="Cele oszczędzania:" HorizontalAlignment="Left" Height="28" Margin="317,352,0,0" VerticalAlignment="Top" Width="199"/>
+        <Label Content="Skrócona historia:" HorizontalAlignment="Left" Height="28" Margin="10,278,0,0" VerticalAlignment="Top" Width="164"/>
     </Grid>
 </Page>

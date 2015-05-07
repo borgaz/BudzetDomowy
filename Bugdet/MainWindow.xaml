@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="BUDŻET DOMOWY" Height="600" Width="850">
     <Grid>
-        <Frame x:Name="MainContentFrame" Content="" HorizontalAlignment="Left" Height="550" Margin="57,10,0,0" VerticalAlignment="Top" Width="725" NavigationUIVisibility="Hidden" Background="#FF888888"/>
+        <Frame x:Name="MainContentFrame" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Height="550" Width="725" Margin="58,10,0,0" NavigationUIVisibility="Hidden" Background="#33CC00"/>
         <Button x:Name="WelcomePageButton" HorizontalAlignment="Left" Margin="-106,123,0,0" VerticalAlignment="Top" Width="270" Height="44" RenderTransformOrigin="0.5,0.5" Content="Strona Główna" FontSize="20" Click="WelcomePageButton_Click">
             <Button.RenderTransform>
                 <TransformGroup>
@@ -34,7 +34,7 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button x:Name="CreatorButton" HorizontalAlignment="Right" Margin="0,123,-106,0" VerticalAlignment="Top" Width="270" Height="44" RenderTransformOrigin="0.5,0.5" Content="Kreator" FontSize="20" Click="CreatorButton_Click">
+        <Button x:Name="CreatorButton" HorizontalAlignment="Right" Margin="0,123,-106,0" VerticalAlignment="Top" Width="270" Height="44" RenderTransformOrigin="0.5,0.5" Content="Przychody i wydatki" FontSize="20" Click="CreatorButton_Click">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
