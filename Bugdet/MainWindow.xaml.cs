@@ -38,6 +38,7 @@ namespace Budget
 
         private void InitializeObjects()
         {
+            Title = "BUDŻET DOMOWY";
             Title = Title + " (" + Main_Classes.Budget.Instance.Name + ")";
             _mainPage = new MainPage();
             _interfacePage = new InterfacePage.InterfacePage();
@@ -176,7 +177,7 @@ namespace Budget
                             CheckSavings();
                             e.Cancel = false;
                         break;
-                    }
+                }
             }
         }
 
