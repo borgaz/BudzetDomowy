@@ -71,13 +71,14 @@ namespace Budget.Payments_Manager
                     //Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
                     Main_Classes.Budget.Instance.AddSinglePayment(temp_id,
                         new SinglePayment(Note.Text, Convert.ToDouble(PaymentValue.Text.Replace(".",",")), categoryItem.Id, true, PaymentName.Text, _singleDateGrid.SelectedDate));
-
-                    int temp_id_balance = Main_Classes.Budget.Instance.BalanceLog.Last().Key + 1;
-                    // uwaga tutaj odejmujemy
-                    double currentBalance = Main_Classes.Budget.Instance.BalanceLog.Last().Value.Balance - Convert.ToDouble(PaymentValue.Text.Replace(".", ","));
-                    Main_Classes.Budget.Instance.AddBalanceLog(temp_id_balance,
-                        new BalanceLog(currentBalance, DateTime.Today, temp_id, 0));
-                    //Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));
+                    if (_singleDateGrid.SelectedDate < DateTime.Now)
+                    {
+                        int temp_id_balance = Main_Classes.Budget.Instance.BalanceLog.Last().Key + 1;
+                        // uwaga tutaj odejmujemy
+                        double currentBalance = Main_Classes.Budget.Instance.BalanceLog.Last().Value.Balance - Convert.ToDouble(PaymentValue.Text.Replace(".", ","));
+                        Main_Classes.Budget.Instance.AddBalanceLog(temp_id_balance, new BalanceLog(currentBalance, DateTime.Today, temp_id, 0));
+                        //Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));
+                    }
                     _singleDateGrid.SingleDatePicker.Text = "";
 
                 }

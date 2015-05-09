@@ -9,24 +9,30 @@
 	Title="WelcomePage">
 
     <Grid>
-        <Image Source="../Resources/Pie-Chart-icon.png" HorizontalAlignment="Left" Height="337" Margin="317,10,0,0" VerticalAlignment="Top" Width="398"/>
-        <DataGrid HorizontalAlignment="Left" Name="historyDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" Margin="10,306,0,0" VerticalAlignment="Top" Height="234" Width="260" Loaded="Page_Loaded">
+        <Image Source="../Resources/Pie-Chart-icon.png" HorizontalAlignment="Left" Height="235" Margin="452,62,0,0" VerticalAlignment="Top" Width="260"/>
+        <DataGrid HorizontalAlignment="Left" Name="shortHistoryDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" Margin="10,306,0,0" VerticalAlignment="Top" Height="234" Width="375" Loaded="Page_Loaded">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nazwa" Width="120" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Kwota" Width="60" Binding="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Data" Width="80" Binding="{Binding Date, UpdateSourceTrigger=PropertyChanged}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <DataGrid HorizontalAlignment="Left" Name="providedPaymentsDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeColumns="False" Margin="10,38,0,0" VerticalAlignment="Top" Height="234" Width="260" SelectionMode="Single">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Nazwa" Width="120" IsReadOnly="True" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="+/-" Width="40" IsReadOnly="True" Binding="{Binding Sign}"/>
+                <DataGridTextColumn Header="Typ" Width="70" IsReadOnly="True" Binding="{Binding Type}"/>
+                <DataGridTextColumn Header="Nazwa" Width="100" IsReadOnly="True" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Kwota" Width="60" IsReadOnly="True" Binding="{Binding Amount}"/>
                 <DataGridTextColumn Header="Data" Width="80" IsReadOnly="True" Binding="{Binding Date}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid HorizontalAlignment="Left" Margin="317,380,0,0" VerticalAlignment="Top" Height="160" Width="260"/>
-        <Label Content="Najbliższe przychody i wydatki" HorizontalAlignment="Left" Height="28" Margin="10,10,0,0" VerticalAlignment="Top" Width="191"/>
-        <Label Content="Cele oszczędzania:" HorizontalAlignment="Left" Height="28" Margin="317,352,0,0" VerticalAlignment="Top" Width="199"/>
+        <DataGrid HorizontalAlignment="Left" Name="providedPaymentsDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeColumns="False" Margin="10,38,0,0" VerticalAlignment="Top" Height="234" Width="375" Loaded="Page_Loaded" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="+/-" Width="40" IsReadOnly="True" Binding="{Binding Sign}"/>
+                <DataGridTextColumn Header="Typ" Width="70" IsReadOnly="True" Binding="{Binding Type}"/>
+                <DataGridTextColumn Header="Nazwa" Width="100" IsReadOnly="True" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Kwota" Width="60" IsReadOnly="True" Binding="{Binding Amount}"/>
+                <DataGridTextColumn Header="Data" Width="80" IsReadOnly="True" Binding="{Binding Date}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid HorizontalAlignment="Left" Margin="440,366,0,0" VerticalAlignment="Top" Height="160" Width="260"/>
+        <Label Content="Najbliższe przychody i wydatki:" HorizontalAlignment="Left" Height="28" Margin="10,10,0,0" VerticalAlignment="Top" Width="191"/>
+        <Label Content="Cele oszczędzania:" HorizontalAlignment="Left" Height="28" Margin="441,328,0,0" VerticalAlignment="Top" Width="199"/>
         <Label Content="Skrócona historia:" HorizontalAlignment="Left" Height="28" Margin="10,278,0,0" VerticalAlignment="Top" Width="164"/>
+        <Label Content="Aktualne saldo:" HorizontalAlignment="Left" Height="25" Margin="551,13,0,0" VerticalAlignment="Top" Width="94"/>
+        <TextBox Name="Balance" HorizontalAlignment="Left" Height="22" Margin="649,16,0,0" TextWrapping="Wrap" IsReadOnly="True" Text="TextBox" VerticalAlignment="Top" Width="61"/>
     </Grid>
 </Page>

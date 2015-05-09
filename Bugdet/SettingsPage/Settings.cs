@@ -1,46 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Budget.SettingsPage
 {
-    public class Settings
+    public sealed class Settings
     {
         private static Settings instance;
+
         /*Wyswietlanie przyszlych platnosci*/
         /*1. z jakiego okresu: */
-        private String period; // co jaki czas (dzien/tydzine/miesiac itp)
-        private int frequency; // co ile "periodow" (dni/tygodni itp)
+        private String PP_period; // co jaki czas (dzien/tydzine/miesiac itp)
+        private int PP_frequency; // co ile "periodow" (dni/tygodni itp)
         /*2. jaka kwota: */
-        private double amountOf; // kwota od
-        private double amountTo; // kwota do
+        private double PP_amountOf; // kwota od
+        private double PP_amountTo; // kwota do
         /*3. liczba wyswietlanych rekordow: */
-        private int numberOfRow; // ile przyszlych rekordow wyswietlamy
+        private int PP_numberOfRow; // ile przyszlych rekordow wyswietlamy
 
-        private Settings() // pozniej trzeba dorobic wczytywanie ustawien z pliku/bazy.
-        {
-            period = "MIESIĄC";
-            frequency = 6;
-            amountOf = 0;
-            amountTo = Double.MaxValue;
-            numberOfRow = 20;
-        }
-
-        public DateTime LastDateToShow()
-        {
-            if (period == "MIESIĄC")
-                return DateTime.Now.AddMonths(frequency);
-            else if (period == "DZIEŃ")
-                return DateTime.Now.AddDays(frequency);
-            else if (period == "TYDZIEŃ")
-                return DateTime.Now.AddDays(7 * frequency);
-            else if (period == "ROK")
-                return DateTime.Now.AddYears(frequency);
-            else
-                return DateTime.Now;
-        }
+        /*Wyswietlanie krotkiej historii*/
+        /*1. z jakiego okresu: */
+        private String SH_period; // co jaki czas (dzien/tydzine/miesiac itp)
+        private int SH_frequency; // co ile "periodow" (dni/tygodni itp)
+        /*2. jaka kwota: */
+        private double SH_amountOf; // kwota od
+        private double SH_amountTo; // kwota do
+        /*3. liczba wyswietlanych rekordow: */
+        private int SH_numberOfRow; // ile przyszlych rekordow wyswietlamy
 
         public static Settings Instance
         {
@@ -51,66 +35,172 @@ namespace Budget.SettingsPage
                     instance = new Settings();
                 }
                 return instance;
-            } 
+            }
+
         }
 
-        public String Period
+        private Settings() // pozniej trzeba dorobic wczytywanie ustawien z pliku/bazy.
+        {
+            PP_period = "MIESIĄC";
+            PP_frequency = 6;
+            PP_amountOf = 0;
+            PP_amountTo = Double.MaxValue;
+            PP_numberOfRow = 20;
+
+            SH_period = "MIESIĄC";
+            SH_frequency = 6;
+            SH_amountOf = 0;
+            SH_amountTo = Double.MaxValue;
+            SH_numberOfRow = 20;
+        }
+
+        public DateTime PP_LastDateToShow()
+        {
+            if (PP_period == "MIESIĄC")
+                return DateTime.Now.AddMonths(PP_frequency);
+            else if (PP_period == "DZIEŃ")
+                return DateTime.Now.AddDays(PP_frequency);
+            else if (PP_period == "TYDZIEŃ")
+                return DateTime.Now.AddDays(7 * PP_frequency);
+            else if (PP_period == "ROK")
+                return DateTime.Now.AddYears(PP_frequency);
+            else
+                return DateTime.Now;
+        }
+
+        public DateTime SH_LastDateToShow()
+        {
+            if (SH_period == "MIESIĄC")
+                return DateTime.Now.AddMonths(-1 * SH_frequency); 
+            else if (SH_period == "DZIEŃ")
+                return DateTime.Now.AddDays(-1 * SH_frequency);
+            else if (SH_period == "TYDZIEŃ")
+                return DateTime.Now.AddDays(-7 * SH_frequency);
+            else if (SH_period == "ROK")
+                return DateTime.Now.AddYears(-1 * SH_frequency);
+            else
+                return DateTime.Now;
+        }
+
+        // Nizej sa juz tylko wlasciwosci(settery i gettery)
+
+        public String PP_Period
         {
             get
             {
-                return period;
+                return PP_period;
             }
             set
             {
-                period = value;
+                PP_period = value;
             }
         }
 
-        public int Frequency
+        public int PP_Frequency
         {
             get
             {
-                return frequency;
+                return PP_frequency;
             }
             set
             {
-                frequency = value;
+                PP_frequency = value;
             }
         }
 
-        public int NumberOfRow
+        public int PP_NumberOfRow
         {
             get
             {
-                return numberOfRow;
+                return PP_numberOfRow;
             }
             set
             {
-                numberOfRow = value;
+                PP_numberOfRow = value;
             }
         }
 
-        public double AmountOf
+        public double PP_AmountOf
         {
             get
             {
-                return amountOf;
+                return PP_amountOf;
             }
             set
             {
-                amountOf = value;
+                PP_amountOf = value;
             }
         }
 
-        public double AmountTo
+        public double PP_AmountTo
         {
             get
             {
-                return amountTo;
+                return PP_amountTo;
             }
             set
             {
-                amountTo = value;
+                PP_amountTo = value;
+            }
+        }
+
+        public String SH_Period
+        {
+            get
+            {
+                return SH_period;
+            }
+            set
+            {
+                SH_period = value;
+            }
+        }
+
+        public int SH_Frequency
+        {
+            get
+            {
+                return SH_frequency;
+            }
+            set
+            {
+                SH_frequency = value;
+            }
+        }
+
+        public int SH_NumberOfRow
+        {
+            get
+            {
+                return SH_numberOfRow;
+            }
+            set
+            {
+                SH_numberOfRow = value;
+            }
+        }
+
+        public double SH_AmountOf
+        {
+            get
+            {
+                return SH_amountOf;
+            }
+            set
+            {
+                SH_amountOf = value;
+            }
+        }
+
+        public double SH_AmountTo
+        {
+            get
+            {
+                return SH_amountTo;
+            }
+            set
+            {
+                SH_amountTo = value;
             }
         }
     }

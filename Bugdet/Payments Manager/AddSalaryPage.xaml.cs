@@ -68,16 +68,19 @@ namespace Budget.Payments_Manager
                     }
                     catch (Exception)
                     { } //gdy brak elementów w tablicy temp_id = 1
-                    int temp_id_balance = Main_Classes.Budget.Instance.BalanceLog.Last().Key + 1;
+                    
 
                     //Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
                     Main_Classes.Budget.Instance.AddSinglePayment(temp_id,
                         new SinglePayment(Note.Text, Convert.ToDouble(SalaryValue.Text.Replace(".", ",")), categoryItem.Id, false, SalaryName.Text, _singleDateGrid.SelectedDate));
                     // uwaga tutaj dodajemy
-                    double currentBalance = Main_Classes.Budget.Instance.BalanceLog.Last().Value.Balance + Convert.ToDouble(SalaryValue.Text.Replace(".", ","));
-                    Main_Classes.Budget.Instance.AddBalanceLog(temp_id_balance,
-                        new BalanceLog(currentBalance, DateTime.Today, temp_id, 0));
-                    // Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));
+                    if (_singleDateGrid.SelectedDate < DateTime.Now)
+                    {
+                        int temp_id_balance = Main_Classes.Budget.Instance.BalanceLog.Last().Key + 1;
+                        double currentBalance = Main_Classes.Budget.Instance.BalanceLog.Last().Value.Balance + Convert.ToDouble(SalaryValue.Text.Replace(".", ","));
+                        Main_Classes.Budget.Instance.AddBalanceLog(temp_id_balance, new BalanceLog(currentBalance, DateTime.Today, temp_id, 0));
+                        // Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));
+                    }
                     _singleDateGrid.SingleDatePicker.Text = "";
                 }
 

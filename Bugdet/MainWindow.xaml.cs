@@ -38,6 +38,7 @@ namespace Budget
 
         private void InitializeObjects()
         {
+            Title = Title + " (" + Main_Classes.Budget.Instance.Name + ")";
             _mainPage = new MainPage();
             _interfacePage = new InterfacePage.InterfacePage();
             _welcomePage = new WelcomePage.WelcomePage();
@@ -54,10 +55,6 @@ namespace Budget
             th = new Thread(OnPageChange);
             th.Start();
         }
-        //protected override void OnClosed(EventArgs e)
-        //{
-   
-        //}
 
         ~MainWindow()
         {

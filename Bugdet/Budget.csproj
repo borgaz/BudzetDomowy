@@ -136,7 +136,7 @@
     <Compile Include="Utility Classes\CustomMessageBox.xaml.cs">
       <DependentUpon>CustomMessageBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WelcomePage\ProvidedPayment.cs" />
+    <Compile Include="WelcomePage\PaymentForDataGrid.cs" />
     <Compile Include="WelcomePage\WelcomePage.xaml.cs">
       <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>

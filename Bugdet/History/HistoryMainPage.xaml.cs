@@ -53,7 +53,7 @@ namespace Budget.History
                         if (categoryItem.Id != pp.CategoryID)
                             continue;
                     }
-                    
+
                     if (pp.Type && SinglePaymentCheckBox.IsChecked == true)
                     {
                         history.Rows.Add(pp.Type, p.Key, pp.Name, Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name,
