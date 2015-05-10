@@ -36,7 +36,7 @@ namespace Budget.New_Budget
                 int temp = 1;
                 try
                 { 
-                    temp = _periodPayments.Last().Key + 1; 
+                    temp = _periodPayments.Keys.Max() + 1; 
                 }
                 catch { }
                 _periodPayments.Add(temp, new PeriodPayment(originalCategoryID[CategoryComboBox.SelectedIndex],

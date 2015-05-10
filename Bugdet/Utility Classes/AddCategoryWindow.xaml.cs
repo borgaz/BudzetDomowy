@@ -56,15 +56,15 @@ namespace Budget.Utility_Classes
 
                 if (!creator)
                 {
-                    Main_Classes.Budget.Instance.ListOfAdds.Add(new Changes(typeof(Category), Main_Classes.Budget.Instance.Categories.Last().Key + 1));
-                    Main_Classes.Budget.Instance.Categories.Add(Main_Classes.Budget.Instance.Categories.Last().Key + 1,
+                    Main_Classes.Budget.Instance.ListOfAdds.Add(new Changes(typeof(Category), Main_Classes.Budget.Instance.Categories.Keys.Max() + 1));
+                    Main_Classes.Budget.Instance.Categories.Add(Main_Classes.Budget.Instance.Categories.Keys.Max() + 1,
                         new Category(CategoryNameTextBox.Text, CategoryNoteTextBox.Text, category));
                     Main_Classes.Budget.Instance.InsertCategories(_actualComboBox, type);
                     _actualComboBox.SelectedIndex = _actualComboBox.Items.Count - 1;
                 }
                 else
                 {
-                    _categories.Add(_categories.Last().Key + 1,
+                    _categories.Add(_categories.Keys.Max() + 1,
                         new Category(CategoryNameTextBox.Text, CategoryNoteTextBox.Text, category));
                     _creatorIdList = MakeBudgetWindow.InsertCategories(_actualComboBox, _categories, _creatorType);
                     _actualComboBox.SelectedIndex = _actualComboBox.Items.Count - 1;
