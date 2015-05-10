@@ -36,6 +36,10 @@ namespace Budget.Main_Classes
             {
                 return balance;
             }
+            set
+            {
+                balance = value;
+            }
         }
 
         public int SinglePaymentID

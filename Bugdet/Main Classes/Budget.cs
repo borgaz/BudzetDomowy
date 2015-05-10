@@ -244,6 +244,15 @@ namespace Budget.Main_Classes
 
         public void DeleteSinglePayment(int indexSinglePayment, int indexBalanceLog)
         {
+            double amountToRefactor = this.payments[indexSinglePayment].Amount;
+            if (this.payments[indexSinglePayment].Type == false)
+                amountToRefactor = (-1) * amountToRefactor;
+            foreach (KeyValuePair<int, BalanceLog> b in this.balanceLogs)
+            {
+                if (b.Value.SinglePaymentID > indexSinglePayment)
+                    b.Value.Balance += amountToRefactor;
+            }
+
             payments.Remove(indexSinglePayment);
             balanceLogs.Remove(indexBalanceLog);
 
