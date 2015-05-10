@@ -47,7 +47,6 @@ namespace Budget
             _historyPage = new HistoryMainPage();
             WelcomePageButton.IsEnabled = false;
             _actualPage = 2;
-            _welcomePage.Title += Main_Classes.Budget.Instance.Name;
             CreatorButton.IsEnabled = true;
             SettingsButton.IsEnabled = true;
             HistoryButton.IsEnabled = true;

@@ -11,9 +11,9 @@
         <Frame x:Name="BtnsContentFrame" Content="" Margin="10,45,0,0" Height="450" Width="300" VerticalAlignment="Top" HorizontalAlignment="Left" NavigationUIVisibility="Hidden" Background="#33CC00"/>
         <Button x:Name="AddPaymentBtn" Content="Dodaj Wydatek" HorizontalAlignment="Left" Margin="190,10,0,0" VerticalAlignment="Top" Width="120" Click="addPaymentBtn_Click" Height="25"/>
         <Button x:Name="AddSalaryBtn" Content="Dodaj Przychód" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" Click="addSalaryBtn_Click" Height="25" Grid.Column="1"/>
-        <Button x:Name="LoadHistoryButton" Content="Historia" HorizontalAlignment="Left" Margin="468,508,0,12" Height="30" Width="120" Click="LoadHistoryButton_Click" />
-        <Button x:Name="DumpAllButton" Content="Zapisz" HorizontalAlignment="Left" Margin="99,495,0,0" Height="30" Width="120" Click="DumpAllButton_Click" />
-        <TabControl HorizontalAlignment="Left" Height="485" Margin="340,10,0,0" VerticalAlignment="Top" Width="375">
+        <Button x:Name="LoadHistoryButton" Content="Historia" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="468,0,0,10" Height="30" Width="120" Click="LoadHistoryButton_Click" />
+        <Button x:Name="DumpAllButton" Content="Zapisz" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="99,0,0,10" Height="30" Width="120" Click="DumpAllButton_Click" />
+        <TabControl HorizontalAlignment="Right" VerticalAlignment="Top" Height="485" Margin="0,10,10,0" Width="375">
             <TabItem Header="Wydatki i przychody okresowe">
                 <DataGrid x:Name="PeriodPaymentsTable" Loaded="dataGridView_Loaded" IsReadOnly="True" LoadingRow="DataGridView_OnLoadingRow" Margin="0,0,0,0">
                     <DataGrid.ContextMenu>
@@ -26,7 +26,7 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="Ostatnio dodane" FocusableChanged="UIElement_OnFocusableChanged">
-                <DataGrid x:Name="LastAddedDataGrid" Loaded="LastAddedDataGrid_Loaded" IsReadOnly="True" Height="410" Width="335" LoadingRow="LastAddedDataGrid_OnLoadingRow"/>
+                <DataGrid x:Name="LastAddedDataGrid" Loaded="LastAddedDataGrid_Loaded" IsReadOnly="True" Margin="10,8,10,10" LoadingRow="LastAddedDataGrid_OnLoadingRow"/>
             </TabItem>
         </TabControl>
     </Grid>

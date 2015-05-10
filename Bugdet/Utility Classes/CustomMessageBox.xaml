@@ -1,14 +1,14 @@
 ﻿<Window x:Class="Budget.Utility_Classes.CustomMessageBox"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="CustomMessageBox" Height="181" Width="350">
+        Title="Okno wylogowania" Height="113" Width="353">
     <Grid>
-        <StackPanel x:Name="ButtonsStackPanel" Orientation="Horizontal" HorizontalAlignment="Center" Height="32" Margin="15,110,5,0" VerticalAlignment="Top" Width="322">
-            <Button x:Name="YesButton" Content="Button" Width="75" Margin="15,0" Click="YesButton_OnClick"/>
-            <Button x:Name="CancelButton" Content="Button" Width="75" Margin="15,0" Click="CancelButton_OnClick"/>
-            <Button x:Name="NoButton" Content="Button" Width="75" Margin="15,0" Click="NoButton_OnClick"/>
+        <StackPanel x:Name="ButtonsStackPanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,6" Height="32" Width="345">
+            <Button x:Name="YesButton" Content="Button" Width="75" Margin="30,0,15,0" Click="YesButton_OnClick"/>
+            <Button x:Name="CancelButton" Content="Button" Width="75" Margin="15,0,15,0" Click="CancelButton_OnClick"/>
+            <Button x:Name="NoButton" Content="Button" Width="75" Margin="15,0,30,0" Click="NoButton_OnClick"/>
         </StackPanel>
-        <TextBlock x:Name="MessageBoxText" HorizontalAlignment="Left" Margin="15,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="80" Width="308" TextAlignment="Center"/>
+        <TextBlock x:Name="MessageBoxText" Margin="15,10,15,43" TextWrapping="Wrap" TextAlignment="Center"/>
 
     </Grid>
 </Window>

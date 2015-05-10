@@ -33,8 +33,8 @@ namespace Budget.WelcomePage
                     Main_Classes.PeriodPayment pP = (Main_Classes.PeriodPayment) payment;
                     if (pP.Amount < SettingsPage.Settings.Instance.PP_AmountTo && pP.Amount > SettingsPage.Settings.Instance.PP_AmountOf)
                     {
-                       lastDate = SettingsPage.Settings.Instance.PP_LastDateToShow() <= pP.EndDate ? SettingsPage.Settings.Instance.PP_LastDateToShow() : pP.EndDate;
-                       providedPayments.AddRange(Main_Classes.PeriodPayment.createListOfSelectedPeriodPayments(pP, lastDate));
+                        lastDate = SettingsPage.Settings.Instance.PP_LastDateToShow() <= pP.EndDate ? SettingsPage.Settings.Instance.PP_LastDateToShow() : pP.EndDate;
+                        providedPayments.AddRange(Main_Classes.PeriodPayment.createListOfSelectedPeriodPayments(pP, lastDate));
                     }
                 }
                 else
