@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
@@ -6,6 +8,9 @@ using Budget.History;
 using Budget.Payments_Manager;
 using Budget.SettingsPage;
 using Budget.Utility_Classes;
+using Budget.Main_Classes;
+using Budget.New_Budget;
+using Budget.Payments_Manager;
 
 namespace Budget
 {
@@ -54,6 +59,7 @@ namespace Budget
             running = true;
             th = new Thread(OnPageChange);
             th.Start();
+
         }
 
         ~MainWindow()
@@ -109,6 +115,12 @@ namespace Budget
             HistoryButton.IsEnabled = true;
             _actualPage = 1;
             InsertPage();
+
+            //List<SinglePayment> list = Main_Classes.Budget.Instance.CheckPeriodPayments();
+            //if (list.Count > 0)
+            //{
+            //    new CheckingPeriodPayments(list).ShowDialog();
+            //}
         }
 
         private void WelcomePageButton_Click(object sender, RoutedEventArgs e)

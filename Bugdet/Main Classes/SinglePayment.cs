@@ -32,5 +32,10 @@ namespace Budget.Main_Classes
             //Mniej niż zero - historia
             //Większe od zera - przyszlosc
         }
+
+        override public void changeUpdateDate()
+        {
+            this.date = DateTime.Now;
+        }
     }
 }

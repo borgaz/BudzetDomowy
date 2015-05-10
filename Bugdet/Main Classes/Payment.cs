@@ -11,6 +11,7 @@ namespace Budget.Main_Classes
         private String note; // notatka
 
         abstract public int CompareDate();
+        abstract public void changeUpdateDate();
 
         public override string ToString()
         {
@@ -72,6 +73,16 @@ namespace Budget.Main_Classes
             {
                 name = value;
             }
-        }     
+        }
+
+        virtual public int countPeriods()
+        {
+            return 0;
+        }
+
+        virtual public SinglePayment createSingleFromPeriod(int _period)
+        {
+            return null;
+        }
     }
 }

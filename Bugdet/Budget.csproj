@@ -74,6 +74,9 @@
     </ApplicationDefinition>
     <Compile Include="Main Classes\Budget.cs" />
     <Compile Include="Main Classes\Budget2.cs" />
+    <Compile Include="Payments Manager\CheckingPeriodPayments.xaml.cs">
+      <DependentUpon>CheckingPeriodPayments.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Payments Manager\PeriodDateGrid.xaml.cs">
       <DependentUpon>PeriodDateGrid.xaml</DependentUpon>
     </Compile>
@@ -162,6 +165,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LoginWindow\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Payments Manager\CheckingPeriodPayments.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
