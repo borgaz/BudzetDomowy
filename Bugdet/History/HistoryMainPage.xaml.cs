@@ -143,7 +143,11 @@ namespace Budget.History
 
         private void UpdateItem_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            // dla testow
+            int id = 5;
+            Main_Classes.Budget.Instance.Categories[id].Name = "gas";
+            Main_Classes.Budget.Instance.ListOfEdts.Add(new Utility_Classes.Changes (typeof(Category),id));
+            //throw new NotImplementedException();
         }
 
         private void PeriodPaymentCheckBox_OnClick(object sender, RoutedEventArgs e)

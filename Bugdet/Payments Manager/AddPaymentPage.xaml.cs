@@ -72,8 +72,11 @@ namespace Budget.Payments_Manager
                     //Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
                     Main_Classes.Budget.Instance.AddSinglePayment(temp_id,
                         new SinglePayment(Note.Text, Convert.ToDouble(PaymentValue.Text.Replace(".",",")), categoryItem.Id, true, PaymentName.Text, _singleDateGrid.SelectedDate));
-                    if (_singleDateGrid.SelectedDate < DateTime.Now)
+                    Console.WriteLine(_singleDateGrid.SelectedDate);
+                    Console.WriteLine(DateTime.Now);
+                    if (_singleDateGrid.SelectedDate <= DateTime.Now)
                     {
+                       
                         int temp_id_balance = Main_Classes.Budget.Instance.BalanceLog.Last().Key + 1;
                         // uwaga tutaj odejmujemy
                         double currentBalance = Main_Classes.Budget.Instance.BalanceLog.Last().Value.Balance - Convert.ToDouble(PaymentValue.Text.Replace(".", ","));

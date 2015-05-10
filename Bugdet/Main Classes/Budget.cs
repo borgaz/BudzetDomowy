@@ -70,6 +70,7 @@ namespace Budget.Main_Classes
                 {
                     instance = FetchAll();
                 }
+                
                 return instance;
             }
         }
@@ -178,6 +179,7 @@ namespace Budget.Main_Classes
         {
             get
             {
+                this.balance = this.balanceLogs[this.balanceLogs.Keys.Max()].Balance;
                 return balance;
             }
         }
@@ -244,6 +246,7 @@ namespace Budget.Main_Classes
         {
             payments.Remove(indexSinglePayment);
             balanceLogs.Remove(indexBalanceLog);
+
             ListOfDels.Add(new Changes(typeof(SinglePayment), indexSinglePayment));
         }
 

@@ -76,11 +76,12 @@ namespace Budget.Payments_Manager
                     Main_Classes.Budget.Instance.AddSinglePayment(temp_id,
                         new SinglePayment(Note.Text, Convert.ToDouble(SalaryValue.Text.Replace(".", ",")), categoryItem.Id, false, SalaryName.Text, _singleDateGrid.SelectedDate));
                     // uwaga tutaj dodajemy
-                    if (_singleDateGrid.SelectedDate < DateTime.Now)
+                    if (_singleDateGrid.SelectedDate <= DateTime.Now)
                     {
-                        int temp_id_balance = Main_Classes.Budget.Instance.BalanceLog.Last().Key + 1;
-                        double currentBalance = Main_Classes.Budget.Instance.BalanceLog.Last().Value.Balance + Convert.ToDouble(SalaryValue.Text.Replace(".", ","));
-                        Main_Classes.Budget.Instance.AddBalanceLog(temp_id_balance, new BalanceLog(currentBalance, DateTime.Today, temp_id, 0));
+                        int balanceMaxKey = Main_Classes.Budget.Instance.BalanceLog.Keys.Max();
+                        int tempIdBalance = balanceMaxKey + 1;
+                        double currentBalance = Main_Classes.Budget.Instance.BalanceLog[balanceMaxKey].Balance + Convert.ToDouble(SalaryValue.Text.Replace(".", ","));
+                        Main_Classes.Budget.Instance.AddBalanceLog(tempIdBalance, new BalanceLog(currentBalance, DateTime.Today, temp_id, 0));
                         // Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));
                     }
                     _singleDateGrid.SingleDatePicker.Text = "";

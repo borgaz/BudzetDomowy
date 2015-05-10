@@ -19,7 +19,9 @@ namespace Budget.WelcomePage
         {
             providedPaymentsDataGrid.ItemsSource = createDataForPaymentForDataGridDataGrid();
             shortHistoryDataGrid.ItemsSource = creataDataForShortHistoryDataGrid();
-            Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.BalanceLog[Main_Classes.Budget.Instance.BalanceLog.Count].Balance);
+            //int balanceMaxKey = Main_Classes.Budget.Instance.Balance;
+            Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.Balance);
+            //Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.BalanceLog[Main_Classes.Budget.Instance.BalanceLog.Count].Balance);
         }
 
         private List<PaymentForDataGrid> createDataForPaymentForDataGridDataGrid()

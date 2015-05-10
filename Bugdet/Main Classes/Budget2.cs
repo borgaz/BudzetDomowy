@@ -170,7 +170,7 @@ namespace Budget.Main_Classes
                         PeriodPayment p = (PeriodPayment)Budget.Instance.Payments[C.ID];
                         string amountWithDot = p.Amount.ToString().Replace(",", ".");
                         SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO PeriodPayments(id, categoryId, amount, note, type, name, frequency, period, lastUpdate, startDate, endDate) values('" +
-                            C.ID + "','" + p.CategoryID + "','" + amountWithDot + "','" + p.Note + "','" + Convert.ToInt32(p.Type) + "','" + p.Name + "','" + p.Frequency + "','" + p.Period + "','" + p.LastUpdate + "','" +
+                            C.ID + "','" + p.CategoryID + "','" + amountWithDot + "','" + p.Note + "','" + Convert.ToInt32(p.Type) + "','" + p.Name + "','" + p.Frequency + "','" + p.Period + "','" + p.LastUpdate.ToShortDateString() + "','" +
                             p.StartDate.ToShortDateString() + "','" + p.EndDate.ToShortDateString() + "')");
                     }
                     if (C.Type == typeof(SinglePayment))
@@ -208,9 +208,7 @@ namespace Budget.Main_Classes
             return true;
         }
 
-        private Boolean DeleteFromDB(List<Changes> listOfDels, bool isPartOfEdts) //troche to dziwne rozwiazanie, 
-            //ale funkcja troche inaczej zachowuje sie gdy usuwanie jest czescia edytowania - wtedy nie usuwamy balanceloga 
-            // tylko go uaktualniamy
+        private Boolean DeleteFromDB(List<Changes> listOfDels)
         {
             try
             {
@@ -226,15 +224,13 @@ namespace Budget.Main_Classes
                     }
                     if (C.Type == typeof(SinglePayment))
                     {
-                        if (!isPartOfEdts)
-                        {
-                            System.Data.DataSet tempSelect = SqlConnect.Instance.SelectQuery("SELECT amount,type FROM SinglePayments WHERE id = " + C.ID);
-                            double amountToRefactor = (double)tempSelect.Tables[0].Rows[0]["amount"];
-                            if ((bool)tempSelect.Tables[0].Rows[0]["type"] == false)
-                                amountToRefactor = (-1) * amountToRefactor;
-                            SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE BALANCELOGS SET BALANCE = (BALANCE + '" + amountToRefactor + "') WHERE singlePaymentid > " + C.ID);
-                            SqlConnect.Instance.ExecuteSqlNonQuery("DELETE FROM BALANCELOGS WHERE singlePaymentId = " + C.ID);
-                        }
+                        System.Data.DataSet tempSelect = SqlConnect.Instance.SelectQuery("SELECT amount,type FROM SinglePayments WHERE id = " + C.ID);
+                        double amountToRefactor = (double)tempSelect.Tables[0].Rows[0]["amount"];
+                        if ((bool)tempSelect.Tables[0].Rows[0]["type"] == false)
+                            amountToRefactor = (-1) * amountToRefactor;
+                        SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE BALANCELOGS SET BALANCE = (BALANCE + '" + amountToRefactor + "') WHERE singlePaymentid > " + C.ID);
+                        SqlConnect.Instance.ExecuteSqlNonQuery("DELETE FROM BALANCELOGS WHERE singlePaymentId = " + C.ID);
+
                         SqlConnect.Instance.ExecuteSqlNonQuery("DELETE FROM SINGLEPAYMENTS WHERE id = " + C.ID);
                     }
                     if (C.Type == typeof(SavingsTarget))
@@ -254,41 +250,98 @@ namespace Budget.Main_Classes
 
         private Boolean EditDB(List<Changes> listOfEdts)
         {
-            foreach (Changes C in listOfEdts)
+            try
             {
-                if (C.Type == typeof(SinglePayment))
+                foreach (Changes C in listOfEdts)
                 {
-                    System.Data.DataSet tempSelect = SqlConnect.Instance.SelectQuery("SELECT amount,type FROM SinglePayments WHERE id = " + C.ID);
-                    if (payments[C.ID].Amount != (double)tempSelect.Tables[0].Rows[0]["amount"])
+                    if (C.Type == typeof(SinglePayment))
                     {
-                        double amountToRefactor;
-                        if ((bool)tempSelect.Tables[0].Rows[0]["type"] == false)
-                            amountToRefactor = payments[C.ID].Amount - (double)tempSelect.Tables[0].Rows[0]["amount"];
-                        else
-                            amountToRefactor = (double)tempSelect.Tables[0].Rows[0]["amount"] - payments[C.ID].Amount;
-                        string amountToRefactorWithDot = amountToRefactor.ToString().Replace(",", ".");
-                       SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE BALANCELOGS SET BALANCE = (BALANCE + '" + amountToRefactorWithDot + "') WHERE singlePaymentid >= " + C.ID);
+                        System.Data.DataSet tempSelect = SqlConnect.Instance.SelectQuery("SELECT amount,type FROM SinglePayments WHERE id = " + C.ID);
+                        if (payments[C.ID].Amount != (double)tempSelect.Tables[0].Rows[0]["amount"])
+                        {
+                            double amountToRefactor;
+                            if ((bool)tempSelect.Tables[0].Rows[0]["type"] == false)
+                                amountToRefactor = payments[C.ID].Amount - (double)tempSelect.Tables[0].Rows[0]["amount"];
+                            else
+                                amountToRefactor = (double)tempSelect.Tables[0].Rows[0]["amount"] - payments[C.ID].Amount;
+                            string amountToRefactorWithDot = amountToRefactor.ToString().Replace(",", ".");
+                            SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE BALANCELOGS SET BALANCE = (BALANCE + '" + amountToRefactorWithDot + "') WHERE singlePaymentid >= " + C.ID);
+                        }
+                        SinglePayment p = (SinglePayment)Budget.Instance.Payments[C.ID];
+                        string amountWithDot = p.Amount.ToString().Replace(",", ".");
+                        SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE SINGLEPAYMENTS SET CATEGORYID = '" + p.CategoryID +
+                            "', NAME ='" + p.Name +
+                            "', AMOUNT ='" + amountWithDot +
+                            "', DATE ='" + p.Date.ToShortDateString() +
+                            "', TYPE = '" + Convert.ToInt32(p.Type) +
+                            "', NOTE = '" + p.Note +
+                            "'WHERE id = " + C.ID);
+
+                    }
+
+                    if (C.Type == typeof(Category))
+                    {
+                        SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE CATEGORIES SET NAME = '" + categories[C.ID].Name +
+                            "', NOTE ='" + categories[C.ID].Note +
+                            "', TYPE = '" + Convert.ToInt32(categories[C.ID].Type) +
+                            "' WHERE id = " + C.ID);
+                    }
+                    if (C.Type == typeof(PeriodPayment))
+                    {
+                        PeriodPayment p = (PeriodPayment)Budget.Instance.Payments[C.ID];
+                        string amountWithDot = p.Amount.ToString().Replace(",", ".");
+                        SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE PERIODPAYMENTS SET CATEGORYID = '" + p.CategoryID +
+                            "', NAME ='" + p.Name +
+                            "', AMOUNT ='" + amountWithDot +
+                            "', FREQUENCY ='" + p.Frequency +
+                            "', PERIOD ='" + p.Period +
+                            "', STARTDATE ='" + p.StartDate.ToShortDateString() +
+                            "', ENDDATE ='" + p.EndDate.ToShortDateString() +
+                            "', LASTUPDATE ='" + p.LastUpdate.ToShortDateString() +
+                            "', TYPE = '" + Convert.ToInt32(p.Type) +
+                            "', NOTE = '" + p.Note +
+                            "'WHERE id = " + C.ID);
+                    }
+                    if (C.Type == typeof(SavingsTarget))
+                    {
+                        SavingsTarget s = Budget.Instance.SavingsTargets[C.ID];
+                        string moneyHoldingsWithDot = s.MoneyHoldings.ToString().Replace(",", ".");
+                        string neededAmountWithDot = s.NeededAmount.ToString().Replace(",", ".");
+                        SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE SAVINGSTARGETS SET TARGET = '" + s.Target +
+                            "', NOTE = '" + s.Note +
+                            "', DEADLINE ='" + s.Deadline.ToShortDateString() +
+                            "', MONEYHOLDINGS='" + moneyHoldingsWithDot +
+                            "', NEEDEDAMOUNT='" + neededAmountWithDot +
+                            "', PRIORITY = '" + s.Priority +
+                            "', ADDEDDATE = '" + s.AddedDate.ToShortDateString() +
+                            "' WHERE id = " + C.ID);
                     }
                 }
             }
-
-            if (DeleteFromDB(listOfEdts,true) && AddToDB(listOfEdts))
+            catch (Exception ex)
             {
-                return true;
+                SqlConnect.Instance.ErrLog(ex);
+                return false;
             }
-            return false;
+            //if (DeleteFromDB(listOfEdts,true) && AddToDB(listOfEdts))
+            //{
+            //    return true;
+            //}
+            return true;
         }
 
         public void Dump()
         {
             if (Budget.Instance.AddToDB(Budget.Instance.ListOfAdds)
                 && Budget.Instance.EditDB(Budget.Instance.ListOfEdts)
-                && Budget.Instance.DeleteFromDB(Budget.Instance.ListOfDels,false))
+                && Budget.Instance.DeleteFromDB(Budget.Instance.ListOfDels))
             {
                 MessageBox.Show("Poprawnie zapisana baza danych!");
                 listOfEdts.Clear();
                 listOfDels.Clear();
                 listOfAdds.Clear();
+                SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE BUDGET SET BALANCE = '" + balance.ToString().Replace(",", ".") +
+                    "'");
                 instance = Budget.FetchAll();
             }
             else
