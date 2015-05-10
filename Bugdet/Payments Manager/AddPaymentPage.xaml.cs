@@ -35,10 +35,12 @@ namespace Budget.Payments_Manager
                 var categoryItem = (ComboBoxItem)CategoryBox.SelectedValue;
                 if (PeriodPaymentRadio.IsChecked == true)
                 {
-                    var temp_id = -1;
+                    int temp_id = -1;
                     try
-                    { 
-                        temp_id = Main_Classes.Budget.Instance.Payments.First().Key - 1; 
+                    {
+                        temp_id = Main_Classes.Budget.Instance.Payments.Keys.Min() - 1;
+                        if (temp_id == 0) // w bazie chcemy periodPays indeksowane od -1
+                            temp_id = -1;
                     }
                     catch (Exception)
                     { }
@@ -60,9 +62,8 @@ namespace Budget.Payments_Manager
                 {
                     int temp_id = 1;
                     try
-                    { 
-                        temp_id = Main_Classes.Budget.Instance.Payments.Last().Key + 1;
-                        Console.WriteLine(temp_id);
+                    {
+                        temp_id = Main_Classes.Budget.Instance.Payments.Keys.Max() + 1;
                         if (temp_id == 0) // w bazie chcemy singlePays indeksowane od 1
                             temp_id = 1;
                     }
