@@ -340,7 +340,7 @@ namespace Budget.Main_Classes
                 {
                     try
                     {
-                        periodCount = p.Value.countPeriods();
+                        periodCount = p.Value.CountPeriods();
                         Console.WriteLine("\n" + periodCount);
 
                         if (periodCount>0)
@@ -349,8 +349,8 @@ namespace Budget.Main_Classes
                         }
                         while (periodCount>0) 
                         {
-                            editList.Add(p.Value.createSingleFromPeriod(periodCount));
-                            Console.WriteLine(p.Value.createSingleFromPeriod(periodCount).ToString() + "\n");
+                            editList.Add(p.Value.CreateSingleFromPeriod(periodCount));
+                            Console.WriteLine(p.Value.CreateSingleFromPeriod(periodCount).ToString() + "\n");
                             periodCount--;
                         }           
                     }

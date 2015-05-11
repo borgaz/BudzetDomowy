@@ -30,7 +30,7 @@ namespace Budget.Main_Classes
 
         public PeriodPayment(PeriodPayment pP) : base(pP.CategoryID, pP.Amount, pP.Note, pP.Type, pP.Name)
         {
-            this.lastUpdate = pP.countNextDate();
+            this.lastUpdate = pP.CountNextDate();
             this.startDate = pP.startDate;
             this.endDate = pP.endDate;
             this.frequency = pP.frequency;
@@ -86,7 +86,7 @@ namespace Budget.Main_Classes
             //Większe od zera - lastUpdate jest późniejsza niż Now. 
         }
 
-        override public int countPeriods()
+        override public int CountPeriods()
         {          
             int _periods = 0;
 
@@ -116,7 +116,7 @@ namespace Budget.Main_Classes
             this.lastUpdate = DateTime.Now;
         }
 
-        override public SinglePayment createSingleFromPeriod(int _period)
+        override public SinglePayment CreateSingleFromPeriod(int _period)
         {
             DateTime temp = new DateTime();
             if (this.period == "MIESIĄC")
@@ -131,7 +131,7 @@ namespace Budget.Main_Classes
             return new SinglePayment(this.Note, this.Amount, this.CategoryID, this.Type, "[Okresowy]" + this.Name, temp);
         }
 
-        public DateTime countNextDate()
+        public DateTime CountNextDate()
         {
             if (period == "MIESIĄC")
                 return lastUpdate.AddMonths(frequency);
@@ -145,7 +145,7 @@ namespace Budget.Main_Classes
                 return DateTime.Now;
         }
 
-        static public List<WelcomePage.PaymentForDataGrid> createListOfSelectedPeriodPayments(PeriodPayment pP, DateTime lastDate)
+        static public List<WelcomePage.PaymentForDataGrid> CreateListOfSelectedPeriodPayments(PeriodPayment pP, DateTime lastDate)
         {
             List<PeriodPayment> periodPayments = new List<PeriodPayment>();
             if (pP.startDate >= DateTime.Now)
@@ -161,7 +161,7 @@ namespace Budget.Main_Classes
                 }
                 periodPayments.Add(tempPP);
             }
-            checkAndAddElement(periodPayments, lastDate);
+            CheckAndAddElement(periodPayments, lastDate);
 
             List<WelcomePage.PaymentForDataGrid> providedPayments = new List<WelcomePage.PaymentForDataGrid>();
             foreach (PeriodPayment temp in periodPayments)
@@ -171,12 +171,18 @@ namespace Budget.Main_Classes
             return providedPayments;
         }
 
-        static public void checkAndAddElement(List<PeriodPayment> list, DateTime lastDate)
+        static public void CheckAndAddElement(List<PeriodPayment> list, DateTime lastDate)
         {
-            if (list[list.Count - 1].countNextDate() <= lastDate)
+            //foreach (var pP in list)
+            //{
+            //    if (list[list.Count - 1].CountNextDate() > lastDate)
+            //        continue;
+            //    list.Add(new PeriodPayment(list[list.Count - 1]));
+            //}
+            if (list[list.Count - 1].CountNextDate() <= lastDate)
             {
                 list.Add(new PeriodPayment(list[list.Count - 1]));
-                checkAndAddElement(list, lastDate);
+                CheckAndAddElement(list, lastDate);
             }
         }
     }

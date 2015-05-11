@@ -21,14 +21,14 @@ namespace Budget.WelcomePage
 
         private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            providedPaymentsDataGrid.ItemsSource = createDataForPaymentForDataGridDataGrid();
-            shortHistoryDataGrid.ItemsSource = creataDataForShortHistoryDataGrid();
+            providedPaymentsDataGrid.ItemsSource = CreateDataForPaymentForDataGrid();
+            shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
             //int balanceMaxKey = Main_Classes.Budget.Instance.Balance;
             Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.Balance);
             //Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.BalanceLog[Main_Classes.Budget.Instance.BalanceLog.Count].Balance);
         }
 
-        private List<PaymentForDataGrid> createDataForPaymentForDataGridDataGrid()
+        private List<PaymentForDataGrid> CreateDataForPaymentForDataGrid()
         {
             DateTime lastDate;
             List<PaymentForDataGrid> providedPayments = new List<PaymentForDataGrid>();
@@ -36,16 +36,16 @@ namespace Budget.WelcomePage
             {
                 if (payment.GetType() == typeof(Main_Classes.PeriodPayment))
                 {
-                    Main_Classes.PeriodPayment pP = (Main_Classes.PeriodPayment) payment;
+                    var pP = (Main_Classes.PeriodPayment) payment;
                     if (pP.Amount < SettingsPage.Settings.Instance.PP_AmountTo && pP.Amount > SettingsPage.Settings.Instance.PP_AmountOf)
                     {
                         lastDate = SettingsPage.Settings.Instance.PP_LastDateToShow() <= pP.EndDate ? SettingsPage.Settings.Instance.PP_LastDateToShow() : pP.EndDate;
-                        providedPayments.AddRange(Main_Classes.PeriodPayment.createListOfSelectedPeriodPayments(pP, lastDate));
+                        providedPayments.AddRange(Main_Classes.PeriodPayment.CreateListOfSelectedPeriodPayments(pP, lastDate));
                     }
                 }
                 else
                 {
-                    Main_Classes.SinglePayment sP = (Main_Classes.SinglePayment) payment;
+                    var sP = (Main_Classes.SinglePayment) payment;
                     if (sP.CompareDate() >= 0 && sP.Amount < SettingsPage.Settings.Instance.PP_AmountTo && sP.Amount > SettingsPage.Settings.Instance.PP_AmountOf && sP.Date < SettingsPage.Settings.Instance.PP_LastDateToShow())
                     {
                         providedPayments.Add(new PaymentForDataGrid(sP.Name, sP.Amount, "Pojedynczy", sP.Date, sP.Type, sP.CategoryID));
@@ -61,7 +61,7 @@ namespace Budget.WelcomePage
             return providedPayments;
         }
 
-        private List<PaymentForDataGrid> creataDataForShortHistoryDataGrid()
+        private List<PaymentForDataGrid> CreataDataForShortHistoryDataGrid()
         {
             List<PaymentForDataGrid> shortHistory = new List<PaymentForDataGrid>();
 
@@ -69,7 +69,7 @@ namespace Budget.WelcomePage
             {
                 if(balanceLog.SinglePaymentID != 0 && balanceLog.PeriodPaymentID == 0)
                 {
-                    Main_Classes.SinglePayment sP = (Main_Classes.SinglePayment)Main_Classes.Budget.Instance.Payments[balanceLog.SinglePaymentID];
+                    var sP = (Main_Classes.SinglePayment)Main_Classes.Budget.Instance.Payments[balanceLog.SinglePaymentID];
                     if (sP.CompareDate() <= 0 && sP.Date >= SettingsPage.Settings.Instance.SH_LastDateToShow() && sP.Amount < SettingsPage.Settings.Instance.SH_AmountTo && sP.Amount > SettingsPage.Settings.Instance.SH_AmountOf)
                     {
                         shortHistory.Add(new PaymentForDataGrid(sP.Name, sP.Amount, "Pojedyńczy", sP.Date, sP.Type, sP.CategoryID));
@@ -77,7 +77,7 @@ namespace Budget.WelcomePage
                 }
                 else if(balanceLog.SinglePaymentID == 0 && balanceLog.PeriodPaymentID != 0)
                 {
-                    Main_Classes.PeriodPayment pP = (Main_Classes.PeriodPayment)Main_Classes.Budget.Instance.Payments[balanceLog.PeriodPaymentID];
+                    var pP = (Main_Classes.PeriodPayment)Main_Classes.Budget.Instance.Payments[balanceLog.PeriodPaymentID];
 
                     if (balanceLog.Date >= SettingsPage.Settings.Instance.SH_LastDateToShow() && pP.Amount < SettingsPage.Settings.Instance.SH_AmountTo && pP.Amount > SettingsPage.Settings.Instance.SH_AmountOf)
                     {

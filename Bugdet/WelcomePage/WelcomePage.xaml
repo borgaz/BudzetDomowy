@@ -33,20 +33,15 @@
         <Label Content="Skrócona historia:" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="164" Height="28" Margin="10,0,0,244"/>
         <Label Content="Aktualne saldo:" HorizontalAlignment="Right" VerticalAlignment="Top" Width="94" Height="25" Margin="0,10,75,0"/>
         <TextBox Name="Balance" HorizontalAlignment="Right" VerticalAlignment="Top" Width="65" Height="22" Margin="0,13,10,0" TextWrapping="Wrap" IsReadOnly="True" Text="TextBox"/>
-        <ProgressBar x:Name="PaymentsBar" HorizontalAlignment="Left" Height="165" Margin="466,107,0,0" VerticalAlignment="Top" Width="33" Orientation="Vertical" Background="White" Foreground="#FFB41919"/>
-        <ProgressBar x:Name="SalariesBar" HorizontalAlignment="Left" Height="165" Margin="539,107,0,0" VerticalAlignment="Top" Width="33" Orientation="Vertical">
-            <ProgressBar.Foreground>
-                <SolidColorBrush Color="#FF0C3A0C"/>
-            </ProgressBar.Foreground>
+        <ProgressBar x:Name="PaymentsBar" HorizontalAlignment="Left" Height="165" Margin="466,107,0,0" VerticalAlignment="Top" Width="33" Orientation="Vertical" Foreground="#FFFF2626">
             <ProgressBar.Background>
                 <SolidColorBrush Color="White"/>
             </ProgressBar.Background>
-            <ProgressBar.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                    <GradientStop Color="#FFB2B2B2" Offset="0"/>
-                    <GradientStop Color="#FF8C8C8C" Offset="1"/>
-                </LinearGradientBrush>
-            </ProgressBar.BorderBrush>
+        </ProgressBar>
+        <ProgressBar x:Name="SalariesBar" HorizontalAlignment="Left" Height="165" Margin="539,107,0,0" VerticalAlignment="Top" Width="33" Orientation="Vertical" BorderBrush="{x:Null}" Foreground="#FF00B008">
+            <ProgressBar.Background>
+                <SolidColorBrush Color="White"/>
+            </ProgressBar.Background>
         </ProgressBar>
     </Grid>
 </Page>
