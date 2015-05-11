@@ -9,7 +9,7 @@
 	Title="WelcomePage">
 
     <Grid>
-        <DataGrid Name="shortHistoryDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" Margin="10,0,0,10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="234" Width="375" Loaded="Page_Loaded">
+        <DataGrid Name="shortHistoryDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" Margin="10,0,0,10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="234" Width="375" Loaded="Page_Loaded" Background="#33CC00">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="+/-" Width="40" IsReadOnly="True" Binding="{Binding Sign}"/>
                 <DataGridTextColumn Header="Typ" Width="70" IsReadOnly="True" Binding="{Binding Type}"/>
@@ -18,7 +18,7 @@
                 <DataGridTextColumn Header="Data" Width="75" IsReadOnly="True" Binding="{Binding Date}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid HorizontalAlignment="Left" Name="providedPaymentsDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeColumns="False" Margin="10,38,0,0" VerticalAlignment="Top" Height="234" Width="375" Loaded="Page_Loaded" SelectionMode="Single" LoadingRow="ProvidedPaymentsDataGrid_OnLoadingRow">
+        <DataGrid HorizontalAlignment="Left" Name="providedPaymentsDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeColumns="False" Margin="10,38,0,0" VerticalAlignment="Top" Height="234" Width="375" Loaded="Page_Loaded" SelectionMode="Single" LoadingRow="ProvidedPaymentsDataGrid_OnLoadingRow" Background="#33CC00">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="+/-" Width="40" IsReadOnly="True" Binding="{Binding Sign}"/>
                 <DataGridTextColumn Header="Typ" Width="70" IsReadOnly="True" Binding="{Binding Type}"/>
@@ -27,7 +27,7 @@
                 <DataGridTextColumn Header="Data" Width="75" IsReadOnly="True" Binding="{Binding Date}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="234" Width="308" Margin="0,0,10,10"/>
+        <DataGrid HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="234" Width="308" Margin="0,0,10,10" Background="#33CC00"/>
         <Label Content="Najbliższe przychody i wydatki:" HorizontalAlignment="Left" Height="28" Margin="10,10,0,0" VerticalAlignment="Top" Width="180"/>
         <Label Content="Cele oszczędzania:" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="109" Height="28" Margin="0,0,209,244"/>
         <Label Content="Skrócona historia:" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="105" Height="28" Margin="10,0,0,244"/>
