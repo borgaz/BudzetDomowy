@@ -75,12 +75,12 @@ namespace Budget.Main_Classes
             }
         }
 
-        virtual public int countPeriods()
+        virtual public int CountPeriods()
         {
             return 0;
         }
 
-        virtual public SinglePayment createSingleFromPeriod(int _period)
+        virtual public SinglePayment CreateSingleFromPeriod(int _period)
         {
             return null;
         }

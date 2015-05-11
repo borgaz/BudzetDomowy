@@ -26,7 +26,7 @@ namespace Budget.WelcomePage
             return this.date.CompareTo(pP.date);
         }
 
-        // Nizej sa juz tylko gettery
+        // Nizej sa juz tylko gettery 
 
         public double Amount
         {
