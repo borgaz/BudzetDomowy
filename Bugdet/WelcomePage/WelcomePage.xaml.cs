@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.Collections.Generic;
+using System.Data;
+using System.Windows.Media;
+using Budget.Main_Classes;
 
 namespace Budget.WelcomePage
 {
@@ -13,6 +16,7 @@ namespace Budget.WelcomePage
         public WelcomePage()
         {
             InitializeComponent();
+            InsertBars();
         }
 
         private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -88,6 +92,18 @@ namespace Budget.WelcomePage
                 shortHistory.RemoveRange(SettingsPage.Settings.Instance.SH_NumberOfRow, shortHistory.Count - SettingsPage.Settings.Instance.SH_NumberOfRow);
             }
             return shortHistory;
+        }
+
+        private void InsertBars()
+        {
+            PaymentsBar.Maximum = SalariesBar.Maximum = SqlConnect.Instance.monthlySalaries + SqlConnect.Instance.monthlyPayments;
+            SalariesBar.Value = SqlConnect.Instance.monthlySalaries;
+            PaymentsBar.Value = SqlConnect.Instance.monthlyPayments;
+            SalariesBar.ToolTip = SalariesBar.Value;
+            PaymentsBar.ToolTip = PaymentsBar.Value;
+        }
+        private void ProvidedPaymentsDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
+        {
         }
     }
 }

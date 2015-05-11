@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Budget.LoginWindow.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Okno Logowania" Height="155" Width="233" Background="#FF33CC00">
+        Title="Okno Logowania" Height="155" Width="233" Background="#FF33CC00" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     
     <Grid KeyDown="UIElement_OnKeyDown">
         <Label Content="Budżet:" HorizontalAlignment="Left" Margin="10,10,0,0" Width="50" Height="26" VerticalAlignment="Top"/>

@@ -114,6 +114,20 @@ namespace Budget.Main_Classes
                         Convert.ToString(singlePayFromSelect.Tables[0].Rows[i]["name"]),
                         date
                         ));
+                    //do miesiecznej sumy
+                    if (
+                        !Convert.ToDateTime(singlePayFromSelect.Tables[0].Rows[i]["date"])
+                            .Month.Equals(DateTime.Now.Month))
+                        continue;
+
+                    if (Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["type"]) == 1)
+                        SqlConnect.Instance.monthlyPayments =
+                            Convert.ToDouble(singlePayFromSelect.Tables[0].Rows[i]["amount"]);
+                    else
+                    {
+                        SqlConnect.Instance.monthlySalaries =
+                             Convert.ToDouble(singlePayFromSelect.Tables[0].Rows[i]["amount"]);
+                    }
                 }
 
                 /////////////////////////////////////////////////////////////////////////////////////////////

@@ -15,6 +15,8 @@ namespace Budget.Main_Classes
 
         private SQLiteConnection _mydb;
         private SQLiteCommand _command;
+        public double monthlySalaries = 0;
+        public double monthlyPayments = 0;
 
         private SqlConnect()
         {
