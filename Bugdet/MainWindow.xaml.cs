@@ -116,11 +116,11 @@ namespace Budget
             _actualPage = 1;
             InsertPage();
 
-            //List<SinglePayment> list = Main_Classes.Budget.Instance.CheckPeriodPayments();
-            //if (list.Count > 0)
-            //{
-            //    new CheckingPeriodPayments(list).ShowDialog();
-            //}
+            List<SinglePayment> list = Main_Classes.Budget.Instance.CheckPeriodPayments();
+            if (list.Count > 0)
+            {
+                new CheckingPeriodPayments(list).ShowDialog();
+            }
         }
 
         private void WelcomePageButton_Click(object sender, RoutedEventArgs e)
@@ -194,7 +194,7 @@ namespace Budget
 
         private void CheckSavings()
         {
-            if (Main_Classes.Budget.Instance.ListOfAdds.Count != 0 || Main_Classes.Budget.Instance.ListOfEdts.Count != 0 || Main_Classes.Budget.Instance.ListOfDels.Count != 0)
+            if (Main_Classes.Budget.Instance.ListOfAdds.Count != 0 || Main_Classes.Budget.Instance.ListOfEdits.Count != 0 || Main_Classes.Budget.Instance.ListOfDels.Count != 0)
             {
                 if (MessageBox.Show("Czy chcesz zapisać zmiany przed zamknięciem?", "Zapisz dane", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {

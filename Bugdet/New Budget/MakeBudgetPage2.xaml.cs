@@ -39,6 +39,7 @@ namespace Budget.New_Budget
                     temp = _periodPayments.Keys.Max() + 1; 
                 }
                 catch { }
+
                 _periodPayments.Add(temp, new PeriodPayment(originalCategoryID[CategoryComboBox.SelectedIndex],
                     Convert.ToDouble(SalaryValue.Text.Replace(".", ",")),
                     NoteTextBox.Text,

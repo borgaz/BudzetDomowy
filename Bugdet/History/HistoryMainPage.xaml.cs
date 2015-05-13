@@ -146,7 +146,7 @@ namespace Budget.History
             // dla testow
             int id = 5;
             Main_Classes.Budget.Instance.Categories[id].Name = "gas";
-            Main_Classes.Budget.Instance.ListOfEdts.Add(new Utility_Classes.Changes (typeof(Category),id));
+            Main_Classes.Budget.Instance.ListOfEdits.Add(new Utility_Classes.Changes (typeof(Category),id));
             //throw new NotImplementedException();
         }
 

@@ -347,11 +347,11 @@ namespace Budget.Main_Classes
         public void Dump()
         {
             if (Budget.Instance.AddToDB(Budget.Instance.ListOfAdds)
-                && Budget.Instance.EditDB(Budget.Instance.ListOfEdts)
+                && Budget.Instance.EditDB(Budget.Instance.ListOfEdits)
                 && Budget.Instance.DeleteFromDB(Budget.Instance.ListOfDels))
             {
-                MessageBox.Show("Poprawnie zapisana baza danych!");
-                listOfEdts.Clear();
+                MessageBox.Show("Zapisano");
+                listOfEdits.Clear();
                 listOfDels.Clear();
                 listOfAdds.Clear();
                 SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE BUDGET SET BALANCE = '" + balance.ToString().Replace(",", ".") +

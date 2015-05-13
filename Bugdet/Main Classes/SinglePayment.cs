@@ -33,7 +33,7 @@ namespace Budget.Main_Classes
             //Większe od zera - przyszlosc
         }
 
-        override public void changeUpdateDate()
+        override public void changeUpdateDate(int count = 0)
         {
             this.date = DateTime.Now;
         }

@@ -8,7 +8,7 @@
 	Title="MainSettingsWindow">
 
     <Grid>
-        <Frame x:Name="SettingsContentFrame" Margin="175,0,0,0" NavigationUIVisibility="Hidden" BorderThickness="2,0,0,0" BorderBrush="GreenYellow"/>
+        <Frame x:Name="SettingsContentFrame" Margin="175,0,0,0" NavigationUIVisibility="Hidden" BorderThickness="2,0,0,0" BorderBrush="#FF5490AC"/>
         <Button x:Name="GeneralOptionsButton" Content="Ogólne" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="155" Height="34" Click="GeneralOptionsButton_Click"/>
 
     </Grid>

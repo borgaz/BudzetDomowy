@@ -22,10 +22,9 @@ namespace Budget.Payments_Manager
             InitializeComponent();
             Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.SALARY);
             InsertDateTypes(_periodDateGrid.TypeOfDayComboBox);
-
-            //_periodDateGrid.StartDatePicker.Text = DateTime.Now.Date.ToString();
+            _periodDateGrid.StartDatePicker.Text = DateTime.Now.Date.ToString();
             //_periodDateGrid.EndDatePicker.Text = DateTime.MaxValue.ToString();
-            //_singleDateGrid.SingleDatePicker.Text = DateTime.Now.Date.ToString();
+            _singleDateGrid.SingleDatePicker.Text = DateTime.Now.Date.ToString();
         }
 
         private void addPaymentBtn_Click(object sender, RoutedEventArgs e)

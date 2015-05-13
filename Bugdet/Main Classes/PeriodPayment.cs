@@ -92,6 +92,16 @@ namespace Budget.Main_Classes
 
             DateTime temp = new DateTime();
             temp = this.lastUpdate;
+
+            if (this.period == "MIESIĄC")
+                temp = temp.AddMonths(this.frequency);
+            else if (this.period == "DZIEŃ")
+                temp = temp.AddDays(this.frequency);
+            else if (this.period == "TYDZIEŃ")
+                temp = temp.AddDays(7 * this.frequency);
+            else if (this.period == "ROK")
+                temp = temp.AddYears(this.frequency); 
+
             while (DateTime.Compare(temp, DateTime.Now) <= 0)
             //Mniej niż zero - lastUpdate (temp) jest wcześniejsza niż Now.
             //Zero - lastUpdate (temp) jest taka sama jak Now.
@@ -111,14 +121,25 @@ namespace Budget.Main_Classes
             return _periods;
         }
 
-        override public void changeUpdateDate()
+        override public void changeUpdateDate(int countPeriod)
         {
-            this.lastUpdate = DateTime.Now;
+            if (this.period == "MIESIĄC")
+                this.lastUpdate = this.lastUpdate.AddMonths(countPeriod);
+            else if (this.period == "DZIEŃ")
+                this.lastUpdate = this.lastUpdate.AddDays(countPeriod);
+            else if (this.period == "TYDZIEŃ")
+                this.lastUpdate = this.lastUpdate.AddDays(countPeriod);
+            else if (this.period == "ROK")
+                this.lastUpdate = this.lastUpdate.AddYears(countPeriod); 
         }
 
         override public SinglePayment CreateSingleFromPeriod(int _period)
         {
             DateTime temp = new DateTime();
+            temp = this.lastUpdate;
+
+            //Console.WriteLine("Last update początkowe: " + this.lastUpdate);
+
             if (this.period == "MIESIĄC")
                 temp = temp.AddMonths(_period);
             else if (this.period == "DZIEŃ")

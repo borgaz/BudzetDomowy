@@ -13,13 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Budget.Main_Classes;
 using Budget.Utility_Classes;
-using Budget.New_Budget;
 
 namespace Budget.Payments_Manager
 {
-    /// <summary>
-    /// Interaction logic for CheckingPeriodPayments.xaml
-    /// </summary>
+
     public partial class CheckingPeriodPayments : Window
     {
         int listIndex = 0;
@@ -30,32 +27,39 @@ namespace Budget.Payments_Manager
             InitializeComponent();
             singlePaymentsList = _singlePaymentsList;
             listIndex = _singlePaymentsList.Count-1;
-            PaymentText.Text = singlePaymentsList[listIndex].ToString();
-        }
-
-        private void PostponeButton_Click(object sender, RoutedEventArgs e)
-        {
-            Main_Classes.Budget.Instance.AddSinglePayment(Main_Classes.Budget.Instance.Payments.Keys.Max() + 1, 
-                                                            singlePaymentsList[listIndex]);
-            if (listIndex >= 0)
-            {
-                this.Close();
-            }
-            else
-            {
-                listIndex--;
-            }
+            PaymentName.Content = singlePaymentsList[listIndex].Name; 
+            DateText.Content = singlePaymentsList[listIndex].Date.ToShortDateString();
+            Amount.Text = singlePaymentsList[listIndex].Amount.ToString();
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            if (listIndex >= 0)
+            singlePaymentsList[listIndex].Amount = Convert.ToDouble(Amount.Text);
+            Main_Classes.Budget.Instance.AddSinglePayment(Main_Classes.Budget.Instance.Payments.Keys.Max() + 1,
+                                                            singlePaymentsList[listIndex]);
+            if (listIndex > 0)
             {
-                this.Close();
+                listIndex--;
+                PaymentName.Content = singlePaymentsList[listIndex].Name;
+                DateText.Content = singlePaymentsList[listIndex].Date.ToShortDateString();
+                Amount.Text = singlePaymentsList[listIndex].Amount.ToString();
             }
             else
             {
-                listIndex--;
+                this.Close();
+            }      
+        }
+
+        private void PreviewTextInput_Amount(object sender, TextCompositionEventArgs e)
+        {
+            if (!char.IsDigit(e.Text, e.Text.Length - 1) && !char.IsPunctuation(e.Text, e.Text.Length - 1))
+            {
+                e.Handled = true;
+                Amount.ToolTip = "Podaj kwotę liczbą.";
+            }
+            else
+            {
+                Amount.ToolTip = null;
             }
         }
     }

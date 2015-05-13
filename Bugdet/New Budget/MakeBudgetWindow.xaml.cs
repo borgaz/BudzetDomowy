@@ -72,7 +72,7 @@ namespace Budget.New_Budget
                 {
                     if(_page2 == null)
                         _page2 = new MakeBudgetPage2(_salaries, _categories); // strona druga
-                    InsertCategories(_page2.CategoryComboBox, _categories, false);
+                    InsertCategories(_page2.CategoryComboBox, _categories, true);
                     PageFrame.Content = _page2;
                     ExitBtn.IsEnabled = false;
                     ExitBtn.Content = "Wyjdź";
@@ -84,7 +84,7 @@ namespace Budget.New_Budget
                 {
                     if (_page3 == null)
                         _page3 = new MakeBudgetPage3(_payments, _categories); // strona trzecia
-                    InsertCategories(_page3.CategoryComboBox, _categories, true);
+                    InsertCategories(_page3.CategoryComboBox, _categories, false);
                     PageFrame.Content = _page3;
                     ExitBtn.IsEnabled = true;
                     ExitBtn.Content = "Dodaj przychody";
@@ -221,7 +221,7 @@ namespace Budget.New_Budget
         /// <summary>
         /// Inserts categories in CategoryComboBox
         /// </summary>
-        public static List<int> InsertCategories(ComboBox categoryBox, Dictionary<int, Category>cat, Boolean type)
+        public static List<int> InsertCategories(ComboBox categoryBox, Dictionary<int, Category>cat, bool type)
         {
             categoryBox.Items.Clear();
             List<int> originalID = new List<int>();

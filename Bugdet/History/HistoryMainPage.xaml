@@ -8,7 +8,7 @@
 	Title="HistoryMainPage">
 
     <Grid>
-        <DataGrid x:Name="HistoryDataGrid" IsReadOnly="True" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="530" Width="343" LoadingRow="HistoryDataGrid_OnLoadingRow" Loaded="HistoryDataGrid_OnLoaded" Background="#33CC00">
+        <DataGrid x:Name="HistoryDataGrid" IsReadOnly="True" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="530" Width="343" LoadingRow="HistoryDataGrid_OnLoadingRow" Loaded="HistoryDataGrid_OnLoaded" Background="#FFEEF7F7">
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Usuń rekord" Click="DeleteItem_OnClick"/>

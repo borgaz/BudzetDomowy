@@ -7,11 +7,11 @@ namespace Budget.Main_Classes
         private int categoryID; // id kategorii, z ktorej jest dana platnosc
         private double amount; // kwota
         private String name; // nazwa platnosci
-        private bool type; // 0 - przychod, 1 - wydatek
+        private bool type; // false - przychod, true - wydatek
         private String note; // notatka
 
         abstract public int CompareDate();
-        abstract public void changeUpdateDate();
+        abstract public void changeUpdateDate(int count);
 
         public override string ToString()
         {

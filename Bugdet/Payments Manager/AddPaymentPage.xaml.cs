@@ -23,9 +23,9 @@ namespace Budget.Payments_Manager
             Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.PAYMENT);
             AddSalaryPage.InsertDateTypes(_periodDateGrid.TypeOfDayComboBox);
             
-            //_periodDateGrid.StartDatePicker.Text = DateTime.Now.Date.ToString();
+            _periodDateGrid.StartDatePicker.Text = DateTime.Now.Date.ToString();
             //_periodDateGrid.EndDatePicker.Text = DateTime.MaxValue.ToString();
-            //_singleDateGrid.SingleDatePicker.Text = DateTime.Now.Date.ToString();
+            _singleDateGrid.SingleDatePicker.Text = DateTime.Now.Date.ToString();
         }
 
         private void addPaymentBtn_Click(object sender, RoutedEventArgs e)
@@ -76,8 +76,8 @@ namespace Budget.Payments_Manager
                     Console.WriteLine(DateTime.Now);
                     if (_singleDateGrid.SelectedDate <= DateTime.Now)
                     {
-                       
-                        int temp_id_balance = Main_Classes.Budget.Instance.BalanceLog.Last().Key + 1;
+
+                        int temp_id_balance = Main_Classes.Budget.Instance.BalanceLog.Keys.Max() + 1;
                         // uwaga tutaj odejmujemy
                         double currentBalance = Main_Classes.Budget.Instance.BalanceLog.Last().Value.Balance - Convert.ToDouble(PaymentValue.Text.Replace(".", ","));
                         Main_Classes.Budget.Instance.AddBalanceLog(temp_id_balance, new BalanceLog(currentBalance, DateTime.Today, temp_id, 0));

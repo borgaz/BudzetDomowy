@@ -25,7 +25,7 @@ namespace Budget.Main_Classes
         private int numberOfPeople; // ilosc osob, dla ktorych prowadzony jest budzet domowy
         private List<Changes> listOfAdds; //lista dodanych rekordów
         private List<Changes> listOfDels; //lista usuniętych rekordów
-        private List<Changes> listOfEdts; //lista zedytowanych rekordów
+        private List<Changes> listOfEdits; //lista zedytowanych rekordów
         private DateTime minDate; // najwcześniejsza data płatności/wydatku w bazie
         private DateTime maxDate; // najpóźniejsza data płatności/wydatku w bazie
         private double maxAmount; // maksymalna kwota płatności/wydatku w bazie
@@ -56,7 +56,7 @@ namespace Budget.Main_Classes
             this.creationDate = creationDate;
             listOfAdds = new List<Changes>();
             listOfDels = new List<Changes>();
-            listOfEdts = new List<Changes>();
+            listOfEdits = new List<Changes>();
             this.minDate = minDate;
             this.maxDate = maxDate;
             this.maxAmount = maxAmount;
@@ -119,11 +119,11 @@ namespace Budget.Main_Classes
             }
         }
 
-        public List<Changes> ListOfEdts
+        public List<Changes> ListOfEdits
         {
             get
             {
-                return this.listOfEdts;
+                return this.listOfEdits;
             }
         }
 
@@ -240,6 +240,29 @@ namespace Budget.Main_Classes
 
             payments.Add(index, payment);
             ListOfAdds.Add(new Changes(typeof(SinglePayment), index));
+
+            if (DateTime.Compare(payment.Date, DateTime.Now) <= 0 )
+            {
+                if (payment.Type == false)
+                {
+                    int balanceMaxKey = BalanceLog.Keys.Max();
+                    int tempIdBalance = balanceMaxKey + 1;
+                    double currentBalance = BalanceLog[balanceMaxKey].Balance + payment.Amount;
+                    AddBalanceLog(tempIdBalance, new BalanceLog(currentBalance, DateTime.Today, index, 0));
+                }
+                else
+                {
+                    int temp_id_balance = BalanceLog.Keys.Max() + 1;
+                    // uwaga tutaj odejmujemy
+                    double currentBalance = BalanceLog.Last().Value.Balance - payment.Amount;
+                    AddBalanceLog(temp_id_balance, new BalanceLog(currentBalance, DateTime.Today, index, 0));
+                }
+            }
+        }
+
+        public void EditSinglePayment(int index, SinglePayment payment)
+        {
+            ListOfEdits.Add(new Changes(typeof(PeriodPayment), index));
         }
 
         public void DeleteSinglePayment(int indexSinglePayment, int indexBalanceLog)
@@ -263,7 +286,6 @@ namespace Budget.Main_Classes
         {
             savingsTargets.Add(index, target);
             ListOfAdds.Add(new Changes(typeof(SavingsTarget), index));
-
         }
 
         public void DeleteSavingsTarget(int index)
@@ -276,6 +298,11 @@ namespace Budget.Main_Classes
         {
             payments.Add(index, payment);
             ListOfAdds.Add(new Changes(typeof(PeriodPayment), index));
+        }
+
+        public void EditPeriodPayment(int index, PeriodPayment payment)
+        {
+            ListOfEdits.Add(new Changes(typeof(PeriodPayment), index));
         }
 
         public void DeletePeriodPayment(int index)
@@ -341,18 +368,24 @@ namespace Budget.Main_Classes
                     try
                     {
                         periodCount = p.Value.CountPeriods();
+
                         Console.WriteLine("\n" + periodCount);
 
-                        if (periodCount>0)
-                        {
-                            p.Value.changeUpdateDate();
-                        }
+                        int tempCount = periodCount;
                         while (periodCount>0) 
                         {
                             editList.Add(p.Value.CreateSingleFromPeriod(periodCount));
-                            Console.WriteLine(p.Value.CreateSingleFromPeriod(periodCount).ToString() + "\n");
+
+                            //Console.WriteLine(p.Value.CreateSingleFromPeriod(periodCount).ToString() + "\n");
+
                             periodCount--;
-                        }           
+                        }
+
+                        if (tempCount > 0)
+                        {
+                            p.Value.changeUpdateDate(tempCount);
+                            Budget.Instance.EditPeriodPayment(p.Key, (PeriodPayment)p.Value);
+                        }
                     }
                     catch (NotImplementedException ex)
                     {
