@@ -53,6 +53,7 @@ namespace Budget.Main_Classes
             {
                 return note;
             }
+            set { note = value; }
         }
 
         public bool Type

@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using Budget.History;
+using Budget.Main_Classes;
 using Budget.Payments_Manager;
 using Budget.SettingsPage;
 using Budget.Utility_Classes;
-using Budget.Main_Classes;
-using Budget.New_Budget;
-using Budget.Payments_Manager;
 
 namespace Budget
 {

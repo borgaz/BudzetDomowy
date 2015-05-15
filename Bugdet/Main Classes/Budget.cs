@@ -262,7 +262,7 @@ namespace Budget.Main_Classes
 
         public void EditSinglePayment(int index, SinglePayment payment)
         {
-            ListOfEdits.Add(new Changes(typeof(PeriodPayment), index));
+            ListOfEdits.Add(new Changes(typeof(SinglePayment), index));
         }
 
         public void DeleteSinglePayment(int indexSinglePayment, int indexBalanceLog)
@@ -384,7 +384,7 @@ namespace Budget.Main_Classes
                         if (tempCount > 0)
                         {
                             p.Value.changeUpdateDate(tempCount);
-                            Budget.Instance.EditPeriodPayment(p.Key, (PeriodPayment)p.Value);
+                            Instance.EditPeriodPayment(p.Key, (PeriodPayment)p.Value);
                         }
                     }
                     catch (NotImplementedException ex)

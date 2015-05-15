@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace Budget.Main_Classes
@@ -79,7 +80,7 @@ namespace Budget.Main_Classes
         public Boolean CheckPassword(String budget, String password)
         {
             Connect(budget);
-            System.Console.WriteLine(budget + " " + password);
+            Console.WriteLine(budget + " " + password);
             DataSet result = SelectQuery("Select count(*) as count from Budget where name = '" + budget + "' AND password = '" + password + "'");
             if (Convert.ToInt32(result.Tables[0].Rows[0]["count"].ToString()) < 1)
             {
@@ -187,7 +188,7 @@ namespace Budget.Main_Classes
                 // budzet
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 string balanceWithDot = _balance.Balance.ToString().Replace(",", ".");
-                SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Budget(name,note,creation,numberofpeople,password,balance) values('" +
+                Instance.ExecuteSqlNonQuery("INSERT INTO Budget(name,note,creation,numberofpeople,password,balance) values('" +
                                    _name + "'," + "'note','" + DateTime.Now.ToShortDateString() +
                                    "'," + _numberOfPeople + ",'" + _password + "','" + balanceWithDot + "')");
 
@@ -198,7 +199,7 @@ namespace Budget.Main_Classes
 
                 for (int i = 0; i < _categories.Count; i++)
                 {
-                    SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO Categories(name,note,type) values('" +
+                    Instance.ExecuteSqlNonQuery("INSERT INTO Categories(name,note,type) values('" +
                                         _categories[i + 1].Name +
                                        "','" + _categories[i + 1].Note + "','" + Convert.ToInt32(_categories[i + 1].Type) + "')");
                 }
@@ -208,7 +209,7 @@ namespace Budget.Main_Classes
                 // Aktualny stan konta
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 
-                SqlConnect.Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(balance,date,singlePaymentId,periodPaymentId) values('" +
+                Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(balance,date,singlePaymentId,periodPaymentId) values('" +
                                    balanceWithDot + "','" + _balance.Date.ToShortDateString() + "','" +
                                    _balance.SinglePaymentID + "','" + _balance.PeriodPaymentID + "')");
 
@@ -220,7 +221,7 @@ namespace Budget.Main_Classes
                 {
                     PeriodPayment p = pay.Value;
                     String amountWithDot = p.Amount.ToString().Replace(",", ".");
-                    SqlConnect.Instance.ExecuteSqlNonQuery(
+                    Instance.ExecuteSqlNonQuery(
                         "INSERT INTO PeriodPayments(id, categoryId,amount,note,type,name,frequency,period,lastUpdate,startDate,endDate) values(" +
                         pay.Key*(-1) + "," + p.CategoryID + ",'" + amountWithDot + "','" + p.Note + "'," + Convert.ToInt32(p.Type) + ",'" + p.Name + "'," + p.Frequency + ",'" + p.Period + "','" + p.LastUpdate.ToShortDateString() + "','" +
                         p.StartDate.ToShortDateString() +
@@ -228,9 +229,9 @@ namespace Budget.Main_Classes
                 }
                 return true;
             }
-            catch (System.Data.SQLite.SQLiteException ex)
+            catch (SQLiteException ex)
             {
-                System.Windows.MessageBox.Show("Błąd");
+                MessageBox.Show("Błąd");
                 Console.WriteLine(ex.ToString());
                 return false;
             }
@@ -323,7 +324,7 @@ namespace Budget.Main_Classes
 
         public static String RemoveUnnecessarySymbols(String str)
         {
-            string replacedString = System.Text.RegularExpressions.Regex.Replace(str, @"[?<>!;:*+-_&@#%^()='/]", "");
+            string replacedString = Regex.Replace(str, @"[?<>!;:*+-_&@#%^()='/]", "");
             return replacedString;
         }
     }

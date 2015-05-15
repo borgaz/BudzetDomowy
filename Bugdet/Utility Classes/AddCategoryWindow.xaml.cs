@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Forms;
+using System.Windows.Controls;
 using Budget.Main_Classes;
 using Budget.New_Budget;
-using Budget = Budget.Main_Classes.Budget;
-using ComboBox = System.Windows.Controls.ComboBox;
-using MessageBox = System.Windows.MessageBox;
 
 namespace Budget.Utility_Classes
 {

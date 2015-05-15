@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Budget.WelcomePage;
 
 namespace Budget.Main_Classes
 {
@@ -166,7 +167,7 @@ namespace Budget.Main_Classes
                 return DateTime.Now;
         }
 
-        static public List<WelcomePage.PaymentForDataGrid> CreateListOfSelectedPeriodPayments(PeriodPayment pP, DateTime lastDate)
+        static public List<PaymentForDataGrid> CreateListOfSelectedPeriodPayments(PeriodPayment pP, DateTime lastDate)
         {
             List<PeriodPayment> periodPayments = new List<PeriodPayment>();
             if (pP.startDate >= DateTime.Now)
@@ -184,10 +185,10 @@ namespace Budget.Main_Classes
             }
             CheckAndAddElement(periodPayments, lastDate);
 
-            List<WelcomePage.PaymentForDataGrid> providedPayments = new List<WelcomePage.PaymentForDataGrid>();
+            List<PaymentForDataGrid> providedPayments = new List<PaymentForDataGrid>();
             foreach (PeriodPayment temp in periodPayments)
             {
-                providedPayments.Add(new WelcomePage.PaymentForDataGrid(temp.Name, temp.Amount, "Okresowy", temp.lastUpdate, temp.Type, temp.CategoryID));
+                providedPayments.Add(new PaymentForDataGrid(temp.Name, temp.Amount, "Okresowy", temp.lastUpdate, temp.Type, temp.CategoryID));
             }
             return providedPayments;
         }

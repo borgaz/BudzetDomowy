@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Budget.Main_Classes;
-using Budget.New_Budget;
 using Budget.Utility_Classes;
 using ComboBoxItem = Budget.Utility_Classes.ComboBoxItem;
 
@@ -114,7 +114,7 @@ namespace Budget.Payments_Manager
          //   Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.SALARY);
         }
 
-        private void SalaryName_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        private void SalaryName_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (SalaryName.Text.Length == 50)
             {
@@ -128,7 +128,7 @@ namespace Budget.Payments_Manager
             }
         }
 
-        private void SalaryValue_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        private void SalaryValue_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!char.IsDigit(e.Text, e.Text.Length - 1) && !char.IsPunctuation(e.Text, e.Text.Length - 1))
             {

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Budget.Main_Classes;
-using Budget.New_Budget;
-using Budget.Utility_Classes;
-
 
 namespace Budget.Payments_Manager
 {
@@ -18,10 +16,14 @@ namespace Budget.Payments_Manager
     {
         private AddPaymentPage _singlePaymentPage = new AddPaymentPage();
         private AddSalaryPage _singleSalaryPage = new AddSalaryPage();
+        private int _lastSingleId = Main_Classes.Budget.Instance.Payments.Keys.Max();
+        private int _lastPeriodId = Main_Classes.Budget.Instance.Payments.Keys.Min();
 
         public MainPage()
         {
             InitializeComponent();
+            Console.WriteLine(_lastPeriodId);
+            Console.WriteLine(_lastSingleId);
         }
 
         private void addPaymentBtn_Click(object sender, RoutedEventArgs e)
@@ -46,17 +48,22 @@ namespace Budget.Payments_Manager
             added.Columns.Add("Nazwa", typeof(string));
             added.Columns.Add("Kwota", typeof(int));
             added.Columns.Add("Kategoria", typeof(string));
-            foreach (var ch in Main_Classes.Budget.Instance.ListOfAdds)
+            foreach (var ch in Main_Classes.Budget.Instance.Payments)
             {
-                if (ch.Type == typeof (SinglePayment))
+                if (ch.Value.GetType() == typeof (SinglePayment))
                 {
-                    var p = (SinglePayment) Main_Classes.Budget.Instance.Payments[ch.ID];
-                    added.Rows.Add(ch.ID, p.Type, p.Name, p.Amount, Main_Classes.Budget.Instance.Categories[p.CategoryID].Name);
+                    if (ch.Key <= _lastSingleId)
+                        continue;
+                    var p = (SinglePayment) Main_Classes.Budget.Instance.Payments[ch.Key];
+                    added.Rows.Add(ch.Key, p.Type, p.Name, p.Amount, Main_Classes.Budget.Instance.Categories[p.CategoryID].Name);
                 }
-                if (ch.Type == typeof (PeriodPayment))
+                if (ch.Value.GetType() == typeof (PeriodPayment))
                 {
-                    var p = (PeriodPayment) Main_Classes.Budget.Instance.Payments[ch.ID];
-                    added.Rows.Add(ch.ID, p.Type, p.Name, p.Amount, Main_Classes.Budget.Instance.Categories[p.CategoryID].Name);
+                    Console.WriteLine(ch.Key);
+                    if (ch.Key >= _lastPeriodId)
+                        continue;
+                    var p = (PeriodPayment) Main_Classes.Budget.Instance.Payments[ch.Key];
+                    added.Rows.Add(ch.Key, p.Type, p.Name, p.Amount, Main_Classes.Budget.Instance.Categories[p.CategoryID].Name);
                 }
             }
             LastAddedDataGrid.ItemsSource = added.DefaultView;
