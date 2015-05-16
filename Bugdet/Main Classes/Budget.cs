@@ -372,15 +372,17 @@ namespace Budget.Main_Classes
                         Console.WriteLine("\n" + periodCount);
 
                         int tempCount = periodCount;
-                        while (periodCount>0) 
+                        if (periodCount > 0)
                         {
-                            editList.Add(p.Value.CreateSingleFromPeriod(periodCount));
+                            while (periodCount >= 0)
+                            {
+                                editList.Add(p.Value.CreateSingleFromPeriod(periodCount));
 
-                            //Console.WriteLine(p.Value.CreateSingleFromPeriod(periodCount).ToString() + "\n");
+                                //Console.WriteLine(p.Value.CreateSingleFromPeriod(periodCount).ToString() + "\n");
 
-                            periodCount--;
+                                periodCount--;
+                            }
                         }
-
                         if (tempCount > 0)
                         {
                             p.Value.changeUpdateDate(tempCount);
@@ -394,6 +396,43 @@ namespace Budget.Main_Classes
                 }
             }
             return editList;
+        }
+
+        /// <summary>
+        /// Checks which single payments from the future should be added to balance logs.
+        /// </summary>
+        public void FutureSinglePaymentsCheck()
+        {
+            foreach (KeyValuePair<int, Payment> entry in Payments)
+            {
+                if (entry.Value.GetType() == typeof(SinglePayment));
+                {
+                    if (entry.Value.CompareDate() <=0)
+                    {
+                        foreach (BalanceLog balance in balanceLogs.Values)
+                        {
+                            if (balance.SinglePaymentID == entry.Key)
+                            {
+                                if (entry.Value.Type == false)
+                                {
+                                    int balanceMaxKey = BalanceLog.Keys.Max();
+                                    int tempIdBalance = balanceMaxKey + 1;
+                                    double currentBalance = BalanceLog[balanceMaxKey].Balance + entry.Value.Amount;
+                                    AddBalanceLog(tempIdBalance, new BalanceLog(currentBalance, DateTime.Today, entry.Key, 0));
+                                }
+                                else
+                                {
+                                    int temp_id_balance = BalanceLog.Keys.Max() + 1;
+                                    // uwaga tutaj odejmujemy
+                                    double currentBalance = BalanceLog.Last().Value.Balance - entry.Value.Amount;
+                                    AddBalanceLog(temp_id_balance, new BalanceLog(currentBalance, DateTime.Today, entry.Key, 0));
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public Boolean CheckCategory(string name)

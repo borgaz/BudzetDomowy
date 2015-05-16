@@ -148,6 +148,8 @@ namespace Budget
             HistoryButton.IsEnabled = false;
             _actualPage = 4;
             InsertPage();
+
+            //Main_Classes.Budget.Instance.FutureSinglePaymentsCheck();
         }
 
         protected override void OnClosing(CancelEventArgs e)
