@@ -407,12 +407,21 @@ namespace Budget.Main_Classes
             {
                 if (entry.Value.GetType() == typeof(SinglePayment));
                 {
-                    if (entry.Value.CompareDate() <=0)
+                    if (entry.Value.CompareDate() <= 0)
                     {
+                        bool found = false; 
+
                         foreach (BalanceLog balance in balanceLogs.Values)
                         {
                             if (balance.SinglePaymentID == entry.Key)
                             {
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        if (found == false)
+                        {
                                 if (entry.Value.Type == false)
                                 {
                                     int balanceMaxKey = BalanceLog.Keys.Max();
@@ -427,8 +436,6 @@ namespace Budget.Main_Classes
                                     double currentBalance = BalanceLog.Last().Value.Balance - entry.Value.Amount;
                                     AddBalanceLog(temp_id_balance, new BalanceLog(currentBalance, DateTime.Today, entry.Key, 0));
                                 }
-                                break;
-                            }
                         }
                     }
                 }
