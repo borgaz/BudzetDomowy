@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using Budget.Main_Classes;
 using Budget.SettingsPage;
 
@@ -104,6 +105,11 @@ namespace Budget.WelcomePage
         }
         private void ProvidedPaymentsDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
         {
+        }
+
+        private void Grid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            InsertBars();
         }
     }
 }

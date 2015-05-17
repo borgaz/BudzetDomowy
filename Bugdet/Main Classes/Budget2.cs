@@ -119,11 +119,11 @@ namespace Budget.Main_Classes
                         continue;
 
                     if (Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["type"]) == 1)
-                        SqlConnect.Instance.monthlyPayments =
+                        SqlConnect.Instance.monthlyPayments +=
                             Convert.ToDouble(singlePayFromSelect.Tables[0].Rows[i]["amount"]);
                     else
                     {
-                        SqlConnect.Instance.monthlySalaries =
+                        SqlConnect.Instance.monthlySalaries +=
                              Convert.ToDouble(singlePayFromSelect.Tables[0].Rows[i]["amount"]);
                     }
                 }

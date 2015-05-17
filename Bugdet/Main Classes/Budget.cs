@@ -215,6 +215,15 @@ namespace Budget.Main_Classes
             }
         }
 
+        private void CheckPayment(SinglePayment payment,int delete)
+        {
+            if (!payment.Date.Month.Equals(DateTime.Now.Month)) return;
+            if (payment.Type)
+                SqlConnect.Instance.monthlyPayments = (delete == 1 ? SqlConnect.Instance.monthlyPayments - payment.Amount : SqlConnect.Instance.monthlyPayments + payment.Amount);
+            else
+                SqlConnect.Instance.monthlySalaries = (delete == 1 ? SqlConnect.Instance.monthlySalaries - payment.Amount : SqlConnect.Instance.monthlySalaries + payment.Amount);
+        }
+
         public void AddSinglePayment(int index, SinglePayment payment)
         {
             // prace nad dodawaniem singlepays z inną datą
@@ -236,7 +245,7 @@ namespace Budget.Main_Classes
             //Console.WriteLine(key);
             //payments.Add(key, payment);
             //ListOfAdds.Add(new Changes(typeof(SinglePayment), key));
-
+            CheckPayment(payment,0);
 
             payments.Add(index, payment);
             ListOfAdds.Add(new Changes(typeof(SinglePayment), index));
@@ -275,6 +284,7 @@ namespace Budget.Main_Classes
                 if (b.Value.SinglePaymentID > indexSinglePayment)
                     b.Value.Balance += amountToRefactor;
             }
+            CheckPayment((SinglePayment)Payments[indexSinglePayment], 1);
 
             payments.Remove(indexSinglePayment);
             balanceLogs.Remove(indexBalanceLog);
