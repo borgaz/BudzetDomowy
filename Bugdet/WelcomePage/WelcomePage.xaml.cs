@@ -100,8 +100,8 @@ namespace Budget.WelcomePage
             PaymentsBar.Maximum = SalariesBar.Maximum = SqlConnect.Instance.monthlySalaries + SqlConnect.Instance.monthlyPayments;
             SalariesBar.Value = SqlConnect.Instance.monthlySalaries;
             PaymentsBar.Value = SqlConnect.Instance.monthlyPayments;
-            SalariesBar.ToolTip = SalariesBar.Value;
-            PaymentsBar.ToolTip = PaymentsBar.Value;
+            SalariesBar.ToolTip = SalariesBar.Value + " zł";
+            PaymentsBar.ToolTip = PaymentsBar.Value + " zł";
         }
         private void ProvidedPaymentsDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
         {
