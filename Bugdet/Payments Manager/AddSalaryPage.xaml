@@ -7,20 +7,20 @@
       d:DesignHeight="450" d:DesignWidth="300"
 	Title="AddSalaryPage">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Width="280" TextWrapping="Wrap" Text="Dodaj przychód(jednorazowy/okresowy), który później będziesz mógł edytować/usunąć w zakładce zarządzania." VerticalAlignment="Top"/>
-        <TextBox x:Name="SalaryName" HorizontalAlignment="Left" Height="27" Margin="120,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" PreviewTextInput="SalaryName_PreviewTextInput" GotFocus="SalaryName_OnGotFocus"/>
-        <Label Content="Nazwa przychodu" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top" Width="105" Height="27"/>
-        <Label Content="Kwota przychodu" HorizontalAlignment="Left" Margin="10,99,0,0" Height="27" Width="105" VerticalAlignment="Top"/>
-        <TextBox x:Name="SalaryValue" HorizontalAlignment="Left" Height="27" Margin="120,99,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" RenderTransformOrigin="0.95,0.478" PreviewTextInput="SalaryValue_PreviewTextInput" GotFocus="SalaryName_OnGotFocus"/>
-        <ComboBox x:Name="CategoryBox" HorizontalAlignment="Left" Margin="120,131,0,0" Height="27" VerticalAlignment="Top" Width="128"/>
-        <Label Content="Kategoria" HorizontalAlignment="Left" Margin="10,131,0,0" Width="105" Height="27" VerticalAlignment="Top"/>
-        <Button x:Name="AddCategoryBtn" Content="+" HorizontalAlignment="Left" Margin="253,131,0,0" VerticalAlignment="Top" Width="27" Height="27" ToolTip="Dodaj kategorie" Click="AddCategoryBtn_Click" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-        <Label Content="Dodatkowa notatka" HorizontalAlignment="Left" Margin="10,313,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Note" HorizontalAlignment="Left" Height="56" Margin="10,344,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="270"/>
-        <Button x:Name="AddPaymentBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="10,413,0,0" VerticalAlignment="Top" Width="80" Height="27" RenderTransformOrigin="0.2,-0.091" Click="addPaymentBtn_Click"/>
-        <TextBox x:Name="InfoBox" HorizontalAlignment="Left" Height="27" Margin="100,413,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" IsEnabled="False"/>
-        <RadioButton x:Name="SinglePaymentRadio" Content="Przychod pojedynczy" HorizontalAlignment="Left" Margin="16,167,0,0" VerticalAlignment="Top" Checked="SinglePaymentRadio_OnChecked"/>
-        <RadioButton x:Name="PeriodPaymentRadio" Content="Przychod okresowy" HorizontalAlignment="Left" Margin="159,167,0,0" VerticalAlignment="Top" Checked="PeriodPaymentRadio_OnChecked"/>
-        <Frame x:Name="DateTypeFrame" Content="" HorizontalAlignment="Left" Height="120" Margin="10,188,0,0" VerticalAlignment="Top" Width="280" NavigationUIVisibility="Hidden"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Width="280" TextWrapping="Wrap" Text="Dodaj przychód, który później będzie można edytować w zakładce Wydatki i Przychody." VerticalAlignment="Top" FontSize="14"/>
+        <TextBox x:Name="SalaryName" HorizontalAlignment="Left" Height="27" Margin="130,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" PreviewTextInput="SalaryName_PreviewTextInput" GotFocus="SalaryName_OnGotFocus"/>
+        <Label Content="Nazwa przychodu" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top" Width="115" Height="27" FontSize="13"/>
+        <Label Content="Kwota przychodu" HorizontalAlignment="Left" Margin="10,99,0,0" Height="27" Width="115" VerticalAlignment="Top" FontSize="13"/>
+        <TextBox x:Name="SalaryValue" HorizontalAlignment="Left" Height="27" Margin="130,99,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" RenderTransformOrigin="0.95,0.478" PreviewTextInput="SalaryValue_PreviewTextInput" GotFocus="SalaryName_OnGotFocus"/>
+        <ComboBox x:Name="CategoryBox" HorizontalAlignment="Left" Margin="130,131,0,0" Height="27" VerticalAlignment="Top" Width="128"/>
+        <Label Content="Kategoria" HorizontalAlignment="Left" Margin="10,131,0,0" Width="105" Height="27" VerticalAlignment="Top" FontSize="13"/>
+        <Button x:Name="AddCategoryBtn" Content="+" HorizontalAlignment="Left" Margin="263,131,0,0" VerticalAlignment="Top" Width="27" Height="27" ToolTip="Dodaj kategorie" Click="AddCategoryBtn_Click" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Content="Dodatkowa notatka" HorizontalAlignment="Left" Margin="10,318,0,0" VerticalAlignment="Top" FontSize="13"/>
+        <TextBox x:Name="Note" HorizontalAlignment="Left" Height="50" Margin="10,350,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280"/>
+        <Button x:Name="AddPaymentBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="10,413,0,0" VerticalAlignment="Top" Width="80" Height="27" RenderTransformOrigin="0.2,-0.091" Click="addPaymentBtn_Click" FontSize="13"/>
+        <TextBox x:Name="InfoBox" HorizontalAlignment="Left" Height="27" Margin="100,413,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" IsEnabled="False"/>
+        <RadioButton x:Name="SinglePaymentRadio" Content="Przychod pojedynczy" HorizontalAlignment="Left" Margin="16,167,0,0" VerticalAlignment="Top" Checked="SinglePaymentRadio_OnChecked" FontSize="13"/>
+        <RadioButton x:Name="PeriodPaymentRadio" Content="Przychod okresowy" HorizontalAlignment="Right" Margin="0,167,10,0" VerticalAlignment="Top" Checked="PeriodPaymentRadio_OnChecked" FontSize="13"/>
+        <Frame x:Name="DateTypeFrame" Content="" HorizontalAlignment="Left" Height="120" Margin="10,194,0,0" VerticalAlignment="Top" Width="280" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Page>
