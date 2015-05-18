@@ -148,7 +148,7 @@ namespace Budget.Main_Classes
             else if (this.period == "ROK")
                 temp = temp.AddYears(this.frequency * _period);  
 
-            return new SinglePayment(this.Note, this.Amount, this.CategoryID, this.Type, "[Okresowy]" + this.Name, temp);
+            return new SinglePayment(this.Note, this.Amount, this.CategoryID, this.Type, "[Okresowy] " + this.Name, temp);
         }
 
         public DateTime CountNextDate()

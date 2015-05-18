@@ -53,5 +53,10 @@ namespace Budget.Payments_Manager
                 Amount.ToolTip = null;
             }
         }
+
+        private void QuitButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

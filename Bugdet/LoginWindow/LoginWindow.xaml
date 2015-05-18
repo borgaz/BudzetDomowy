@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Okno Logowania" Height="147" Width="233" Background="#FF33CC00" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
 
-    <Grid KeyDown="UIElement_OnKeyDown" Background="#FFDDE3F0">
+    <Grid KeyDown="UIElement_OnKeyDown" Background="#FFEDEEF9
+          ">
         <Label Content="Budżet:" HorizontalAlignment="Left" Margin="10,10,0,0" Width="50" Height="26" VerticalAlignment="Top"/>
         <ComboBox x:Name="BudgetsComboBox" HorizontalAlignment="Right" Margin="0,10,40,0" VerticalAlignment="Top" Height="26" Width="120" SelectionChanged="BudgetsComboBox_SelectionChanged" FontSize="14" />
         <Button x:Name="AddBudgetButton" Content="+" HorizontalAlignment="Right" VerticalAlignment="Top" Height="26" Width="26" Margin="0,10,10,0" Click="AddBudgetButton_Click" FontSize="14"/>
