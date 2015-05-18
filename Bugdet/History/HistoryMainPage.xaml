@@ -9,11 +9,11 @@
 
     <Grid>
         <TabControl HorizontalAlignment="Left" Height="540" Margin="10,0,0,0" VerticalAlignment="Top" Width="705" Loaded="FrameworkElement_OnLoaded">
-            <TabItem Header="HISTORIA" Margin="-2,-2,-2,-2" HorizontalAlignment="Left" Width="352.5">
+            <TabItem Header="HISTORIA" Margin="-2,-2,-2,-2" HorizontalAlignment="Left" Width="350.5">
                 <Frame x:Name="HistoryFrame" Content="" HorizontalAlignment="Left" Height="510" VerticalAlignment="Top" Width="700" Margin="0,0,0,0" NavigationUIVisibility="Hidden" Background="#FFEDEEF9"/>
             </TabItem>
-            <TabItem Header="ANALIZA" Margin="-2,-2,-174,0">
-                <Frame x:Name="AnalisysFrame" Content="" HorizontalAlignment="Left" Height="510" VerticalAlignment="Top" Width="700" Margin="0,0,0,0" NavigationUIVisibility="Hidden" Background="#FFEDEEF9"/>
+            <TabItem Header="ANALIZA" Margin="0,-2,-3,-2" HorizontalAlignment="Right" Width="350">
+                <Frame x:Name="AnalisysFrame" Content="" HorizontalAlignment="Right" Height="510" VerticalAlignment="Top" Width="700" Margin="0,0,0,0" NavigationUIVisibility="Hidden" Background="#FFEDEEF9"/>
             </TabItem>
         </TabControl>
     </Grid>

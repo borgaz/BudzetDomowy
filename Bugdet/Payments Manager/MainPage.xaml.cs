@@ -16,14 +16,12 @@ namespace Budget.Payments_Manager
     {
         private AddPaymentPage _singlePaymentPage = new AddPaymentPage();
         private AddSalaryPage _singleSalaryPage = new AddSalaryPage();
-        private int _lastSingleId = Main_Classes.Budget.Instance.Payments.Keys.Max();
-        private int _lastPeriodId = Main_Classes.Budget.Instance.Payments.Keys.Min();
+        private int _lastSingleId = Main_Classes.Budget.Instance.Payments.Count > 0 ? Main_Classes.Budget.Instance.Payments.Keys.Max() : 0;
+        private int _lastPeriodId = Main_Classes.Budget.Instance.Payments.Count > 0 ? Main_Classes.Budget.Instance.Payments.Keys.Min() : 0;
 
         public MainPage()
         {
             InitializeComponent();
-            Console.WriteLine(_lastPeriodId);
-            Console.WriteLine(_lastSingleId);
         }
 
         private void addPaymentBtn_Click(object sender, RoutedEventArgs e)
@@ -59,7 +57,6 @@ namespace Budget.Payments_Manager
                 }
                 if (ch.Value.GetType() == typeof (PeriodPayment))
                 {
-                    Console.WriteLine(ch.Key);
                     if (ch.Key >= _lastPeriodId)
                         continue;
                     var p = (PeriodPayment) Main_Classes.Budget.Instance.Payments[ch.Key];

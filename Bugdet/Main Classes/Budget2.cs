@@ -22,7 +22,6 @@ namespace Budget.Main_Classes
                 String password = String.Empty;
                 double maximumAmount = 0;
                 DateTime creationDate = DateTime.Now;
-                int numberOfPeople = 0;
                 double balance = 0;
                 DateTime maximumDate = new DateTime(1900, 01, 01);
                 DateTime minimumDate = new DateTime(2100, 12, 31);
@@ -35,7 +34,6 @@ namespace Budget.Main_Classes
                     balance = Convert.ToDouble(nameFromSelect.Tables[0].Rows[0]["balance"]);
                     password = Convert.ToString(nameFromSelect.Tables[0].Rows[0]["password"]);
                     creationDate = Convert.ToDateTime(nameFromSelect.Tables[0].Rows[0]["creation"]);
-                    numberOfPeople = Convert.ToInt32(nameFromSelect.Tables[0].Rows[0]["numberOfPeople"]);
                 }
 
                 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,8 +47,7 @@ namespace Budget.Main_Classes
                     categories.Add(Convert.ToInt32(categoriesFromSelect.Tables[0].Rows[i]["id"]),
                     new Category(Convert.ToString(categoriesFromSelect.Tables[0].Rows[i]["name"]),
                         Convert.ToString(categoriesFromSelect.Tables[0].Rows[i]["note"]),
-                        Convert.ToBoolean(categoriesFromSelect.Tables[0].Rows[i]["type"])
-                        ));
+                        Convert.ToBoolean(categoriesFromSelect.Tables[0].Rows[i]["type"])));
                 }
 
                 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,8 +62,7 @@ namespace Budget.Main_Classes
                         new BalanceLog(Convert.ToDouble(balanceLogsFromSelect.Tables[0].Rows[i]["balance"]),
                         Convert.ToDateTime(balanceLogsFromSelect.Tables[0].Rows[i]["date"]),
                         Convert.ToInt32(balanceLogsFromSelect.Tables[0].Rows[i]["singlePaymentId"]),
-                        Convert.ToInt32(balanceLogsFromSelect.Tables[0].Rows[i]["periodPaymentId"])
-                        ));
+                        Convert.ToInt32(balanceLogsFromSelect.Tables[0].Rows[i]["periodPaymentId"])));
                 }
 
                 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,8 +83,7 @@ namespace Budget.Main_Classes
                         Convert.ToString(periodPayFromSelect.Tables[0].Rows[i]["period"]),
                         Convert.ToDateTime(periodPayFromSelect.Tables[0].Rows[i]["lastUpdate"]),
                         Convert.ToDateTime(periodPayFromSelect.Tables[0].Rows[i]["startDate"]),
-                        Convert.ToDateTime(periodPayFromSelect.Tables[0].Rows[i]["endDate"])
-                        ));
+                        Convert.ToDateTime(periodPayFromSelect.Tables[0].Rows[i]["endDate"])));
                 }
                 DataSet singlePayFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM SinglePayments");
                 for (int i = 0; i < singlePayFromSelect.Tables[0].Rows.Count; i++)
@@ -106,16 +101,13 @@ namespace Budget.Main_Classes
 
                     payments.Add(Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["id"]),
                         new SinglePayment(Convert.ToString(singlePayFromSelect.Tables[0].Rows[i]["note"]),
-                        amount,
-                        Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["categoryId"]),
-                        Convert.ToBoolean(singlePayFromSelect.Tables[0].Rows[i]["type"]),
-                        Convert.ToString(singlePayFromSelect.Tables[0].Rows[i]["name"]),
-                        date
-                        ));
+                            amount,
+                            Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["categoryId"]),
+                            Convert.ToBoolean(singlePayFromSelect.Tables[0].Rows[i]["type"]),
+                            Convert.ToString(singlePayFromSelect.Tables[0].Rows[i]["name"]),
+                            date));
                     //do miesiecznej sumy
-                    if (
-                        !Convert.ToDateTime(singlePayFromSelect.Tables[0].Rows[i]["date"])
-                            .Month.Equals(DateTime.Now.Month))
+                    if (!Convert.ToDateTime(singlePayFromSelect.Tables[0].Rows[i]["date"]).Month.Equals(DateTime.Now.Month))
                         continue;
 
                     if (Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["type"]) == 1)
@@ -143,8 +135,7 @@ namespace Budget.Main_Classes
                         Convert.ToInt32(savTargetsFromSelect.Tables[0].Rows[i]["priority"]),
                         Convert.ToDouble(savTargetsFromSelect.Tables[0].Rows[i]["moneyHoldings"]),
                         Convert.ToDateTime(savTargetsFromSelect.Tables[0].Rows[i]["addedDate"]),
-                        Convert.ToDouble(savTargetsFromSelect.Tables[0].Rows[i]["neededAmount"])
-                        ));
+                        Convert.ToDouble(savTargetsFromSelect.Tables[0].Rows[i]["neededAmount"])));
                 }
 
                 if (DateTime.Compare(maximumDate, new DateTime(1900, 01, 01)) == 0)
@@ -153,7 +144,7 @@ namespace Budget.Main_Classes
                     minimumDate = DateTime.Today;
 
                 return new Budget(note, name, password, payments, categories, savingsTargets, balanceLogs, balance,
-                    numberOfPeople, creationDate, minimumDate, maximumDate, maximumAmount);
+                    creationDate, minimumDate, maximumDate, maximumAmount);
             }
             catch (Exception ex)
             {
@@ -249,7 +240,6 @@ namespace Budget.Main_Classes
                     {
                         SqlConnect.Instance.ExecuteSqlNonQuery("DELETE FROM SAVINGSTARGETS WHERE id = " + C.ID);
                     }
-
                 }
             }
             catch (Exception ex)
@@ -358,8 +348,6 @@ namespace Budget.Main_Classes
             }
             else
                 MessageBox.Show("Błąd w zapisie bazy danych!");
-
         }
-
     }
 }

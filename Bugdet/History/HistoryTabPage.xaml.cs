@@ -163,7 +163,6 @@ namespace Budget.History
                 }
                 else // dla single
                 {
-                    Console.WriteLine((int)dataRow.Row.ItemArray[1]);
                     MessageBox.Show("Opis: " +
                                     Main_Classes.Budget.Instance.Payments[
                                         Main_Classes.Budget.Instance.BalanceLog[(int)dataRow.Row.ItemArray[1]].SinglePaymentID].Note +

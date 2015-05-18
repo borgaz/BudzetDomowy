@@ -23,7 +23,7 @@ namespace Budget.Payments_Manager
             Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.SALARY);
             InsertDateTypes(_periodDateGrid.TypeOfDayComboBox);
             _periodDateGrid.StartDatePicker.Text = DateTime.Now.Date.ToString();
-            //_periodDateGrid.EndDatePicker.Text = DateTime.MaxValue.ToString();
+            _periodDateGrid.EndDatePicker.Text = DateTime.MaxValue.ToString();
             _singleDateGrid.SingleDatePicker.Text = DateTime.Now.Date.ToString();
         }
 
@@ -34,15 +34,16 @@ namespace Budget.Payments_Manager
                 var categoryItem = (ComboBoxItem)CategoryBox.SelectedValue;
                 if (PeriodPaymentRadio.IsChecked == true)
                 {
-                    var temp_id = -1;
+                    int temp_id = -1;
                     try
                     {
                         temp_id = Main_Classes.Budget.Instance.Payments.Keys.Min() - 1;
-                        if (temp_id == 0) // w bazie chcemy periodPays indeksowane od -1
+                        if (temp_id == 0)
+                        {
                             temp_id = -1;
+                        }     
                     }
-                    catch (Exception)
-                    { }
+                    catch (Exception) { }
 
                     Main_Classes.Budget.Instance.AddPeriodPayment(temp_id,
                         new PeriodPayment(categoryItem.Id,
@@ -59,30 +60,24 @@ namespace Budget.Payments_Manager
                 }
                 else
                 {
-                    var temp_id = 1;
+                    int temp_id = 1;
                     try
                     {
                         temp_id = Main_Classes.Budget.Instance.Payments.Keys.Max() + 1;
-                        if (temp_id == 0) // w bazie chcemy singlePays indeksowane od 1
+                        if (temp_id == 0)
+                        {
                             temp_id = 1;
-
+                        }
                     }
-                    catch (Exception)
-                    { } //gdy brak elementów w tablicy temp_id = 1
+                    catch (Exception) { }
                     
-
-                    //Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
                     Main_Classes.Budget.Instance.AddSinglePayment(temp_id,
-                        new SinglePayment(Note.Text, Convert.ToDouble(SalaryValue.Text.Replace(".", ",")), categoryItem.Id, false, SalaryName.Text, _singleDateGrid.SelectedDate));
-                    // uwaga tutaj dodajemy
-                    if (_singleDateGrid.SelectedDate <= DateTime.Now)
-                    {
-                        int balanceMaxKey = Main_Classes.Budget.Instance.BalanceLog.Keys.Max();
-                        int tempIdBalance = balanceMaxKey + 1;
-                        double currentBalance = Main_Classes.Budget.Instance.BalanceLog[balanceMaxKey].Balance + Convert.ToDouble(SalaryValue.Text.Replace(".", ","));
-                        Main_Classes.Budget.Instance.AddBalanceLog(tempIdBalance, new BalanceLog(currentBalance, DateTime.Today, temp_id, 0));
-                        // Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));
-                    }
+                        new SinglePayment(Note.Text, 
+                            Convert.ToDouble(SalaryValue.Text.Replace(".", ",")), 
+                            categoryItem.Id, 
+                            false, 
+                            SalaryName.Text, 
+                            _singleDateGrid.SelectedDate));
                     _singleDateGrid.SingleDatePicker.Text = "";
                 }
 
@@ -91,8 +86,7 @@ namespace Budget.Payments_Manager
                 SalaryName.Text = "";
                 SalaryValue.Text = "";
                 CategoryBox.SelectedIndex = -1;
-                Note.Text = "";
-               
+                Note.Text = ""; 
             }
             else
             {
@@ -112,7 +106,6 @@ namespace Budget.Payments_Manager
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
             new AddCategoryWindow(CategoryBox,Main_Classes.Budget.CategoryTypeEnum.SALARY).ShowDialog();
-         //   Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.SALARY);
         }
 
         private void SalaryName_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -159,7 +152,6 @@ namespace Budget.Payments_Manager
         private void SalaryName_OnGotFocus(object sender, RoutedEventArgs e)
         {
             InfoBox.Text = ""; 
-        }
-       
+        }   
     }
 }

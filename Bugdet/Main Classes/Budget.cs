@@ -22,7 +22,6 @@ namespace Budget.Main_Classes
         private Dictionary<int, BalanceLog> balanceLogs; // słownik logow
         private double balance; // saldo
         private DateTime creationDate; // data stworzenia budzetu
-        private int numberOfPeople; // ilosc osob, dla ktorych prowadzony jest budzet domowy
         private List<Changes> listOfAdds; //lista dodanych rekordów
         private List<Changes> listOfDels; //lista usuniętych rekordów
         private List<Changes> listOfEdits; //lista zedytowanych rekordów
@@ -32,16 +31,18 @@ namespace Budget.Main_Classes
 
         public enum CategoryTypeEnum
         {
-          PAYMENT,SALARY,ANY }
+            PAYMENT,SALARY,ANY // co to?
+        }
+
         public override string ToString()
         {
-            return "NAME: " + name + ", NOTE: " + note + ", PASSWORD: " + password + ", NUMBER_OF_PEOPLE: " + numberOfPeople
-                + ", CREATION_DATE: " + creationDate + ", BALANCE: " + balance + "\n";
+            return "NAME: " + name + ", NOTE: " + note + ", PASSWORD: " + password +
+                ", CREATION_DATE: " + creationDate + ", BALANCE: " + balance + "\n";
         }
 
         private Budget(String note, String name, String password, Dictionary<int, Payment> payments,
             Dictionary<int, Category> categories, Dictionary<int, SavingsTarget> savingsTargets,
-            Dictionary<int, BalanceLog> balanceLogs, double balance, int numberOfPeople, DateTime creationDate,
+            Dictionary<int, BalanceLog> balanceLogs, double balance, DateTime creationDate,
             DateTime minDate, DateTime maxDate, double maxAmount)
         {
             this.note = note;
@@ -51,7 +52,6 @@ namespace Budget.Main_Classes
             this.categories = categories;
             this.savingsTargets = savingsTargets;
             this.balanceLogs = balanceLogs;
-            this.numberOfPeople = numberOfPeople;
             this.balance = balance;
             this.creationDate = creationDate;
             listOfAdds = new List<Changes>();
@@ -69,8 +69,7 @@ namespace Budget.Main_Classes
                 if (instance == null)
                 {
                     instance = FetchAll();
-                }
-                
+                }  
                 return instance;
             }
         }
@@ -79,6 +78,7 @@ namespace Budget.Main_Classes
         {
             instance = FetchAll();
         }
+
         public double MaxAmount
         {
             get
@@ -163,18 +163,6 @@ namespace Budget.Main_Classes
             }
         }
 
-        public int NumberOfPeople
-        {
-            get
-            {
-                return this.numberOfPeople;
-            }
-            set
-            {
-                this.numberOfPeople = value;
-            }
-        }
-
         public double Balance
         {
             get
@@ -183,6 +171,7 @@ namespace Budget.Main_Classes
                 return balance;
             }
         }
+
         public Dictionary<int, BalanceLog> BalanceLog
         {
             get
@@ -262,7 +251,6 @@ namespace Budget.Main_Classes
                 else
                 {
                     int temp_id_balance = BalanceLog.Keys.Max() + 1;
-                    // uwaga tutaj odejmujemy
                     double currentBalance = BalanceLog.Last().Value.Balance - payment.Amount;
                     AddBalanceLog(temp_id_balance, new BalanceLog(currentBalance, DateTime.Today, index, 0));
                 }
@@ -357,7 +345,6 @@ namespace Budget.Main_Classes
             catch (Exception)
             {
                 MessageBox.Show(categories.Count + "");
-                Console.WriteLine(categories.ToArray());
             }
         }
 
@@ -378,18 +365,12 @@ namespace Budget.Main_Classes
                     try
                     {
                         periodCount = p.Value.CountPeriods();
-
-                        Console.WriteLine("\n" + periodCount);
-
                         int tempCount = periodCount;
                         if (periodCount > 0)
                         {
                             while (periodCount >= 0)
                             {
                                 editList.Add(p.Value.CreateSingleFromPeriod(periodCount));
-
-                                //Console.WriteLine(p.Value.CreateSingleFromPeriod(periodCount).ToString() + "\n");
-
                                 periodCount--;
                             }
                         }
@@ -399,10 +380,7 @@ namespace Budget.Main_Classes
                             Instance.EditPeriodPayment(p.Key, (PeriodPayment)p.Value);
                         }
                     }
-                    catch (NotImplementedException ex)
-                    {
-                        Console.WriteLine("Błąd typu.");
-                    }
+                    catch (NotImplementedException ex) { }
                 }
             }
             return editList;
@@ -432,20 +410,19 @@ namespace Budget.Main_Classes
 
                         if (found == false)
                         {
-                                if (entry.Value.Type == false)
-                                {
-                                    int balanceMaxKey = BalanceLog.Keys.Max();
-                                    int tempIdBalance = balanceMaxKey + 1;
-                                    double currentBalance = BalanceLog[balanceMaxKey].Balance + entry.Value.Amount;
-                                    AddBalanceLog(tempIdBalance, new BalanceLog(currentBalance, DateTime.Today, entry.Key, 0));
-                                }
-                                else
-                                {
-                                    int temp_id_balance = BalanceLog.Keys.Max() + 1;
-                                    // uwaga tutaj odejmujemy
-                                    double currentBalance = BalanceLog.Last().Value.Balance - entry.Value.Amount;
-                                    AddBalanceLog(temp_id_balance, new BalanceLog(currentBalance, DateTime.Today, entry.Key, 0));
-                                }
+                            if (entry.Value.Type == false)
+                            {
+                                int balanceMaxKey = BalanceLog.Keys.Max();
+                                int tempIdBalance = balanceMaxKey + 1;
+                                double currentBalance = BalanceLog[balanceMaxKey].Balance + entry.Value.Amount;
+                                AddBalanceLog(tempIdBalance, new BalanceLog(currentBalance, DateTime.Today, entry.Key, 0));
+                            }
+                            else
+                            {
+                                int temp_id_balance = BalanceLog.Keys.Max() + 1;
+                                double currentBalance = BalanceLog.Last().Value.Balance - entry.Value.Amount;
+                                AddBalanceLog(temp_id_balance, new BalanceLog(currentBalance, DateTime.Today, entry.Key, 0));
+                            }
                         }
                     }
                 }
@@ -462,6 +439,5 @@ namespace Budget.Main_Classes
             }
             return contains;
         }
-
     }
 }

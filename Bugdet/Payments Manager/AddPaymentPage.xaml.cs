@@ -64,27 +64,21 @@ namespace Budget.Payments_Manager
                     try
                     {
                         temp_id = Main_Classes.Budget.Instance.Payments.Keys.Max() + 1;
-                        if (temp_id == 0) // w bazie chcemy singlePays indeksowane od 1
+                        if (temp_id == 0)
+                        {
                             temp_id = 1;
+                        }  
                     }
-                    catch (Exception)
-                    { } //gdy brak elementów w tablicy temp_id = 1
-                    //Budget.Instance.ListOfAdds.Add(new Changes(typeof(SinglePayment), temp_id));
+                    catch (Exception) { }
+
                     Main_Classes.Budget.Instance.AddSinglePayment(temp_id,
-                        new SinglePayment(Note.Text, Convert.ToDouble(PaymentValue.Text.Replace(".",",")), categoryItem.Id, true, PaymentName.Text, _singleDateGrid.SelectedDate));
-                    Console.WriteLine(_singleDateGrid.SelectedDate);
-                    Console.WriteLine(DateTime.Now);
-                    if (_singleDateGrid.SelectedDate <= DateTime.Now)
-                    {
-
-                        int temp_id_balance = Main_Classes.Budget.Instance.BalanceLog.Keys.Max() + 1;
-                        // uwaga tutaj odejmujemy
-                        double currentBalance = Main_Classes.Budget.Instance.BalanceLog.Last().Value.Balance - Convert.ToDouble(PaymentValue.Text.Replace(".", ","));
-                        Main_Classes.Budget.Instance.AddBalanceLog(temp_id_balance, new BalanceLog(currentBalance, DateTime.Today, temp_id, 0));
-                        //Budget.Instance.ListOfAdds.Add(new Changes(typeof(BalanceLog), temp_id_balance));
-                    }
+                        new SinglePayment(Note.Text, 
+                            Convert.ToDouble(PaymentValue.Text.Replace(".",",")), 
+                            categoryItem.Id, 
+                            true, 
+                            PaymentName.Text, 
+                            _singleDateGrid.SelectedDate));
                     _singleDateGrid.SingleDatePicker.Text = "";
-
                 }
 
                 InfoBox.Text = "Dodano!";
@@ -103,7 +97,6 @@ namespace Budget.Payments_Manager
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
             new AddCategoryWindow(CategoryBox,Main_Classes.Budget.CategoryTypeEnum.PAYMENT).ShowDialog();
-         //   Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.PAYMENT);
         }
 
         private void PaymentName_PreviewTextInput(object sender, TextCompositionEventArgs e)

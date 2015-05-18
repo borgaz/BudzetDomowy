@@ -239,7 +239,6 @@ namespace Budget.New_Budget
             catch (Exception)
             {
                 MessageBox.Show(cat.Count + "");
-                Console.WriteLine(cat.Values.ToString());
             }
             return originalID;
         }
