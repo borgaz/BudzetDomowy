@@ -1,7 +1,11 @@
 ﻿using System;
+using System.IO;
+using System.Text;
+using System.Xml.Serialization;
 
 namespace Budget.SettingsPage
 {
+    [Serializable]
     public sealed class Settings
     {
         private static Settings instance;
@@ -32,9 +36,17 @@ namespace Budget.SettingsPage
             {
                 if (instance == null)
                 {
-                    instance = new Settings();
+                    if (! DeserializeFromXml())
+                    {
+                        instance = new Settings();
+                    }
                 }
+
                 return instance;
+            }
+            set
+            {
+                instance = value;
             }
 
         }
@@ -42,16 +54,41 @@ namespace Budget.SettingsPage
         private Settings() // pozniej trzeba dorobic wczytywanie ustawien z pliku/bazy.
         {
             PP_period = "MIESIĄC";
-            PP_frequency = 6;
+            PP_frequency = 1;
             PP_amountOf = 0;
-            PP_amountTo = Double.MaxValue;
+            PP_amountTo = Main_Classes.Budget.Instance.MaxAmount;
             PP_numberOfRow = 20;
 
             SH_period = "MIESIĄC";
-            SH_frequency = 6;
+            SH_frequency = 1;
             SH_amountOf = 0;
-            SH_amountTo = Double.MaxValue;
+            SH_amountTo = Main_Classes.Budget.Instance.MaxAmount;
             SH_numberOfRow = 20;
+        }
+
+        public string SerializeToXml()
+        {
+            StreamWriter writer = new StreamWriter(Main_Classes.Budget.Instance.Name + "Settings.xml");
+            XmlSerializer serializer = new XmlSerializer(typeof(Settings));
+            serializer.Serialize(writer, this);
+            writer.Close();
+            return writer.ToString();
+        }
+
+        private static bool DeserializeFromXml()
+        {
+            try
+            {
+                StreamReader reader = new StreamReader(Main_Classes.Budget.Instance.Name + "Settings.xml");
+                XmlSerializer serializer = new XmlSerializer(typeof(Settings));
+                instance = (Settings)serializer.Deserialize(reader);
+                reader.Close();
+                return true;
+            }
+            catch(Exception)
+            { 
+                return false; 
+            }    
         }
 
         public DateTime PP_LastDateToShow()

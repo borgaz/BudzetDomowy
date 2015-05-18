@@ -42,7 +42,11 @@ namespace Budget.WelcomePage
                     if (pP.Amount < Settings.Instance.PP_AmountTo && pP.Amount > Settings.Instance.PP_AmountOf)
                     {
                         lastDate = Settings.Instance.PP_LastDateToShow() <= pP.EndDate ? Settings.Instance.PP_LastDateToShow() : pP.EndDate;
-                        providedPayments.AddRange(PeriodPayment.CreateListOfSelectedPeriodPayments(pP, lastDate));
+                        if (pP.CountNextDate() < lastDate)
+                        {
+                            providedPayments.AddRange(PeriodPayment.CreateListOfSelectedPeriodPayments(pP, lastDate));
+                        }
+                       
                     }
                 }
                 else

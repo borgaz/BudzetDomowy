@@ -92,6 +92,9 @@
     <Compile Include="Payments Manager\SingleDateGrid.xaml.cs">
       <DependentUpon>SingleDateGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingsPage\CustomizationPage.xaml.cs">
+      <DependentUpon>CustomizationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SettingsPage\Settings.cs" />
     <Compile Include="Utility Classes\Changes.cs" />
     <Compile Include="Utility Classes\ComboBoxItem.cs" />
@@ -198,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Payments Manager\SingleDateGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingsPage\CustomizationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
