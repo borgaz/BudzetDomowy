@@ -24,7 +24,7 @@ namespace Budget.Payments_Manager
             AddSalaryPage.InsertDateTypes(_periodDateGrid.TypeOfDayComboBox);
             
             _periodDateGrid.StartDatePicker.Text = DateTime.Now.Date.ToString();
-            //_periodDateGrid.EndDatePicker.Text = DateTime.MaxValue.ToString();
+            _periodDateGrid.EndDatePicker.Text = DateTime.Now.Date.ToString();
             _singleDateGrid.SingleDatePicker.Text = DateTime.Now.Date.ToString();
         }
 

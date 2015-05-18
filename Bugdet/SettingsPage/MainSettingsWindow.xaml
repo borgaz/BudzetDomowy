@@ -8,8 +8,10 @@
 	Title="MainSettingsWindow">
 
     <Grid>
-        <Frame x:Name="SettingsContentFrame" Margin="175,0,0,0" NavigationUIVisibility="Hidden" BorderThickness="2,0,0,0" BorderBrush="#FF5490AC"/>
-        <Button x:Name="GeneralOptionsButton" Content="Ogólne" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="155" Height="34" Click="GeneralOptionsButton_Click"/>
+        <Frame x:Name="SettingsContentFrame" Margin="190,0,0,0" NavigationUIVisibility="Hidden" BorderThickness="3,0,0,0" BorderBrush="#FF5490AC"/>
+        <Button x:Name="GeneralOptionsButton" Content="Ogólne" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="170" Height="30" Click="GeneralOptionsButton_Click"/>
+        <Button x:Name="HistoryOptionsButton" Content="Dostosuj wyświetlanie historii" HorizontalAlignment="Left" Height="30" Margin="10,50,0,0" VerticalAlignment="Top" Width="170" Click="HistoryOptionsButton_Click"/>
+        <Button x:Name="FutureOptionsButton" Content="Dostosuj wyświetlanie predykcji" HorizontalAlignment="Left" Height="30" Margin="10,90,0,0" VerticalAlignment="Top" Width="170" Click="FutureOptionsButton_Click"/>
 
     </Grid>
 </Page>

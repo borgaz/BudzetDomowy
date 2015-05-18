@@ -108,6 +108,7 @@ namespace Budget.Payments_Manager
             cBox.Items.Add("MIESIĄC");
             cBox.Items.Add("ROK");
         }
+
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
         {
             new AddCategoryWindow(CategoryBox,Main_Classes.Budget.CategoryTypeEnum.SALARY).ShowDialog();

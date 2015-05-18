@@ -8,8 +8,6 @@
 	Title="GeneralOptionsPage">
 
     <Grid>
-        <Label Content="Nazwa budżetu:" HorizontalAlignment="Left" Margin="24,39,0,0" VerticalAlignment="Top"/>
-        <Label Content="Saldo:" HorizontalAlignment="Left" Margin="24,84,0,0" VerticalAlignment="Top"/>
-
+        <Label Content="Nazwa budżetu:" HorizontalAlignment="Left" Margin="25,25,0,0" VerticalAlignment="Top" Height="25" Width="100"/>
     </Grid>
 </Page>

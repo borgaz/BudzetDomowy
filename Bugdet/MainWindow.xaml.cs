@@ -45,7 +45,7 @@ namespace Budget
             _mainPage = new MainPage();
             _interfacePage = new InterfacePage.InterfacePage();
             _welcomePage = new WelcomePage.WelcomePage();
-            _mainSettingsWindow = new MainSettingsWindow(1);
+            _mainSettingsWindow = new MainSettingsWindow();
             _historyPage = new HistoryMainPage();
             WelcomePageButton.IsEnabled = false;
             _actualPage = 2;
@@ -179,6 +179,7 @@ namespace Budget
                             }
                             e.Cancel = true;
                             Main_Classes.Budget.ResetInstance();
+                            SettingsPage.Settings.Instance = null;
                             InitializeObjects();
                             this.Visibility = Visibility.Visible;
                         break;
