@@ -1,6 +1,6 @@
 # BudzetDomowy
 
-> The number of lines of code: **3677**
+> The number of lines of code: **4999**
 
 > Command to get the number:
 ```bash
