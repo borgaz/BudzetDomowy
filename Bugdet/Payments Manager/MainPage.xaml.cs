@@ -122,7 +122,7 @@ namespace Budget.Payments_Manager
             }       
             try
             {
-                e.Row.Background = (int)dataRow.Row.ItemArray[1] == 1 ? Brushes.Red : Brushes.ForestGreen;
+                e.Row.Background = (int)dataRow.Row.ItemArray[1] == 1 ? Brushes.Tomato : Brushes.SpringGreen;
             }
             catch (InvalidCastException)
             { }

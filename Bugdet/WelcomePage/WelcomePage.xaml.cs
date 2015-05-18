@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using Budget.Main_Classes;
 using Budget.SettingsPage;
+using System.Windows.Media;
 
 namespace Budget.WelcomePage
 {
@@ -105,11 +106,26 @@ namespace Budget.WelcomePage
         }
         private void ProvidedPaymentsDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
         {
+            colorDataGridRow(e);
         }
 
         private void Grid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             InsertBars();
+        }
+
+        private void shortHistoryDataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            colorDataGridRow(e);
+        }
+
+        private void colorDataGridRow (DataGridRowEventArgs e)
+        {
+            PaymentForDataGrid p = e.Row.Item as PaymentForDataGrid;
+            if (p.Sign == true)
+                e.Row.Background = new SolidColorBrush(Colors.Tomato);
+            else
+                e.Row.Background = new SolidColorBrush(Colors.SpringGreen);
         }
     }
 }

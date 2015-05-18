@@ -79,11 +79,12 @@ namespace Budget.History
             {
                 if ((bool)dataRow.Row.ItemArray[0])
                 {
-                    e.Row.Background = Brushes.Red;
+                    e.Row.Background = Brushes.Tomato;
                 }
                 else
                 {
-                    e.Row.Background = Brushes.ForestGreen;
+                    //e.Row.Background = Brushes.ForestGreen;
+                    e.Row.Background = Brushes.SpringGreen;
                 }
             }
             catch (InvalidCastException)
