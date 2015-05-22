@@ -80,7 +80,6 @@ namespace Budget.Main_Classes
         public Boolean CheckPassword(String budget, String password)
         {
             Connect(budget);
-            Console.WriteLine(budget + " " + password);
             DataSet result = SelectQuery("Select count(*) as count from Budget where name = '" + budget + "' AND password = '" + password + "'");
             if (Convert.ToInt32(result.Tables[0].Rows[0]["count"].ToString()) < 1)
             {

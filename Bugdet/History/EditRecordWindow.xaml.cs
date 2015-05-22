@@ -42,10 +42,11 @@ namespace Budget.History
             {
                 if (NameTextBox.Text != "" && AmountTextBox.Text != "")
                 {
+                    double amountBeforeChange = Main_Classes.Budget.Instance.Payments[_paymentId].Amount; 
                     Main_Classes.Budget.Instance.Payments[_paymentId].Name = NameTextBox.Text;
                     Main_Classes.Budget.Instance.Payments[_paymentId].Note = DescTextBox.Text;
                     Main_Classes.Budget.Instance.Payments[_paymentId].Amount = Convert.ToDouble(AmountTextBox.Text);
-                    Main_Classes.Budget.Instance.EditSinglePayment(_paymentId, (SinglePayment)Main_Classes.Budget.Instance.Payments[_paymentId]);
+                    Main_Classes.Budget.Instance.EditSinglePayment(_paymentId, (SinglePayment)Main_Classes.Budget.Instance.Payments[_paymentId], amountBeforeChange);
                     MessageBox.Show("Zapisano zmiany!");
                     Close();
                 }

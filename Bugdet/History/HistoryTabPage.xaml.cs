@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Linq;
 using Budget.Main_Classes;
 using ComboBoxItem = Budget.Utility_Classes.ComboBoxItem;
 
@@ -31,7 +32,7 @@ namespace Budget.History
             history.Columns.Add("Kategoria", typeof(string));
             history.Columns.Add("Data", typeof(string));
             history.Columns.Add("Kwota", typeof(double));
-            foreach (KeyValuePair<int, BalanceLog> p in Main_Classes.Budget.Instance.BalanceLog)
+            foreach (KeyValuePair<int, BalanceLog> p in Main_Classes.Budget.Instance.BalanceLog.Reverse())
             {
                 if (!((p.Value.Date >= (StartDateCheckBox.IsChecked == true ? StartDatePicker.SelectedDate : DateTime.MinValue)) &&
                       (p.Value.Date <= (EndDateCheckBox.IsChecked == true ? EndDatePicker.SelectedDate : DateTime.MaxValue))))

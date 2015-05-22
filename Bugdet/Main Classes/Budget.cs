@@ -257,8 +257,19 @@ namespace Budget.Main_Classes
             }
         }
 
-        public void EditSinglePayment(int index, SinglePayment payment)
+        public void EditSinglePayment(int index, SinglePayment payment, double amountBeforeChange)
         {
+            double amountToRefactor;
+            if (this.payments[index].Type == false)
+                amountToRefactor = this.payments[index].Amount - amountBeforeChange;
+            else
+                amountToRefactor = amountBeforeChange - this.payments[index].Amount;
+
+            foreach (KeyValuePair<int, BalanceLog> b in this.balanceLogs)
+            {
+                if (b.Value.SinglePaymentID >= index)
+                    b.Value.Balance += amountToRefactor;
+            }
             ListOfEdits.Add(new Changes(typeof(SinglePayment), index));
         }
 
@@ -393,7 +404,7 @@ namespace Budget.Main_Classes
         {
             foreach (KeyValuePair<int, Payment> entry in Payments)
             {
-                if (entry.Value.GetType() == typeof(SinglePayment));
+                if (entry.Value.GetType() == typeof(SinglePayment))
                 {
                     if (entry.Value.CompareDate() <= 0)
                     {
