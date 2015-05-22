@@ -29,10 +29,9 @@
         <Label Content="Najbliższe przychody i wydatki:" HorizontalAlignment="Left" Height="28" Margin="10,10,0,0" VerticalAlignment="Top" Width="191" FontWeight="Bold"/>
         <Label Content="Cele oszczędzania:" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="122" Height="28" Margin="0,0,196,244" FontWeight="Bold"/>
         <Label Content="Skrócona historia:" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="115" Height="28" Margin="10,0,0,244" FontWeight="Bold"/>
-        <Label Content="Aktualne saldo:" HorizontalAlignment="Right" VerticalAlignment="Top" Width="97" Height="25" Margin="0,10,65,0" FontWeight="Bold"/>
-        <TextBox Name="Balance" HorizontalAlignment="Right" VerticalAlignment="Top" Width="65" Height="22" Margin="0,13,0,0" TextWrapping="Wrap" IsReadOnly="True" Text="TextBox" IsEnabled="False"/>
+        <Label Content="Aktualne saldo:" HorizontalAlignment="Right" VerticalAlignment="Top" Width="97" Height="25" Margin="0,103,29,0" FontWeight="Bold"/>
         <ProgressBar x:Name="PaymentsBar" HorizontalAlignment="Right" Height="200" Margin="0,72,257,0" VerticalAlignment="Top" Width="34" Orientation="Vertical" Background="#FFFBFBFB" Foreground="#FFCD0505"/>
-        <ProgressBar x:Name="SalariesBar" HorizontalAlignment="Right" Height="200" Margin="0,72,167,0" VerticalAlignment="Top" Width="34" Orientation="Vertical">
+        <ProgressBar x:Name="SalariesBar" HorizontalAlignment="Right" Height="200" Margin="0,73,187,0" VerticalAlignment="Top" Width="34" Orientation="Vertical">
             <ProgressBar.Foreground>
                 <SolidColorBrush Color="#FF02AE02"/>
             </ProgressBar.Foreground>
@@ -47,8 +46,8 @@
             </ProgressBar.BorderBrush>
         </ProgressBar>
         <Rectangle Fill="#FF5899BD" HorizontalAlignment="Left" Margin="395,0,0,0" Width="2"/>
-        <Label Content="Bilans na ten miesiąc" HorizontalAlignment="Left" Margin="417,41,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Width="182"/>
-        <Label Content="Przychody" HorizontalAlignment="Left" Margin="497,152,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" FontWeight="Bold" FontSize="16" >
+        <Label Content="Bilans na ten miesiąc" HorizontalAlignment="Left" Margin="417,41,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Width="182"/>
+        <Label Content="Przychody" HorizontalAlignment="Left" Margin="477,152,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" FontWeight="Bold" FontSize="16" >
             <Label.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -68,5 +67,6 @@
                 </TransformGroup>
             </Label.RenderTransform>
         </Label>
+        <TextBox x:Name="Balance" HorizontalAlignment="Left" Height="32" Margin="599,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97" FontSize="18" FontWeight="Bold" TextAlignment="Center" Background="#FFEDEEF9"/>
     </Grid>
 </Page>

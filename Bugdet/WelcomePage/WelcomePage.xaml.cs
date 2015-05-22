@@ -26,7 +26,16 @@ namespace Budget.WelcomePage
             providedPaymentsDataGrid.ItemsSource = CreateDataForPaymentForDataGrid();
             shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
             //int balanceMaxKey = Main_Classes.Budget.Instance.Balance;
+            Balance.IsReadOnly = true;
             Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.Balance);
+            if (Main_Classes.Budget.Instance.Balance > 0)
+            {
+                Balance.Foreground = Brushes.Green;
+            }
+            if (Main_Classes.Budget.Instance.Balance <= 0)
+            {
+                Balance.Foreground = Brushes.Red;
+            }
             //Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.BalanceLog[Main_Classes.Budget.Instance.BalanceLog.Count].Balance);
         }
 

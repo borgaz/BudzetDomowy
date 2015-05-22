@@ -11,6 +11,6 @@
         <PasswordBox x:Name ="PasswordTextBox" HorizontalAlignment="Right" Margin="0,84,40,0" VerticalAlignment="Top" Width="115" Height="26" FontSize="14"/>
         <Button x:Name="LogInButton" Content="Zaloguj" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10" Height="26" Width="95" Click="LogInButton_Click" FontSize="14"/>
         <Button x:Name="CloseButton" Content="Wyjdź" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Height="26" Width="95" Click="CloseButton_Click" FontSize="14"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Wybierz nazwę budżetu lub utwórz nowy." VerticalAlignment="Top" Width="207" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Wybierz nazwę budżetu lub utwórz nowy." VerticalAlignment="Top" Width="207" FontSize="14" TextAlignment="Center"/>
     </Grid>
 </Window>
