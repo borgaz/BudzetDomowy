@@ -69,6 +69,7 @@ namespace Budget
             int page = _actualPage;
             while (running)
             {
+                Thread.Sleep(1);
                 if (page != _actualPage)
                 {
                     this.Dispatcher.Invoke(InsertPage);

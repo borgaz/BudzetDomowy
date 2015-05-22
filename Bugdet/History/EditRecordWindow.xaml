@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Budget.History.EditRecordWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="EditRecordWindow" Height="300" Width="300">
+        Title="EditRecordWindow" Height="300" Width="300" ResizeMode="NoResize" Icon="/Budget;component/Resources/app-icon.ico">
     <Grid Background="#FFEDEEF9">
         <Label Content="Nazwa :" HorizontalAlignment="Left" Margin="10,22,0,0" VerticalAlignment="Top"/>
         <Label Content="Kwota :" HorizontalAlignment="Left" Margin="10,66,0,0" VerticalAlignment="Top"/>

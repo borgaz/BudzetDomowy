@@ -313,6 +313,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\app-icon2.ico" />
+    <Resource Include="Resources\app-icon.ico" />
     <Content Include="Resources\Pie-Chart-icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
