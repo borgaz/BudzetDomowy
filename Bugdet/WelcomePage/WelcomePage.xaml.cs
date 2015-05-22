@@ -48,7 +48,7 @@ namespace Budget.WelcomePage
                 if (payment.GetType() == typeof(PeriodPayment))
                 {
                     var pP = (PeriodPayment) payment;
-                    if (pP.Amount < Settings.Instance.PP_AmountTo && pP.Amount > Settings.Instance.PP_AmountOf)
+                    if (pP.Amount <= Settings.Instance.PP_AmountTo && pP.Amount >= Settings.Instance.PP_AmountOf)
                     {
                         lastDate = Settings.Instance.PP_LastDateToShow() <= pP.EndDate ? Settings.Instance.PP_LastDateToShow() : pP.EndDate;
                         if (pP.CountNextDate() < lastDate)
@@ -61,7 +61,7 @@ namespace Budget.WelcomePage
                 else
                 {
                     var sP = (SinglePayment) payment;
-                    if (sP.CompareDate() >= 0 && sP.Amount < Settings.Instance.PP_AmountTo && sP.Amount > Settings.Instance.PP_AmountOf && sP.Date < Settings.Instance.PP_LastDateToShow())
+                    if (sP.CompareDate() >= 0 && sP.Amount < Settings.Instance.PP_AmountTo && sP.Amount >= Settings.Instance.PP_AmountOf && sP.Date <= Settings.Instance.PP_LastDateToShow())
                     {
                         providedPayments.Add(new PaymentForDataGrid(sP.Name, sP.Amount, "Pojedynczy", sP.Date, sP.Type, sP.CategoryID));
                     }    
@@ -85,7 +85,7 @@ namespace Budget.WelcomePage
                 if(balanceLog.SinglePaymentID != 0 && balanceLog.PeriodPaymentID == 0)
                 {
                     var sP = (SinglePayment)Main_Classes.Budget.Instance.Payments[balanceLog.SinglePaymentID];
-                    if (sP.CompareDate() <= 0 && sP.Date >= Settings.Instance.SH_LastDateToShow() && sP.Amount < Settings.Instance.SH_AmountTo && sP.Amount > Settings.Instance.SH_AmountOf)
+                    if (sP.CompareDate() <= 0 && sP.Date >= Settings.Instance.SH_LastDateToShow() && sP.Amount <= Settings.Instance.SH_AmountTo && sP.Amount >= Settings.Instance.SH_AmountOf)
                     {
                         if (sP.Name.StartsWith("[Okresowy]"))
                         {
@@ -102,7 +102,7 @@ namespace Budget.WelcomePage
                 {
                     var pP = (PeriodPayment)Main_Classes.Budget.Instance.Payments[balanceLog.PeriodPaymentID];
 
-                    if (balanceLog.Date >= Settings.Instance.SH_LastDateToShow() && pP.Amount < Settings.Instance.SH_AmountTo && pP.Amount > Settings.Instance.SH_AmountOf)
+                    if (balanceLog.Date >= Settings.Instance.SH_LastDateToShow() && pP.Amount <= Settings.Instance.SH_AmountTo && pP.Amount >= Settings.Instance.SH_AmountOf)
                     {
                         shortHistory.Add(new PaymentForDataGrid(pP.Name, pP.Amount, "Okresowy", balanceLog.Date, pP.Type, pP.CategoryID));
                     }
