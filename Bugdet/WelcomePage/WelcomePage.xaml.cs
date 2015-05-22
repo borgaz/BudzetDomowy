@@ -87,7 +87,15 @@ namespace Budget.WelcomePage
                     var sP = (SinglePayment)Main_Classes.Budget.Instance.Payments[balanceLog.SinglePaymentID];
                     if (sP.CompareDate() <= 0 && sP.Date >= Settings.Instance.SH_LastDateToShow() && sP.Amount < Settings.Instance.SH_AmountTo && sP.Amount > Settings.Instance.SH_AmountOf)
                     {
-                        shortHistory.Add(new PaymentForDataGrid(sP.Name, sP.Amount, "Pojedynczy", sP.Date, sP.Type, sP.CategoryID));
+                        if (sP.Name.StartsWith("[Okresowy]"))
+                        {
+                            String TempName = sP.Name.Substring(10);
+                            shortHistory.Add(new PaymentForDataGrid(TempName, sP.Amount, "Okresowy", sP.Date, sP.Type, sP.CategoryID));
+                        }
+                        else 
+                        {
+                            shortHistory.Add(new PaymentForDataGrid(sP.Name, sP.Amount, "Pojedynczy", sP.Date, sP.Type, sP.CategoryID));
+                        }
                     }
                 }
                 else if(balanceLog.SinglePaymentID == 0 && balanceLog.PeriodPaymentID != 0)
