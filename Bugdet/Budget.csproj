@@ -152,6 +152,9 @@
       <DependentUpon>CustomMessageBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="WelcomePage\PaymentForDataGrid.cs" />
+    <Compile Include="WelcomePage\SavingsTargetsWindow.xaml.cs">
+      <DependentUpon>SavingsTargetsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WelcomePage\WelcomePage.xaml.cs">
       <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>
@@ -261,6 +264,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Utility Classes\CustomMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WelcomePage\SavingsTargetsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

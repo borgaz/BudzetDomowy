@@ -148,5 +148,10 @@ namespace Budget.WelcomePage
             else
                 e.Row.Background = new SolidColorBrush(Colors.SpringGreen);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SavingsTargetsWindow.Instance.ShowDialog();
+        }
     }
 }
