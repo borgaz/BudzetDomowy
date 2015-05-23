@@ -32,7 +32,7 @@ namespace Budget.History
             history.Columns.Add("Kategoria", typeof(string));
             history.Columns.Add("Data", typeof(string));
             history.Columns.Add("Kwota", typeof(double));
-            foreach (KeyValuePair<int, BalanceLog> p in Main_Classes.Budget.Instance.BalanceLog.Reverse())
+            foreach (KeyValuePair<int, BalanceLog> p in Main_Classes.Budget.Instance.BalanceLog)
             {
                 if (!((p.Value.Date >= (StartDateCheckBox.IsChecked == true ? StartDatePicker.SelectedDate : DateTime.MinValue)) &&
                       (p.Value.Date <= (EndDateCheckBox.IsChecked == true ? EndDatePicker.SelectedDate : DateTime.MaxValue))))
@@ -66,6 +66,8 @@ namespace Budget.History
                         pp.Date.ToShortDateString(), pp.Amount);
                 }
             }
+
+            history.DefaultView.Sort = "[Data] DESC";
             HistoryDataGrid.ItemsSource = history.DefaultView;
 
             HistoryDataGrid.Columns[0].Visibility = Visibility.Hidden;
