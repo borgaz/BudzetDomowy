@@ -58,18 +58,19 @@ namespace Budget.History
                 if (pp.Type && SinglePaymentCheckBox.IsChecked == true)
                 {
                     history.Rows.Add(pp.Type, p.Key, pp.Name, Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name,
-                        p.Value.Date.ToShortDateString(), pp.Amount);
+                        pp.Date.ToShortDateString(), pp.Amount);
                 }
                 if (!pp.Type && SingleSalaryCheckBox.IsChecked == true)
                 {
                     history.Rows.Add(pp.Type, p.Key, pp.Name, Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name,
-                        p.Value.Date.ToShortDateString(), pp.Amount);
+                        pp.Date.ToShortDateString(), pp.Amount);
                 }
             }
             HistoryDataGrid.ItemsSource = history.DefaultView;
 
             HistoryDataGrid.Columns[0].Visibility = Visibility.Hidden;
             HistoryDataGrid.Columns[1].Visibility = Visibility.Hidden;
+            
         }
         private void HistoryDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
         {
