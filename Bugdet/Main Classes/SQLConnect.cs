@@ -301,6 +301,7 @@ namespace Budget.Main_Classes
             var defaultCategories = new Dictionary<int, Category>();
             try
             {
+                defaultCategories.Add(0, new Category("Oszczędzanie", "Odłożenie pieniędzy na dany cel", false));
                 defaultCategories.Add(1, new Category("Paliwo","Benzyna do samochodu", false));
                 defaultCategories.Add(2, new Category("Jedzenie", "Zakupy okresowe", false));
                 defaultCategories.Add(3, new Category("Prąd", "Rachunki za energie", false));
