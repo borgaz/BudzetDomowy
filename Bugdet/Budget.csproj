@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="De.TorstenMandelkow.MetroChart">
+      <HintPath>C:\Users\Wojtus\Desktop\MetroChart\TestApplicationWPF\bin\Debug\De.TorstenMandelkow.MetroChart.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -75,6 +78,7 @@
     <Compile Include="Analisys\AnalysisTabPage.xaml.cs">
       <DependentUpon>AnalysisTabPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Analisys\TestChart.cs" />
     <Compile Include="History\EditRecordWindow.xaml.cs">
       <DependentUpon>EditRecordWindow.xaml</DependentUpon>
     </Compile>
@@ -197,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Payments Manager\SingleDateGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analisys\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
