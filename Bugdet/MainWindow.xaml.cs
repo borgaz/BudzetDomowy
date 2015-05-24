@@ -22,7 +22,7 @@ namespace Budget
         private WelcomePage.WelcomePage _welcomePage;
         private MainSettingsWindow _mainSettingsWindow;
         private HistoryMainPage _historyPage;
-        private Analisys.AnalysisTabPage _analisysPage;
+        private Analisys.AnalisysMainPage _analisysPage;
         private static int _actualPage = 2;
         private bool running = true;
         private Thread th;
@@ -49,7 +49,7 @@ namespace Budget
             _welcomePage = new WelcomePage.WelcomePage();
             _mainSettingsWindow = new MainSettingsWindow();
             _historyPage = new HistoryMainPage();
-            _analisysPage = new AnalysisTabPage();
+            _analisysPage = new AnalisysMainPage();
             WelcomePageButton.IsEnabled = false;
             _actualPage = 2;
             CreatorButton.IsEnabled = true;

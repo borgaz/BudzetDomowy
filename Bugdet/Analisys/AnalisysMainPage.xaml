@@ -1,0 +1,20 @@
+﻿<Page x:Class="Budget.Analisys.AnalisysMainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="725"
+	Title="AnalisysMainPage">
+
+    <Grid>
+        <TabControl x:Name="ChartsTab" HorizontalAlignment="Left" Height="550" VerticalAlignment="Top" Width="725" Loaded="ChartsTab_OnLoaded">
+            <TabItem x:Name="CategoryPaymentTab" Header="Wykres kołowy wydatków" Margin="0,0,0,0">
+                <Frame x:Name="CategoryPaymentFrame"></Frame>
+            </TabItem>
+            <TabItem x:Name="MonthAvgTab" Header="Średnie wydatki i przychody">
+                <Frame x:Name="MonthAvgFrame"></Frame>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>

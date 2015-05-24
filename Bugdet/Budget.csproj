@@ -76,6 +76,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Analisys\AnalisysAvgPage.xaml.cs">
+      <DependentUpon>AnalisysAvgPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Analisys\AnalisysMainPage.xaml.cs">
+      <DependentUpon>AnalisysMainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Analisys\AnalysisTabPage.xaml.cs">
       <DependentUpon>AnalysisTabPage.xaml</DependentUpon>
     </Compile>
@@ -169,6 +175,14 @@
     <Compile Include="Payments Manager\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="Analisys\AnalisysAvgPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analisys\AnalisysMainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Analisys\AnalysisTabPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
