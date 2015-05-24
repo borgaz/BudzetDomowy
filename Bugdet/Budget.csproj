@@ -324,7 +324,9 @@
   <ItemGroup>
     <Resource Include="Resources\app-icon2.ico" />
     <Resource Include="Resources\app-icon.ico" />
-    <None Include="Resources\cog.png" />
+    <Resource Include="Resources\cog.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Resources\Pie-Chart-icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

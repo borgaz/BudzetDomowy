@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Budget.Analisys.AnalysisTabPage" Collapsed="true">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Analisys\AnalysisTabPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.App" Collapsed="true">
+    <Position X="5.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.MainWindow" Collapsed="true">
+    <Position X="8.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACkAIAIgAAgAAQoAEAEEoAAARgIAAAAAAAAAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.History.EditRecordWindow" Collapsed="true">
+    <Position X="8.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BBAAAAAAAAAAAAAQAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>History\EditRecordWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.History.HistoryMainPage" Collapsed="true">
+    <Position X="12.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAEAAAgAQABAAACQAAgAAAAAgIAAAAggAAAAQAIAA=</HashCode>
+      <FileName>History\HistoryMainPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.History.UtilityWindow" Collapsed="true">
+    <Position X="10.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>History\UtilityWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.InterfacePage.InterfacePage" Collapsed="true">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InterfacePage\InterfacePage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.LoginWindow.LoginWindow" Collapsed="true">
+    <Position X="15.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAEABCAAAAAgQAAAECAAAAAAAAAABAAQAAAAAAAAAA=</HashCode>
+      <FileName>LoginWindow\LoginWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Main_Classes.BalanceLog" Collapsed="true">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAIAAAAEAAgAAAAIAAAAAAABAgAAAwAAAAA=</HashCode>
+      <FileName>Main Classes\BalanceLog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Main_Classes.Budget" Collapsed="true">
+    <Position X="8.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ZQQAEECEAJBAAAQEgAgFwAQZAQHVMAIbQgAgAgcgUEA=</HashCode>
+      <FileName>Main Classes\Budget.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Main_Classes.Category" Collapsed="true">
+    <Position X="10.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAEAAAAAAQAAAAFAAAAAQAAAAEAAAA=</HashCode>
+      <FileName>Main Classes\Category.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Main_Classes.Payment" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQACAgACAAAAAgAEAAQAAASAAAAFgQAAAQAAAAEAAAA=</HashCode>
+      <FileName>Main Classes\Payment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Main_Classes.PeriodPayment" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>wAACAgAAAAAAAAAEACQAAAAwAIAAkQCAAAAAAkCAAAI=</HashCode>
+      <FileName>Main Classes\PeriodPayment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Main_Classes.SavingsTarget" Collapsed="true">
+    <Position X="12.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gQAAAAIAAAQAAAAEIAAAACAAAAABAAgAAQkIAIEJAAA=</HashCode>
+      <FileName>Main Classes\SavingsTarget.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Main_Classes.SinglePayment" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAEAAAAAAAAAAAAAQABAAAAAQAAAAA=</HashCode>
+      <FileName>Main Classes\SinglePayment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Main_Classes.SqlConnect" Collapsed="true">
+    <Position X="8.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ICAGEACAAAgAAABAAAAJAIAAAAAAAAAAQAAAAJAAgAI=</HashCode>
+      <FileName>Main Classes\SQLConnect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.New_Budget.AddedPaymentPage" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAABAQAAAAAIAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>New Budget\AddedPaymentPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.New_Budget.AddedSalariesPage" Collapsed="true">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAADAQAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>New Budget\AddedSalariesPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.New_Budget.AddedSalariesWindow" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAAoAAAAAAAAAAAAAA=</HashCode>
+      <FileName>New Budget\AddedSalariesWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.New_Budget.MakeBudgetPage1" Collapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAAQEABAAAAAAAAIEAgAAAABIAAAAAACgAAAAAAA=</HashCode>
+      <FileName>New Budget\MakeBudgetPage1.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.New_Budget.MakeBudgetPage2" Collapsed="true">
+    <Position X="12.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQgIAAAQAAAAAAAAAAAgACBAQAAEAABA=</HashCode>
+      <FileName>New Budget\MakeBudgetPage2.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.New_Budget.MakeBudgetPage3" Collapsed="true">
+    <Position X="14" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQgAAAARAEAAAAAAAAAgACAAAAIAAABA=</HashCode>
+      <FileName>New Budget\MakeBudgetPage3.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.New_Budget.MakeBudgetWindow" Collapsed="true">
+    <Position X="15.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEAAAAAAgAQBAAgIKAAAiAAAAQIAACQACoAAAAAAA=</HashCode>
+      <FileName>New Budget\MakeBudgetWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.New_Budget.SalaryInfo" Collapsed="true">
+    <Position X="10.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAABAAAASAAAAEgAACAAAAAgAAAAA=</HashCode>
+      <FileName>New Budget\SalaryInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Payments_Manager.AddPaymentPage" Collapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABgAAAAAAEAAQAABAAAAAAAAEAIAAAAg=</HashCode>
+      <FileName>Payments Manager\AddPaymentPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Payments_Manager.AddSalaryPage" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgABgIAAAAAAAAQAABAAAAAAAAUEIAAAAA=</HashCode>
+      <FileName>Payments Manager\AddSalaryPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Payments_Manager.CheckingPeriodPayments" Collapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAgAAAAAAAAAgAAAAAAACAAAAAAAAAACAA=</HashCode>
+      <FileName>Payments Manager\CheckingPeriodPayments.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Payments_Manager.MainPage" Collapsed="true">
+    <Position X="5.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQABAAIAAAAEBAAYAACACAAQAAAABAAAAAAIEAQAA=</HashCode>
+      <FileName>Payments Manager\MainPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Payments_Manager.PeriodDateGrid" Collapsed="true">
+    <Position X="7" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAIAAAAAAAgAAAAAAAAAAQADGAAAgA=</HashCode>
+      <FileName>Payments Manager\PeriodDateGrid.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Payments_Manager.SingleDateGrid" Collapsed="true">
+    <Position X="7" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Payments Manager\SingleDateGrid.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Properties.Resources" Collapsed="true">
+    <Position X="8.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAABEQAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Properties.Settings" Collapsed="true">
+    <Position X="15.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.SettingsPage.CustomizationPage" Collapsed="true">
+    <Position X="5.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SettingsPage\CustomizationPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.SettingsPage.GeneralOptionsPage" Collapsed="true">
+    <Position X="10.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SettingsPage\GeneralOptionsPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.SettingsPage.MainSettingsWindow" Collapsed="true">
+    <Position X="7" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACCAAKAAAAAAAAAAgAAAAQgAAA=</HashCode>
+      <FileName>SettingsPage\MainSettingsWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.SettingsPage.Settings" Collapsed="true">
+    <Position X="5.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAkAAAABAIgAABCgEAgAAAAAABoAECQSABAkAAAAEA=</HashCode>
+      <FileName>SettingsPage\Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Utility_Classes.AddCategoryWindow" Collapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAJAAAAQgAAAAEAAAAAAAARAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Utility Classes\AddCategoryWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Utility_Classes.Changes" Collapsed="true">
+    <Position X="12.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Utility Classes\Changes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Utility_Classes.ComboBoxItem" Collapsed="true">
+    <Position X="15.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAEAAAAAAAAAAAAACAAAAAgAAAAAgA=</HashCode>
+      <FileName>Utility Classes\ComboBoxItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.Utility_Classes.CustomMessageBox" Collapsed="true">
+    <Position X="7" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAIAAAAAABABAICAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Utility Classes\CustomMessageBox.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.WelcomePage.PaymentForDataGrid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAhQAAAAQAASAAAAFgAABAQAAAQAAAAA=</HashCode>
+      <FileName>WelcomePage\PaymentForDataGrid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Budget.WelcomePage.SavingsTargetsWindow" Collapsed="true">
+    <Position X="14" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAEAAAAAAAAAAAAAAAAABEAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>WelcomePage\SavingsTargetsWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Budget.WelcomePage.WelcomePage" Collapsed="true">
+    <Position X="12.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAECAQAAQAACAAAAEYAAAAA=</HashCode>
+      <FileName>WelcomePage\WelcomePage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
