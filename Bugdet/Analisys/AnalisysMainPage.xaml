@@ -9,8 +9,8 @@
 
     <Grid>
         <TabControl x:Name="ChartsTab" HorizontalAlignment="Left" Height="550" VerticalAlignment="Top" Width="725" Loaded="ChartsTab_OnLoaded">
-            <TabItem x:Name="CategoryPaymentTab" Header="Wykres kołowy wydatków" Margin="0,0,0,0">
-                <Frame x:Name="CategoryPaymentFrame"></Frame>
+            <TabItem x:Name="CategoryPaymentTab" Header="Wykres kołowy płatności" Margin="0,0,0,0">
+                <Frame x:Name="CategoryPaymentFrame" Background="White"></Frame>
             </TabItem>
             <TabItem x:Name="MonthAvgTab" Header="Średnie wydatki i przychody">
                 <Frame x:Name="MonthAvgFrame"></Frame>

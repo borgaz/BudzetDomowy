@@ -1,5 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Controls;
+using System.Windows;
+using System.Windows.Media;
 
 namespace Budget.Analisys
 {
@@ -8,7 +11,7 @@ namespace Budget.Analisys
     /// </summary>
     public partial class AnalysisTabPage : Page
     {
-        TestChart var = new TestChart();
+        CategoryChart var = new CategoryChart();
         public AnalysisTabPage()
         {
             InitializeComponent();

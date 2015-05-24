@@ -7,27 +7,38 @@ using System.Threading.Tasks;
 
 namespace Budget.Analisys
 {
-    class TestChart
+    class CategoryChart
     {
 
-        public ObservableCollection<TestClass> Errors { get; private set; }
+        public ObservableCollection<TestClass> Salary { get; private set; }
+        public ObservableCollection<TestClass> Payments { get; private set; }
 
-        public TestChart()
+        public CategoryChart()
         {
-            Errors = new ObservableCollection<TestClass>();
+            Payments = new ObservableCollection<TestClass>();
+            Salary = new ObservableCollection<TestClass>();
+
             foreach (KeyValuePair<int, Main_Classes.Category> c in Main_Classes.Budget.Instance.Categories)
             {
                 double sum = 0;
+                double sum2 = 0;
                 foreach (KeyValuePair<int, Main_Classes.Payment> s in Main_Classes.Budget.Instance.Payments)
                 {
                     if (!c.Value.Type) 
                         if (s.Value.GetType() == typeof(Main_Classes.SinglePayment))
-                            if (c.Key == s.Value.CategoryID)
-                                sum += s.Value.Amount;
-
+                            if (s.Value.CompareDate() <= 0)
+                                if (c.Key == s.Value.CategoryID)
+                                    sum += s.Value.Amount;
+                    if (c.Value.Type)
+                        if (s.Value.GetType() == typeof(Main_Classes.SinglePayment))
+                            if (s.Value.CompareDate() <= 0)
+                                if (c.Key == s.Value.CategoryID)
+                                    sum2 += s.Value.Amount;
                 }
                 if (sum != 0)
-                    Errors.Add(new TestClass() { Category = c.Value.Name, Number = sum });
+                    Payments.Add(new TestClass() { Category = c.Value.Name, Number = sum });
+                if (sum2 != 0)
+                    Salary.Add(new TestClass() { Category = c.Value.Name, Number = sum2 });
             }
         }
 

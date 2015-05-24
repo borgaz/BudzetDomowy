@@ -377,14 +377,14 @@ namespace Budget.Main_Classes
                     {
                         periodCount = p.Value.CountPeriods();
                         int tempCount = periodCount;
-                        if (periodCount > 0)
-                        {
-                            while (periodCount >= 0)
+                        //if (periodCount > 0)
+                        //{
+                            while (periodCount > 0)
                             {
                                 editList.Add(p.Value.CreateSingleFromPeriod(periodCount));
                                 periodCount--;
                             }
-                        }
+                        //}
                         if (tempCount > 0)
                         {
                             p.Value.changeUpdateDate(tempCount);

@@ -85,7 +85,7 @@
     <Compile Include="Analisys\AnalysisTabPage.xaml.cs">
       <DependentUpon>AnalysisTabPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Analisys\TestChart.cs" />
+    <Compile Include="Analisys\CategoryChart.cs" />
     <Compile Include="History\EditRecordWindow.xaml.cs">
       <DependentUpon>EditRecordWindow.xaml</DependentUpon>
     </Compile>

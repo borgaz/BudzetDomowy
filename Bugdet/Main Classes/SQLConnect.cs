@@ -196,7 +196,7 @@ namespace Budget.Main_Classes
                 // Lista kategorii
                 /////////////////////////////////////////////////////////////////////////////////////////////
 
-                for (int i = 0; i < _categories.Count; i++)
+                for (int i = 0; i < (_categories.Count - 1); i++)
                 {
                     Instance.ExecuteSqlNonQuery("INSERT INTO Categories(name,note,type) values('" +
                                         _categories[i + 1].Name +
