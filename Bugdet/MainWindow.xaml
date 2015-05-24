@@ -31,7 +31,20 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button x:Name="SettingsButton" HorizontalAlignment="Right" Margin="0,403,-106,0" VerticalAlignment="Top" Width="270" Height="44" RenderTransformOrigin="0.5,0.5" Content="Ustawienia" FontSize="20" Click="SettingsButton_Click">
+        <Button x:Name="SettingsButton" HorizontalAlignment="Right" Margin="0,14,9,0" VerticalAlignment="Top" Width="40" Height="44" RenderTransformOrigin="0.5,0.5" FontSize="20" Click="SettingsButton_Click">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+            <Button.Content>
+                <Image Source="Resources/cog.png" Height="40"></Image>
+            </Button.Content>
+        </Button>
+        <Button x:Name="CreatorButton" HorizontalAlignment="Right" Margin="0,168,-101,0" VerticalAlignment="Top" Width="260" Height="44" RenderTransformOrigin="0.5,0.5" Content="Przychody i wydatki" FontSize="20" Click="CreatorButton_Click">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -41,7 +54,7 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button x:Name="CreatorButton" HorizontalAlignment="Right" Margin="0,123,-106,0" VerticalAlignment="Top" Width="270" Height="44" RenderTransformOrigin="0.5,0.5" Content="Przychody i wydatki" FontSize="20" Click="CreatorButton_Click">
+        <Button x:Name="AnalisysButton" Content="Analiza" HorizontalAlignment="Left" Margin="698,420,-86,0" VerticalAlignment="Top" Width="232" Height="42" RenderTransformOrigin="0.5,0.5" FontSize="20" Click="AnalisysButton_Click">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>

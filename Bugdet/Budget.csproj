@@ -72,14 +72,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="History\AnalysisTabPage.xaml.cs">
+    <Compile Include="Analisys\AnalysisTabPage.xaml.cs">
       <DependentUpon>AnalysisTabPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="History\EditRecordWindow.xaml.cs">
       <DependentUpon>EditRecordWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="History\HistoryTabPage.xaml.cs">
-      <DependentUpon>HistoryTabPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Main Classes\Budget.cs" />
     <Compile Include="Main Classes\Budget2.cs" />
@@ -167,7 +164,7 @@
     <Compile Include="Payments Manager\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Page Include="History\AnalysisTabPage.xaml">
+    <Page Include="Analisys\AnalysisTabPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -176,10 +173,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="History\HistoryMainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="History\HistoryTabPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -322,6 +315,7 @@
   <ItemGroup>
     <Resource Include="Resources\app-icon2.ico" />
     <Resource Include="Resources\app-icon.ico" />
+    <None Include="Resources\cog.png" />
     <Content Include="Resources\Pie-Chart-icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

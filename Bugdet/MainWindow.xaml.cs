@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
+using Budget.Analisys;
 using Budget.History;
 using Budget.Main_Classes;
 using Budget.Payments_Manager;
@@ -21,6 +22,7 @@ namespace Budget
         private WelcomePage.WelcomePage _welcomePage;
         private MainSettingsWindow _mainSettingsWindow;
         private HistoryMainPage _historyPage;
+        private Analisys.AnalysisTabPage _analisysPage;
         private static int _actualPage = 2;
         private bool running = true;
         private Thread th;
@@ -47,15 +49,17 @@ namespace Budget
             _welcomePage = new WelcomePage.WelcomePage();
             _mainSettingsWindow = new MainSettingsWindow();
             _historyPage = new HistoryMainPage();
+            _analisysPage = new AnalysisTabPage();
             WelcomePageButton.IsEnabled = false;
             _actualPage = 2;
             CreatorButton.IsEnabled = true;
             SettingsButton.IsEnabled = true;
             HistoryButton.IsEnabled = true;
+            AnalisysButton.IsEnabled = true;
             InsertPage();
-            running = true;
-            th = new Thread(OnPageChange);
-            th.Start();
+            //running = true;
+            //th = new Thread(OnPageChange);
+            //th.Start();
 
         }
 
@@ -64,19 +68,19 @@ namespace Budget
             running = false;
         }
 
-        private void OnPageChange()
-        {
-            int page = _actualPage;
-            while (running)
-            {
-                Thread.Sleep(1);
-                if (page != _actualPage)
-                {
-                    this.Dispatcher.Invoke(InsertPage);
-                    page = _actualPage;
-                }
-            }
-        }
+        //private void OnPageChange()
+        //{
+        //    int page = _actualPage;
+        //    while (running)
+        //    {
+        //        Thread.Sleep(1);
+        //        if (page != _actualPage)
+        //        {
+        //            this.Dispatcher.Invoke(InsertPage);
+        //            page = _actualPage;
+        //        }
+        //    }
+        //}
         protected void InsertPage()
         {
             switch (_actualPage)
@@ -97,6 +101,9 @@ namespace Budget
                 case 4:
                     this.MainContentFrame.Content = _historyPage;
                     break;
+                case 5:
+                    MainContentFrame.Content = _analisysPage;
+                    break;
             }
         }
 
@@ -111,6 +118,7 @@ namespace Budget
             WelcomePageButton.IsEnabled = true;
             SettingsButton.IsEnabled = true;
             HistoryButton.IsEnabled = true;
+            AnalisysButton.IsEnabled = true;
             _actualPage = 1;
             InsertPage();
 
@@ -127,6 +135,7 @@ namespace Budget
             WelcomePageButton.IsEnabled = false;
             SettingsButton.IsEnabled = true;
             HistoryButton.IsEnabled = true;
+            AnalisysButton.IsEnabled = true;
             _actualPage = 2;
             InsertPage();
         }
@@ -137,6 +146,7 @@ namespace Budget
             WelcomePageButton.IsEnabled = true;
             SettingsButton.IsEnabled = false;
             HistoryButton.IsEnabled = true;
+            AnalisysButton.IsEnabled = true;
             _actualPage = 3;
             InsertPage();
         }
@@ -147,6 +157,7 @@ namespace Budget
             WelcomePageButton.IsEnabled = true;
             SettingsButton.IsEnabled = true;
             HistoryButton.IsEnabled = false;
+            AnalisysButton.IsEnabled = true;
             _actualPage = 4;
             InsertPage();
 
@@ -208,6 +219,17 @@ namespace Budget
             if (!Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightAlt) || Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightCtrl)) return;
             if (e.Key.Equals(Key.S))
                 Main_Classes.Budget.Instance.Dump();
+        }
+
+        private void AnalisysButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreatorButton.IsEnabled = true;
+            WelcomePageButton.IsEnabled = true;
+            SettingsButton.IsEnabled = true;
+            HistoryButton.IsEnabled = true;
+            AnalisysButton.IsEnabled = false;
+            _actualPage = 5;
+            InsertPage();
         }
     }
 }

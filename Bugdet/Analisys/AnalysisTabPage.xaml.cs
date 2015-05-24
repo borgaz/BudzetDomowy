@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Budget.History
+namespace Budget.Analisys
 {
     /// <summary>
     /// Interaction logic for AnalysisTabPage.xaml

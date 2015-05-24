@@ -8,13 +8,31 @@
 	Title="HistoryMainPage">
 
     <Grid>
-        <TabControl HorizontalAlignment="Left" Height="540" Margin="10,0,0,0" VerticalAlignment="Top" Width="705" Loaded="FrameworkElement_OnLoaded">
-            <TabItem Header="HISTORIA" Margin="-2,-2,-2,-2" HorizontalAlignment="Left" Width="350.5">
-                <Frame x:Name="HistoryFrame" Content="" HorizontalAlignment="Left" Height="510" VerticalAlignment="Top" Width="700" Margin="0,0,0,0" NavigationUIVisibility="Hidden" Background="#FFEDEEF9"/>
-            </TabItem>
-            <TabItem Header="ANALIZA" Margin="0,-2,-3,-2" HorizontalAlignment="Right" Width="350">
-                <Frame x:Name="AnalisysFrame" Content="" HorizontalAlignment="Right" Height="510" VerticalAlignment="Top" Width="700" Margin="0,0,0,0" NavigationUIVisibility="Hidden" Background="#FFEDEEF9"/>
-            </TabItem>
-        </TabControl>
+        <Frame x:Name="HistoryFrame" Content="" HorizontalAlignment="Left" Height="550" VerticalAlignment="Top" Width="725" Margin="0,0,0,0" NavigationUIVisibility="Hidden" Background="#FFEDEEF9"/>
+        <DataGrid x:Name="HistoryDataGrid" IsReadOnly="True" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="490" Width="343" LoadingRow="HistoryDataGrid_OnLoadingRow" Loaded="HistoryDataGrid_OnLoaded" Background="White">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Usuń rekord" Click="DeleteItem_OnClick"/>
+                    <MenuItem Header="Edytuj rekord" Click="UpdateItem_OnClick"/>
+                    <MenuItem Header="Więcej Informacji" Click="InfoItem_OnClick"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <StackPanel HorizontalAlignment="Left" Height="386" Margin="363,10,0,0" VerticalAlignment="Top" Width="226">
+            <CheckBox x:Name="SinglePaymentCheckBox" Margin="5" Content="Wydatki pojedyncze" Click="PeriodPaymentCheckBox_OnClick" IsChecked="True"/>
+            <CheckBox x:Name="SingleSalaryCheckBox" Margin="5" Content="Przychody pojedyncze" Click="PeriodPaymentCheckBox_OnClick" IsChecked="True"/>
+            <CheckBox x:Name="StartDateCheckBox" Margin="5,15,98,15" Content="Od Kiedy" Click="StartDateCheckBox_OnClick"/>
+
+
+            <DatePicker x:Name="StartDatePicker" Margin="85,-35,5,15" IsEnabled="False" SelectedDateChanged="PeriodPaymentCheckBox_OnClick"/>
+            <CheckBox x:Name="EndDateCheckBox" Margin="5,5,98,5" Content="Do Kiedy" Click="EndDateCheckBox_OnClick"/>
+            <DatePicker x:Name="EndDatePicker" Margin="85,-25,5,0" IsEnabled="False" SelectedDateChanged="PeriodPaymentCheckBox_OnClick"/>
+            <ComboBox x:Name="CategoryComboBox" Margin="85,40,5,0" SelectionChanged="PeriodPaymentCheckBox_OnClick" IsEnabled="False"/>
+            <CheckBox x:Name="CategoryCheckBox" Content="Kategoria" Margin="5,-20,144,0" Click="CategoryCheckBox_OnClick" RenderTransformOrigin="0.494,0.5"/>
+            <RadioButton x:Name="LowerRadio" Content="Mniejsze niż" Margin="5,10,138,0" Click="PeriodPaymentCheckBox_OnClick"/>
+            <RadioButton x:Name="GreaterRadio" Content="Większe niż" Margin="100,-15,10,0" IsChecked="True" Click="PeriodPaymentCheckBox_OnClick"/>
+            <Slider x:Name="AmountSlider" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" Width="206" Maximum="2000" Minimum="0" Value="0" TickFrequency="200" ValueChanged="AmountSlider_OnValueChanged" Loaded="AmountSlider_Loaded"/>
+            <TextBox x:Name="SliderValueTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="85,0,86,0" Width="55" PreviewTextInput="SliderValueTextBox_OnPreviewTextInput" TextChanged="SliderValueTextBox_OnTextChanged" Text="0" TextAlignment="Center"/>
+        </StackPanel>
     </Grid>
 </Page>
