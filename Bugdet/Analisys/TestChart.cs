@@ -15,11 +15,20 @@ namespace Budget.Analisys
         public TestChart()
         {
             Errors = new ObservableCollection<TestClass>();
-            Errors.Add(new TestClass() {Category = "Globalization", Number = 75});
-            Errors.Add(new TestClass() {Category = "Features", Number = 2});
-            Errors.Add(new TestClass() {Category = "ContentTypes", Number = 12});
-            Errors.Add(new TestClass() {Category = "Correctness", Number = 83});
-            Errors.Add(new TestClass() {Category = "Best Practices", Number = 29});
+            foreach (KeyValuePair<int, Main_Classes.Category> c in Main_Classes.Budget.Instance.Categories)
+            {
+                double sum = 0;
+                foreach (KeyValuePair<int, Main_Classes.Payment> s in Main_Classes.Budget.Instance.Payments)
+                {
+                    if (!c.Value.Type) 
+                        if (s.Value.GetType() == typeof(Main_Classes.SinglePayment))
+                            if (c.Key == s.Value.CategoryID)
+                                sum += s.Value.Amount;
+
+                }
+                if (sum != 0)
+                    Errors.Add(new TestClass() { Category = c.Value.Name, Number = sum });
+            }
         }
 
         private object selectedItem = null;
@@ -38,7 +47,7 @@ namespace Budget.Analisys
         {
             public string Category { get; set; }
 
-            public int Number { get; set; }
+            public double Number { get; set; }
         }
     }
 }
