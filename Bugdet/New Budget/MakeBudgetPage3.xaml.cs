@@ -18,7 +18,7 @@ namespace Budget.New_Budget
         private Dictionary<int, PeriodPayment> _periodPayments;
         private Dictionary<int, Category> _categories;
         List<int> originalCategoryID;
-      //  private int _salaries;
+
         public MakeBudgetPage3(Dictionary<int,PeriodPayment> d,Dictionary<int,Category> c)
         {
             InitializeComponent();
@@ -115,8 +115,6 @@ namespace Budget.New_Budget
         private void addedPaymentsBtn_Click(object sender, RoutedEventArgs e)
         {
             new AddedSalariesWindow(2, _periodPayments, _categories).ShowDialog();
-        }
-
-        
+        }      
     }
 }

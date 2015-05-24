@@ -1,0 +1,19 @@
+﻿<Window x:Class="Budget.WelcomePage.AddAmountToSavingsTargetWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="AddAmountToSavingsTargetWindow" Height="300" Width="330">
+    <Grid Height="270" Width="310">
+        <ComboBox x:Name="TargetComboBox" HorizontalAlignment="Left" Height="25" Margin="110,10,0,0" VerticalAlignment="Top" Width="100" SelectionChanged="TargetComboBox_SelectionChanged"/>
+        <Button x:Name="ReadyButton" Content="Gotowe" HorizontalAlignment="Left" Height="25" Margin="110,225,0,0" VerticalAlignment="Top" Width="90" Click="ReadyButton_Click"/>
+        <TextBox x:Name="TargetAmountTextBox" HorizontalAlignment="Left" Height="25" Margin="10,105,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"  Width="90" IsEnabled="False"/>
+        <TextBox x:Name="PossessedAmountTextBox" HorizontalAlignment="Left" Height="25" Margin="110,105,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90" IsEnabled="False"/>
+        <TextBox x:Name="MissingAmountTextBox" HorizontalAlignment="Left" Height="25" Margin="210,105,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90" IsEnabled="False"/>
+        <TextBox x:Name="AmountTextBox" HorizontalAlignment="Left" Height="25" Margin="110,190,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90"/>
+        <Label Content="Wybierz cel:" HorizontalAlignment="Left" Height="25" Margin="10,10,0,0" VerticalAlignment="Top" Width="90"/>
+        <Label Content="Docelowa" HorizontalAlignment="Left" Height="25" Margin="10,80,0,0" VerticalAlignment="Top" Width="90"/>
+        <Label Content="Posiadana" HorizontalAlignment="Left" Height="25" Margin="110,80,0,0" VerticalAlignment="Top" Width="90"/>
+        <Label Content="Brakuje" HorizontalAlignment="Left" Height="25" Margin="210,80,0,0" VerticalAlignment="Top" Width="90"/>
+        <Label Content="Kwota jaką chcesz odłożyć: " HorizontalAlignment="Left" Height="25" Margin="75,155,0,0" VerticalAlignment="Top" Width="160"/>
+        <Label Content="Kwota:" HorizontalAlignment="Left" Height="25" Margin="10,45,0,0" VerticalAlignment="Top" Width="90"/>
+    </Grid>
+</Window>

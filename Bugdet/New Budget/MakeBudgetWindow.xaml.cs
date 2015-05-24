@@ -199,7 +199,7 @@ namespace Budget.New_Budget
                 p.Add(i, _payments[i - _salaries.Count]);
             }
 
-            if (SqlConnect.Instance.DumpCreator(_categories, p, salaryInfo.Name, salaryInfo.Password, new BalanceLog(salaryInfo.Amount, DateTime.Now, 0, 0), salaryInfo.NumberOfPeople))
+            if (SqlConnect.Instance.DumpCreator(_categories, p, salaryInfo.Name, salaryInfo.Password, new BalanceLog(salaryInfo.Amount, DateTime.Now, 0, 0)))
             {
                 LoginWindow.LoginWindow.Instance.IsLogged = true;
                 return true;
@@ -229,10 +229,10 @@ namespace Budget.New_Budget
             {
                 for (int i = 0; i < cat.Count; i++)
                 {
-                    if (cat[i + 1].Type == type)
+                    if (cat[i].Type == type)
                     {
-                        categoryBox.Items.Add(cat[i + 1].Name);
-                        originalID.Add(i+1);
+                        categoryBox.Items.Add(cat[i].Name);
+                        originalID.Add(i);
                     }
                 }
             }

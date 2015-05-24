@@ -5,11 +5,12 @@ using System.Windows;
 using System.Windows.Controls;
 using Budget.Utility_Classes;
 using ComboBoxItem = Budget.Utility_Classes.ComboBoxItem;
+using System.ComponentModel;
 
 // First part of Budget class - constructor, properties, minor methods
 namespace Budget.Main_Classes
 {
-    public sealed partial class Budget
+    public sealed partial class Budget : INotifyPropertyChanged
     {
         private static Budget instance = null;
 
@@ -167,7 +168,7 @@ namespace Budget.Main_Classes
         {
             get
             {
-                this.balance = this.balanceLogs[this.balanceLogs.Keys.Max()].Balance;
+                var balance = this.balanceLogs[this.balanceLogs.Keys.Max()].Balance;
                 return balance;
             }
         }
@@ -324,6 +325,7 @@ namespace Budget.Main_Classes
         {
             balanceLogs.Add(index, log);
             ListOfAdds.Add(new Changes(typeof(BalanceLog), index));
+            OnPropertyChanged("BalanceLog");
         }
 
         // BalanceLog usuwa sie automatycznie po usunieciu skojarzonego singlepaymentid
@@ -449,6 +451,14 @@ namespace Budget.Main_Classes
                     contains = true;
             }
             return contains;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null) 
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

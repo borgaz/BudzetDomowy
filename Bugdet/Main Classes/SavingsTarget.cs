@@ -2,32 +2,38 @@
 
 namespace Budget.Main_Classes
 {
-    public class SavingsTarget
+    public class SavingsTarget : IComparable<SavingsTarget>
     {
         private String target; // cel, na jaki chcemy odlozyc pieniadze
         private String note; // notatka
         private DateTime deadline; // data, do ktorej chcemy miec dana kwote
         private int daysLeft; // ile dni pozostalo do deadLine`a
+        private Boolean type; // czy automatycznie odkladaja sie pieniadze, czy robimy to recznie
         public enum Priorities    
         {
-            VeryLow = -2,
-            Low = -1,
-            Normal = 0,
-            High = 1,
-            VeryHigh = 2
+            BardzoNiski = -2,
+            Niski = -1,
+            Normalny = 0,
+            Wysoki = 1,
+            BardzoWysoki = 2
         }
         private Priorities priority;    // priorytet
         private double moneyHoldings; // odlozona juz kwota
         private DateTime addedDate; // data dodatania celu
         private double neededAmount; // kwota, jaka chcemy odlozyc
 
+        public int CompareTo(SavingsTarget sT)
+        {
+            return this.priority.CompareTo(sT.priority);
+        }
+
         public override string ToString()
         {
             return "TARGET: " + target + ", NOTE: " + note + ", DEADLINE: " + deadline + ", DAYS_LEFT: " + daysLeft + ", PRIORITY: " + priority
-                + ", MONEY_HOLDINGS: " + moneyHoldings + ", ADDED_DATE: " + addedDate + ", NEEDED_AMOUNT: " + neededAmount + "\n";
+                + ", MONEY_HOLDINGS: " + moneyHoldings + ", ADDED_DATE: " + addedDate + ", NEEDED_AMOUNT: " + neededAmount + ", TYPE: " + type + "\n";
         }
 
-        public SavingsTarget(String target, String note, DateTime deadline, int priority, double moneyHoldings, DateTime addedDate, double neededAmount)
+        public SavingsTarget(String target, String note, DateTime deadline, int priority, double moneyHoldings, DateTime addedDate, double neededAmount, Boolean type)
         {
             this.target = target;
             this.note = note;
@@ -37,6 +43,7 @@ namespace Budget.Main_Classes
             this.moneyHoldings = moneyHoldings;
             this.addedDate = addedDate;
             this.neededAmount = neededAmount;
+            this.type = type;
         }
 
         /// <summary>
@@ -44,9 +51,11 @@ namespace Budget.Main_Classes
         /// </summary>
         /// <param name="amount">Kwota którą chcemy dodać (ewentualnie odjąć)</param>
         /// <returns>Zwraca true, jak cel zostanie osiągnięty, false w przeciwnym wypadku</returns>
-        public Boolean AddMoney (double amount)
+        public Boolean AddMoney (double amount, int index)
         {
             this.moneyHoldings += amount;
+            Main_Classes.Budget.Instance.ListOfEdits.Add(new Utility_Classes.Changes(typeof(SavingsTarget), index));
+
             return CountMoneyLeft() == 0.0;
         }
 
@@ -78,6 +87,14 @@ namespace Budget.Main_Classes
             }
         }
 
+        public Boolean Type
+        {
+            get
+            {
+                return type;
+            }
+        }
+
         public String Note
         {
             get
@@ -94,11 +111,19 @@ namespace Budget.Main_Classes
             }
         }
 
-        public int Priority
+        public int PriorityToInt
         {
             get
             {
                 return (int)priority;
+            }
+        }
+
+        public String PriorityToString
+        {
+            get
+            {
+                return priority.ToString();
             }
         }
 

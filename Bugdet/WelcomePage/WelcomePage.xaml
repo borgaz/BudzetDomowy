@@ -12,7 +12,7 @@
         <DataGrid Name="shortHistoryDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" Margin="10,0,0,10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="234" Width="375" Loaded="Page_Loaded" Background="White" LoadingRow="shortHistoryDataGrid_LoadingRow">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Typ" Width="70" IsReadOnly="True" Binding="{Binding Type}"/>
-                <DataGridTextColumn Header="Nazwa" Width="105" IsReadOnly="True" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Nazwa" Width="125" IsReadOnly="True" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Kwota" Width="60" IsReadOnly="True" Binding="{Binding Amount}"/>
                 <DataGridTextColumn Header="Data" Width="75" IsReadOnly="True" Binding="{Binding Date}"/>
             </DataGrid.Columns>
@@ -20,18 +20,25 @@
         <DataGrid HorizontalAlignment="Left" Name="providedPaymentsDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeColumns="False" Margin="10,38,0,0" VerticalAlignment="Top" Height="234" Width="375" Loaded="Page_Loaded" SelectionMode="Single" LoadingRow="ProvidedPaymentsDataGrid_OnLoadingRow" Background="White">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Typ" Width="70" IsReadOnly="True" Binding="{Binding Type}"/>
-                <DataGridTextColumn Header="Nazwa" Width="105" IsReadOnly="True" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Nazwa" Width="125" IsReadOnly="True" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Kwota" Width="60" IsReadOnly="True" Binding="{Binding Amount}"/>
                 <DataGridTextColumn Header="Data" Width="75" IsReadOnly="True" Binding="{Binding Date}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="234" Width="308" Margin="0,0,10,10" Background="White"/>
+        <DataGrid x:Name="savingsTargetsDataGrid" ItemsSource="{Binding}"  AutoGenerateColumns="False"  CanUserResizeColumns="False" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="234" Width="308" Margin="0,0,10,10"  Loaded="Page_Loaded" SelectionMode="Single" Background="White">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nazwa" Width="65" IsReadOnly="True" Binding="{Binding Target}"/>
+                <DataGridTextColumn Header="Priorytet" Width="88" IsReadOnly="True" Binding="{Binding PriorityToString}"/>   
+                <DataGridTextColumn Header="Kwota" Width="65" IsReadOnly="True" Binding="{Binding NeededAmount}"/>
+                <DataGridTextColumn Header="Odłożono" Width="65" IsReadOnly="True" Binding="{Binding MoneyHoldings}"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <Label Content="Najbliższe przychody i wydatki:" HorizontalAlignment="Left" Height="28" Margin="10,10,0,0" VerticalAlignment="Top" Width="191" FontWeight="Bold"/>
-        <Label Content="Cele oszczędzania:" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="122" Height="28" Margin="0,0,196,244" FontWeight="Bold"/>
+        <Label Content="Cele oszczędzania:" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="122" Height="28" Margin="0,0,196,250" FontWeight="Bold"/>
         <Label Content="Skrócona historia:" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="115" Height="28" Margin="10,0,0,244" FontWeight="Bold"/>
         <Label Content="Aktualne saldo:" HorizontalAlignment="Right" VerticalAlignment="Top" Width="97" Height="25" Margin="0,103,29,0" FontWeight="Bold"/>
-        <ProgressBar x:Name="PaymentsBar" HorizontalAlignment="Right" Height="200" Margin="0,72,257,0" VerticalAlignment="Top" Width="34" Orientation="Vertical" Background="#FFFBFBFB" Foreground="#FFCD0505"/>
-        <ProgressBar x:Name="SalariesBar" HorizontalAlignment="Right" Height="200" Margin="0,73,187,0" VerticalAlignment="Top" Width="34" Orientation="Vertical">
+        <ProgressBar x:Name="PaymentsBar" HorizontalAlignment="Right" Height="200" Margin="0,60,257,0" VerticalAlignment="Top" Width="34" Orientation="Vertical" Background="#FFFBFBFB" Foreground="#FFCD0505"/>
+        <ProgressBar x:Name="SalariesBar" HorizontalAlignment="Right" Height="200" Margin="0,60,187,0" VerticalAlignment="Top" Width="34" Orientation="Vertical">
             <ProgressBar.Foreground>
                 <SolidColorBrush Color="#FF02AE02"/>
             </ProgressBar.Foreground>
@@ -46,7 +53,7 @@
             </ProgressBar.BorderBrush>
         </ProgressBar>
         <Rectangle Fill="#FF5899BD" HorizontalAlignment="Left" Margin="395,0,0,0" Width="2"/>
-        <Label Content="Bilans na ten miesiąc" HorizontalAlignment="Left" Margin="417,41,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Width="182"/>
+        <Label Content="Bilans na ten miesiąc" HorizontalAlignment="Left" Margin="420,30,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Width="182"/>
         <Label Content="Przychody" HorizontalAlignment="Left" Margin="477,152,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" FontWeight="Bold" FontSize="16" >
             <Label.RenderTransform>
                 <TransformGroup>
@@ -67,7 +74,8 @@
                 </TransformGroup>
             </Label.RenderTransform>
         </Label>
-        <TextBox x:Name="Balance" HorizontalAlignment="Left" Height="32" Margin="599,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97" FontSize="18" FontWeight="Bold" TextAlignment="Center" Background="#FFEDEEF9"/>
-        <Button Content="Button" HorizontalAlignment="Left" Height="25" Margin="616,278,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click"/>
+        <TextBox x:Name="Balance" HorizontalAlignment="Left" Height="32" Margin="599,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97"  IsReadOnly="True" FontSize="18" FontWeight="Bold" TextAlignment="Center" Background="#FFEDEEF9"/>
+        <Button x:Name="NewTargetButton" Content="Dodaj nowy" HorizontalAlignment="Right" Height="25" Margin="0,0,100,250" VerticalAlignment="Bottom" Width="80" Click="NewTargetButton_Click"/>
+        <Button x:Name="AddAmountToTargetButton" Content="Odłóż kwotę" HorizontalAlignment="Right" Height="25" Margin="0,0,10,250" VerticalAlignment="Bottom" Width="80" Click="AddAmountToTargetButton_Click"/>
     </Grid>
 </Page>

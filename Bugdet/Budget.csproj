@@ -112,9 +112,6 @@
     <Compile Include="History\UtilityWindow.xaml.cs">
       <DependentUpon>UtilityWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="InterfacePage\InterfacePage.xaml.cs">
-      <DependentUpon>InterfacePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="LoginWindow\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -159,6 +156,9 @@
     <Compile Include="Utility Classes\CustomMessageBox.xaml.cs">
       <DependentUpon>CustomMessageBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WelcomePage\AddAmountToSavingsTargetWindow.xaml.cs">
+      <DependentUpon>AddAmountToSavingsTargetWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WelcomePage\PaymentForDataGrid.cs" />
     <Compile Include="WelcomePage\SavingsTargetsWindow.xaml.cs">
       <DependentUpon>SavingsTargetsWindow.xaml</DependentUpon>
@@ -196,10 +196,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="History\UtilityWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="InterfacePage\InterfacePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -280,6 +276,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Utility Classes\CustomMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WelcomePage\AddAmountToSavingsTargetWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

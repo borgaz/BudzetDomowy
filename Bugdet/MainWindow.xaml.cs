@@ -18,7 +18,6 @@ namespace Budget
     public partial class MainWindow : Window
     {
         private MainPage _mainPage;
-        private InterfacePage.InterfacePage _interfacePage;
         private WelcomePage.WelcomePage _welcomePage;
         private MainSettingsWindow _mainSettingsWindow;
         private HistoryMainPage _historyPage;
@@ -45,7 +44,6 @@ namespace Budget
             Title = "BUDŻET DOMOWY";
             Title = Title + " (" + Main_Classes.Budget.Instance.Name + ")";
             _mainPage = new MainPage();
-            _interfacePage = new InterfacePage.InterfacePage();
             _welcomePage = new WelcomePage.WelcomePage();
             _mainSettingsWindow = new MainSettingsWindow();
             _historyPage = new HistoryMainPage();

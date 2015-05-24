@@ -19,7 +19,6 @@ namespace Budget.History
         {
             InitializeComponent();
             Main_Classes.Budget.Instance.InsertCategories(CategoryComboBox, Main_Classes.Budget.CategoryTypeEnum.ANY);
-
         }
         private void RefreshTable()
         {
@@ -55,6 +54,7 @@ namespace Budget.History
 
                 if (pp.Type && SinglePaymentCheckBox.IsChecked == true)
                 {
+                    var fd = Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name;
                     history.Rows.Add(pp.Type, p.Key, pp.Name, Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name,
                         pp.Date.ToShortDateString(), pp.Amount);
                 }

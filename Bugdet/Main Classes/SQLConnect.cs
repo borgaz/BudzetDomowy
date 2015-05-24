@@ -19,11 +19,6 @@ namespace Budget.Main_Classes
         public double monthlySalaries = 0;
         public double monthlyPayments = 0;
 
-        private SqlConnect()
-        {
-          //  Connect("budzet");
-        }
-
         public static SqlConnect Instance
         {
             get
@@ -32,7 +27,7 @@ namespace Budget.Main_Classes
             }
         }
 
-        public Boolean Connect(String budget)
+        private Boolean Connect(String budget)
         {
             try
             {
@@ -163,6 +158,7 @@ namespace Budget.Main_Classes
                                                                       "target varchar(50)," +
                                                                       "note varchar(200)," +
                                                                       "deadLine date," +
+                                                                      "type boolean," +
                                                                       "moneyHoldings double," +
                                                                       "neededAmount double," +
                                                                       "priority integer," +
@@ -178,7 +174,7 @@ namespace Budget.Main_Classes
             }
         }
         public Boolean DumpCreator(Dictionary<int, Category> _categories, Dictionary<int, PeriodPayment> _payments, 
-            String _name, String _password, BalanceLog _balance, int _numberOfPeople)
+            String _name, String _password, BalanceLog _balance)
         {
             try
             {
@@ -189,7 +185,7 @@ namespace Budget.Main_Classes
                 string balanceWithDot = _balance.Balance.ToString().Replace(",", ".");
                 Instance.ExecuteSqlNonQuery("INSERT INTO Budget(name,note,creation,numberofpeople,password,balance) values('" +
                                    _name + "'," + "'note','" + DateTime.Now.ToShortDateString() +
-                                   "'," + _numberOfPeople + ",'" + _password + "','" + balanceWithDot + "')");
+                                   "'," + 0 + ",'" + _password + "','" + balanceWithDot + "')");
 
 
                 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -199,8 +195,8 @@ namespace Budget.Main_Classes
                 for (int i = 0; i < (_categories.Count - 1); i++)
                 {
                     Instance.ExecuteSqlNonQuery("INSERT INTO Categories(name,note,type) values('" +
-                                        _categories[i + 1].Name +
-                                       "','" + _categories[i + 1].Note + "','" + Convert.ToInt32(_categories[i + 1].Type) + "')");
+                                        _categories[i].Name +
+                                       "','" + _categories[i].Note + "','" + Convert.ToInt32(_categories[i].Type) + "')");
                 }
 
 
@@ -301,7 +297,7 @@ namespace Budget.Main_Classes
             var defaultCategories = new Dictionary<int, Category>();
             try
             {
-                defaultCategories.Add(0, new Category("Oszczędzanie", "Odłożenie pieniędzy na dany cel", false));
+                defaultCategories.Add(0, new Category("Oszczędzanie", "Odłożenie pieniędzy na jakis cel", false));
                 defaultCategories.Add(1, new Category("Paliwo","Benzyna do samochodu", false));
                 defaultCategories.Add(2, new Category("Jedzenie", "Zakupy okresowe", false));
                 defaultCategories.Add(3, new Category("Prąd", "Rachunki za energie", false));

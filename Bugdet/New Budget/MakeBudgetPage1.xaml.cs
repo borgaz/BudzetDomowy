@@ -36,6 +36,7 @@ namespace Budget.New_Budget
             green.StartPoint = new Point(0.5, 0);
             green.EndPoint = new Point(0.5, 1);
         }
+
         private void CheckWindow() // Proba kolorowania pustych okienek 
         {
             try
@@ -53,9 +54,7 @@ namespace Budget.New_Budget
                 }
             }
             catch (Exception)
-            {
-                // tymczasowy ducktape
-            }
+            { }
         }
 
         /// <summary>
@@ -63,14 +62,13 @@ namespace Budget.New_Budget
         /// </summary>
         public Boolean CheckInfo()
         {
-            if (budgetBalance.Text != "" && budgetNameText.Text != "" && (passTextBox.Password.Equals(passRepeatTextBox.Password)) && passTextBox.Password != "" && NumberOfPeopleTextBox.Text != "")
+            if (budgetBalance.Text != "" && budgetNameText.Text != "" && (passTextBox.Password.Equals(passRepeatTextBox.Password)) && passTextBox.Password != "")
             {
                 if (!SqlConnect.Instance.CheckBaseName(budgetNameText.Text))
                     return false;
                 salaryInfo.Name = budgetNameText.Text;
                 salaryInfo.Amount = double.Parse(budgetBalance.Text.Replace(".", ","));
                 salaryInfo.Password = SqlConnect.Instance.HashPasswordMd5((passTextBox.Password));
-                salaryInfo.NumberOfPeople = int.Parse(NumberOfPeopleTextBox.Text);
                 return true;
             }
             else

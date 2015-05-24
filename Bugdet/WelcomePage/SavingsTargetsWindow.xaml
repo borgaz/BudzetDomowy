@@ -8,11 +8,11 @@
 
     <Grid Height="400" Width="400">
         <CheckBox x:Name="AutoCheckBox" Content="Automatyczne odkładanie" HorizontalAlignment="Left" Height="25" Margin="10,155,0,0" VerticalAlignment="Top" Width="200" Unchecked="AutoCheckBox_Unchecked" Checked="AutoCheckBox_Checked"/>
-        <ComboBox x:Name="PriorityComboBox" HorizontalAlignment="Left" Height="25" Margin="120,120,0,0" VerticalAlignment="Top" Width="100"/>
+        <ComboBox x:Name="PriorityComboBox" HorizontalAlignment="Left" Height="25" Margin="120,120,0,0" VerticalAlignment="Top" Width="120"/>
         <ComboBox x:Name="PeriodComboBox" HorizontalAlignment="Left" Height="25" Margin="130,225,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Height="25" Margin="120,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="100" GotFocus="NameTextBox_GotFocus"/>
         <TextBox  x:Name="AmountTextBox" HorizontalAlignment="Left" Height="25" Margin="120,85,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="100"/>
-        <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Height="25" Margin="120,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="100"/>
-        <TextBox x:Name="NoteTextBox" HorizontalAlignment="Left" Height="50" Margin="10,340,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="300"/>
+        <TextBox x:Name="NoteTextBox" HorizontalAlignment="Left" Height="50" Margin="10,340,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="270"/>
         <TextBox x:Name="Amount2TextBox" HorizontalAlignment="Left" Height="25" Margin="120,190,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="100"/>
         <TextBox x:Name="FrequencyTextBox" HorizontalAlignment="Left" Height="25" Margin="70,225,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="50"/>
         <Label Content="Nazwa:" HorizontalAlignment="Left" Height="25" Margin="10,50,0,0" VerticalAlignment="Top" Width="100"/>
@@ -24,8 +24,8 @@
         <Label x:Name="Label1" Content="Odkładaj:" HorizontalAlignment="Left" Height="25" Margin="10,190,0,0" VerticalAlignment="Top" Width="100"/>
         <Label x:Name="Label2" Content="co:" HorizontalAlignment="Left" Height="25" Margin="10,225,0,0" VerticalAlignment="Top" Width="50"/>
         <Label Content="Koniec oszczędzania:" HorizontalAlignment="Left" Height="25" Margin="10,260,0,0" VerticalAlignment="Top" Width="150"/>
-        <Button Content="Dodaj" HorizontalAlignment="Left" Height="50" Margin="340,340,0,0" VerticalAlignment="Top" Width="50" Click="Button_Click"/>
+        <Button Content="Dodaj" HorizontalAlignment="Left" Height="25" Margin="290,340,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click"/>
         <DatePicker x:Name="DatePicker" HorizontalAlignment="Left" Height="25" Margin="170,260,0,0" VerticalAlignment="Top" Width="120"/>
-        
+        <TextBox x:Name="InfoTextBox" HorizontalAlignment="Left" Height="25" Margin="290,365,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="100" IsEnabled="False"/>
     </Grid>
 </Window>

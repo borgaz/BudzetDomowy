@@ -118,6 +118,5 @@ namespace Budget.New_Budget
                 SalaryName.ToolTip = null;
             }
         }
-
     }
 }

@@ -13,21 +13,25 @@ namespace Budget.WelcomePage
     /// Interaction logic for WelcomePage.xaml
     /// </summary>
     public partial class WelcomePage : Page
-    {
-
+    {        
         public WelcomePage()
         {
             InitializeComponent();
             InsertBars();
-        }
+
+            Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.Balance);
+            providedPaymentsDataGrid.ItemsSource = CreateDataForPaymentForDataGrid();
+            shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
+            savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
+                    }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            providedPaymentsDataGrid.ItemsSource = CreateDataForPaymentForDataGrid();
-            shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
-            //int balanceMaxKey = Main_Classes.Budget.Instance.Balance;
-            Balance.IsReadOnly = true;
-            Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.Balance);
+            SavingsTargetsWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) => { if (propertyChangedEventArgs.PropertyName.Equals("Refresh_pPDG")) providedPaymentsDataGrid.ItemsSource = CreateDataForPaymentForDataGrid(); };
+            SavingsTargetsWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) => { if (propertyChangedEventArgs.PropertyName.Equals("Refresh_sHDG")) shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid(); };
+            SavingsTargetsWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) => { if (propertyChangedEventArgs.PropertyName.Equals("Refresh_sTDG")) savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid(); };
+            Main_Classes.Budget.Instance.PropertyChanged += (s, propertyChangedEventArgs) => { if (propertyChangedEventArgs.PropertyName.Equals("BalanceLog")) Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.Balance); };
+
             if (Main_Classes.Budget.Instance.Balance > 0)
             {
                 Balance.Foreground = Brushes.Green;
@@ -36,7 +40,17 @@ namespace Budget.WelcomePage
             {
                 Balance.Foreground = Brushes.Red;
             }
-            //Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.BalanceLog[Main_Classes.Budget.Instance.BalanceLog.Count].Balance);
+        }
+
+        private List<Main_Classes.SavingsTarget> CreataDataForSavingsTargetsDataGrid()
+        {
+            List<Main_Classes.SavingsTarget> savingsTargets = new List<SavingsTarget>();
+            foreach(Main_Classes.SavingsTarget sT in Main_Classes.Budget.Instance.SavingsTargets.Values)
+            {
+                savingsTargets.Add(sT);
+            }
+            savingsTargets.Sort((a, b) => -1 * a.CompareTo(b));
+            return savingsTargets;
         }
 
         private List<PaymentForDataGrid> CreateDataForPaymentForDataGrid()
@@ -125,6 +139,7 @@ namespace Budget.WelcomePage
             SalariesBar.ToolTip = SalariesBar.Value + " zł";
             PaymentsBar.ToolTip = PaymentsBar.Value + " zł";
         }
+
         private void ProvidedPaymentsDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
         {
             colorDataGridRow(e);
@@ -149,9 +164,15 @@ namespace Budget.WelcomePage
                 e.Row.Background = new SolidColorBrush(Colors.SpringGreen);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void NewTargetButton_Click(object sender, RoutedEventArgs e)
         {
             SavingsTargetsWindow.Instance.ShowDialog();
+        }
+
+        private void AddAmountToTargetButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddAmountToSavingsTargetWindow.Instance.welcomePageSavingsTargetsDataGrid = savingsTargetsDataGrid;
+            AddAmountToSavingsTargetWindow.Instance.ShowDialog();
         }
     }
 }

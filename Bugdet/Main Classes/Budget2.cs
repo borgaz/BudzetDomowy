@@ -44,7 +44,7 @@ namespace Budget.Main_Classes
                 DataSet categoriesFromSelect = SqlConnect.Instance.SelectQuery("SELECT * FROM Categories");
                 for (int i = 0; i < categoriesFromSelect.Tables[0].Rows.Count; i++)
                 {
-                    categories.Add(Convert.ToInt32(categoriesFromSelect.Tables[0].Rows[i]["id"]),
+                    categories.Add(Convert.ToInt32(categoriesFromSelect.Tables[0].Rows[i]["id"]) - 1,
                     new Category(Convert.ToString(categoriesFromSelect.Tables[0].Rows[i]["name"]),
                         Convert.ToString(categoriesFromSelect.Tables[0].Rows[i]["note"]),
                         Convert.ToBoolean(categoriesFromSelect.Tables[0].Rows[i]["type"])));
@@ -135,7 +135,8 @@ namespace Budget.Main_Classes
                         Convert.ToInt32(savTargetsFromSelect.Tables[0].Rows[i]["priority"]),
                         Convert.ToDouble(savTargetsFromSelect.Tables[0].Rows[i]["moneyHoldings"]),
                         Convert.ToDateTime(savTargetsFromSelect.Tables[0].Rows[i]["addedDate"]),
-                        Convert.ToDouble(savTargetsFromSelect.Tables[0].Rows[i]["neededAmount"])));
+                        Convert.ToDouble(savTargetsFromSelect.Tables[0].Rows[i]["neededAmount"]),
+                        Convert.ToBoolean(savTargetsFromSelect.Tables[0].Rows[i]["type"])));
                 }
 
                 if (DateTime.Compare(maximumDate, new DateTime(1900, 01, 01)) == 0)
@@ -197,10 +198,10 @@ namespace Budget.Main_Classes
                         string moneyHoldingsWithDot = s.MoneyHoldings.ToString().Replace(",", ".");
                         string neededAmountWithDot = s.NeededAmount.ToString().Replace(",", ".");
                         SqlConnect.Instance.ExecuteSqlNonQuery(
-                            "INSERT INTO SavingsTargets(id, target, note, deadLine, priority, moneyHoldings, addedDate, neededAmount) values('" +
+                            "INSERT INTO SavingsTargets(id, target, note, deadLine, priority, moneyHoldings, addedDate, neededAmount, type) values('" +
                             C.ID + "','" + s.Target + "','" + s.Note + "','" + s.Deadline.ToShortDateString() + "','" +
-                            s.Priority + "','" + moneyHoldingsWithDot + "','" + s.AddedDate.ToShortDateString() + "','" +
-                            neededAmountWithDot + "')");
+                            s.PriorityToInt + "','" + moneyHoldingsWithDot + "','" + s.AddedDate.ToShortDateString() + "','" +
+                            neededAmountWithDot + "','" + Convert.ToInt32(s.Type) + "')");
                     }
                 }
             }
@@ -314,8 +315,9 @@ namespace Budget.Main_Classes
                             "', DEADLINE ='" + s.Deadline.ToShortDateString() +
                             "', MONEYHOLDINGS='" + moneyHoldingsWithDot +
                             "', NEEDEDAMOUNT='" + neededAmountWithDot +
-                            "', PRIORITY = '" + s.Priority +
+                            "', PRIORITY = '" + s.PriorityToInt +
                             "', ADDEDDATE = '" + s.AddedDate.ToShortDateString() +
+                            "', TYPE = '" + Convert.ToInt32(s.Type) +
                             "' WHERE id = " + C.ID);
                     }
                 }

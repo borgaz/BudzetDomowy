@@ -6,7 +6,6 @@ namespace Budget.New_Budget
     {
         private String name;
         private double amount;
-        private int numberOfPeople;
         private String password;
         public SalaryInfo()
         {
@@ -29,12 +28,6 @@ namespace Budget.New_Budget
         {
             get { return amount; }
             set { amount = value; }
-        }
-
-        public int NumberOfPeople
-        {
-            get { return numberOfPeople; }
-            set { numberOfPeople = value; }
         }
     }
 }
