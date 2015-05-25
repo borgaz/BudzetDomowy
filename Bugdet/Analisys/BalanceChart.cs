@@ -4,42 +4,73 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Budget.Main_Classes;
 
 namespace Budget.Analisys
 {
     class BalanceChart
     {
-        
-      //  public ObservableCollection<TestClass> Salary { get; private set; }
-        public ObservableCollection<TestClass> Payments { get; private set; }
+
+      //  public ObservableCollection<Now> Salary { get; private set; }
+        public ObservableCollection<Now> Payments { get; private set; }
+        public ObservableCollection<Now> Paymentsa { get; private set; }
+        public ObservableCollection<Now> Paymentsb { get; private set; }
 
         public BalanceChart()
         {
-            Payments = new ObservableCollection<TestClass>();
-         //   Salary = new ObservableCollection<TestClass>();
+            Payments = new ObservableCollection<Now>();
+            Paymentsa = new ObservableCollection<Now>();
+            Paymentsb = new ObservableCollection<Now>();
+          //  Salary = new ObservableCollection<Now>();
+            double suma = 0;
+            double sum2a = 0;
 
-            foreach (KeyValuePair<int, Main_Classes.Category> c in Main_Classes.Budget.Instance.Categories)
-            {
-                double sum = 0;
-                double sum2 = 0;
+            double sumb = 0;
+            double sum2b = 0;
+
+            double sumc = 0;
+            double sum2c = 0;
                 foreach (KeyValuePair<int, Main_Classes.Payment> s in Main_Classes.Budget.Instance.Payments)
                 {
-                    if (!c.Value.Type) 
-                        if (s.Value.GetType() == typeof(Main_Classes.SinglePayment))
-                            if (s.Value.CompareDate() <= 0)
-                                if (c.Key == s.Value.CategoryID)
-                                    sum += s.Value.Amount;
-                    //if (c.Value.Type)
-                    //    if (s.Value.GetType() == typeof(Main_Classes.SinglePayment))
-                    //        if (s.Value.CompareDate() <= 0)
-                    //            if (c.Key == s.Value.CategoryID)
-                    //                sum2 += s.Value.Amount;
+                    if (!s.Value.Type)
+                        if (s.Value.GetType() == typeof (Main_Classes.SinglePayment))
+                        {
+                            var temp = (SinglePayment) s.Value;
+                            if(temp.Date.Month == DateTime.Now.Month)
+                                suma += s.Value.Amount;
+                            if(temp.Date.Month == DateTime.Now.AddMonths(-1).Month)
+                                sumb += s.Value.Amount;
+                            if (temp.Date.Month == DateTime.Now.AddMonths(-2).Month)
+                                sumc += s.Value.Amount;
+
+                        }
+                    if (s.Value.Type)
+                        if (s.Value.GetType() == typeof (Main_Classes.SinglePayment))
+                        {
+                            var temp = (SinglePayment)s.Value;
+                            if (temp.Date.Month == DateTime.Now.Month)
+                                sum2a += s.Value.Amount;
+                            if (temp.Date.Month == DateTime.Now.AddMonths(-1).Month)
+                                sum2b += s.Value.Amount;
+                            if (temp.Date.Month == DateTime.Now.AddMonths(-2).Month)
+                                sum2c += s.Value.Amount;
+                        }
+
                 }
-                if (sum != 0)
-                    Payments.Add(new TestClass() { Category = c.Value.Name, Number = sum });
-               // if (sum2 != 0)
-                    //Salary.Add(new TestClass() { Category = c.Value.Name, Number = sum2 });
-            }
+            if (suma != 0)
+                Payments.Add(new Now() { Payment = "Wydatki", Number = suma });
+            if (sum2a != 0)
+                Payments.Add(new Now() { Payment = "Przychody", Number = sum2a });
+
+            if (sumb != 0)
+                Paymentsa.Add(new Now() { Payment = "Wydatki", Number = suma });
+            if (sum2b != 0)
+                Paymentsa.Add(new Now() { Payment = "Przychody", Number = sum2a });
+
+            if (sumc != 0)
+                Paymentsb.Add(new Now() { Payment = "Wydatki", Number = suma });
+            if (sum2c != 0)
+                Paymentsb.Add(new Now() { Payment = "Przychody", Number = sum2a });
         }
 
         private object selectedItem = null;
@@ -54,12 +85,11 @@ namespace Budget.Analisys
             }
         }
 
-        public class TestClass
+        public class Now
         {
-            public string Category { get; set; }
+            public string Payment { get; set; }
 
             public double Number { get; set; }
         }
-
     }
 }

@@ -30,6 +30,7 @@ namespace Budget.Analisys
         private void ChartsTab_OnLoaded(object sender, RoutedEventArgs e)
         {
             _chartTab = new AnalysisTabPage();
+            _balanceTab = new AnalisysAvgPage();
             CategoryPaymentFrame.Content = _chartTab;
             MonthAvgFrame.Content = _balanceTab;
         }

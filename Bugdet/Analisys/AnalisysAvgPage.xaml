@@ -11,7 +11,11 @@
     <Grid>
         <chart:ClusteredColumnChart Style="{StaticResource MinimalChartStyle}" ChartTitle="Średnie saldo miesięczne" ChartSubTitle="Średnie saldo za poszczególny miesiąc" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}" Height="Auto" Margin="10,0,10,10" Width="Auto" >
             <chart:ClusteredColumnChart.Series>
-                <chart:ChartSeries DisplayMember="Payment" SeriesTitle="saldo miesięczne" ValueMember="Number" ItemsSource="{Binding Path=Payments}" />
+                <chart:ChartSeries DisplayMember="Payment" SeriesTitle="miesiac-2" ValueMember="Number" ItemsSource="{Binding Path=Paymentsb}" />
+                <chart:ChartSeries DisplayMember="Payment" SeriesTitle="miesiac-1" ValueMember="Number" ItemsSource="{Binding Path=Paymentsa}" />
+                <chart:ChartSeries DisplayMember="Payment" SeriesTitle="miesiac" ValueMember="Number" ItemsSource="{Binding Path=Payments}" />
+                <!--<chart:ChartSeries DisplayMember="Payment" SeriesTitle="miesiac+1" ValueMember="Number" ItemsSource="{Binding Path=PaymentsNext1}" />
+                <chart:ChartSeries DisplayMember="Payment" SeriesTitle="miesiac+2" ValueMember="Number" ItemsSource="{Binding Path=PaymentsNext2}" />-->
             </chart:ClusteredColumnChart.Series>
         </chart:ClusteredColumnChart>
     </Grid>
