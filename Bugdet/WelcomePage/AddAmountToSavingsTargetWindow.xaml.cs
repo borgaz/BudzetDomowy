@@ -45,7 +45,7 @@ namespace Budget.WelcomePage
             }
         }
 
-        private void ReadyButton_Click(object sender, RoutedEventArgs e)
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             double amount, missingAmount;
             Main_Classes.SinglePayment sP;
@@ -69,6 +69,29 @@ namespace Budget.WelcomePage
             }
         }
 
+        private void SubtractButton_Click(object sender, RoutedEventArgs e)
+        {
+            double amount, possessedAmount;
+            Main_Classes.SinglePayment sP;
+            if (TargetComboBox.SelectedIndex != -1 && !AmountTextBox.Text.Equals(String.Empty))
+            {
+                amount = Convert.ToDouble(AmountTextBox.Text);
+                possessedAmount = Convert.ToDouble(PossessedAmountTextBox.Text);
+                if (amount > possessedAmount)
+                {
+                    amount = possessedAmount;
+                }
+                Main_Classes.Budget.Instance.SavingsTargets[index].AddMoney(-1 * amount, index);
+
+                int indexOfSinglePayment = Main_Classes.Budget.Instance.Payments.Count > 0 ? Main_Classes.Budget.Instance.Payments.Keys.Max() + 1 : 1;
+                sP = new Main_Classes.SinglePayment("", amount, 0, false, "Oszczędzanie: " + Main_Classes.Budget.Instance.SavingsTargets[index].Target, DateTime.Now);
+                Main_Classes.Budget.Instance.AddSinglePayment(indexOfSinglePayment, sP);
+                OnPropertyChanged("Update_sHDG");
+                OnPropertyChanged("Refresh_sTDG");
+                this.Close();
+            }
+        }
+
         private void TargetComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             index = Main_Classes.Budget.Instance.SavingsTargets.FirstOrDefault(x => x.Value.Target.Equals(Convert.ToString(TargetComboBox.SelectedItem))).Key;
@@ -83,7 +106,7 @@ namespace Budget.WelcomePage
         {
             foreach(Main_Classes.SavingsTarget sT in Main_Classes.Budget.Instance.SavingsTargets.Values)
             {
-                if (sT.Type == false)
+                if (sT.Type == false && sT.CountMoneyLeft() > 0)
                 {
                     TargetComboBox.Items.Add(sT.Target);
                 }

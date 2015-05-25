@@ -4,7 +4,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d"
-	Title="Cele oszczędzania" Height="440" Width="420">
+	Title="Cele oszczędzania" 
+    Height="440" 
+    Width="420"
+    ResizeMode="NoResize">
 
     <Grid Height="400" Width="400">
         <CheckBox x:Name="AutoCheckBox" Content="Automatyczne odkładanie" HorizontalAlignment="Left" Height="25" Margin="10,155,0,0" VerticalAlignment="Top" Width="200" Unchecked="AutoCheckBox_Unchecked" Checked="AutoCheckBox_Checked"/>

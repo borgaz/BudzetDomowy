@@ -50,33 +50,19 @@ namespace Budget.Main_Classes
         /// Dodawanie pieniędzy do targetu
         /// </summary>
         /// <param name="amount">Kwota którą chcemy dodać (ewentualnie odjąć)</param>
-        /// <returns>Zwraca true, jak cel zostanie osiągnięty, false w przeciwnym wypadku</returns>
-        public Boolean AddMoney (double amount, int index)
+        public void AddMoney (double amount, int index)
         {
             this.moneyHoldings += amount;
             Main_Classes.Budget.Instance.ListOfEdits.Add(new Utility_Classes.Changes(typeof(SavingsTarget), index));
-
-            return CountMoneyLeft() == 0.0;
         }
 
         /// <summary>
         /// Obliczanie, jakiej kwoty brakuje
         /// </summary>
-        /// <returns>Zwraca liczbę, która jeśli jest dodatnia, oznacza, ile brakuje do celu, a jak jest ujemna, to ile za dużo odłożyliśmy </returns>
+        /// <returns>Zwraca liczbę, która oznacza, ile brakuje do celu </returns>
         public double CountMoneyLeft()
         {
-            if (this.NeededAmount - this.moneyHoldings < 0)
-            {
-                return (this.NeededAmount - (this.NeededAmount + this.moneyHoldings));
-            }
-            else if (this.NeededAmount - this.moneyHoldings > 0)
-            {
-                return this.NeededAmount - this.moneyHoldings;
-            }
-            else
-            {
-                return 0.0;
-            }   
+                return (this.NeededAmount - this.moneyHoldings);
         }
 
         public String Target

@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       Loaded="Page_Loaded"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       d:DesignHeight="550" d:DesignWidth="725"
 	Title="WelcomePage">
 
@@ -12,23 +12,23 @@
         <DataGrid Name="shortHistoryDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" Margin="10,0,0,10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="234" Width="375" Loaded="Page_Loaded" Background="White" LoadingRow="shortHistoryDataGrid_OnLoadingRow">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Typ" Width="70" IsReadOnly="True" Binding="{Binding Type}"/>
-                <DataGridTextColumn Header="Nazwa" Width="125" IsReadOnly="True" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Nazwa" Width="167" IsReadOnly="True" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Kwota" Width="60" IsReadOnly="True" Binding="{Binding Amount}"/>
-                <DataGridTextColumn Header="Data" Width="75" IsReadOnly="True" Binding="{Binding Date}"/>
+                <DataGridTextColumn Header="Data" Width="70" IsReadOnly="True" Binding="{Binding Date}"/>
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid HorizontalAlignment="Left" Name="providedPaymentsDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeColumns="False" Margin="10,38,0,0" VerticalAlignment="Top" Height="234" Width="375" Loaded="Page_Loaded" SelectionMode="Single" LoadingRow="ProvidedPaymentsDataGrid_OnLoadingRow" Background="White">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Typ" Width="70" IsReadOnly="True" Binding="{Binding Type}"/>
-                <DataGridTextColumn Header="Nazwa" Width="125" IsReadOnly="True" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Nazwa" Width="167" IsReadOnly="True" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Kwota" Width="60" IsReadOnly="True" Binding="{Binding Amount}"/>
-                <DataGridTextColumn Header="Data" Width="75" IsReadOnly="True" Binding="{Binding Date}"/>
+                <DataGridTextColumn Header="Data" Width="70" IsReadOnly="True" Binding="{Binding Date}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid x:Name="savingsTargetsDataGrid" ItemsSource="{Binding}"  AutoGenerateColumns="False"  CanUserResizeColumns="False" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="234" Width="308" Margin="0,0,10,10"  Loaded="Page_Loaded" SelectionMode="Single" Background="White">
+        <DataGrid x:Name="savingsTargetsDataGrid" ItemsSource="{Binding}"  AutoGenerateColumns="False"  CanUserResizeColumns="False" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="234" Width="308" Margin="0,0,10,10"  Loaded="Page_Loaded" SelectionMode="Single" Background="White" LoadingRow="savingsTargetsDataGrid_OnLoadingRow">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nazwa" Width="65" IsReadOnly="True" Binding="{Binding Target}"/>
-                <DataGridTextColumn Header="Priorytet" Width="88" IsReadOnly="True" Binding="{Binding PriorityToString}"/>   
+                <DataGridTextColumn Header="Nazwa" Width="80" IsReadOnly="True" Binding="{Binding Target}"/>
+                <DataGridTextColumn Header="Priorytet" Width="90" IsReadOnly="True" Binding="{Binding PriorityToString}"/>   
                 <DataGridTextColumn Header="Kwota" Width="65" IsReadOnly="True" Binding="{Binding NeededAmount}"/>
                 <DataGridTextColumn Header="Odłożono" Width="65" IsReadOnly="True" Binding="{Binding MoneyHoldings}"/>
             </DataGrid.Columns>
@@ -76,6 +76,6 @@
         </Label>
         <TextBox x:Name="Balance" HorizontalAlignment="Left" Height="32" Margin="599,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97"  IsReadOnly="True" FontSize="18" FontWeight="Bold" TextAlignment="Center" Background="#FFEDEEF9"/>
         <Button x:Name="NewTargetButton" Content="Dodaj nowy" HorizontalAlignment="Right" Height="25" Margin="0,0,100,250" VerticalAlignment="Bottom" Width="80" Click="NewTargetButton_Click"/>
-        <Button x:Name="AddAmountToTargetButton" Content="Odłóż kwotę" HorizontalAlignment="Right" Height="25" Margin="0,0,10,250" VerticalAlignment="Bottom" Width="80" Click="AddAmountToTargetButton_Click"/>
+        <Button x:Name="AddAmountToTargetButton" Content="Zarządzaj" HorizontalAlignment="Right" Height="25" Margin="0,0,10,250" VerticalAlignment="Bottom" Width="80" Click="AddAmountToTargetButton_Click"/>
     </Grid>
 </Page>

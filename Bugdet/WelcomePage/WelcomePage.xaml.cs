@@ -35,16 +35,6 @@ namespace Budget.WelcomePage
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            SavingsTargetsWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) =>
-            {
-                if (propertyChangedEventArgs.PropertyName.Equals("Update_sTDG")) 
-                    savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
-                if (propertyChangedEventArgs.PropertyName.Equals("Update_sHDG"))
-                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
-                if (propertyChangedEventArgs.PropertyName.Equals("Update_pPDG"))
-                    providedPaymentsDataGrid.ItemsSource = CreateDataForProvidedPaymentDataGrid();
-            };
-
             Main_Classes.Budget.Instance.PropertyChanged += (s, propertyChangedEventArgs) => 
             {
                 if (propertyChangedEventArgs.PropertyName.Equals("BalanceLog"))
@@ -60,14 +50,6 @@ namespace Budget.WelcomePage
                     }
                 }
             };
-
-            AddAmountToSavingsTargetWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) => 
-            {
-                if (propertyChangedEventArgs.PropertyName.Equals("Update_sHDG")) 
-                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
-                if (propertyChangedEventArgs.PropertyName.Equals("Refresh_sTDG"))
-                    savingsTargetsDataGrid.Items.Refresh(); 
-            };  
         }
 
         private List<Main_Classes.SavingsTarget> CreataDataForSavingsTargetsDataGrid()
@@ -182,26 +164,60 @@ namespace Budget.WelcomePage
             colorDataGridRow(e);
         }
 
+        private void savingsTargetsDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            colorDataGridRow(e);
+        }
+
         private void colorDataGridRow (DataGridRowEventArgs e)
         {
-            PaymentForDataGrid p = e.Row.Item as PaymentForDataGrid;
-            if (p.Sign == true)
+            var p = e.Row.Item;
+            if (p.GetType() == typeof(PaymentForDataGrid))
             {
-                e.Row.Background = new SolidColorBrush(Colors.Tomato);
-            }    
-            else
+                PaymentForDataGrid pFDG = (PaymentForDataGrid) p;
+                if (pFDG.Sign == true)
+                {
+                    e.Row.Background = new SolidColorBrush(Colors.Tomato);
+                }
+                else
+                {
+                    e.Row.Background = new SolidColorBrush(Colors.SpringGreen);
+                }    
+            }
+            else if (p.GetType() == typeof(SavingsTarget))
             {
-                e.Row.Background = new SolidColorBrush(Colors.SpringGreen);
-            }      
+                SavingsTarget sT = (SavingsTarget) p;
+                if (sT.CountMoneyLeft() == 0)
+                {
+                    e.Row.Background = new SolidColorBrush(Colors.SpringGreen);
+                }
+            }     
         }
 
         private void NewTargetButton_Click(object sender, RoutedEventArgs e)
         {
+            SavingsTargetsWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) =>
+            {
+                if (propertyChangedEventArgs.PropertyName.Equals("Update_sTDG"))
+                    savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
+                if (propertyChangedEventArgs.PropertyName.Equals("Update_sHDG"))
+                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
+                if (propertyChangedEventArgs.PropertyName.Equals("Update_pPDG"))
+                    providedPaymentsDataGrid.ItemsSource = CreateDataForProvidedPaymentDataGrid();
+            };
             SavingsTargetsWindow.Instance.ShowDialog();
         }
 
         private void AddAmountToTargetButton_Click(object sender, RoutedEventArgs e)
         {
+            
+            AddAmountToSavingsTargetWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) =>
+            {
+                if (propertyChangedEventArgs.PropertyName.Equals("Update_sHDG"))
+                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
+                if (propertyChangedEventArgs.PropertyName.Equals("Refresh_sTDG"))
+                    savingsTargetsDataGrid.Items.Refresh();
+            };
             AddAmountToSavingsTargetWindow.Instance.ShowDialog();
         }
     }
