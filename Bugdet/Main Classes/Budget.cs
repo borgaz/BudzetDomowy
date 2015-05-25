@@ -5,12 +5,11 @@ using System.Windows;
 using System.Windows.Controls;
 using Budget.Utility_Classes;
 using ComboBoxItem = Budget.Utility_Classes.ComboBoxItem;
-using System.ComponentModel;
 
 // First part of Budget class - constructor, properties, minor methods
 namespace Budget.Main_Classes
 {
-    public sealed partial class Budget : INotifyPropertyChanged
+    public sealed partial class Budget : ViewModelBase
     {
         private static Budget instance = null;
 
@@ -450,14 +449,6 @@ namespace Budget.Main_Classes
                     contains = true;
             }
             return contains;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) 
-                handler(this, new PropertyChangedEventArgs(propertyName));
-        }
+        }  
     }
 }

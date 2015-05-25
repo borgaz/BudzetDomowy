@@ -31,6 +31,7 @@
                 <DataGridTextColumn Header="Priorytet" Width="90" IsReadOnly="True" Binding="{Binding PriorityToString}"/>   
                 <DataGridTextColumn Header="Kwota" Width="65" IsReadOnly="True" Binding="{Binding NeededAmount}"/>
                 <DataGridTextColumn Header="Odłożono" Width="65" IsReadOnly="True" Binding="{Binding MoneyHoldings}"/>
+                
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Najbliższe przychody i wydatki:" HorizontalAlignment="Left" Height="28" Margin="10,10,0,0" VerticalAlignment="Top" Width="191" FontWeight="Bold"/>

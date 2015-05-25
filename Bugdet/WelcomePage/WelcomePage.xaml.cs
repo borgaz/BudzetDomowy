@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using Budget.Main_Classes;
-using Budget.SettingsPage;
 using System.Windows.Media;
 
 namespace Budget.WelcomePage
@@ -20,9 +18,6 @@ namespace Budget.WelcomePage
             InsertBars();
 
             Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.Balance);
-            providedPaymentsDataGrid.ItemsSource = CreateDataForProvidedPaymentDataGrid();
-            shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
-            savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
             if (Main_Classes.Budget.Instance.Balance > 0)
             {
                 Balance.Foreground = Brushes.Green;
@@ -38,7 +33,8 @@ namespace Budget.WelcomePage
             providedPaymentsDataGrid.ItemsSource = CreateDataForProvidedPaymentDataGrid();
             shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
             savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
-            Main_Classes.Budget.Instance.PropertyChanged += (s, propertyChangedEventArgs) => 
+
+            Main_Classes.Budget.Instance.PropertyChanged += (s, propertyChangedEventArgs) =>
             {
                 if (propertyChangedEventArgs.PropertyName.Equals("BalanceLog"))
                 {
@@ -57,7 +53,7 @@ namespace Budget.WelcomePage
 
         private List<Main_Classes.SavingsTarget> CreataDataForSavingsTargetsDataGrid()
         {
-            List<Main_Classes.SavingsTarget> savingsTargets = new List<SavingsTarget>();
+            List<Main_Classes.SavingsTarget> savingsTargets = new List<Main_Classes.SavingsTarget>();
             foreach(Main_Classes.SavingsTarget sT in Main_Classes.Budget.Instance.SavingsTargets.Values)
             {
                 savingsTargets.Add(sT);
@@ -70,24 +66,24 @@ namespace Budget.WelcomePage
         {
             DateTime lastDate;
             List<PaymentForDataGrid> providedPayments = new List<PaymentForDataGrid>();
-            foreach(Payment payment in Main_Classes.Budget.Instance.Payments.Values)
+            foreach (Main_Classes.Payment payment in Main_Classes.Budget.Instance.Payments.Values)
             {
-                if (payment.GetType() == typeof(PeriodPayment))
+                if (payment.GetType() == typeof(Main_Classes.PeriodPayment))
                 {
-                    var pP = (PeriodPayment) payment;
-                    if (pP.Amount <= Settings.Instance.PP_AmountTo && pP.Amount >= Settings.Instance.PP_AmountOf)
+                    var pP = (Main_Classes.PeriodPayment)payment;
+                    if (pP.Amount <= SettingsPage.Settings.Instance.PP_AmountTo && pP.Amount >= SettingsPage.Settings.Instance.PP_AmountOf)
                     {
-                        lastDate = Settings.Instance.PP_LastDateToShow() <= pP.EndDate ? Settings.Instance.PP_LastDateToShow() : pP.EndDate;
+                        lastDate = SettingsPage.Settings.Instance.PP_LastDateToShow() <= pP.EndDate ? SettingsPage.Settings.Instance.PP_LastDateToShow() : pP.EndDate;
                         if (pP.CountNextDate() <= lastDate)
                         {
-                            providedPayments.AddRange(PeriodPayment.CreateListOfSelectedPeriodPayments(pP, lastDate));
+                            providedPayments.AddRange(Main_Classes.PeriodPayment.CreateListOfSelectedPeriodPayments(pP, lastDate));
                         }
                     }
                 }
                 else
                 {
-                    var sP = (SinglePayment) payment;
-                    if (sP.CompareDate() >= 0 && sP.Amount <= Settings.Instance.PP_AmountTo && sP.Amount >= Settings.Instance.PP_AmountOf && sP.Date <= Settings.Instance.PP_LastDateToShow())
+                    var sP = (Main_Classes.SinglePayment)payment;
+                    if (sP.CompareDate() >= 0 && sP.Amount <= SettingsPage.Settings.Instance.PP_AmountTo && sP.Amount >= SettingsPage.Settings.Instance.PP_AmountOf && sP.Date <= SettingsPage.Settings.Instance.PP_LastDateToShow())
                     {
                         providedPayments.Add(new PaymentForDataGrid(sP.Name, sP.Amount, "Pojedynczy", sP.Date, sP.Type, sP.CategoryID));
                     }    
@@ -95,9 +91,9 @@ namespace Budget.WelcomePage
             }
 
             providedPayments.Sort();
-            if (providedPayments.Count > Settings.Instance.PP_NumberOfRow)
+            if (providedPayments.Count > SettingsPage.Settings.Instance.PP_NumberOfRow)
             {
-                providedPayments.RemoveRange(Settings.Instance.PP_NumberOfRow, providedPayments.Count - Settings.Instance.PP_NumberOfRow);
+                providedPayments.RemoveRange(SettingsPage.Settings.Instance.PP_NumberOfRow, providedPayments.Count - SettingsPage.Settings.Instance.PP_NumberOfRow);
             }
             return providedPayments;
         }
@@ -106,12 +102,12 @@ namespace Budget.WelcomePage
         {
             List<PaymentForDataGrid> shortHistory = new List<PaymentForDataGrid>();
 
-            foreach(BalanceLog balanceLog in Main_Classes.Budget.Instance.BalanceLog.Values)
+            foreach (Main_Classes.BalanceLog balanceLog in Main_Classes.Budget.Instance.BalanceLog.Values)
             {
                 if(balanceLog.SinglePaymentID != 0 && balanceLog.PeriodPaymentID == 0)
                 {
-                    var sP = (SinglePayment)Main_Classes.Budget.Instance.Payments[balanceLog.SinglePaymentID];
-                    if (sP.CompareDate() <= 0 && sP.Date >= Settings.Instance.SH_LastDateToShow() && sP.Amount <= Settings.Instance.SH_AmountTo && sP.Amount >= Settings.Instance.SH_AmountOf)
+                    var sP = (Main_Classes.SinglePayment)Main_Classes.Budget.Instance.Payments[balanceLog.SinglePaymentID];
+                    if (sP.CompareDate() <= 0 && sP.Date >= SettingsPage.Settings.Instance.SH_LastDateToShow() && sP.Amount <= SettingsPage.Settings.Instance.SH_AmountTo && sP.Amount >= SettingsPage.Settings.Instance.SH_AmountOf)
                     {
                         if (sP.Name.StartsWith("[Okresowy]"))
                         {
@@ -126,9 +122,8 @@ namespace Budget.WelcomePage
                 }
                 else if(balanceLog.SinglePaymentID == 0 && balanceLog.PeriodPaymentID != 0)
                 {
-                    var pP = (PeriodPayment)Main_Classes.Budget.Instance.Payments[balanceLog.PeriodPaymentID];
-
-                    if (balanceLog.Date >= Settings.Instance.SH_LastDateToShow() && pP.Amount <= Settings.Instance.SH_AmountTo && pP.Amount >= Settings.Instance.SH_AmountOf)
+                    var pP = (Main_Classes.PeriodPayment)Main_Classes.Budget.Instance.Payments[balanceLog.PeriodPaymentID];
+                    if (balanceLog.Date >= SettingsPage.Settings.Instance.SH_LastDateToShow() && pP.Amount <= SettingsPage.Settings.Instance.SH_AmountTo && pP.Amount >= SettingsPage.Settings.Instance.SH_AmountOf)
                     {
                         shortHistory.Add(new PaymentForDataGrid(pP.Name, pP.Amount, "Okresowy", balanceLog.Date, pP.Type, pP.CategoryID));
                     }
@@ -136,18 +131,18 @@ namespace Budget.WelcomePage
             }
 
             shortHistory.Sort((a, b) => -1 * a.CompareTo(b));
-            if (shortHistory.Count > Settings.Instance.SH_NumberOfRow)
+            if (shortHistory.Count > SettingsPage.Settings.Instance.SH_NumberOfRow)
             {
-                shortHistory.RemoveRange(Settings.Instance.SH_NumberOfRow, shortHistory.Count - Settings.Instance.SH_NumberOfRow);
+                shortHistory.RemoveRange(SettingsPage.Settings.Instance.SH_NumberOfRow, shortHistory.Count - SettingsPage.Settings.Instance.SH_NumberOfRow);
             }
             return shortHistory;
         }
 
         private void InsertBars()
         {
-            PaymentsBar.Maximum = SalariesBar.Maximum = SqlConnect.Instance.monthlySalaries + SqlConnect.Instance.monthlyPayments;
-            SalariesBar.Value = SqlConnect.Instance.monthlySalaries;
-            PaymentsBar.Value = SqlConnect.Instance.monthlyPayments;
+            PaymentsBar.Maximum = SalariesBar.Maximum = Main_Classes.SqlConnect.Instance.monthlySalaries + Main_Classes.SqlConnect.Instance.monthlyPayments;
+            SalariesBar.Value = Main_Classes.SqlConnect.Instance.monthlySalaries;
+            PaymentsBar.Value = Main_Classes.SqlConnect.Instance.monthlyPayments;
             SalariesBar.ToolTip = SalariesBar.Value + " zł";
             PaymentsBar.ToolTip = PaymentsBar.Value + " zł";
         }
@@ -187,9 +182,9 @@ namespace Budget.WelcomePage
                     e.Row.Background = new SolidColorBrush(Colors.SpringGreen);
                 }    
             }
-            else if (p.GetType() == typeof(SavingsTarget))
+            else if (p.GetType() == typeof(Main_Classes.SavingsTarget))
             {
-                SavingsTarget sT = (SavingsTarget) p;
+                Main_Classes.SavingsTarget sT = (Main_Classes.SavingsTarget)p;
                 if (sT.CountMoneyLeft() == 0)
                 {
                     e.Row.Background = new SolidColorBrush(Colors.SpringGreen);
@@ -212,12 +207,13 @@ namespace Budget.WelcomePage
         }
 
         private void AddAmountToTargetButton_Click(object sender, RoutedEventArgs e)
-        {
-            
+        { 
             AddAmountToSavingsTargetWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) =>
             {
                 if (propertyChangedEventArgs.PropertyName.Equals("Update_sHDG"))
                     shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
+                if (propertyChangedEventArgs.PropertyName.Equals("Update_sTDG"))
+                    savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
                 if (propertyChangedEventArgs.PropertyName.Equals("Refresh_sTDG"))
                     savingsTargetsDataGrid.Items.Refresh();
             };

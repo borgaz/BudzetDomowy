@@ -8,9 +8,10 @@ namespace Budget.Main_Classes
         private String note; // notatka
         private DateTime deadline; // data, do ktorej chcemy miec dana kwote
         private int daysLeft; // ile dni pozostalo do deadLine`a
-        private Boolean type; // czy automatycznie odkladaja sie pieniadze, czy robimy to recznie
+        private Boolean type; // czy automatycznie odkladaja sie pieniadze(true), czy robimy to recznie(false)
         public enum Priorities    
         {
+            Zrealizowany = -3,
             BardzoNiski = -2,
             Niski = -1,
             Normalny = 0,
@@ -50,10 +51,16 @@ namespace Budget.Main_Classes
         /// Dodawanie pieniędzy do targetu
         /// </summary>
         /// <param name="amount">Kwota którą chcemy dodać (ewentualnie odjąć)</param>
-        public void AddMoney (double amount, int index)
+        public Boolean AddMoney (double amount, int index)
         {
             this.moneyHoldings += amount;
+            if (CountMoneyLeft() == 0)
+            {
+                this.priority = Priorities.Zrealizowany;
+            }
             Main_Classes.Budget.Instance.ListOfEdits.Add(new Utility_Classes.Changes(typeof(SavingsTarget), index));
+
+            return CountMoneyLeft() == 0;
         }
 
         /// <summary>

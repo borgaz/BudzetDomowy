@@ -92,6 +92,7 @@
     </Compile>
     <Compile Include="Main Classes\Budget.cs" />
     <Compile Include="Main Classes\Budget2.cs" />
+    <Compile Include="Main Classes\ViewModelBase.cs" />
     <Compile Include="Payments Manager\CheckingPeriodPayments.xaml.cs">
       <DependentUpon>CheckingPeriodPayments.xaml</DependentUpon>
     </Compile>

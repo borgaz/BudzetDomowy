@@ -47,6 +47,7 @@ namespace Budget.WelcomePage
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            String text = String.Empty;
             double amount, missingAmount;
             Main_Classes.SinglePayment sP;
 
@@ -58,7 +59,10 @@ namespace Budget.WelcomePage
                 {
                     amount = missingAmount;
                 }
-                Main_Classes.Budget.Instance.SavingsTargets[index].AddMoney(amount, index);
+                if (Main_Classes.Budget.Instance.SavingsTargets[index].AddMoney(amount, index) == true)
+                {
+                    OnPropertyChanged("Update_sTDG");
+                }
 
                 int indexOfSinglePayment = Main_Classes.Budget.Instance.Payments.Count > 0 ? Main_Classes.Budget.Instance.Payments.Keys.Max() + 1 : 1;
                 sP = new Main_Classes.SinglePayment("", amount, 0, true, "Oszczędzanie: " + Main_Classes.Budget.Instance.SavingsTargets[index].Target, DateTime.Now);
@@ -67,10 +71,24 @@ namespace Budget.WelcomePage
                 OnPropertyChanged("Refresh_sTDG");
                 this.Close();
             }
+            else
+            {
+                if (AmountTextBox.Text.Equals(String.Empty))
+                {
+                    text = "Uzupełnij:\n- ile chcesz odłożyć\n";
+                }
+                if (TargetComboBox.SelectedIndex == -1)
+                {
+                    text += "Wybierz:\n - na który cel chcesz odłożyć";
+                }
+                MessageBox.Show(text);
+                text = String.Empty;
+            }
         }
 
         private void SubtractButton_Click(object sender, RoutedEventArgs e)
         {
+            String text = String.Empty;
             double amount, possessedAmount;
             Main_Classes.SinglePayment sP;
             if (TargetComboBox.SelectedIndex != -1 && !AmountTextBox.Text.Equals(String.Empty))
@@ -82,13 +100,26 @@ namespace Budget.WelcomePage
                     amount = possessedAmount;
                 }
                 Main_Classes.Budget.Instance.SavingsTargets[index].AddMoney(-1 * amount, index);
-
+               
                 int indexOfSinglePayment = Main_Classes.Budget.Instance.Payments.Count > 0 ? Main_Classes.Budget.Instance.Payments.Keys.Max() + 1 : 1;
                 sP = new Main_Classes.SinglePayment("", amount, 0, false, "Oszczędzanie: " + Main_Classes.Budget.Instance.SavingsTargets[index].Target, DateTime.Now);
                 Main_Classes.Budget.Instance.AddSinglePayment(indexOfSinglePayment, sP);
                 OnPropertyChanged("Update_sHDG");
                 OnPropertyChanged("Refresh_sTDG");
                 this.Close();
+            }
+            else
+            {
+                if (AmountTextBox.Text.Equals(String.Empty))
+                {
+                    text = "Uzupełnij:\n- ile chcesz odjąć\n";
+                }
+                if (TargetComboBox.SelectedIndex == -1)
+                {
+                    text += "Wybierz:\n - z którego celu chcesz odjąć";
+                }
+                MessageBox.Show(text);
+                text = String.Empty;
             }
         }
 
@@ -106,7 +137,7 @@ namespace Budget.WelcomePage
         {
             foreach(Main_Classes.SavingsTarget sT in Main_Classes.Budget.Instance.SavingsTargets.Values)
             {
-                if (sT.Type == false && sT.CountMoneyLeft() > 0)
+                if (sT.Type == false && sT.CountMoneyLeft() > 0 )
                 {
                     TargetComboBox.Items.Add(sT.Target);
                 }
