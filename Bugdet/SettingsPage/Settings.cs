@@ -29,6 +29,7 @@ namespace Budget.SettingsPage
         private double SH_amountTo; // kwota do
         /*3. liczba wyswietlanych rekordow: */
         private int SH_numberOfRow; // ile przyszlych rekordow wyswietlamy
+        private Boolean serializable;
 
         public static Settings Instance
         {
@@ -64,10 +65,13 @@ namespace Budget.SettingsPage
             SH_amountOf = 0;
             SH_amountTo = Main_Classes.Budget.Instance.MaxAmount;
             SH_numberOfRow = 20;
+
+            serializable = false;
         }
 
         public string SerializeToXml()
         {
+            serializable = true;
             StreamWriter writer = new StreamWriter(Main_Classes.Budget.Instance.Name + "Settings.xml");
             XmlSerializer serializer = new XmlSerializer(typeof(Settings));
             serializer.Serialize(writer, this);
@@ -238,6 +242,14 @@ namespace Budget.SettingsPage
             set
             {
                 SH_amountTo = value;
+            }
+        }
+        
+        public Boolean Serializable
+        {
+            get
+            {
+                return serializable;
             }
         }
     }

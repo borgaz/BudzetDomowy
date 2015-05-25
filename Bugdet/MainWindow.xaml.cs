@@ -9,6 +9,7 @@ using Budget.Main_Classes;
 using Budget.Payments_Manager;
 using Budget.SettingsPage;
 using Budget.Utility_Classes;
+using System;
 
 namespace Budget
 {
@@ -79,17 +80,14 @@ namespace Budget
         //        }
         //    }
         //}
+
         protected void InsertPage()
         {
             switch (_actualPage)
             {
                 case 1:
                     this.MainContentFrame.Content = _mainPage;
-                    //_mainPage.PeriodPaymentsTable.ItemsSource = null;
                     break;
-                //case 2:
-                //    this.MainContentFrame.Content = _interfacePage;
-                //    break;
                 case 2:
                     this.MainContentFrame.Content = _welcomePage;
                     break;
@@ -158,16 +156,13 @@ namespace Budget
             AnalisysButton.IsEnabled = true;
             _actualPage = 4;
             InsertPage();
-
-            //Main_Classes.Budget.Instance.FutureSinglePaymentsCheck();
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
             if (LoginWindow.LoginWindow.Instance.IsLogged == true)
             {
-                var msgBox = new CustomMessageBox(CustomMessageBox.MessageBoxType.YesNoCanel,
-                    "Czy chcesz zamknąć program?");
+                var msgBox = new CustomMessageBox(CustomMessageBox.MessageBoxType.YesNoCanel, "Czy chcesz zamknąć program?");
                 msgBox.ShowDialog();
                 switch (msgBox.result)
                 {
@@ -176,27 +171,27 @@ namespace Budget
                         e.Cancel = true;
                         break;
                     case 2:
-                            running = false;
-                            CheckSavings();
-                            this.Visibility = Visibility.Hidden;
-                            LoginWindow.LoginWindow.Instance.IsLogged = false;
-                            LoginWindow.LoginWindow.Instance = null;
-                            LoginWindow.LoginWindow.Instance.ShowDialog();
-                            if (!LoginWindow.LoginWindow.Instance.IsLogged)
-                            {
-                                e.Cancel = false;
-                                return;
-                            }
-                            e.Cancel = true;
-                            Main_Classes.Budget.ResetInstance();
-                            SettingsPage.Settings.Instance = null;
-                            InitializeObjects();
-                            this.Visibility = Visibility.Visible;
+                        running = false;
+                        CheckSavings();
+                        this.Visibility = Visibility.Hidden;
+                        LoginWindow.LoginWindow.Instance.IsLogged = false;
+                        LoginWindow.LoginWindow.Instance = null;
+                        LoginWindow.LoginWindow.Instance.ShowDialog();
+                        if (!LoginWindow.LoginWindow.Instance.IsLogged)
+                        {
+                            e.Cancel = false;
+                            return;
+                        }
+                        e.Cancel = true;
+                        Main_Classes.Budget.ResetInstance();
+                        SettingsPage.Settings.Instance = null;
+                        InitializeObjects();
+                        this.Visibility = Visibility.Visible;
                         break;
                     case 3:
-                            running = false;
-                            CheckSavings();
-                            e.Cancel = false;
+                        running = false;
+                        CheckSavings();
+                        e.Cancel = false;
                         break;
                 }
             }
@@ -212,6 +207,7 @@ namespace Budget
                 }
             }
         }
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (!Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightAlt) || Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightCtrl)) return;

@@ -23,7 +23,7 @@ namespace Budget.Payments_Manager
             Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.SALARY);
             InsertDateTypes(_periodDateGrid.TypeOfDayComboBox);
             _periodDateGrid.StartDatePicker.Text = DateTime.Now.Date.ToString();
-            _periodDateGrid.EndDatePicker.Text = DateTime.MaxValue.ToString();
+            _periodDateGrid.EndDatePicker.Text = DateTime.Now.Date.ToString();
             _singleDateGrid.SingleDatePicker.Text = DateTime.Now.Date.ToString();
         }
 

@@ -216,29 +216,19 @@ namespace Budget.Main_Classes
 
         public void AddSinglePayment(int index, SinglePayment payment)
         {
-            // prace nad dodawaniem singlepays z inną datą
-
-            //int key = 1;
-            //foreach (KeyValuePair<int, Payment>s in payments.Reverse() )
-            //{
-            //    if (s.Value.GetType() == typeof(SinglePayment))
-            //    {
-            //        SinglePayment sp = (SinglePayment)s.Value;
-            //        if (DateTime.Compare(sp.Date, payment.Date) <= 0)
-            //        {
-            //            key = s.Key + 1;
-            //            break;
-            //        }
-            //        else
-            //    }
-            //}
-            //Console.WriteLine(key);
-            //payments.Add(key, payment);
-            //ListOfAdds.Add(new Changes(typeof(SinglePayment), key));
-            CheckPayment(payment,0);
+            CheckPayment(payment, 0);
 
             payments.Add(index, payment);
             ListOfAdds.Add(new Changes(typeof(SinglePayment), index));
+            if (payment.Amount > maxAmount)
+            {
+                maxAmount = payment.Amount;
+                if (SettingsPage.Settings.Instance.Serializable == false)
+                {
+                    SettingsPage.Settings.Instance.SH_AmountTo = maxAmount;
+                    SettingsPage.Settings.Instance.PP_AmountTo = maxAmount;
+                }
+            }
 
             if (DateTime.Compare(payment.Date, DateTime.Now) <= 0 )
             {
@@ -306,6 +296,15 @@ namespace Budget.Main_Classes
 
         public void AddPeriodPayment(int index, PeriodPayment payment)
         {
+            if (payment.Amount > maxAmount)
+            {
+                maxAmount = payment.Amount;
+                if (SettingsPage.Settings.Instance.Serializable == false)
+                {
+                    SettingsPage.Settings.Instance.SH_AmountTo = maxAmount;
+                    SettingsPage.Settings.Instance.PP_AmountTo = maxAmount;
+                }
+            }
             payments.Add(index, payment);
             ListOfAdds.Add(new Changes(typeof(PeriodPayment), index));
         }

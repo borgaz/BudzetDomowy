@@ -40,7 +40,7 @@ namespace Budget.WelcomePage
             PriorityComboBox.Items.Add(Main_Classes.SavingsTarget.Priorities.Niski);
             PriorityComboBox.Items.Add(Main_Classes.SavingsTarget.Priorities.BardzoNiski);
             New_Budget.MakeBudgetWindow.InsertDateTypes(PeriodComboBox);
-            DatePicker.SelectedDate = DateTime.Today;
+            DatePicker.SelectedDate = DateTime.Now;
         }
 
         public static SavingsTargetsWindow Instance
@@ -86,6 +86,7 @@ namespace Budget.WelcomePage
             String text = String.Empty;
             int indexOfSavingsTarget = Main_Classes.Budget.Instance.SavingsTargets.Count > 0 ? Main_Classes.Budget.Instance.SavingsTargets.Keys.Max() + 1: 0;
             double lastPostponedAmount = 0;
+            DateTime lastPay;
             Main_Classes.SavingsTarget sT = null;
             Main_Classes.PeriodPayment pP;
             Main_Classes.SinglePayment sP;
@@ -94,35 +95,37 @@ namespace Budget.WelcomePage
                 if (AutoCheckBox.IsChecked == false)
                 {
                     sT = new Main_Classes.SavingsTarget(NameTextBox.Text, NoteTextBox.Text, DatePicker.SelectedDate.Value,
-                                                           Convert.ToInt32(PriorityComboBox.SelectedItem), 0, DateTime.Today, Convert.ToDouble(AmountTextBox.Text), false);
+                                                           Convert.ToInt32(PriorityComboBox.SelectedItem), 0, DateTime.Now, Convert.ToDouble(AmountTextBox.Text), false);
                     Main_Classes.Budget.Instance.AddSavingsTarget(indexOfSavingsTarget, sT);
-                    OnPropertyChanged("Refresh_sTDG");
+                    OnPropertyChanged("Update_sTDG");
                     clearSavingsTargetsWindow();
                 }
                 else if (AutoCheckBox.IsChecked == true)
                 {
                     if (!Amount2TextBox.Text.Equals(String.Empty) && !FrequencyTextBox.Text.Equals(String.Empty) && PeriodComboBox.SelectedIndex != -1)
                     {
-                        sT = new Main_Classes.SavingsTarget(NameTextBox.Text, NoteTextBox.Text, countDeadline(out lastPostponedAmount),
-                                                            PriorityComboBox.SelectedIndex, 0, DateTime.Today, Convert.ToDouble(AmountTextBox.Text), true);
-                        int indexOfPeriodPayment = Main_Classes.Budget.Instance.Payments.Keys.Min() - 1;
+                        sT = new Main_Classes.SavingsTarget(NameTextBox.Text, NoteTextBox.Text, countDeadline(out lastPostponedAmount, out lastPay),
+                                                            Convert.ToInt32(PriorityComboBox.SelectedItem), 0, DateTime.Now, Convert.ToDouble(AmountTextBox.Text), true);
+                        int indexOfPeriodPayment = Main_Classes.Budget.Instance.Payments.Count > 0 ? Main_Classes.Budget.Instance.Payments.Keys.Min() - 1 : -1;
                         pP = new Main_Classes.PeriodPayment(0, lastPostponedAmount, NoteTextBox.Text, true,
-                                                                "Oszczędzanie: " + NameTextBox.Text, Convert.ToInt32(FrequencyTextBox.Text), Convert.ToString(PeriodComboBox.SelectedItem), DateTime.Today, DateTime.Today, countDeadline(out lastPostponedAmount));
-                        int indexOfSinglePayment = Main_Classes.Budget.Instance.Payments.Keys.Max() + 1;
-                        sP = new Main_Classes.SinglePayment(NoteTextBox.Text, lastPostponedAmount, 0, true, "Oszczędzanie: " + NameTextBox.Text, DateTime.Today);
+                                                                "Oszczędzanie: " + NameTextBox.Text, Convert.ToInt32(FrequencyTextBox.Text), Convert.ToString(PeriodComboBox.SelectedItem), DateTime.Now, DateTime.Now, countDeadline(out lastPostponedAmount, out lastPay));
+                        int indexOfSinglePayment = Main_Classes.Budget.Instance.Payments.Count > 0 ? Main_Classes.Budget.Instance.Payments.Keys.Max() + 1 : 1;
+                        sP = new Main_Classes.SinglePayment(NoteTextBox.Text, lastPostponedAmount, 0, true, "Oszczędzanie: " + NameTextBox.Text, lastPay);
 
-                        Main_Classes.Budget.Instance.AddSinglePayment(indexOfSinglePayment, sP);
-                        Main_Classes.Budget.Instance.AddPeriodPayment(indexOfPeriodPayment, pP);
                         Main_Classes.Budget.Instance.AddSavingsTarget(indexOfSavingsTarget + 1, sT);
+                        OnPropertyChanged("Update_sTDG");   
+                        Main_Classes.Budget.Instance.AddSinglePayment(indexOfSinglePayment, sP);
+                        OnPropertyChanged("Update_sHDG");
+                        Main_Classes.Budget.Instance.AddPeriodPayment(indexOfPeriodPayment, pP);
+                        OnPropertyChanged("Update_pPDG");
+                       
 
                         Amount2TextBox.Text = String.Empty;
                         FrequencyTextBox.Text = String.Empty;
                         PeriodComboBox.SelectedIndex = -1;
                        
                         clearSavingsTargetsWindow();
-                        OnPropertyChanged("Refresh_pPDG");
-                        OnPropertyChanged("Refresh_sHDG");
-                        OnPropertyChanged("Refresh_sTDG");
+                        
                     }
                     else
                     {
@@ -181,12 +184,12 @@ namespace Budget.WelcomePage
             InfoTextBox.Foreground = Brushes.Green;
         }
 
-        private DateTime countDeadline(out double lastPostponedAmount)
+        private DateTime countDeadline(out double lastPostponedAmount, out DateTime lastPay)
         {
             double neededAmount = Convert.ToDouble(AmountTextBox.Text), postponedAmount = Convert.ToDouble(Amount2TextBox.Text);
             int frequency = Convert.ToInt32(FrequencyTextBox.Text);
             string period = Convert.ToString(PeriodComboBox.SelectedItem);
-            DateTime deadLine = DateTime.Today;
+            DateTime deadLine = DateTime.Now;
             while(neededAmount > postponedAmount)
             {
                 if (period == "MIESIĄC")
@@ -200,6 +203,18 @@ namespace Budget.WelcomePage
                 neededAmount -= postponedAmount;
             }
             lastPostponedAmount = neededAmount;
+
+            if (period == "MIESIĄC")
+                lastPay = deadLine.AddMonths(frequency);
+            else if (period == "DZIEŃ")
+                lastPay = deadLine.AddDays(frequency);
+            else if (period == "TYDZIEŃ")
+                lastPay = deadLine.AddDays(7 * frequency);
+            else if (period == "ROK")
+                lastPay = deadLine.AddYears(frequency);
+            else
+                lastPay = DateTime.Now;
+
             return deadLine;
         }
 

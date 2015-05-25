@@ -20,18 +20,9 @@ namespace Budget.WelcomePage
             InsertBars();
 
             Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.Balance);
-            providedPaymentsDataGrid.ItemsSource = CreateDataForPaymentForDataGrid();
+            providedPaymentsDataGrid.ItemsSource = CreateDataForProvidedPaymentDataGrid();
             shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
             savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
-                    }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            SavingsTargetsWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) => { if (propertyChangedEventArgs.PropertyName.Equals("Refresh_pPDG")) providedPaymentsDataGrid.ItemsSource = CreateDataForPaymentForDataGrid(); };
-            SavingsTargetsWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) => { if (propertyChangedEventArgs.PropertyName.Equals("Refresh_sHDG")) shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid(); };
-            SavingsTargetsWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) => { if (propertyChangedEventArgs.PropertyName.Equals("Refresh_sTDG")) savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid(); };
-            Main_Classes.Budget.Instance.PropertyChanged += (s, propertyChangedEventArgs) => { if (propertyChangedEventArgs.PropertyName.Equals("BalanceLog")) Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.Balance); };
-
             if (Main_Classes.Budget.Instance.Balance > 0)
             {
                 Balance.Foreground = Brushes.Green;
@@ -40,6 +31,43 @@ namespace Budget.WelcomePage
             {
                 Balance.Foreground = Brushes.Red;
             }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            SavingsTargetsWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) =>
+            {
+                if (propertyChangedEventArgs.PropertyName.Equals("Update_sTDG")) 
+                    savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
+                if (propertyChangedEventArgs.PropertyName.Equals("Update_sHDG"))
+                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
+                if (propertyChangedEventArgs.PropertyName.Equals("Update_pPDG"))
+                    providedPaymentsDataGrid.ItemsSource = CreateDataForProvidedPaymentDataGrid();
+            };
+
+            Main_Classes.Budget.Instance.PropertyChanged += (s, propertyChangedEventArgs) => 
+            {
+                if (propertyChangedEventArgs.PropertyName.Equals("BalanceLog"))
+                {
+                    Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.Balance);
+                    if (Main_Classes.Budget.Instance.Balance > 0)
+                    {
+                        Balance.Foreground = Brushes.Green;
+                    }
+                    if (Main_Classes.Budget.Instance.Balance <= 0)
+                    {
+                        Balance.Foreground = Brushes.Red;
+                    }
+                }
+            };
+
+            AddAmountToSavingsTargetWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) => 
+            {
+                if (propertyChangedEventArgs.PropertyName.Equals("Update_sHDG")) 
+                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
+                if (propertyChangedEventArgs.PropertyName.Equals("Refresh_sTDG"))
+                    savingsTargetsDataGrid.Items.Refresh(); 
+            };  
         }
 
         private List<Main_Classes.SavingsTarget> CreataDataForSavingsTargetsDataGrid()
@@ -53,7 +81,7 @@ namespace Budget.WelcomePage
             return savingsTargets;
         }
 
-        private List<PaymentForDataGrid> CreateDataForPaymentForDataGrid()
+        private List<PaymentForDataGrid> CreateDataForProvidedPaymentDataGrid()
         {
             DateTime lastDate;
             List<PaymentForDataGrid> providedPayments = new List<PaymentForDataGrid>();
@@ -65,17 +93,16 @@ namespace Budget.WelcomePage
                     if (pP.Amount <= Settings.Instance.PP_AmountTo && pP.Amount >= Settings.Instance.PP_AmountOf)
                     {
                         lastDate = Settings.Instance.PP_LastDateToShow() <= pP.EndDate ? Settings.Instance.PP_LastDateToShow() : pP.EndDate;
-                        if (pP.CountNextDate() < lastDate)
+                        if (pP.CountNextDate() <= lastDate)
                         {
                             providedPayments.AddRange(PeriodPayment.CreateListOfSelectedPeriodPayments(pP, lastDate));
                         }
-                       
                     }
                 }
                 else
                 {
                     var sP = (SinglePayment) payment;
-                    if (sP.CompareDate() >= 0 && sP.Amount < Settings.Instance.PP_AmountTo && sP.Amount >= Settings.Instance.PP_AmountOf && sP.Date <= Settings.Instance.PP_LastDateToShow())
+                    if (sP.CompareDate() >= 0 && sP.Amount <= Settings.Instance.PP_AmountTo && sP.Amount >= Settings.Instance.PP_AmountOf && sP.Date <= Settings.Instance.PP_LastDateToShow())
                     {
                         providedPayments.Add(new PaymentForDataGrid(sP.Name, sP.Amount, "Pojedynczy", sP.Date, sP.Type, sP.CategoryID));
                     }    
@@ -140,17 +167,17 @@ namespace Budget.WelcomePage
             PaymentsBar.ToolTip = PaymentsBar.Value + " zł";
         }
 
-        private void ProvidedPaymentsDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
-        {
-            colorDataGridRow(e);
-        }
-
         private void Grid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             InsertBars();
         }
 
-        private void shortHistoryDataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
+        private void ProvidedPaymentsDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            colorDataGridRow(e);
+        }
+
+        private void shortHistoryDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
         {
             colorDataGridRow(e);
         }
@@ -159,9 +186,13 @@ namespace Budget.WelcomePage
         {
             PaymentForDataGrid p = e.Row.Item as PaymentForDataGrid;
             if (p.Sign == true)
+            {
                 e.Row.Background = new SolidColorBrush(Colors.Tomato);
+            }    
             else
+            {
                 e.Row.Background = new SolidColorBrush(Colors.SpringGreen);
+            }      
         }
 
         private void NewTargetButton_Click(object sender, RoutedEventArgs e)
@@ -171,7 +202,6 @@ namespace Budget.WelcomePage
 
         private void AddAmountToTargetButton_Click(object sender, RoutedEventArgs e)
         {
-            AddAmountToSavingsTargetWindow.Instance.welcomePageSavingsTargetsDataGrid = savingsTargetsDataGrid;
             AddAmountToSavingsTargetWindow.Instance.ShowDialog();
         }
     }

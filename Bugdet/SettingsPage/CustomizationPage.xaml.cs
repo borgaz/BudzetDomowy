@@ -26,6 +26,10 @@ namespace Budget.SettingsPage
         {
             whichPage = i;
             InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
             if (whichPage == 1)
             {
                 Label.Content = "w przód.";

@@ -9,7 +9,7 @@
 	Title="WelcomePage">
 
     <Grid MouseEnter="Grid_MouseEnter">
-        <DataGrid Name="shortHistoryDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" Margin="10,0,0,10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="234" Width="375" Loaded="Page_Loaded" Background="White" LoadingRow="shortHistoryDataGrid_LoadingRow">
+        <DataGrid Name="shortHistoryDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" Margin="10,0,0,10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="234" Width="375" Loaded="Page_Loaded" Background="White" LoadingRow="shortHistoryDataGrid_OnLoadingRow">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Typ" Width="70" IsReadOnly="True" Binding="{Binding Type}"/>
                 <DataGridTextColumn Header="Nazwa" Width="125" IsReadOnly="True" Binding="{Binding Name}"/>

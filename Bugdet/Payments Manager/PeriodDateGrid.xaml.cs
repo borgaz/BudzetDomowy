@@ -33,7 +33,7 @@ namespace Budget.Payments_Manager
             {
                 if (EndDatePicker.Text == "")
                 {
-                    return DateTime.MaxValue;
+                    return DateTime.Now;
                 }
                 else
                 {

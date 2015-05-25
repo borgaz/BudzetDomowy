@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,16 +18,14 @@ namespace Budget.WelcomePage
     /// <summary>
     /// Interaction logic for AddAmountToSavingsTargetWindow.xaml
     /// </summary>
-    public partial class AddAmountToSavingsTargetWindow : Window
+    public partial class AddAmountToSavingsTargetWindow : Window, INotifyPropertyChanged
     {
         private static AddAmountToSavingsTargetWindow _instance = null;
-        public System.Windows.Controls.DataGrid welcomePageSavingsTargetsDataGrid;
         private int index;
 
         private AddAmountToSavingsTargetWindow()
         {
             InitializeComponent();
-            InsertTargets();
         }
 
         protected override void OnClosed(EventArgs e)
@@ -62,10 +61,10 @@ namespace Budget.WelcomePage
                 Main_Classes.Budget.Instance.SavingsTargets[index].AddMoney(amount, index);
 
                 int indexOfSinglePayment = Main_Classes.Budget.Instance.Payments.Count > 0 ? Main_Classes.Budget.Instance.Payments.Keys.Max() + 1 : 1;
-                sP = new Main_Classes.SinglePayment("", amount, 0, true, "Oszczędzanie: " + Main_Classes.Budget.Instance.SavingsTargets[index].Target, DateTime.Today);
+                sP = new Main_Classes.SinglePayment("", amount, 0, true, "Oszczędzanie: " + Main_Classes.Budget.Instance.SavingsTargets[index].Target, DateTime.Now);
                 Main_Classes.Budget.Instance.AddSinglePayment(indexOfSinglePayment, sP);
-
-                welcomePageSavingsTargetsDataGrid.Items.Refresh();
+                OnPropertyChanged("Update_sHDG");
+                OnPropertyChanged("Refresh_sTDG");
                 this.Close();
             }
         }
@@ -89,6 +88,19 @@ namespace Budget.WelcomePage
                     TargetComboBox.Items.Add(sT.Target);
                 }
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            InsertTargets();
         }
     }
 }
