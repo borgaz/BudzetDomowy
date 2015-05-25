@@ -8,7 +8,7 @@
 	Title="CustomizationPage">
 
     <Grid>
-        <Button x:Name="SaveButton" Content="Zapisz" HorizontalAlignment="Left" Height="25" Margin="25,500,0,0" VerticalAlignment="Top" Width="100" Click="SaveButton_Click"/>
+        <Button x:Name="SaveButton" Content="Zapisz konfigurację" HorizontalAlignment="Left" Height="25" Margin="25,500,0,0" VerticalAlignment="Top" Width="130" Click="SaveButton_Click"/>
         <ComboBox x:Name="DateTypeComboBox" HorizontalAlignment="Left" Height="25" Margin="195,75,0,0" VerticalAlignment="Top" Width="100"/>
         <Label Content="Wyświetlaj:" HorizontalAlignment="Left" Height="25" Margin="25,75,0,0" VerticalAlignment="Top" Width="100"/>
         <Label Content="Kwota:" HorizontalAlignment="Left" Height="25" Margin="25,110,0,0" VerticalAlignment="Top" Width="100"/>

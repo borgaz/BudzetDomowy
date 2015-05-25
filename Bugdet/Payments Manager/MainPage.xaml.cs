@@ -100,11 +100,6 @@ namespace Budget.Payments_Manager
             PeriodPaymentsTable.Columns[1].Visibility = Visibility.Hidden;
         }
 
-        private void DumpAllButton_Click(object sender, RoutedEventArgs e)
-        {
-            Main_Classes.Budget.Instance.Dump();
-        }
-
         private void dataGridView_Loaded(object sender, RoutedEventArgs e)
         {
             RefreshTable();

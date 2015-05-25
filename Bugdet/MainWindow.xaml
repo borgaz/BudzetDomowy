@@ -11,7 +11,7 @@
                 </RadialGradientBrush>
             </Frame.Background>
         </Frame>
-        <Button x:Name="WelcomePageButton" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-106,123,0,0" Width="270" Height="44" RenderTransformOrigin="0.5,0.5" Content="Strona Główna" FontSize="20" Click="WelcomePageButton_Click">
+        <Button x:Name="WelcomePageButton" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-100,172,0,0" Width="260" Height="44" RenderTransformOrigin="0.5,0.5" Content="Strona Główna" FontSize="20" Click="WelcomePageButton_Click">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -21,7 +21,7 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button x:Name="HistoryButton" HorizontalAlignment="Left" Margin="-106,403,0,0" VerticalAlignment="Top" Width="270" Height="44" RenderTransformOrigin="0.5,0.5" Content="Historia" FontSize="20" Click="HistoryButton_Click">
+        <Button x:Name="HistoryButton" HorizontalAlignment="Left" Margin="-86,423,0,0" VerticalAlignment="Top" Width="230" Height="44" RenderTransformOrigin="0.5,0.5" Content="Historia" FontSize="20" Click="HistoryButton_Click">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -54,7 +54,7 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button x:Name="AnalisysButton" Content="Analiza" HorizontalAlignment="Left" Margin="698,420,-86,0" VerticalAlignment="Top" Width="232" Height="42" RenderTransformOrigin="0.5,0.5" FontSize="20" Click="AnalisysButton_Click">
+        <Button x:Name="AnalisysButton" Content="Analiza" HorizontalAlignment="Left" Margin="699,421,-85,0" VerticalAlignment="Top" Width="230" Height="42" RenderTransformOrigin="0.5,0.5" FontSize="20" Click="AnalisysButton_Click">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -63,6 +63,11 @@
                     <TranslateTransform/>
                 </TransformGroup>
             </Button.RenderTransform>
+        </Button>
+        <Button x:Name="SaveButton" HorizontalAlignment="Left" Margin="9,19,0,0" VerticalAlignment="Top" Width="44" Height="40" Click="SaveButton_Click">
+            <Button.Content>
+                <Image Source="/Resources/saveButton.png"/>
+            </Button.Content>
         </Button>
     </Grid>
 </Window>

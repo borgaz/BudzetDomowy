@@ -337,6 +337,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\saveButton.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\app-icon2.ico" />
     <Resource Include="Resources\app-icon.ico" />
     <Resource Include="Resources\cog.png">

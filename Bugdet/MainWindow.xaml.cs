@@ -229,5 +229,10 @@ namespace Budget
             _actualPage = 5;
             InsertPage();
         }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            Main_Classes.Budget.Instance.Dump();
+        }
     }
 }
