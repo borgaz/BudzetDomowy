@@ -21,6 +21,7 @@ namespace Budget.Analisys
     public partial class AnalisysMainPage : Page
     {
         private AnalysisTabPage _chartTab;
+        private AnalisysAvgPage _balanceTab;
         public AnalisysMainPage()
         {
             InitializeComponent();
@@ -30,6 +31,7 @@ namespace Budget.Analisys
         {
             _chartTab = new AnalysisTabPage();
             CategoryPaymentFrame.Content = _chartTab;
+            MonthAvgFrame.Content = _balanceTab;
         }
     }
 }

@@ -104,7 +104,7 @@ namespace Budget.Main_Classes
                 temp = temp.AddYears(this.frequency); 
 
             while (DateTime.Compare(temp, DateTime.Now) <= 0)
-            //Mniej niż zero - lastUpdate (temp) jest wcześniejsza niż Now.
+            //Mniej niż zeroooooo - lastUpdate (temp) jest wcześniejsza niż Now.
             //Zero - lastUpdate (temp) jest taka sama jak Now.
             //Większe od zera - lastUpdate (temp) jest późniejsza niż Now. 
             {

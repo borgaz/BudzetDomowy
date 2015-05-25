@@ -16,8 +16,8 @@ namespace Budget.Main_Classes
 
         private SQLiteConnection _mydb;
         private SQLiteCommand _command;
-        public double monthlySalaries = 0;
-        public double monthlyPayments = 0;
+        public double monthlySalaries;
+        public double monthlyPayments;
 
         public static SqlConnect Instance
         {
@@ -33,6 +33,8 @@ namespace Budget.Main_Classes
             {
                 _mydb = new SQLiteConnection("Data Source=" + budget + ".sqlite;Version=3");
                 _mydb.Open();
+                monthlySalaries = 0;
+                monthlyPayments = 0;
                 return true;
             }
             catch(SQLiteException)

@@ -20,9 +20,11 @@ namespace Budget.Analisys
     /// </summary>
     public partial class AnalisysAvgPage : Page
     {
+        BalanceChart var = new BalanceChart();
         public AnalisysAvgPage()
         {
             InitializeComponent();
+            DataContext = var;
         }
     }
 }

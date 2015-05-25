@@ -25,7 +25,7 @@ namespace Budget
         private Analisys.AnalisysMainPage _analisysPage;
         private static int _actualPage = 2;
         private bool running = true;
-        private Thread th;
+       // private Thread th;
 
         public MainWindow()
         {
