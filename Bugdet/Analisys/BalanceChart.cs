@@ -63,14 +63,14 @@ namespace Budget.Analisys
                 Payments.Add(new Now() { Payment = "Przychody", Number = sum2a });
 
             if (sumb != 0)
-                Paymentsa.Add(new Now() { Payment = "Wydatki", Number = suma });
+                Paymentsa.Add(new Now() { Payment = "Wydatki", Number = sumb });
             if (sum2b != 0)
-                Paymentsa.Add(new Now() { Payment = "Przychody", Number = sum2a });
+                Paymentsa.Add(new Now() { Payment = "Przychody", Number = sum2b });
 
             if (sumc != 0)
-                Paymentsb.Add(new Now() { Payment = "Wydatki", Number = suma });
+                Paymentsb.Add(new Now() { Payment = "Wydatki", Number = sumc });
             if (sum2c != 0)
-                Paymentsb.Add(new Now() { Payment = "Przychody", Number = sum2a });
+                Paymentsb.Add(new Now() { Payment = "Przychody", Number = sum2c });
         }
 
         private object selectedItem = null;

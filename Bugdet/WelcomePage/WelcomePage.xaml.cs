@@ -35,6 +35,9 @@ namespace Budget.WelcomePage
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            providedPaymentsDataGrid.ItemsSource = CreateDataForProvidedPaymentDataGrid();
+            shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
+            savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
             Main_Classes.Budget.Instance.PropertyChanged += (s, propertyChangedEventArgs) => 
             {
                 if (propertyChangedEventArgs.PropertyName.Equals("BalanceLog"))
