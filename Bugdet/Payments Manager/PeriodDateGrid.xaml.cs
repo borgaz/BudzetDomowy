@@ -31,9 +31,13 @@ namespace Budget.Payments_Manager
         {
             get 
             {
-                if (EndDatePicker.Text == "")
+                //if (EndDatePicker.Text == "")
+                //{
+                //    return DateTime.Now;
+                //}
+                if (EndDateEnableCheckBox.IsChecked == false)
                 {
-                    return DateTime.Now;
+                    return DateTime.MaxValue;
                 }
                 else
                 {
@@ -105,8 +109,10 @@ namespace Budget.Payments_Manager
         public void ClearComponents()
         {
             NumberOfTextBox.Text = "";
-            StartDatePicker.Text = "";
-            EndDatePicker.Text = "";
+            //StartDatePicker.Text = "";
+            //EndDatePicker.Text = "";
+            StartDatePicker.Text = DateTime.Now.Date.ToString();
+            EndDatePicker.Text = DateTime.Now.Date.ToString();
             TypeOfDayComboBox.SelectedIndex = -1;
             EndDateEnableCheckBox.IsChecked = false;
         }

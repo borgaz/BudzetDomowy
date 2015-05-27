@@ -131,7 +131,8 @@ namespace Budget.WelcomePage
                 }
                 else if (AutoCheckBox.IsChecked == true)
                 {
-                    if (!Amount2TextBox.Text.Equals(String.Empty) && !FrequencyTextBox.Text.Equals(String.Empty) && PeriodComboBox.SelectedIndex != -1)
+                    if (!Amount2TextBox.Text.Equals(String.Empty) && !FrequencyTextBox.Text.Equals(String.Empty) && PeriodComboBox.SelectedIndex != -1 
+                        && Convert.ToDouble(Amount2TextBox.Text) <= Convert.ToDouble(AmountTextBox.Text))
                     {
                         sT = new Main_Classes.SavingsTarget(NameTextBox.Text, NoteTextBox.Text, CountDeadline(out lastPostponedAmount, out lastPay),
                                                             Convert.ToInt32(PriorityComboBox.SelectedItem), 0, DateTime.Now, Convert.ToDouble(AmountTextBox.Text), true);
@@ -169,6 +170,10 @@ namespace Budget.WelcomePage
                         if (PeriodComboBox.SelectedIndex == -1)
                         {
                             text += "Wybierz:\n - jednostkę częstotliwości odkładania kwoty";
+                        }
+                        if (Convert.ToDouble(Amount2TextBox.Text) > Convert.ToDouble(AmountTextBox.Text))
+                        {
+                            text += "Popraw:\n - kwota automatycznego odkładania nie może być większa od kwoty docelowej";
                         }
                         MessageBox.Show(text);
                         text = String.Empty;

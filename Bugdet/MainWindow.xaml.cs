@@ -119,6 +119,7 @@ namespace Budget
             InsertPage();
 
             List<SinglePayment> list = Main_Classes.Budget.Instance.CheckPeriodPayments();
+            Main_Classes.Budget.Instance.FutureSinglePaymentsCheck();
             if (list.Count > 0)
             {
                 new CheckingPeriodPayments(list).ShowDialog();

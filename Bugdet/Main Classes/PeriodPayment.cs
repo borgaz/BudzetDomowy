@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Budget.WelcomePage;
 
 namespace Budget.Main_Classes
 {
     public class PeriodPayment : Payment
     {
-        private DateTime startDate; // poczatkowa data
         private String period; // co jaki czas (dzien/tydzine/miesiac itp)
         private int frequency; // co ile dni/tygodni itp
+        private DateTime startDate; // poczatkowa data
         private DateTime lastUpdate; // data ostatniego wystapienia
         private DateTime endDate; // koncowa data
 
@@ -81,7 +80,7 @@ namespace Budget.Main_Classes
 
         override public int CompareDate()
         {
-            return DateTime.Compare(this.lastUpdate, DateTime.Now);
+            return DateTime.Compare(this.lastUpdate, DateTime.Today);
             //Mniej niż zero - lastUpdate jest wcześniejsza niż Now.
             //Zero - lastUpdate jest taka sama jak Now.
             //Większe od zera - lastUpdate jest późniejsza niż Now. 
@@ -90,28 +89,17 @@ namespace Budget.Main_Classes
         override public int CountPeriods()
         {          
             int _periods = 0;
+            DateTime temp = this.lastUpdate;
 
-            DateTime temp = new DateTime();
-            temp = this.lastUpdate;
-
-            if (this.period == "MIESIĄC")
-                temp = temp.AddMonths(this.frequency);
-            else if (this.period == "DZIEŃ")
-                temp = temp.AddDays(this.frequency);
-            else if (this.period == "TYDZIEŃ")
-                temp = temp.AddDays(7 * this.frequency);
-            else if (this.period == "ROK")
-                temp = temp.AddYears(this.frequency); 
-
-            while (DateTime.Compare(temp, DateTime.Now) <= 0)
+            while (DateTime.Compare(temp, DateTime.Today) <= 0 && DateTime.Compare(temp, this.EndDate) <= 0)
             //Mniej niż zeroooooo - lastUpdate (temp) jest wcześniejsza niż Now.
             //Zero - lastUpdate (temp) jest taka sama jak Now.
-            //Większe od zera - lastUpdate (temp) jest późniejsza niż Now. 
+            //Większe od zera - lastUpdate (temp) jest późniejsza niż Now.
             {
                 _periods++;
 
                 if (this.period == "MIESIĄC")
-                    temp =  temp.AddMonths(this.frequency);
+                    temp = temp.AddMonths(this.frequency);
                 else if (this.period == "DZIEŃ")
                     temp =  temp.AddDays(this.frequency);
                 else if (this.period == "TYDZIEŃ")
@@ -124,20 +112,26 @@ namespace Budget.Main_Classes
 
         override public void changeUpdateDate(int countPeriod)
         {
-            if (this.period == "MIESIĄC")
-                this.lastUpdate = this.lastUpdate.AddMonths(this.frequency * countPeriod);
-            else if (this.period == "DZIEŃ")
-                this.lastUpdate = this.lastUpdate.AddDays(this.frequency * countPeriod);
-            else if (this.period == "TYDZIEŃ")
-                this.lastUpdate = this.lastUpdate.AddDays(7 * this.frequency * countPeriod);
-            else if (this.period == "ROK")
-                this.lastUpdate = this.lastUpdate.AddYears(this.frequency * countPeriod); 
+            if (this.startDate != this.lastUpdate)
+            {
+                if (this.period == "MIESIĄC")
+                    this.lastUpdate = this.lastUpdate.AddMonths(this.frequency * countPeriod);
+                else if (this.period == "DZIEŃ")
+                    this.lastUpdate = this.lastUpdate.AddDays(this.frequency * countPeriod);
+                else if (this.period == "TYDZIEŃ")
+                    this.lastUpdate = this.lastUpdate.AddDays(7 * this.frequency * countPeriod);
+                else if (this.period == "ROK")
+                    this.lastUpdate = this.lastUpdate.AddYears(this.frequency * countPeriod); 
+            }
         }
 
         override public SinglePayment CreateSingleFromPeriod(int _period)
         {
-            DateTime temp = new DateTime();
-            temp = this.lastUpdate;
+            _period -= 1;
+            System.Console.WriteLine("p:" + _period);
+            System.Console.WriteLine(DateTime.MinValue);
+            System.Console.WriteLine(DateTime.MinValue.AddDays(0));
+            DateTime temp = this.lastUpdate;
 
             if (this.period == "MIESIĄC")
                 temp = temp.AddMonths(this.frequency * _period);
@@ -147,6 +141,18 @@ namespace Budget.Main_Classes
                 temp = temp.AddDays(7 * this.frequency * _period);
             else if (this.period == "ROK")
                 temp = temp.AddYears(this.frequency * _period);  
+
+            if (this.CategoryID == 0)
+            {
+                foreach(var sT in Budget.Instance.SavingsTargets)
+                {
+                    if (sT.Value.Target.Equals(this.Name.Substring(14)))
+                    {
+                        sT.Value.AddMoney(this.Amount, sT.Key);
+                        break;
+                    }
+                }
+            }
 
             return new SinglePayment(this.Note, this.Amount, this.CategoryID, this.Type, "[Okresowy] " + this.Name, temp);
         }
@@ -165,17 +171,17 @@ namespace Budget.Main_Classes
                 return DateTime.Now;
         }
 
-        static public List<PaymentForDataGrid> CreateListOfSelectedPeriodPayments(PeriodPayment pP, DateTime lastDate)
+        static public List<WelcomePage.PaymentForDataGrid> CreateListOfSelectedPeriodPayments(PeriodPayment pP, DateTime lastDate)
         {
             List<PeriodPayment> periodPayments = new List<PeriodPayment>();
-            if (pP.startDate >= DateTime.Now)
+            if (pP.startDate >= DateTime.Today)
             {
                 periodPayments.Add(pP);
             }
             else
             {
                 PeriodPayment tempPP = new PeriodPayment(pP);
-                while (tempPP.lastUpdate < DateTime.Now)
+                while (tempPP.lastUpdate < DateTime.Today)
                 {
                     tempPP = new PeriodPayment(tempPP);
                 }
@@ -183,22 +189,16 @@ namespace Budget.Main_Classes
             }
             CheckAndAddElement(periodPayments, lastDate);
 
-            List<PaymentForDataGrid> providedPayments = new List<PaymentForDataGrid>();
+            List<WelcomePage.PaymentForDataGrid> providedPayments = new List<WelcomePage.PaymentForDataGrid>();
             foreach (PeriodPayment temp in periodPayments)
             {
-                providedPayments.Add(new PaymentForDataGrid(temp.Name, temp.Amount, "Okresowy", temp.lastUpdate, temp.Type, temp.CategoryID));
+                providedPayments.Add(new WelcomePage.PaymentForDataGrid(temp.Name, temp.Amount, "Okresowy", temp.lastUpdate, temp.Type, temp.CategoryID));
             }
             return providedPayments;
         }
 
         static public void CheckAndAddElement(List<PeriodPayment> list, DateTime lastDate)
         {
-            //foreach (var pP in list)
-            //{
-            //    if (list[list.Count - 1].CountNextDate() > lastDate)
-            //        continue;
-            //    list.Add(new PeriodPayment(list[list.Count - 1]));
-            //}
             if (list[list.Count - 1].CountNextDate() <= lastDate)
             {
                 list.Add(new PeriodPayment(list[list.Count - 1]));

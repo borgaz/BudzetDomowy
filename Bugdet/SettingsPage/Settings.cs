@@ -98,29 +98,29 @@ namespace Budget.SettingsPage
         public DateTime PP_LastDateToShow()
         {
             if (PP_period == "MIESIĄC")
-                return DateTime.Now.AddMonths(PP_frequency);
+                return DateTime.Today.AddMonths(PP_frequency);
             else if (PP_period == "DZIEŃ")
-                return DateTime.Now.AddDays(PP_frequency);
+                return DateTime.Today.AddDays(PP_frequency);
             else if (PP_period == "TYDZIEŃ")
-                return DateTime.Now.AddDays(7 * PP_frequency);
+                return DateTime.Today.AddDays(7 * PP_frequency);
             else if (PP_period == "ROK")
-                return DateTime.Now.AddYears(PP_frequency);
+                return DateTime.Today.AddYears(PP_frequency);
             else
-                return DateTime.Now;
+                return DateTime.Today;
         }
 
         public DateTime SH_LastDateToShow()
         {
             if (SH_period == "MIESIĄC")
-                return DateTime.Now.AddMonths(-1 * SH_frequency); 
+                return DateTime.Today.AddMonths(-1 * SH_frequency); 
             else if (SH_period == "DZIEŃ")
-                return DateTime.Now.AddDays(-1 * SH_frequency);
+                return DateTime.Today.AddDays(-1 * SH_frequency);
             else if (SH_period == "TYDZIEŃ")
-                return DateTime.Now.AddDays(-7 * SH_frequency);
+                return DateTime.Today.AddDays(-7 * SH_frequency);
             else if (SH_period == "ROK")
-                return DateTime.Now.AddYears(-1 * SH_frequency);
+                return DateTime.Today.AddYears(-1 * SH_frequency);
             else
-                return DateTime.Now;
+                return DateTime.Today;
         }
 
         // Nizej sa juz tylko wlasciwosci(settery i gettery)

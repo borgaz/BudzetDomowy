@@ -50,7 +50,7 @@ namespace Budget.Payments_Manager
                             Convert.ToDouble(PaymentValue.Text.Replace(".", ",")), 
                             Note.Text, 
                             true,
-                            PaymentName.Text, 
+                            PaymentName.Text,
                             _periodDateGrid.NumberOf, 
                             _periodDateGrid.TypeOfDay,
                             _periodDateGrid.StartDate,
@@ -78,7 +78,8 @@ namespace Budget.Payments_Manager
                             true, 
                             PaymentName.Text, 
                             _singleDateGrid.SelectedDate));
-                    _singleDateGrid.SingleDatePicker.Text = "";
+                    //_singleDateGrid.SingleDatePicker.Text = "";
+                    _singleDateGrid.SingleDatePicker.Text = DateTime.Now.Date.ToString();
                 }
 
                 InfoBox.Text = "Dodano!";

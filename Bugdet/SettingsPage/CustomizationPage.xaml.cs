@@ -26,6 +26,7 @@ namespace Budget.SettingsPage
         {
             whichPage = i;
             InitializeComponent();
+            Payments_Manager.AddSalaryPage.InsertDateTypes(DateTypeComboBox);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -51,7 +52,7 @@ namespace Budget.SettingsPage
                 DateTypeComboBox.SelectedItem = SettingsPage.Settings.Instance.SH_Period;
                 FrequencyTextBox.Text = Convert.ToString(SettingsPage.Settings.Instance.SH_Frequency);
             }
-            Payments_Manager.AddSalaryPage.InsertDateTypes(DateTypeComboBox);
+            
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)

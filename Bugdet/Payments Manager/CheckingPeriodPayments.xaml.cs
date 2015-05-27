@@ -7,7 +7,6 @@ using Budget.Main_Classes;
 
 namespace Budget.Payments_Manager
 {
-
     public partial class CheckingPeriodPayments : Window
     {
         int listIndex = 0;
@@ -17,7 +16,7 @@ namespace Budget.Payments_Manager
         {
             InitializeComponent();
             singlePaymentsList = _singlePaymentsList;
-            listIndex = _singlePaymentsList.Count-1;
+            listIndex = _singlePaymentsList.Count - 1;
             PaymentName.Content = singlePaymentsList[listIndex].Name; 
             DateText.Content = singlePaymentsList[listIndex].Date.ToShortDateString();
             Amount.Text = singlePaymentsList[listIndex].Amount.ToString();
@@ -25,9 +24,10 @@ namespace Budget.Payments_Manager
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            int indexOfNewSingle = Main_Classes.Budget.Instance.Payments.Count > 0 && Main_Classes.Budget.Instance.Payments.Keys.Max() > 0 ? Main_Classes.Budget.Instance.Payments.Keys.Max() + 1 : 1;
             singlePaymentsList[listIndex].Amount = Convert.ToDouble(Amount.Text);
-            Main_Classes.Budget.Instance.AddSinglePayment(Main_Classes.Budget.Instance.Payments.Keys.Max() + 1,
-                                                            singlePaymentsList[listIndex]);
+            System.Console.WriteLine(indexOfNewSingle);
+            Main_Classes.Budget.Instance.AddSinglePayment(indexOfNewSingle, singlePaymentsList[listIndex]);
             if (listIndex > 0)
             {
                 listIndex--;

@@ -62,11 +62,11 @@ namespace Budget.Utility_Classes
         {
             if (CategoryNameTextBox.Text != "")
             {
-                //if (Main_Classes.Budget.Instance.CheckCategory(CategoryNameTextBox.Text))
-                //{
-                //    MessageBox.Show("Istnieje juz taka kategoria!");
-                //    return;
-                //}
+                if (Main_Classes.Budget.Instance.CheckCategory(CategoryNameTextBox.Text))
+                {
+                    MessageBox.Show("Istnieje juz taka kategoria!");
+                    return;
+                }
 
                 if (!creator)
                 {
