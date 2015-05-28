@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Reporting.WebForms;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,7 +12,10 @@ namespace Budget.WelcomePage
     /// Interaction logic for WelcomePage.xaml
     /// </summary>
     public partial class WelcomePage : Page
-    {        
+    {
+        private const int INF = 9999999;
+        public DateTime startDate, endDate;
+
         public WelcomePage()
         {
             InitializeComponent();
@@ -30,8 +34,8 @@ namespace Budget.WelcomePage
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            providedPaymentsDataGrid.ItemsSource = CreateDataForProvidedPaymentDataGrid();
-            shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
+            providedPaymentsDataGrid.ItemsSource = CreateDataForProvidedPaymentDataGrid("grid");
+            shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid("grid", DateTime.Today);
             savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
 
             Main_Classes.Budget.Instance.PropertyChanged += (s, propertyChangedEventArgs) =>
@@ -62,18 +66,42 @@ namespace Budget.WelcomePage
             return savingsTargets;
         }
 
-        private List<PaymentForDataGrid> CreateDataForProvidedPaymentDataGrid()
+        private List<PaymentForDataGrid> CreateDataForProvidedPaymentDataGrid(String destination)
         {
+            Double amountOf = 0, amountTo = 0;
+            int numberOfRow = 0;
             DateTime lastDate;
+            if (destination.Equals("grid"))
+            {
+                amountOf = SettingsPage.Settings.Instance.PP_AmountOf;
+                amountTo = SettingsPage.Settings.Instance.PP_AmountTo;
+                numberOfRow = SettingsPage.Settings.Instance.PP_NumberOfRow;
+                lastDate = SettingsPage.Settings.Instance.PP_LastDateToShow();
+            }
+            else if(destination.Equals("pdf"))
+            {
+                amountOf = 0;
+                amountTo = INF;
+                numberOfRow = INF;
+                lastDate = DateTime.MinValue; 
+            }
+            else
+            {
+                lastDate = DateTime.Today;
+            }
+
             List<PaymentForDataGrid> providedPayments = new List<PaymentForDataGrid>();
             foreach (Main_Classes.Payment payment in Main_Classes.Budget.Instance.Payments.Values)
             {
                 if (payment.GetType() == typeof(Main_Classes.PeriodPayment))
                 {
                     var pP = (Main_Classes.PeriodPayment)payment;
-                    if (pP.Amount <= SettingsPage.Settings.Instance.PP_AmountTo && pP.Amount >= SettingsPage.Settings.Instance.PP_AmountOf)
+                    if (pP.Amount <= amountTo && pP.Amount >= amountOf)
                     {
-                        lastDate = SettingsPage.Settings.Instance.PP_LastDateToShow() <= pP.EndDate ? SettingsPage.Settings.Instance.PP_LastDateToShow() : pP.EndDate;
+                        if (!lastDate.Equals(DateTime.MinValue))
+                        {
+                            lastDate = SettingsPage.Settings.Instance.PP_LastDateToShow() <= pP.EndDate ? SettingsPage.Settings.Instance.PP_LastDateToShow() : pP.EndDate;
+                        }
                         if (pP.CountNextDate() <= lastDate)
                         {
                             providedPayments.AddRange(Main_Classes.PeriodPayment.CreateListOfSelectedPeriodPayments(pP, lastDate));
@@ -83,57 +111,75 @@ namespace Budget.WelcomePage
                 else
                 {
                     var sP = (Main_Classes.SinglePayment)payment;
-                    if (sP.CompareDate() >= 0 && sP.Amount <= SettingsPage.Settings.Instance.PP_AmountTo && sP.Amount >= SettingsPage.Settings.Instance.PP_AmountOf && sP.Date <= SettingsPage.Settings.Instance.PP_LastDateToShow())
+                    if (sP.CompareDate() > 0 && sP.Amount <= amountTo && sP.Amount >= amountOf && sP.Date <= lastDate)
                     {
-                        providedPayments.Add(new PaymentForDataGrid(sP.Name, sP.Amount, "Pojedynczy", sP.Date, sP.Type, sP.CategoryID));
+                        providedPayments.Add(new PaymentForDataGrid(sP.Name, sP.Amount, "Pojedynczy", sP.Date, sP.Type, sP.CategoryID, 0));
                     }    
                 }
             }
 
             providedPayments.Sort();
-            if (providedPayments.Count > SettingsPage.Settings.Instance.PP_NumberOfRow)
+            if (providedPayments.Count > numberOfRow)
             {
-                providedPayments.RemoveRange(SettingsPage.Settings.Instance.PP_NumberOfRow, providedPayments.Count - SettingsPage.Settings.Instance.PP_NumberOfRow);
+                providedPayments.RemoveRange(numberOfRow, providedPayments.Count - numberOfRow);
             }
             return providedPayments;
         }
 
-        private List<PaymentForDataGrid> CreataDataForShortHistoryDataGrid()
+        private List<PaymentForDataGrid> CreataDataForShortHistoryDataGrid(String destination, DateTime lastDate)
         {
+            Double amountOf = 0, amountTo = 0;
+            int numberOfRow = 0;
             List<PaymentForDataGrid> shortHistory = new List<PaymentForDataGrid>();
 
+            if (destination.Equals("grid"))
+            {
+                amountOf = SettingsPage.Settings.Instance.PP_AmountOf;
+                amountTo = SettingsPage.Settings.Instance.PP_AmountTo;
+                numberOfRow = SettingsPage.Settings.Instance.PP_NumberOfRow;
+                lastDate = SettingsPage.Settings.Instance.SH_LastDateToShow();
+            }
+            else if (destination.Equals("pdf"))
+            {
+                amountOf = 0;
+                amountTo = INF;
+                numberOfRow = INF;
+                if (lastDate.Equals(DateTime.Today))
+                {
+                    lastDate = DateTime.MinValue;
+                }
+            }
             foreach (Main_Classes.BalanceLog balanceLog in Main_Classes.Budget.Instance.BalanceLog.Values)
             {
-                if(balanceLog.SinglePaymentID != 0 && balanceLog.PeriodPaymentID == 0)
+                if ((balanceLog.SinglePaymentID != 0 && balanceLog.PeriodPaymentID == 0) || (balanceLog.SinglePaymentID == 0 && balanceLog.PeriodPaymentID == 0))
                 {
                     var sP = (Main_Classes.SinglePayment)Main_Classes.Budget.Instance.Payments[balanceLog.SinglePaymentID];
-                    if (sP.CompareDate() <= 0 && sP.Date >= SettingsPage.Settings.Instance.SH_LastDateToShow() && sP.Amount <= SettingsPage.Settings.Instance.SH_AmountTo && sP.Amount >= SettingsPage.Settings.Instance.SH_AmountOf)
+                    if (sP.CompareDate() <= 0 && sP.Date >= lastDate && sP.Amount <= amountTo && sP.Amount >= amountOf)
                     {
                         if (sP.Name.StartsWith("[Okresowy]"))
                         {
                             String TempName = sP.Name.Substring(10);
-                            shortHistory.Add(new PaymentForDataGrid(TempName, sP.Amount, "Okresowy", sP.Date, sP.Type, sP.CategoryID));
+                            shortHistory.Add(new PaymentForDataGrid(TempName, sP.Amount, "Okresowy", sP.Date, sP.Type, sP.CategoryID, balanceLog.Balance));
                         }
                         else 
                         {
-                            shortHistory.Add(new PaymentForDataGrid(sP.Name, sP.Amount, "Pojedynczy", sP.Date, sP.Type, sP.CategoryID));
+                            shortHistory.Add(new PaymentForDataGrid(sP.Name, sP.Amount, "Pojedynczy", sP.Date, sP.Type, sP.CategoryID, balanceLog.Balance));
                         }
                     }
                 }
                 else if(balanceLog.SinglePaymentID == 0 && balanceLog.PeriodPaymentID != 0)
                 {
                     var pP = (Main_Classes.PeriodPayment)Main_Classes.Budget.Instance.Payments[balanceLog.PeriodPaymentID];
-                    if (balanceLog.Date >= SettingsPage.Settings.Instance.SH_LastDateToShow() && pP.Amount <= SettingsPage.Settings.Instance.SH_AmountTo && pP.Amount >= SettingsPage.Settings.Instance.SH_AmountOf)
+                    if (balanceLog.Date >= lastDate && pP.Amount <= amountTo && pP.Amount >= amountOf)
                     {
-                        shortHistory.Add(new PaymentForDataGrid(pP.Name, pP.Amount, "Okresowy", balanceLog.Date, pP.Type, pP.CategoryID));
+                        shortHistory.Add(new PaymentForDataGrid(pP.Name, pP.Amount, "Okresowy", balanceLog.Date, pP.Type, pP.CategoryID, balanceLog.Balance));
                     }
                 }
             }
-
             shortHistory.Sort((a, b) => -1 * a.CompareTo(b));
-            if (shortHistory.Count > SettingsPage.Settings.Instance.SH_NumberOfRow)
+            if (shortHistory.Count > numberOfRow)
             {
-                shortHistory.RemoveRange(SettingsPage.Settings.Instance.SH_NumberOfRow, shortHistory.Count - SettingsPage.Settings.Instance.SH_NumberOfRow);
+                shortHistory.RemoveRange(numberOfRow, shortHistory.Count - numberOfRow);
             }
             return shortHistory;
         }
@@ -199,9 +245,9 @@ namespace Budget.WelcomePage
                 if (propertyChangedEventArgs.PropertyName.Equals("Update_sTDG"))
                     savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
                 if (propertyChangedEventArgs.PropertyName.Equals("Update_sHDG"))
-                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
+                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid("grid", DateTime.Today);
                 if (propertyChangedEventArgs.PropertyName.Equals("Update_pPDG"))
-                    providedPaymentsDataGrid.ItemsSource = CreateDataForProvidedPaymentDataGrid();
+                    providedPaymentsDataGrid.ItemsSource = CreateDataForProvidedPaymentDataGrid("grid");
             };
             SavingsTargetsWindow.Instance.ShowDialog();
         }
@@ -211,13 +257,36 @@ namespace Budget.WelcomePage
             AddAmountToSavingsTargetWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) =>
             {
                 if (propertyChangedEventArgs.PropertyName.Equals("Update_sHDG"))
-                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid();
+                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid("grid", DateTime.Today);
                 if (propertyChangedEventArgs.PropertyName.Equals("Update_sTDG"))
                     savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
                 if (propertyChangedEventArgs.PropertyName.Equals("Refresh_sTDG"))
                     savingsTargetsDataGrid.Items.Refresh();
             };
             AddAmountToSavingsTargetWindow.Instance.ShowDialog();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ReportViewer report = new ReportViewer();
+            report.LocalReport.ReportPath = @"C:\Users\Konrad\Desktop\Uczelnia\PZ\BudzetDomowy\Bugdet\WelcomePage\Report.rdlc";
+            report.LocalReport.DataSources.Add(new ReportDataSource()
+            {
+                Name = "DataSet",
+                Value = CreataDataForShortHistoryDataGrid("pdf", DateTime.Today)
+            });
+            startDate = DateTime.Now.AddDays(-3);
+            endDate = DateTime.Now.AddDays(3);
+            ReportParameter startDateParameter = new ReportParameter("StartDate", startDate.ToShortDateString());
+            ReportParameter endDateParameter = new ReportParameter("EndDate", endDate.ToShortDateString());
+            ReportParameter nameParameter = new ReportParameter("Name", Main_Classes.Budget.Instance.Name);
+            report.LocalReport.SetParameters(new ReportParameter[] { startDateParameter, endDateParameter, nameParameter });
+            byte[] bytes = report.LocalReport.Render("PDF");
+            System.IO.FileStream newFile = new System.IO.FileStream(
+                Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + Main_Classes.Budget.Instance.Name + ".pdf", System.IO.FileMode.Create);
+            newFile.Write(bytes, 0, bytes.Length);
+            newFile.Flush();
+            newFile.Close();
         }
     }
 }

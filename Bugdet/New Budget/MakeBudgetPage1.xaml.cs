@@ -100,7 +100,7 @@ namespace Budget.New_Budget
             if (!char.IsDigit(e.Text, e.Text.Length - 1) && !char.IsPunctuation(e.Text, e.Text.Length - 1) && char.IsPunctuation(e.Text, e.Text.Length - 2))
             {
                 e.Handled = true;
-                budgetBalance.ToolTip = "Wpisz kwotę liczbą";
+                budgetBalance.ToolTip = "Wpisz kwotę liczbą!";
             }
             else
             {

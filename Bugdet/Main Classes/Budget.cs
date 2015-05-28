@@ -96,7 +96,7 @@ namespace Budget.Main_Classes
         public void AddSinglePayment(int index, SinglePayment payment)
         {
             int balanceMaxKey;
-            double currentBalance;
+            double currentBalance, previousBalance;
 
             CheckPayment(payment, 0);
             payments.Add(index, payment);
@@ -113,14 +113,15 @@ namespace Budget.Main_Classes
 
             if (DateTime.Compare(payment.Date, DateTime.Now) <= 0 )
             {
-                balanceMaxKey = BalanceLog.Keys.Max() + 1;
+                previousBalance = balanceLogs.Count > 0 ? balanceLogs.Last().Value.Balance : 0;
+                balanceMaxKey = balanceLogs.Count > 0 ? balanceLogs.Keys.Max() + 1 : 0;
                 if (payment.Type == false)
                 {
-                    currentBalance = BalanceLog.Last().Value.Balance + payment.Amount;
+                    currentBalance = previousBalance + payment.Amount;
                 }
                 else
                 {
-                    currentBalance = BalanceLog.Last().Value.Balance - payment.Amount;
+                    currentBalance = previousBalance - payment.Amount;
                 }
                 AddBalanceLog(balanceMaxKey, new BalanceLog(currentBalance, DateTime.Today, index, 0));
             }
@@ -224,7 +225,7 @@ namespace Budget.Main_Classes
             comboBox.Items.Clear();
             foreach (KeyValuePair<int,Category> c in categories)
             {
-                if (c.Value.Type == catType || type == CategoryTypeEnum.ANY)
+                if ((c.Value.Type == catType || type == CategoryTypeEnum.ANY) && (c.Key != 0) && (c.Key != 1))
                 {
                     comboBox.Items.Add(new Utility_Classes.ComboBoxItem(c.Key, c.Value.Name));
                 }

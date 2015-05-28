@@ -70,7 +70,6 @@ namespace Budget.History
 
             HistoryDataGrid.Columns[0].Visibility = Visibility.Hidden;
             HistoryDataGrid.Columns[1].Visibility = Visibility.Hidden;
-
         }
         private void HistoryDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
         {

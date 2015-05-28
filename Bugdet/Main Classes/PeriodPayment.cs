@@ -192,7 +192,7 @@ namespace Budget.Main_Classes
             List<WelcomePage.PaymentForDataGrid> providedPayments = new List<WelcomePage.PaymentForDataGrid>();
             foreach (PeriodPayment temp in periodPayments)
             {
-                providedPayments.Add(new WelcomePage.PaymentForDataGrid(temp.Name, temp.Amount, "Okresowy", temp.lastUpdate, temp.Type, temp.CategoryID));
+                providedPayments.Add(new WelcomePage.PaymentForDataGrid(temp.Name, temp.Amount, "Okresowy", temp.lastUpdate, temp.Type, temp.CategoryID, 0));
             }
             return providedPayments;
         }

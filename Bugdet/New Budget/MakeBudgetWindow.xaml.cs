@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using Budget.Main_Classes;
 
 namespace Budget.New_Budget
 {
@@ -12,9 +11,9 @@ namespace Budget.New_Budget
     public partial class MakeBudgetWindow : Window
     {
         private static MakeBudgetWindow _instance = null;
-        private static Dictionary<int, Category> _categories = SqlConnect.Instance.AddDefaultCategories(); // 'adddefaultcategories' mozna przeniesc tutaj, bo i tak tylko tutaj jest uzywana
-        private static Dictionary<int, PeriodPayment> _payments = new Dictionary<int, PeriodPayment>();
-        private static Dictionary<int, PeriodPayment> _salaries = new Dictionary<int, PeriodPayment>();
+        private static Dictionary<int, Main_Classes.Category> _categories = Main_Classes.SqlConnect.Instance.AddDefaultCategories(); // 'adddefaultcategories' mozna przeniesc tutaj, bo i tak tylko tutaj jest uzywana
+        private static Dictionary<int, Main_Classes.PeriodPayment> _payments = new Dictionary<int, Main_Classes.PeriodPayment>();
+        private static Dictionary<int, Main_Classes.PeriodPayment> _salaries = new Dictionary<int, Main_Classes.PeriodPayment>();
         private static SalaryInfo salaryInfo = new SalaryInfo();
 
         private int _actualPage = 1;
@@ -188,7 +187,7 @@ namespace Budget.New_Budget
 
         private Boolean CompleteBudget()
         {
-            Dictionary<int, PeriodPayment> p = new Dictionary<int, PeriodPayment>();
+            Dictionary<int, Main_Classes.PeriodPayment> p = new Dictionary<int, Main_Classes.PeriodPayment>();
 
             for (int i = 1; i <= _salaries.Count; i++)     
             {
@@ -198,8 +197,9 @@ namespace Budget.New_Budget
             {
                 p.Add(i, _payments[i - _salaries.Count]);
             }
-
-            if (SqlConnect.Instance.DumpCreator(_categories, p, salaryInfo.Name, salaryInfo.Password, new BalanceLog(salaryInfo.Amount, DateTime.Now, 0, 0)))
+            Main_Classes.BalanceLog bL = new Main_Classes.BalanceLog(salaryInfo.Amount, DateTime.Now, 1, 0);
+            Main_Classes.SinglePayment sP = new Main_Classes.SinglePayment("", salaryInfo.Amount, 1, false, "Saldo początkowe", DateTime.Today);
+            if (Main_Classes.SqlConnect.Instance.DumpCreator(_categories, p, salaryInfo.Name, salaryInfo.Password, bL, sP))
             {
                 LoginWindow.LoginWindow.Instance.IsLogged = true;
                 return true;
@@ -221,7 +221,7 @@ namespace Budget.New_Budget
         /// <summary>
         /// Inserts categories in CategoryComboBox
         /// </summary>
-        public static List<int> InsertCategories(ComboBox categoryBox, Dictionary<int, Category>cat, bool type)
+        public static List<int> InsertCategories(ComboBox categoryBox, Dictionary<int, Main_Classes.Category> cat, bool type)
         {
             categoryBox.Items.Clear();
             List<int> originalID = new List<int>();

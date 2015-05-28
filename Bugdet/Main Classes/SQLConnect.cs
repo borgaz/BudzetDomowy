@@ -176,7 +176,7 @@ namespace Budget.Main_Classes
             }
         }
         public Boolean DumpCreator(Dictionary<int, Category> _categories, Dictionary<int, PeriodPayment> _payments, 
-            String _name, String _password, BalanceLog _balance)
+            String _name, String _password, BalanceLog _balance, SinglePayment _firstPayment)
         {
             try
             {
@@ -189,7 +189,6 @@ namespace Budget.Main_Classes
                                    _name + "'," + "'note','" + DateTime.Now.ToShortDateString() +
                                    "'," + 0 + ",'" + _password + "','" + balanceWithDot + "')");
 
-
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // Lista kategorii
                 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -201,14 +200,23 @@ namespace Budget.Main_Classes
                                        "','" + _categories[i].Note + "','" + Convert.ToInt32(_categories[i].Type) + "')");
                 }
 
-
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // Aktualny stan konta
                 /////////////////////////////////////////////////////////////////////////////////////////////
-                
+
                 Instance.ExecuteSqlNonQuery("INSERT INTO BalanceLogs(balance,date,singlePaymentId,periodPaymentId) values('" +
                                    balanceWithDot + "','" + _balance.Date.ToShortDateString() + "','" +
                                    _balance.SinglePaymentID + "','" + _balance.PeriodPaymentID + "')");
+
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                // Zalożenie budżetu jako pierwszy pojedyńczy przychód
+                /////////////////////////////////////////////////////////////////////////////////////////////
+
+                string amountWithDot = _firstPayment.Amount.ToString().Replace(",", ".");
+                Instance.ExecuteSqlNonQuery(
+                            "INSERT INTO SinglePayments(id, categoryId, amount, note, type, name, date) values('" +
+                            1 + "','" + _firstPayment.CategoryID + "','" + amountWithDot + "','" + _firstPayment.Note + "','" + Convert.ToInt32(_firstPayment.Type) + "','" +
+                            _firstPayment.Name + "','" + _firstPayment.Date.ToShortDateString() + "')");
 
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // Lista płatności
@@ -217,7 +225,7 @@ namespace Budget.Main_Classes
                 foreach (KeyValuePair<int, PeriodPayment> pay in _payments)
                 {
                     PeriodPayment p = pay.Value;
-                    String amountWithDot = p.Amount.ToString().Replace(",", ".");
+                    amountWithDot = p.Amount.ToString().Replace(",", ".");
                     Instance.ExecuteSqlNonQuery(
                         "INSERT INTO PeriodPayments(id, categoryId,amount,note,type,name,frequency,period,lastUpdate,startDate,endDate) values(" +
                         pay.Key*(-1) + "," + p.CategoryID + ",'" + amountWithDot + "','" + p.Note + "'," + Convert.ToInt32(p.Type) + ",'" + p.Name + "'," + p.Frequency + ",'" + p.Period + "','" + p.LastUpdate.ToShortDateString() + "','" +
@@ -300,16 +308,17 @@ namespace Budget.Main_Classes
             try
             {
                 defaultCategories.Add(0, new Category("Oszczędzanie", "Odłożenie pieniędzy na jakis cel", false));
-                defaultCategories.Add(1, new Category("Paliwo","Benzyna do samochodu", false));
+                defaultCategories.Add(1, new Category("-", "Saldo początkowe", true));
                 defaultCategories.Add(2, new Category("Jedzenie", "Zakupy okresowe", false));
                 defaultCategories.Add(3, new Category("Prąd", "Rachunki za energie", false));
                 defaultCategories.Add(4, new Category("Woda", "Rachunki za wodę", false));
                 defaultCategories.Add(5, new Category("Gaz", "Rachunki za gaz", false));
                 defaultCategories.Add(6, new Category("Internet", "Rachunki za internet", false));
-                defaultCategories.Add(7, new Category("Praca", "Wypłata", true));
-                defaultCategories.Add(8, new Category("Emerytura", "Emerytura", true));
-                defaultCategories.Add(9, new Category("Renta", "Renta", true));
+                defaultCategories.Add(7, new Category("Paliwo", "Benzyna do samochodu", false));
+                defaultCategories.Add(8, new Category("Praca", "Wypłata", true));
+                defaultCategories.Add(9, new Category("Emerytura", "Emerytura", true));
                 defaultCategories.Add(10, new Category("Stypednium", "Stypendium, np. socjalne lub naukowe", true));
+                defaultCategories.Add(11, new Category("Renta", "Renta", true));
                 return defaultCategories;
             }
             catch(Exception ex)

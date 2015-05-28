@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Budget.WelcomePage
 {
@@ -10,8 +11,11 @@ namespace Budget.WelcomePage
         private Boolean sign; // 0 - przychod, 1 - wydatek
         private DateTime date;
         private int categoryID;
+        private Double singleAmount;
+        private String categoryName;
+        private Double totalAmount;
 
-        public PaymentForDataGrid(String name, Double amount, String type, DateTime date, Boolean sign, int categoryID)
+        public PaymentForDataGrid(String name, Double amount, String type, DateTime date, Boolean sign, int categoryID, Double tA)
         {
             this.name = name;
             this.amount = amount;
@@ -19,6 +23,16 @@ namespace Budget.WelcomePage
             this.date = date;
             this.sign = sign;
             this.categoryID = categoryID;
+            this.totalAmount = tA;
+            if (this.sign == false)
+            {
+                this.singleAmount = amount;
+            }
+            else
+            {
+                this.singleAmount = -1 * amount;
+            }
+            this.categoryName = Main_Classes.Budget.Instance.Categories.FirstOrDefault(x => x.Key.Equals(categoryID)).Value.Name;
         }
 
         public int CompareTo(PaymentForDataGrid pP)
@@ -27,6 +41,30 @@ namespace Budget.WelcomePage
         }
 
         // Nizej sa juz tylko gettery 
+
+        public Double SingleAmount
+        {
+            get
+            {
+                return singleAmount;
+            }
+        }
+
+        public Double TotalAmount
+        {
+            get
+            {
+                return totalAmount;
+            }
+        }
+
+        public String CategoryName
+        {
+            get
+            {
+                return categoryName;
+            }
+        }
 
         public double Amount
         {
