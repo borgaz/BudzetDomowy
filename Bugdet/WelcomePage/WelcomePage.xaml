@@ -78,5 +78,6 @@
         <TextBox x:Name="Balance" HorizontalAlignment="Left" Height="32" Margin="599,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97"  IsReadOnly="True" FontSize="18" FontWeight="Bold" TextAlignment="Center" Background="#FFEDEEF9"/>
         <Button x:Name="NewTargetButton" Content="Dodaj nowy" HorizontalAlignment="Right" Height="25" Margin="0,0,100,250" VerticalAlignment="Bottom" Width="80" Click="NewTargetButton_Click"/>
         <Button x:Name="AddAmountToTargetButton" Content="Zarządzaj" HorizontalAlignment="Right" Height="25" Margin="0,0,10,250" VerticalAlignment="Bottom" Width="80" Click="AddAmountToTargetButton_Click"/>
+        <Button Content="PDF" HorizontalAlignment="Left" Height="25" Margin="584,201,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click"/>
     </Grid>
 </Page>

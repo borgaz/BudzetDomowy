@@ -65,7 +65,7 @@ namespace Budget.WelcomePage
                 }
 
                 int indexOfSinglePayment = Main_Classes.Budget.Instance.Payments.Count > 0 ? Main_Classes.Budget.Instance.Payments.Keys.Max() + 1 : 1;
-                sP = new Main_Classes.SinglePayment("", amount, 0, true, "Oszczędzanie: " + Main_Classes.Budget.Instance.SavingsTargets[index].Target, DateTime.Now);
+                sP = new Main_Classes.SinglePayment("", amount, 0, true, "Oszczędzanie: " + Main_Classes.Budget.Instance.SavingsTargets[index].Target, DateTime.Today);
                 Main_Classes.Budget.Instance.AddSinglePayment(indexOfSinglePayment, sP);
                 OnPropertyChanged("Update_sHDG");
                 OnPropertyChanged("Refresh_sTDG");

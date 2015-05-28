@@ -124,7 +124,7 @@ namespace Budget.WelcomePage
                 if (AutoCheckBox.IsChecked == false)
                 {
                     sT = new Main_Classes.SavingsTarget(NameTextBox.Text, NoteTextBox.Text, EndDatePicker.SelectedDate.Value,
-                                                           Convert.ToInt32(PriorityComboBox.SelectedItem), 0, DateTime.Now, Convert.ToDouble(AmountTextBox.Text), false);
+                                                           Convert.ToInt32(PriorityComboBox.SelectedItem), 0, DateTime.Today, Convert.ToDouble(AmountTextBox.Text), false);
                     Main_Classes.Budget.Instance.AddSavingsTarget(indexOfSavingsTarget, sT);
                     OnPropertyChanged("Update_sTDG");
                     this.Close();
