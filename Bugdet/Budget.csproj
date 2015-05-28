@@ -158,6 +158,7 @@
     <Compile Include="Utility Classes\CustomMessageBox.xaml.cs">
       <DependentUpon>CustomMessageBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utility Classes\GenerateDateBase.cs" />
     <Compile Include="WelcomePage\AddAmountToSavingsTargetWindow.xaml.cs">
       <DependentUpon>AddAmountToSavingsTargetWindow.xaml</DependentUpon>
     </Compile>

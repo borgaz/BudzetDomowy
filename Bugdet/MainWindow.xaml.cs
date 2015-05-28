@@ -214,6 +214,12 @@ namespace Budget
             if (!Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightAlt) || Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightCtrl)) return;
             if (e.Key.Equals(Key.S))
                 Main_Classes.Budget.Instance.Dump();
+            if (e.Key.Equals(Key.G))
+            {
+                Utility_Classes.GenerateDataBase generator = new GenerateDataBase();
+                MessageBox.Show("Generuję bazę danych!");
+                generator.Generate();
+            }
         }
 
         private void AnalisysButton_Click(object sender, RoutedEventArgs e)
