@@ -31,32 +31,33 @@ namespace Budget.Utility_Classes
         }
         public void Generate()
         {
-            SetDates();    
-            data = DateTime.Today.AddDays(-(numberOfData/2)); //wyliczenie daty z przeszłosci
-            for (int i = 0; i < numberOfData; i++)
+            SetDates();
+            data = DateTime.Now.AddDays(-(numberOfData/2)); //wyliczenie daty z przeszłosci
+            int i = 2;
+            for (int j = 0; j < numberOfData; j++, i++)
             {
-                    int drawnCategory = i % 2 + 1; //rownomierne rozkladanie kategorii
-                    int count = tablica[drawnCategory].Count(); //liczba elementow w kategorii
-                    Main_Classes.Budget.Instance.AddSinglePayment(i, new Main_Classes.SinglePayment
-                        ("", amount.Next(minValue, maxValue), drawnCategory, true, tablica[drawnCategory][name.Next(0, count)], data));
+                int drawnCategory = j % 2 + 1; //rownomierne rozkladanie kategorii
+                int count = tablica[drawnCategory].Count(); //liczba elementow w kategorii
+                Main_Classes.Budget.Instance.AddSinglePayment(i, new Main_Classes.SinglePayment
+                    ("", amount.Next(minValue, maxValue), drawnCategory + 1, true, tablica[drawnCategory][name.Next(0, count)], data));
 
-                    if ((i % 2) == 1) // dzien zmienia sie co 2 dodane wydatki
+                if ((j % 2) == 1) // dzien zmienia sie co 2 dodane wydatki
+                {
+                    if (data.Month != data.AddDays(1).Month) // pensja i wydatki uwzględniane na koniec miesiąca
                     {
-                        if (data.Month != data.AddDays(1).Month) // pensja i wydatki uwzględniane na koniec miesiąca
-                        {
-                            Main_Classes.Budget.Instance.AddSinglePayment(++i, new Main_Classes.SinglePayment
-                                ("", salary, 7, false, tablica[7][0], data)); //stałe wynagrodzenie
-                            Main_Classes.Budget.Instance.AddSinglePayment(++i, new Main_Classes.SinglePayment
-                                ("", amount.Next(minValue, maxValue), 3, true, "Rachunki za prąd", data));
-                            Main_Classes.Budget.Instance.AddSinglePayment(++i, new Main_Classes.SinglePayment
-                                ("", amount.Next(minValue, maxValue), 4, true, "Rachunki za wodę", data));
-                            Main_Classes.Budget.Instance.AddSinglePayment(++i, new Main_Classes.SinglePayment
-                                ("", amount.Next(minValue, maxValue), 5, true, "Rachunki za gaz", data));
-                            Main_Classes.Budget.Instance.AddSinglePayment(++i, new Main_Classes.SinglePayment
-                                ("", amount.Next(minValue, maxValue), 6, true, "Rachunki za Internet", data));
-                        }
-                        data = data.AddDays(1);
+                        Main_Classes.Budget.Instance.AddSinglePayment(++i, new Main_Classes.SinglePayment
+                            ("", salary, 8, false, tablica[7][0], data)); //stałe wynagrodzenie
+                        Main_Classes.Budget.Instance.AddSinglePayment(++i, new Main_Classes.SinglePayment
+                            ("", amount.Next(minValue, maxValue), 7, true, "Rachunki za prąd", data));
+                        Main_Classes.Budget.Instance.AddSinglePayment(++i, new Main_Classes.SinglePayment
+                            ("", amount.Next(minValue, maxValue), 4, true, "Rachunki za wodę", data));
+                        Main_Classes.Budget.Instance.AddSinglePayment(++i, new Main_Classes.SinglePayment
+                            ("", amount.Next(minValue, maxValue), 5, true, "Rachunki za gaz", data));
+                        Main_Classes.Budget.Instance.AddSinglePayment(++i, new Main_Classes.SinglePayment
+                            ("", amount.Next(minValue, maxValue), 6, true, "Rachunki za Internet", data));
                     }
+                    data = data.AddDays(1);
+                }
             }
         }
     }

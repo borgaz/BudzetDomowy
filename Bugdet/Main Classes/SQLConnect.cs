@@ -309,12 +309,12 @@ namespace Budget.Main_Classes
             {
                 defaultCategories.Add(0, new Category("Oszczędzanie", "Odłożenie pieniędzy na jakis cel", false));
                 defaultCategories.Add(1, new Category("-", "Saldo początkowe", true));
-                defaultCategories.Add(2, new Category("Jedzenie", "Zakupy okresowe", false));
-                defaultCategories.Add(3, new Category("Prąd", "Rachunki za energie", false));
+                defaultCategories.Add(2, new Category("Paliwo", "Benzyna do samochodu", false));
+                defaultCategories.Add(3, new Category("Jedzenie", "Zakupy okresowe", false));
                 defaultCategories.Add(4, new Category("Woda", "Rachunki za wodę", false));
                 defaultCategories.Add(5, new Category("Gaz", "Rachunki za gaz", false));
                 defaultCategories.Add(6, new Category("Internet", "Rachunki za internet", false));
-                defaultCategories.Add(7, new Category("Paliwo", "Benzyna do samochodu", false));
+                defaultCategories.Add(7, new Category("Prąd", "Rachunki za energie", false));
                 defaultCategories.Add(8, new Category("Praca", "Wypłata", true));
                 defaultCategories.Add(9, new Category("Emerytura", "Emerytura", true));
                 defaultCategories.Add(10, new Category("Stypednium", "Stypendium, np. socjalne lub naukowe", true));

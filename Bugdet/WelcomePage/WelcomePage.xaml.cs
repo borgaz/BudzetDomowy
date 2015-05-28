@@ -35,7 +35,7 @@ namespace Budget.WelcomePage
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             providedPaymentsDataGrid.ItemsSource = CreateDataForProvidedPaymentDataGrid("grid");
-            shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid("grid", DateTime.Today);
+            shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid("grid", DateTime.Today, DateTime.Today);
             savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
 
             Main_Classes.Budget.Instance.PropertyChanged += (s, propertyChangedEventArgs) =>
@@ -126,7 +126,7 @@ namespace Budget.WelcomePage
             return providedPayments;
         }
 
-        private List<PaymentForDataGrid> CreataDataForShortHistoryDataGrid(String destination, DateTime lastDate)
+        private List<PaymentForDataGrid> CreataDataForShortHistoryDataGrid(String destination, DateTime firstDate, DateTime lastDate)
         {
             Double amountOf = 0, amountTo = 0;
             int numberOfRow = 0;
@@ -137,16 +137,17 @@ namespace Budget.WelcomePage
                 amountOf = SettingsPage.Settings.Instance.PP_AmountOf;
                 amountTo = SettingsPage.Settings.Instance.PP_AmountTo;
                 numberOfRow = SettingsPage.Settings.Instance.PP_NumberOfRow;
-                lastDate = SettingsPage.Settings.Instance.SH_LastDateToShow();
+                firstDate = SettingsPage.Settings.Instance.SH_LastDateToShow();
+                lastDate = DateTime.Today;
             }
             else if (destination.Equals("pdf"))
             {
                 amountOf = 0;
                 amountTo = INF;
                 numberOfRow = INF;
-                if (lastDate.Equals(DateTime.Today))
+                if (firstDate.Equals(DateTime.Today))
                 {
-                    lastDate = DateTime.MinValue;
+                    firstDate = DateTime.MinValue;
                 }
             }
             foreach (Main_Classes.BalanceLog balanceLog in Main_Classes.Budget.Instance.BalanceLog.Values)
@@ -154,7 +155,7 @@ namespace Budget.WelcomePage
                 if ((balanceLog.SinglePaymentID != 0 && balanceLog.PeriodPaymentID == 0) || (balanceLog.SinglePaymentID == 0 && balanceLog.PeriodPaymentID == 0))
                 {
                     var sP = (Main_Classes.SinglePayment)Main_Classes.Budget.Instance.Payments[balanceLog.SinglePaymentID];
-                    if (sP.CompareDate() <= 0 && sP.Date >= lastDate && sP.Amount <= amountTo && sP.Amount >= amountOf)
+                    if (sP.Date <= lastDate && sP.Date >= firstDate && sP.Amount <= amountTo && sP.Amount >= amountOf)
                     {
                         if (sP.Name.StartsWith("[Okresowy]"))
                         {
@@ -170,13 +171,16 @@ namespace Budget.WelcomePage
                 else if(balanceLog.SinglePaymentID == 0 && balanceLog.PeriodPaymentID != 0)
                 {
                     var pP = (Main_Classes.PeriodPayment)Main_Classes.Budget.Instance.Payments[balanceLog.PeriodPaymentID];
-                    if (balanceLog.Date >= lastDate && pP.Amount <= amountTo && pP.Amount >= amountOf)
+                    if (balanceLog.Date >= firstDate && pP.Amount <= amountTo && pP.Amount >= amountOf)
                     {
                         shortHistory.Add(new PaymentForDataGrid(pP.Name, pP.Amount, "Okresowy", balanceLog.Date, pP.Type, pP.CategoryID, balanceLog.Balance));
                     }
                 }
             }
-            shortHistory.Sort((a, b) => -1 * a.CompareTo(b));
+            if (destination == "grid")
+            {
+                shortHistory.Sort((a, b) => -1 * a.CompareTo(b));
+            }
             if (shortHistory.Count > numberOfRow)
             {
                 shortHistory.RemoveRange(numberOfRow, shortHistory.Count - numberOfRow);
@@ -245,7 +249,7 @@ namespace Budget.WelcomePage
                 if (propertyChangedEventArgs.PropertyName.Equals("Update_sTDG"))
                     savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
                 if (propertyChangedEventArgs.PropertyName.Equals("Update_sHDG"))
-                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid("grid", DateTime.Today);
+                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid("grid", DateTime.Today, DateTime.Today);
                 if (propertyChangedEventArgs.PropertyName.Equals("Update_pPDG"))
                     providedPaymentsDataGrid.ItemsSource = CreateDataForProvidedPaymentDataGrid("grid");
             };
@@ -257,7 +261,7 @@ namespace Budget.WelcomePage
             AddAmountToSavingsTargetWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) =>
             {
                 if (propertyChangedEventArgs.PropertyName.Equals("Update_sHDG"))
-                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid("grid", DateTime.Today);
+                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid("grid", DateTime.Today, DateTime.Today);
                 if (propertyChangedEventArgs.PropertyName.Equals("Update_sTDG"))
                     savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
                 if (propertyChangedEventArgs.PropertyName.Equals("Refresh_sTDG"))
@@ -270,13 +274,14 @@ namespace Budget.WelcomePage
         {
             ReportViewer report = new ReportViewer();
             report.LocalReport.ReportPath = @"C:\Users\Konrad\Desktop\Uczelnia\PZ\BudzetDomowy\Bugdet\WelcomePage\Report.rdlc";
+            startDate = DateTime.Today.AddDays(-10);
+            endDate = DateTime.Today.AddDays(3);
             report.LocalReport.DataSources.Add(new ReportDataSource()
             {
                 Name = "DataSet",
-                Value = CreataDataForShortHistoryDataGrid("pdf", DateTime.Today)
+                Value = CreataDataForShortHistoryDataGrid("pdf", startDate, endDate)
             });
-            startDate = DateTime.Now.AddDays(-3);
-            endDate = DateTime.Now.AddDays(3);
+           
             ReportParameter startDateParameter = new ReportParameter("StartDate", startDate.ToShortDateString());
             ReportParameter endDateParameter = new ReportParameter("EndDate", endDate.ToShortDateString());
             ReportParameter nameParameter = new ReportParameter("Name", Main_Classes.Budget.Instance.Name);

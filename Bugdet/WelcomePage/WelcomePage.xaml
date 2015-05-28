@@ -12,7 +12,7 @@
         <DataGrid Name="shortHistoryDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" Margin="10,0,0,10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="234" Width="375" Loaded="Page_Loaded" Background="White" LoadingRow="shortHistoryDataGrid_OnLoadingRow">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Typ" Width="70" IsReadOnly="True" Binding="{Binding Type}"/>
-                <DataGridTextColumn Header="Nazwa" Width="167" IsReadOnly="True" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Nazwa" Width="150" IsReadOnly="True" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Kwota" Width="60" IsReadOnly="True" Binding="{Binding Amount}"/>
                 <DataGridTextColumn Header="Data" Width="70" IsReadOnly="True" Binding="{Binding Date}"/>
             </DataGrid.Columns>
@@ -20,7 +20,7 @@
         <DataGrid HorizontalAlignment="Left" Name="providedPaymentsDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeColumns="False" Margin="10,38,0,0" VerticalAlignment="Top" Height="234" Width="375" Loaded="Page_Loaded" SelectionMode="Single" LoadingRow="ProvidedPaymentsDataGrid_OnLoadingRow" Background="White">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Typ" Width="70" IsReadOnly="True" Binding="{Binding Type}"/>
-                <DataGridTextColumn Header="Nazwa" Width="167" IsReadOnly="True" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Nazwa" Width="150" IsReadOnly="True" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Kwota" Width="60" IsReadOnly="True" Binding="{Binding Amount}"/>
                 <DataGridTextColumn Header="Data" Width="70" IsReadOnly="True" Binding="{Binding Date}"/>
             </DataGrid.Columns>

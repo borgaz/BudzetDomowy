@@ -26,7 +26,6 @@ namespace Budget.Payments_Manager
         {
             int indexOfNewSingle = Main_Classes.Budget.Instance.Payments.Count > 0 && Main_Classes.Budget.Instance.Payments.Keys.Max() > 0 ? Main_Classes.Budget.Instance.Payments.Keys.Max() + 1 : 1;
             singlePaymentsList[listIndex].Amount = Convert.ToDouble(Amount.Text);
-            System.Console.WriteLine(indexOfNewSingle);
             Main_Classes.Budget.Instance.AddSinglePayment(indexOfNewSingle, singlePaymentsList[listIndex]);
             if (listIndex > 0)
             {

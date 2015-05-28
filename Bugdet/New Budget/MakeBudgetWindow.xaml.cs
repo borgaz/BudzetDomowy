@@ -197,8 +197,9 @@ namespace Budget.New_Budget
             {
                 p.Add(i, _payments[i - _salaries.Count]);
             }
-            Main_Classes.BalanceLog bL = new Main_Classes.BalanceLog(salaryInfo.Amount, DateTime.Now, 1, 0);
-            Main_Classes.SinglePayment sP = new Main_Classes.SinglePayment("", salaryInfo.Amount, 1, false, "Saldo początkowe", DateTime.Today);
+            DateTime dT = DateTime.MinValue;
+            Main_Classes.BalanceLog bL = new Main_Classes.BalanceLog(salaryInfo.Amount, dT, 1, 0);
+            Main_Classes.SinglePayment sP = new Main_Classes.SinglePayment("", salaryInfo.Amount, 1, false, "Saldo początkowe", dT);
             if (Main_Classes.SqlConnect.Instance.DumpCreator(_categories, p, salaryInfo.Name, salaryInfo.Password, bL, sP))
             {
                 LoginWindow.LoginWindow.Instance.IsLogged = true;
