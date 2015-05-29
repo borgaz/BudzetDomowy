@@ -298,7 +298,7 @@ namespace Budget.WelcomePage
             {
                 ReportViewer report = new ReportViewer();
                 //report.LocalReport.ReportPath = @"C:\Users\Konrad\Desktop\Uczelnia\PZ\BudzetDomowy\Bugdet\WelcomePage\Report.rdlc";
-                report.LocalReport.ReportPath = @".\..\..\WelcomePage\Report.rdlc";
+                report.LocalReport.ReportPath = @".\..\..\WelcomePage\Report.rdlc"; 
                 report.LocalReport.DataSources.Add(new ReportDataSource()
                 {
                     Name = "DataSet",
@@ -309,15 +309,22 @@ namespace Budget.WelcomePage
                 ReportParameter nameParameter = new ReportParameter("Name", Main_Classes.Budget.Instance.Name);
                 report.LocalReport.SetParameters(new ReportParameter[] { startDateParameter, endDateParameter, nameParameter });
                 byte[] bytes = report.LocalReport.Render("PDF");
-                System.IO.FileStream newFile = new System.IO.FileStream(
-                    Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + Main_Classes.Budget.Instance.Name + ".pdf", System.IO.FileMode.Create);
-                newFile.Write(bytes, 0, bytes.Length);
-                newFile.Flush();
-                newFile.Close();
-                System.Windows.MessageBox.Show("PDF wygenerowany poprawnie");
+                var dialog = new FolderBrowserDialog();
+                DialogResult result = dialog.ShowDialog();
+                if (result.ToString() == "OK")
+                {
+                    System.IO.FileStream newFile = new System.IO.FileStream(
+                    dialog.SelectedPath + "\\" + Main_Classes.Budget.Instance.Name + ".pdf", System.IO.FileMode.Create);
+                    newFile.Write(bytes, 0, bytes.Length);
+                    newFile.Flush();
+                    newFile.Close();
+                    System.Windows.MessageBox.Show("Raport PDF wygenerowany poprawnie");
+                }               
             }
            catch
-           { }
+           {
+ 
+           }
         }
     }
 }
