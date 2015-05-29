@@ -272,26 +272,53 @@ namespace Budget.WelcomePage
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ReportViewer report = new ReportViewer();
             report.LocalReport.ReportPath = @"C:\Users\Konrad\Desktop\Uczelnia\PZ\BudzetDomowy\Bugdet\WelcomePage\Report.rdlc";
-            startDate = DateTime.Today.AddDays(-10);
-            endDate = DateTime.Today.AddDays(3);
-            report.LocalReport.DataSources.Add(new ReportDataSource()
+            if (AdvancePDFCheckBox.IsChecked == true)
             {
-                Name = "DataSet",
-                Value = CreataDataForShortHistoryDataGrid("pdf", startDate, endDate)
-            });
-           
-            ReportParameter startDateParameter = new ReportParameter("StartDate", startDate.ToShortDateString());
-            ReportParameter endDateParameter = new ReportParameter("EndDate", endDate.ToShortDateString());
-            ReportParameter nameParameter = new ReportParameter("Name", Main_Classes.Budget.Instance.Name);
-            report.LocalReport.SetParameters(new ReportParameter[] { startDateParameter, endDateParameter, nameParameter });
-            byte[] bytes = report.LocalReport.Render("PDF");
-            System.IO.FileStream newFile = new System.IO.FileStream(
-                Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + Main_Classes.Budget.Instance.Name + ".pdf", System.IO.FileMode.Create);
-            newFile.Write(bytes, 0, bytes.Length);
-            newFile.Flush();
-            newFile.Close();
+                PDFOptionsWindow.Instance.ShowDialog();
+                startDate = PDFOptionsWindow.Instance.StartDate;
+                endDate = PDFOptionsWindow.Instance.EndDate;
+                if (PDFOptionsWindow.Instance.Generate == true)
+                {
+                    GeneratePDF();
+                }
+                PDFOptionsWindow.Instance = null;
+                AdvancePDFCheckBox.IsChecked = false;
+            }
+            else
+            {
+                startDate = DateTime.Today;
+                endDate = DateTime.Today;
+                GeneratePDF();
+            }   
+        }
+
+        private void GeneratePDF()
+        {
+            try
+            {
+                ReportViewer report = new ReportViewer();
+                //report.LocalReport.ReportPath = @"C:\Users\Konrad\Desktop\Uczelnia\PZ\BudzetDomowy\Bugdet\WelcomePage\Report.rdlc";
+                report.LocalReport.ReportPath = @".\..\..\WelcomePage\Report.rdlc";
+                report.LocalReport.DataSources.Add(new ReportDataSource()
+                {
+                    Name = "DataSet",
+                    Value = CreataDataForShortHistoryDataGrid("pdf", startDate, endDate)
+                });
+                ReportParameter startDateParameter = new ReportParameter("StartDate", startDate.ToShortDateString());
+                ReportParameter endDateParameter = new ReportParameter("EndDate", endDate.ToShortDateString());
+                ReportParameter nameParameter = new ReportParameter("Name", Main_Classes.Budget.Instance.Name);
+                report.LocalReport.SetParameters(new ReportParameter[] { startDateParameter, endDateParameter, nameParameter });
+                byte[] bytes = report.LocalReport.Render("PDF");
+                System.IO.FileStream newFile = new System.IO.FileStream(
+                    Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + Main_Classes.Budget.Instance.Name + ".pdf", System.IO.FileMode.Create);
+                newFile.Write(bytes, 0, bytes.Length);
+                newFile.Flush();
+                newFile.Close();
+                System.Windows.MessageBox.Show("PDF wygenerowany poprawnie");
+            }
+           catch
+           { }
         }
     }
 }
