@@ -270,9 +270,8 @@ namespace Budget.WelcomePage
             AddAmountToSavingsTargetWindow.Instance.ShowDialog();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void PDFButton_Click(object sender, RoutedEventArgs e)
         {
-            report.LocalReport.ReportPath = @"C:\Users\Konrad\Desktop\Uczelnia\PZ\BudzetDomowy\Bugdet\WelcomePage\Report.rdlc";
             if (AdvancePDFCheckBox.IsChecked == true)
             {
                 PDFOptionsWindow.Instance.ShowDialog();
