@@ -9,28 +9,37 @@
 
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Dodaj okresowe wydatki, czyli takie które są opłacane w dany dzień w miesiącu badź dany dzień w tygodniu, bądź co określony okres czasu" VerticalAlignment="Top" Width="452"/>
-        <TextBox x:Name="PaymentName" HorizontalAlignment="Left" Height="23" Margin="119,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126" GotFocus="PaymentName_OnGotFocus" PreviewTextInput="PaymentName_PreviewTextInput"/>
+        <TextBox x:Name="PaymentName" HorizontalAlignment="Left" Height="23" Margin="119,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="136" GotFocus="PaymentName_OnGotFocus" PreviewTextInput="PaymentName_PreviewTextInput" RenderTransformOrigin="0.5,0.5">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.031"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
         <Label Content="Nazwa wydatku" HorizontalAlignment="Left" Margin="13,59,0,0" VerticalAlignment="Top" Width="103"/>
         <Label Content="Kwota" HorizontalAlignment="Left" Margin="13,140,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="PaymentValue" HorizontalAlignment="Left" Height="23" Width="126" Margin="119,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" GotFocus="PaymentName_OnGotFocus" PreviewTextInput="PaymentValue_OnPreviewTextInput"/>
-        <TextBox x:Name="NumberOfTextBox" HorizontalAlignment="Left" Height="23" Width="126" Margin="119,214,0,0" TextWrapping="Wrap" VerticalAlignment="Top" GotFocus="PaymentName_OnGotFocus" PreviewTextInput="PaymentValue_OnPreviewTextInput"/>
+        <TextBox x:Name="PaymentValue" HorizontalAlignment="Left" Height="23" Width="136" Margin="119,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" GotFocus="PaymentName_OnGotFocus" PreviewTextInput="PaymentValue_OnPreviewTextInput"/>
+        <TextBox x:Name="NumberOfTextBox" HorizontalAlignment="Left" Height="23" Width="26" Margin="119,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" GotFocus="PaymentName_OnGotFocus" PreviewTextInput="PaymentValue_OnPreviewTextInput"/>
         <Label x:Name="DescLbl" Content="Odstęp czasu" HorizontalAlignment="Left" Margin="13,181,0,0" VerticalAlignment="Top"/>
         <Button x:Name="AddPaymentBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="142,369,0,0" VerticalAlignment="Top" Width="103" Click="addPaymentBtn_Click"/>
         <Button x:Name="AddedPaymentsBtn" Content="Lista dodanych wydatków" HorizontalAlignment="Left" Margin="280,369,0,0" VerticalAlignment="Top" Width="170" Click="addedPaymentsBtn_Click"/>
         <Border BorderBrush="Black" BorderThickness="0" HorizontalAlignment="Left" Height="52" Margin="19,339,0,0" VerticalAlignment="Top" Width="100">
             <Label x:Name="InfoLbl" Content="" Margin="-1" Foreground="#FF9B1818" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Height="52" Width="100"/>
         </Border>
-        <Button x:Name="AddCategoryBtn" Content="+" HorizontalAlignment="Left" Margin="220,103,0,0" VerticalAlignment="Top" Width="25" Click="AddCategoryBtn_Click"/>
+        <Button x:Name="AddCategoryBtn" Content="+" HorizontalAlignment="Left" Margin="230,103,0,0" VerticalAlignment="Top" Width="25" Click="AddCategoryBtn_Click"/>
         <Label Content="Kategoria" HorizontalAlignment="Left" Margin="13,101,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="CategoryComboBox" HorizontalAlignment="Left" Margin="119,103,0,0" VerticalAlignment="Top" Width="96" GotFocus="PaymentName_OnGotFocus"/>
-        <DatePicker x:Name="StartDatePicker" HorizontalAlignment="Left" Margin="119,255,0,0" VerticalAlignment="Top" Height="25" Width="126" GotFocus="PaymentName_OnGotFocus"/>
+        <ComboBox x:Name="CategoryComboBox" HorizontalAlignment="Left" Margin="119,103,0,0" VerticalAlignment="Top" Width="106" GotFocus="PaymentName_OnGotFocus"/>
+        <DatePicker x:Name="StartDatePicker" HorizontalAlignment="Left" Margin="119,255,0,0" VerticalAlignment="Top" Height="25" Width="136" GotFocus="PaymentName_OnGotFocus"/>
         <Label Content="Od Kiedy" HorizontalAlignment="Left" Margin="13,254,0,0" VerticalAlignment="Top"/>
-        <DatePicker x:Name="EndDatePicker" HorizontalAlignment="Left" Margin="119,298,0,0" VerticalAlignment="Top" Height="25" RenderTransformOrigin="0.5,0.52" Width="126" IsEnabled="False"/>
+        <DatePicker x:Name="EndDatePicker" HorizontalAlignment="Left" Margin="119,298,0,0" VerticalAlignment="Top" Height="25" RenderTransformOrigin="0.5,0.52" Width="136" IsEnabled="False"/>
         <CheckBox x:Name="EndDateCheckBox" Content="Do Kiedy" HorizontalAlignment="Left" Margin="19,302,0,0" VerticalAlignment="Top"
                   Checked="EndDateCheckBox_OnChecked" Unchecked="EndDateCheckBox_OnUnchecked"/>
         <Label Content="Dodatkowa notatka" HorizontalAlignment="Left" Margin="280,59,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="NoteTextBox" HorizontalAlignment="Left" Height="238" Margin="280,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170"/>
-        <ComboBox x:Name="DateTypeBox" HorizontalAlignment="Left" Margin="119,184,0,0" VerticalAlignment="Top" Width="126" Height="23" GotFocus="PaymentName_OnGotFocus"/>
-        
+        <ComboBox x:Name="DateTypeBox" HorizontalAlignment="Left" Margin="154,184,0,0" VerticalAlignment="Top" Width="101" Height="23" GotFocus="PaymentName_OnGotFocus"/>
+
     </Grid>
 </Page>

@@ -24,6 +24,7 @@ namespace Budget
         private HistoryMainPage _historyPage;
         private Analisys.AnalisysMainPage _analisysPage;
         private static int _actualPage = 2;
+        private static int periodChecked = 0;
         private bool running = true;
        // private Thread th;
 
@@ -120,9 +121,10 @@ namespace Budget
 
             List<SinglePayment> list = Main_Classes.Budget.Instance.CheckPeriodPayments();
             Main_Classes.Budget.Instance.FutureSinglePaymentsCheck();
-            if (list.Count > 0)
+            if (list.Count > 0 && periodChecked == 0)
             {
                 new CheckingPeriodPayments(list).ShowDialog();
+                periodChecked = 1;
             }
         }
 

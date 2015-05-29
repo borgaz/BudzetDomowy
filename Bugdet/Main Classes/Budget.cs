@@ -247,17 +247,28 @@ namespace Budget.Main_Classes
             {
                 if (p.Value.GetType() == typeof(PeriodPayment))
                 {
-                    PeriodPayment pP = (PeriodPayment) p.Value;
-                    tempCount = periodCount = pP.CountPeriods();  
-                    while (periodCount > 0)
+                    tempCount = periodCount = p.Value.CountPeriods();  
+                    while (periodCount >= 0)
                     {
-                        editList.Add(pP.CreateSingleFromPeriod(periodCount));
-                        periodCount--;
+                        if (periodCount > 0)
+                        {
+                            editList.Add(p.Value.CreateSingleFromPeriod(periodCount));
+                            periodCount--;
+                        }
+                        else
+                        {
+                            SinglePayment temp = p.Value.CreateFirstSingle();
+                            if (temp != null)
+                            {
+                                editList.Add(temp);
+                            }
+                            periodCount--;            
+                        }
                     } 
                     if (tempCount > 0)
                     {
-                        pP.changeUpdateDate(tempCount);
-                        Instance.EditPeriodPayment(p.Key, pP);
+                        p.Value.changeUpdateDate(tempCount);
+                        Instance.EditPeriodPayment(p.Key, (PeriodPayment)p.Value);
                     }
                 }
             }

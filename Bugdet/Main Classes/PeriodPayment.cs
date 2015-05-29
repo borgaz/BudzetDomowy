@@ -131,6 +131,7 @@ namespace Budget.Main_Classes
             System.Console.WriteLine("p:" + _period);
             System.Console.WriteLine(DateTime.MinValue);
             System.Console.WriteLine(DateTime.MinValue.AddDays(0));
+
             DateTime temp = this.lastUpdate;
 
             if (this.period == "MIESIĄC")
@@ -154,7 +155,15 @@ namespace Budget.Main_Classes
                 }
             }
 
-            return new SinglePayment(this.Note, this.Amount, this.CategoryID, this.Type, "[Okresowy] " + this.Name, temp);
+            return new SinglePayment(this.Note, this.Amount, this.CategoryID, this.Type, "Okresowy: " + this.Name, temp);
+        }
+
+        override public SinglePayment CreateFirstSingle()
+        {
+            if (DateTime.Compare(DateTime.Now, this.startDate) == 0)
+                return new SinglePayment(this.Note, this.Amount, this.CategoryID, this.Type, "Okresowy: " + this.Name, this.startDate);
+            else 
+                return null;
         }
 
         public DateTime CountNextDate()

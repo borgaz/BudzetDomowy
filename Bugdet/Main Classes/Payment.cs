@@ -85,5 +85,10 @@ namespace Budget.Main_Classes
         {
             return null;
         }
+
+        virtual public SinglePayment CreateFirstSingle()
+        {
+            return null;
+        }
     }
 }

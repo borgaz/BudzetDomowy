@@ -157,9 +157,9 @@ namespace Budget.WelcomePage
                     var sP = (Main_Classes.SinglePayment)Main_Classes.Budget.Instance.Payments[balanceLog.SinglePaymentID];
                     if (sP.Date <= lastDate && sP.Date >= firstDate && sP.Amount <= amountTo && sP.Amount >= amountOf)
                     {
-                        if (sP.Name.StartsWith("[Okresowy]"))
+                        if (sP.Name.StartsWith("Okresowy:"))
                         {
-                            String TempName = sP.Name.Substring(10);
+                            String TempName = sP.Name.Substring(9);
                             shortHistory.Add(new PaymentForDataGrid(TempName, sP.Amount, "Okresowy", sP.Date, sP.Type, sP.CategoryID, balanceLog.Balance));
                         }
                         else 
