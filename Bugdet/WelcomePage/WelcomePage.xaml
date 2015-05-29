@@ -78,6 +78,7 @@
         <TextBox x:Name="Balance" HorizontalAlignment="Left" Height="32" Margin="599,133,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97"  IsReadOnly="True" FontSize="18" FontWeight="Bold" TextAlignment="Center" Background="#FFEDEEF9"/>
         <Button x:Name="NewTargetButton" Content="Dodaj nowy" HorizontalAlignment="Right" Height="25" Margin="0,0,100,250" VerticalAlignment="Bottom" Width="80" Click="NewTargetButton_Click"/>
         <Button x:Name="AddAmountToTargetButton" Content="Zarządzaj" HorizontalAlignment="Right" Height="25" Margin="0,0,10,250" VerticalAlignment="Bottom" Width="80" Click="AddAmountToTargetButton_Click"/>
-        <Button Content="Generuj PDF" HorizontalAlignment="Left" Height="25" Margin="206,278,0,0" VerticalAlignment="Top" Width="79" Click="Button_Click"/>
+        <Button Content="Generuj PDF" HorizontalAlignment="Left" Height="25" Margin="200,277,0,0" VerticalAlignment="Top" Width="80" Click="PDFButton_Click"/>
+        <CheckBox x:Name="AdvancePDFCheckBox" Content="Zaawansowane" HorizontalAlignment="Left" Height="25" Margin="283,277,0,0" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </Page>

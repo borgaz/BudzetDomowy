@@ -197,6 +197,9 @@
       <DependentUpon>AddAmountToSavingsTargetWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WelcomePage\PaymentForDataGrid.cs" />
+    <Compile Include="WelcomePage\PDFOptionsWindow.xaml.cs">
+      <DependentUpon>PDFOptionsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WelcomePage\SavingsTargetsWindow.xaml.cs">
       <DependentUpon>SavingsTargetsWindow.xaml</DependentUpon>
     </Compile>
@@ -317,6 +320,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WelcomePage\AddAmountToSavingsTargetWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WelcomePage\PDFOptionsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
