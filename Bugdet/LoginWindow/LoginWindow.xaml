@@ -5,12 +5,12 @@
 
     <Grid KeyDown="UIElement_OnKeyDown" Background="#FFEDEEF9">
         <Label Content="Budżet:" HorizontalAlignment="Left" Margin="10,53,0,0" Width="58" Height="26" VerticalAlignment="Top" FontSize="14"/>
-        <ComboBox x:Name="BudgetsComboBox" HorizontalAlignment="Right" Margin="0,53,40,0" VerticalAlignment="Top" Height="26" Width="115" SelectionChanged="BudgetsComboBox_SelectionChanged" FontSize="14" />
+        <ComboBox x:Name="BudgetsComboBox" KeyboardNavigation.TabIndex="0" HorizontalAlignment="Right" Margin="0,53,40,0" VerticalAlignment="Top" Height="26" Width="115" SelectionChanged="BudgetsComboBox_SelectionChanged" FontSize="14" />
         <Button x:Name="AddBudgetButton" Content="+" HorizontalAlignment="Right" VerticalAlignment="Top" Height="26" Width="26" Margin="0,53,10,0" Click="AddBudgetButton_Click" FontSize="14"/>
         <Label Content="Hasło:" HorizontalAlignment="Left" Margin="10,84,0,0" Width="50" Height="26" VerticalAlignment="Top" FontSize="14"/>
-        <PasswordBox x:Name ="PasswordTextBox" HorizontalAlignment="Right" Margin="0,84,40,0" VerticalAlignment="Top" Width="115" Height="26" FontSize="14"/>
-        <Button x:Name="LogInButton" Content="Zaloguj" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10" Height="26" Width="95" Click="LogInButton_Click" FontSize="14"/>
-        <Button x:Name="CloseButton" Content="Wyjdź" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Height="26" Width="95" Click="CloseButton_Click" FontSize="14"/>
+        <PasswordBox x:Name ="PasswordTextBox" KeyboardNavigation.TabIndex="1" HorizontalAlignment="Right" Margin="0,84,40,0" VerticalAlignment="Top" Width="115" Height="26" FontSize="14"/>
+        <Button x:Name="LogInButton" Content="Zaloguj" KeyboardNavigation.TabIndex="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,10" Height="26" Width="95" Click="LogInButton_Click" FontSize="14"/>
+        <Button x:Name="CloseButton" Content="Wyjdź" KeyboardNavigation.TabIndex="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Height="26" Width="95" Click="CloseButton_Click" FontSize="14"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Wybierz nazwę budżetu lub utwórz nowy." VerticalAlignment="Top" Width="207" FontSize="14" TextAlignment="Center"/>
     </Grid>
 </Window>

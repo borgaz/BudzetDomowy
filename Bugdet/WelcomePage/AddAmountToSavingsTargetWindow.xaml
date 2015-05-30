@@ -3,13 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Zarządzanie oszczędzaniem" Height="300" Width="330" ResizeMode="NoResize">
     <Grid Height="270" Width="310" Loaded="Grid_Loaded">
-        <ComboBox x:Name="TargetComboBox" HorizontalAlignment="Left" Height="25" Margin="110,10,0,0" VerticalAlignment="Top" Width="100" SelectionChanged="TargetComboBox_SelectionChanged"/>
-        <Button x:Name="AddButton" Content="Dodaj" HorizontalAlignment="Left" Height="25" Margin="60,225,0,0" VerticalAlignment="Top" Width="90" Click="AddButton_Click"/>
-        <Button x:Name="SubtractButton" Content="Odejmij" HorizontalAlignment="Right" Height="25" Margin="0,225,60,0" VerticalAlignment="Top" Width="90" Click="SubtractButton_Click" />
+        <ComboBox x:Name="TargetComboBox" KeyboardNavigation.TabIndex="0" HorizontalAlignment="Left" Height="25" Margin="110,10,0,0" VerticalAlignment="Top" Width="100" SelectionChanged="TargetComboBox_SelectionChanged"/>
+        <Button x:Name="AddButton" KeyboardNavigation.TabIndex="2" Content="Dodaj" HorizontalAlignment="Left" Height="25" Margin="60,225,0,0" VerticalAlignment="Top" Width="90" Click="AddButton_Click"/>
+        <Button x:Name="SubtractButton" KeyboardNavigation.TabIndex="3" Content="Odejmij" HorizontalAlignment="Right" Height="25" Margin="0,225,60,0" VerticalAlignment="Top" Width="90" Click="SubtractButton_Click" />
         <TextBox x:Name="TargetAmountTextBox" HorizontalAlignment="Left" Height="25" Margin="10,105,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"  Width="90" IsEnabled="False"/>
         <TextBox x:Name="PossessedAmountTextBox" HorizontalAlignment="Left" Height="25" Margin="110,105,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90" IsEnabled="False"/>
         <TextBox x:Name="MissingAmountTextBox" HorizontalAlignment="Left" Height="25" Margin="210,105,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90" IsEnabled="False"/>
-        <TextBox x:Name="AmountTextBox" HorizontalAlignment="Left" Height="25" Margin="110,190,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90"/>
+        <TextBox x:Name="AmountTextBox" KeyboardNavigation.TabIndex="0" HorizontalAlignment="Left" Height="25" Margin="110,190,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="90"/>
         <Label Content="Wybierz cel:" HorizontalAlignment="Left" Height="25" Margin="10,10,0,0" VerticalAlignment="Top" Width="90"/>
         <Label Content="Docelowa" HorizontalAlignment="Left" Height="25" Margin="10,80,0,0" VerticalAlignment="Top" Width="90"/>
         <Label Content="Posiadana" HorizontalAlignment="Left" Height="25" Margin="110,80,0,0" VerticalAlignment="Top" Width="90"/>

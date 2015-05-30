@@ -9,11 +9,11 @@
 
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Dodaj okresowe przychody, czyli takie które są wypłacane w dany dzień w miesiącu badź dany dzień w tygodniu, bądź co określony okres czasu" VerticalAlignment="Top" Width="452"/>
-        <TextBox x:Name="SalaryName" HorizontalAlignment="Left" Height="23" Margin="119,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="138" GotFocus="SalaryName_OnGotFocus" PreviewTextInput="SalaryName_PreviewTextInput"/>
+        <TextBox x:Name="SalaryName" KeyboardNavigation.TabIndex="0" HorizontalAlignment="Left" Height="23" Margin="119,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="138" GotFocus="SalaryName_OnGotFocus" PreviewTextInput="SalaryName_PreviewTextInput"/>
         <Label Content="Nazwa przychodu" HorizontalAlignment="Left" Margin="13,59,0,0" VerticalAlignment="Top" Width="105"/>
         <Label Content="Kwota" HorizontalAlignment="Left" Margin="13,140,0,00" VerticalAlignment="Top"/>
-        <TextBox x:Name="SalaryValue" HorizontalAlignment="Left" Height="23" Width="138" Margin="119,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PreviewTextInput="SalaryValue_OnPreviewTextInput"/>
-        <TextBox x:Name="NumberOfTextBox" HorizontalAlignment="Left" Height="26" Width="28" Margin="119,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PreviewTextInput="SalaryValue_OnPreviewTextInput"/>
+        <TextBox x:Name="SalaryValue" KeyboardNavigation.TabIndex="2" HorizontalAlignment="Left" Height="23" Width="138" Margin="119,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PreviewTextInput="SalaryValue_OnPreviewTextInput"/>
+        <TextBox x:Name="NumberOfTextBox" KeyboardNavigation.TabIndex="3" HorizontalAlignment="Left" Height="26" Width="28" Margin="119,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PreviewTextInput="SalaryValue_OnPreviewTextInput"/>
         <Label x:Name="DescLbl" Content="Odstęp czasu" HorizontalAlignment="Left" Margin="13,181,0,0" VerticalAlignment="Top"/>
         <Button x:Name="AddSalaryBtn" Content="Dodaj" HorizontalAlignment="Left" Margin="145,369,0,0" VerticalAlignment="Top" Width="103" Click="addSalaryBtn_Click"/>
         <Button x:Name="AddedSalariesBtn" Content="Lista dodanych przychodów" HorizontalAlignment="Left" Margin="280,369,0,0" VerticalAlignment="Top" Width="170" Click="addedSalariesBtn_Click"/>
@@ -22,15 +22,15 @@
         </Border>
         <Button x:Name="AddCategoryBtn" Content="+" HorizontalAlignment="Left" Margin="232,103,0,0" VerticalAlignment="Top" Width="25" Click="AddCategoryBtn_Click" RenderTransformOrigin="1.2,0.364"/>
         <Label Content="Kategoria" HorizontalAlignment="Left" Margin="13,101,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="CategoryComboBox" HorizontalAlignment="Left" Margin="119,103,0,0" VerticalAlignment="Top" Width="108"/>
+        <ComboBox x:Name="CategoryComboBox" KeyboardNavigation.TabIndex="1" HorizontalAlignment="Left" Margin="119,103,0,0" VerticalAlignment="Top" Width="108"/>
         <DatePicker x:Name="StartDatePicker" HorizontalAlignment="Left" Margin="119,255,0,0" VerticalAlignment="Top" Height="25" Width="138"/>
         <Label Content="Od Kiedy" HorizontalAlignment="Left" Margin="13,254,0,0" VerticalAlignment="Top"/>
         <DatePicker x:Name="EndDatePicker" HorizontalAlignment="Left" Margin="119,298,0,0" VerticalAlignment="Top" Height="25" Width="138" IsEnabled="False"/>
         <CheckBox x:Name="EndDateCheckBox" Content="Do Kiedy" HorizontalAlignment="Left" Margin="19,302,0,0" VerticalAlignment="Top"
                   Checked="EndDateCheckBox_OnChecked" Unchecked="EndDateCheckBox_OnUnchecked"/>
         <Label Content="Dodatkowa notatka" HorizontalAlignment="Left" Margin="280,59,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="NoteTextBox" HorizontalAlignment="Left" Height="238" Margin="280,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170"/>
-        <ComboBox x:Name="DateTypeBox" HorizontalAlignment="Left" Margin="154,184,0,0" VerticalAlignment="Top" Width="103" Height="23"/>
+        <TextBox x:Name="NoteTextBox" KeyboardNavigation.TabIndex="5" HorizontalAlignment="Left" Height="238" Margin="280,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170"/>
+        <ComboBox x:Name="DateTypeBox" KeyboardNavigation.TabIndex="4" HorizontalAlignment="Left" Margin="154,184,0,0" VerticalAlignment="Top" Width="103" Height="23"/>
 
     </Grid>
 </Page>

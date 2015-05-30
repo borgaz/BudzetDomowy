@@ -81,8 +81,9 @@ namespace Budget.Payments_Manager
                     _singleDateGrid.SingleDatePicker.Text = "";
                 }
 
-                InfoBox.Text = "Dodano!";
-                InfoBox.Foreground = Brushes.Green;
+                InfoLabel.Content = "Dodano!";
+                InfoLabel.Foreground = Brushes.Green;
+                InfoLabel.FontSize = 16;
                 SalaryName.Text = "";
                 SalaryValue.Text = "";
                 CategoryBox.SelectedIndex = -1;
@@ -90,8 +91,9 @@ namespace Budget.Payments_Manager
             }
             else
             {
-                InfoBox.Text = "Uzupełnij wymagane pola.";
-                InfoBox.Foreground = Brushes.Red;
+                InfoLabel.FontSize = 14;
+                InfoLabel.Content = "Uzupełnij wymagane pola.";
+                InfoLabel.Foreground = Brushes.Red;
             }
         }
 
@@ -151,7 +153,7 @@ namespace Budget.Payments_Manager
 
         private void SalaryName_OnGotFocus(object sender, RoutedEventArgs e)
         {
-            InfoBox.Text = ""; 
+            InfoLabel.Content = ""; 
         }   
     }
 }

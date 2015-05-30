@@ -11,7 +11,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="54" Width="267"><Run Text="Witaj w kreatorze budzetu, przejdz pare krokow do stworzenia swojego wlasnego budzetu."/><LineBreak/><Run Text="Czerwone pola to pola obowiązkowe."/><LineBreak/><Run/></TextBlock>
         <Label Content="Nazwa Twojego budzetu:" HorizontalAlignment="Left" Margin="13,80,0,0" VerticalAlignment="Top"/>
         <Label Content="Obecnie posiadana kwota:" HorizontalAlignment="Left" Margin="13,192,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="budgetNameText" HorizontalAlignment="Left" Height="23" Margin="168,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" TextChanged="BudgetNameText_OnTextChanged" PreviewTextInput="BudgetNameText_OnPreviewTextInput">
+        <TextBox x:Name="budgetNameText" KeyboardNavigation.TabIndex="0" HorizontalAlignment="Left" Height="23" Margin="168,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" TextChanged="BudgetNameText_OnTextChanged" PreviewTextInput="BudgetNameText_OnPreviewTextInput">
             <TextBox.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFEC1717" Offset="0"/>
@@ -19,9 +19,9 @@
                 </LinearGradientBrush>
             </TextBox.Background>
         </TextBox>
-        <PasswordBox x:Name="passTextBox" HorizontalAlignment="Left" Margin="168,121,0,0" VerticalAlignment="Top" Height="23" Width="109" PasswordChanged="PassRepeatTextBox_OnGotFocus" Background="White"/>
-        <PasswordBox x:Name="passRepeatTextBox" HorizontalAlignment="Left" Margin="168,151,0,0" VerticalAlignment="Top" Height="23" Width="109" GotFocus="PassRepeatTextBox_OnGotFocus" PasswordChanged="PassRepeatTextBox_OnGotFocus" Background="White"/>
-        <TextBox x:Name="budgetBalance" HorizontalAlignment="Left" Height="23" Margin="168,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" TextChanged="BudgetBalance_OnTextChanged" PreviewTextInput="NumberOfPeopleTextBox_OnPreviewTextInput">
+        <PasswordBox x:Name="passTextBox" KeyboardNavigation.TabIndex="1" HorizontalAlignment="Left" Margin="168,121,0,0" VerticalAlignment="Top" Height="23" Width="109" PasswordChanged="PassRepeatTextBox_OnGotFocus" Background="White"/>
+        <PasswordBox x:Name="passRepeatTextBox" KeyboardNavigation.TabIndex="2" HorizontalAlignment="Left" Margin="168,151,0,0" VerticalAlignment="Top" Height="23" Width="109" GotFocus="PassRepeatTextBox_OnGotFocus" PasswordChanged="PassRepeatTextBox_OnGotFocus" Background="White"/>
+        <TextBox x:Name="budgetBalance" KeyboardNavigation.TabIndex="3" HorizontalAlignment="Left" Height="23" Margin="168,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" TextChanged="BudgetBalance_OnTextChanged" PreviewTextInput="NumberOfPeopleTextBox_OnPreviewTextInput">
             <TextBox.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFEC1717" Offset="0"/>

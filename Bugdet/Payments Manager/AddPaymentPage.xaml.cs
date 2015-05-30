@@ -82,8 +82,9 @@ namespace Budget.Payments_Manager
                     _singleDateGrid.SingleDatePicker.Text = DateTime.Now.Date.ToString();
                 }
 
-                InfoBox.Text = "Dodano!";
-                InfoBox.Foreground = Brushes.Green;
+                InfoLabel.Content = "Dodano!";
+                InfoLabel.FontSize = 16;
+                InfoLabel.Foreground = Brushes.Green;
                 PaymentName.Text = "";
                 PaymentValue.Text = "";
                 CategoryBox.SelectedIndex = -1;
@@ -91,8 +92,9 @@ namespace Budget.Payments_Manager
             }
             else
             {
-                InfoBox.Text = "Uzupełnij wymagane pola.";
-                InfoBox.Foreground = Brushes.Red;
+                InfoLabel.FontSize = 14;
+                InfoLabel.Content = "Uzupełnij wymagane pola.";
+                InfoLabel.Foreground = Brushes.Red;
             }
         }
         private void AddCategoryBtn_Click(object sender, RoutedEventArgs e)
@@ -143,7 +145,7 @@ namespace Budget.Payments_Manager
 
         private void PaymentName_OnGotFocus(object sender, RoutedEventArgs e)
         {
-            InfoBox.Text = "";  
+            InfoLabel.Content = "";  
         }
     }
 }

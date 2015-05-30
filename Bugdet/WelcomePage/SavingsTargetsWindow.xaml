@@ -10,14 +10,14 @@
     ResizeMode="NoResize">
 
     <Grid Height="400" Width="400">
-        <CheckBox x:Name="AutoCheckBox" Content="Automatyczne odkładanie" HorizontalAlignment="Left" Height="25" Margin="10,150,0,0" VerticalAlignment="Top" Width="200" Unchecked="AutoCheckBox_Unchecked" Checked="AutoCheckBox_Checked"/>
-        <ComboBox x:Name="PriorityComboBox" HorizontalAlignment="Left" Height="25" Margin="120,115,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="PeriodComboBox" HorizontalAlignment="Left" Height="25" Margin="120,245,0,0" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Height="25" Margin="120,45,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox  x:Name="AmountTextBox" HorizontalAlignment="Left" Height="25" Margin="120,80,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="NoteTextBox" HorizontalAlignment="Left" Height="25" Margin="10,365,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="270"/>
-        <TextBox x:Name="Amount2TextBox" HorizontalAlignment="Left" Height="25" Margin="120,210,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="FrequencyTextBox" HorizontalAlignment="Left" Height="25" Margin="60,245,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="50"/>
+        <CheckBox x:Name="AutoCheckBox" KeyboardNavigation.TabIndex="3" Content="Automatyczne odkładanie" HorizontalAlignment="Left" Height="25" Margin="10,150,0,0" VerticalAlignment="Top" Width="200" Unchecked="AutoCheckBox_Unchecked" Checked="AutoCheckBox_Checked"/>
+        <ComboBox x:Name="PriorityComboBox" KeyboardNavigation.TabIndex="2" HorizontalAlignment="Left" Height="25" Margin="120,115,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="PeriodComboBox" KeyboardNavigation.TabIndex="6" HorizontalAlignment="Left" Height="25" Margin="120,245,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="NameTextBox" KeyboardNavigation.TabIndex="0" HorizontalAlignment="Left" Height="25" Margin="120,45,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox  x:Name="AmountTextBox" KeyboardNavigation.TabIndex="1" HorizontalAlignment="Left" Height="25" Margin="120,80,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="NoteTextBox" KeyboardNavigation.TabIndex="8" HorizontalAlignment="Left" Height="25" Margin="10,365,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="270"/>
+        <TextBox x:Name="Amount2TextBox" KeyboardNavigation.TabIndex="4" HorizontalAlignment="Left" Height="25" Margin="120,210,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="FrequencyTextBox" KeyboardNavigation.TabIndex="5" HorizontalAlignment="Left" Height="25" Margin="60,245,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="50"/>
         <Label Content="Nazwa:" HorizontalAlignment="Left" Height="25" Margin="10,45,0,0" VerticalAlignment="Top" Width="100"/>
         <Label Content="Kwota:" HorizontalAlignment="Left" Height="25" Margin="10,80,0,0" VerticalAlignment="Top" Width="100"/>
         <Label Content="Priorytet:" HorizontalAlignment="Left" Height="25" Margin="10,115,0,0" VerticalAlignment="Top" Width="100"/>
@@ -27,9 +27,9 @@
         <Label x:Name="Label1" Content="Odkładaj:" HorizontalAlignment="Left" Height="25" Margin="10,210,0,0" VerticalAlignment="Top" Width="100"/>
         <Label x:Name="Label2" Content="co:" HorizontalAlignment="Left" Height="25" Margin="10,245,0,0" VerticalAlignment="Top" Width="40"/>
         <Label Content="Koniec:" HorizontalAlignment="Left" Height="25" Margin="10,280,0,0" VerticalAlignment="Top" Width="80"/>
-        <Button Content="Dodaj" HorizontalAlignment="Left" Height="25" Margin="290,365,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click"/>
+        <Button Content="Dodaj" KeyboardNavigation.TabIndex="9" HorizontalAlignment="Left" Height="25" Margin="290,365,0,0" VerticalAlignment="Top" Width="100" Click="Button_Click"/>
         <DatePicker x:Name="EndDatePicker" HorizontalAlignment="Left" Height="25" Margin="120,280,0,0" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="CheckButton" Content="Sprawdź" HorizontalAlignment="Left" Height="25" Margin="120,310,0,0" VerticalAlignment="Top" Width="120" Click="CheckButton_Click"/>
+        <Button x:Name="CheckButton" KeyboardNavigation.TabIndex="7" Content="Sprawdź" HorizontalAlignment="Left" Height="25" Margin="120,310,0,0" VerticalAlignment="Top" Width="120" Click="CheckButton_Click"/>
         <Label Content="Początek:" HorizontalAlignment="Left" Height="25" Margin="10,180,0,0" VerticalAlignment="Top" Width="80"/>
         <DatePicker x:Name="StartDatePicker" HorizontalAlignment="Left" Height="25" Margin="120,180,0,0" VerticalAlignment="Top" Width="120"/>
     </Grid>

@@ -10,8 +10,8 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Wprowadź nazwę oraz krótki opis kategorii, która ma zostać dodana " VerticalAlignment="Top" Width="240" Grid.ColumnSpan="2"/>
         <Label Content="Nazwa kategorii" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <Label Content="Opis" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="CategoryNameTextBox" HorizontalAlignment="Right" VerticalAlignment="Top" Width="140" Height="26" Margin="0,52,10,0" TextWrapping="Wrap" Text="" Grid.Column="1"/>
-        <TextBox x:Name="CategoryNoteTextBox" HorizontalAlignment="Right" VerticalAlignment="Top" Width="140" Height="26" Margin="0,83,10,0" TextWrapping="Wrap" Text="" Grid.Column="1"/>
+        <TextBox x:Name="CategoryNameTextBox" KeyboardNavigation.TabIndex="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="140" Height="26" Margin="0,52,10,0" TextWrapping="Wrap" Text="" Grid.Column="1"/>
+        <TextBox x:Name="CategoryNoteTextBox" KeyboardNavigation.TabIndex="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="140" Height="26" Margin="0,83,10,0" TextWrapping="Wrap" Text="" Grid.Column="1"/>
         <Button x:Name="BackBtn" Content="Wyjdź" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="113" Height="26" Margin="10,0,0,10" Click="BackBtn_Click" Grid.ColumnSpan="2"/>
         <Button x:Name="AddCategoryBtn" Content="Dodaj" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="113" Height="26" Margin="0,0,10,10" Click="AddCategoryBtn_Click" Grid.Column="1"/>
         <Label Content="Typ" HorizontalAlignment="Left" Margin="10,114,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
