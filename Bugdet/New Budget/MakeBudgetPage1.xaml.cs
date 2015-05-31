@@ -22,6 +22,8 @@ namespace Budget.New_Budget
             InitializeComponent();
             InsertColors();
             salaryInfo = s;
+            passTextBox.Foreground = red;
+
         }
 
         private void InsertColors()
