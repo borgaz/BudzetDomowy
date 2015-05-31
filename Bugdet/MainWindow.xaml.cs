@@ -10,6 +10,7 @@ using Budget.Payments_Manager;
 using Budget.SettingsPage;
 using Budget.Utility_Classes;
 using System;
+using System.Windows.Threading;
 
 namespace Budget
 {
@@ -24,7 +25,8 @@ namespace Budget
         private HistoryMainPage _historyPage;
         private Analisys.AnalisysMainPage _analisysPage;
         private static int _actualPage = 2;
-        private static int periodChecked = 0;
+        private static int _periodChecked = 0;
+        private Thread _autoSave;
         private bool running = true;
        // private Thread th;
 
@@ -57,15 +59,35 @@ namespace Budget
             HistoryButton.IsEnabled = true;
             AnalisysButton.IsEnabled = true;
             InsertPage();
-            //running = true;
-            //th = new Thread(OnPageChange);
-            //th.Start();
+            SqlConnect.Instance._savingMinutes = 1;
+            _autoSave = new Thread(Save);
+            _autoSave.Start();
 
         }
 
         ~MainWindow()
         {
             running = false;
+        }
+        private void Save()
+        {
+            int time = 0;
+            while(running)
+            {
+                if (time != (SqlConnect.Instance._savingMinutes * 60))
+                {
+                    Thread.Sleep(1000);
+                    time++;
+                    continue;
+                }
+                Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate()
+                {
+                    this.IsEnabled = false;
+                    new SavingInfo().Show();
+                    this.IsEnabled = true;
+                }));
+                time = 0;
+            }
         }
 
         //private void OnPageChange()
@@ -121,10 +143,10 @@ namespace Budget
 
             List<SinglePayment> list = Main_Classes.Budget.Instance.CheckPeriodPayments();
             Main_Classes.Budget.Instance.FutureSinglePaymentsCheck();
-            if (list.Count > 0 && periodChecked == 0)
+            if (list.Count > 0 && _periodChecked == 0)
             {
                 new CheckingPeriodPayments(list).ShowDialog();
-                periodChecked = 1;
+                _periodChecked = 1;
             }
         }
 
@@ -238,6 +260,7 @@ namespace Budget
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             Main_Classes.Budget.Instance.Dump();
+            MessageBox.Show("Zapisano");
         }
     }
 }

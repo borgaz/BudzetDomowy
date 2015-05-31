@@ -18,6 +18,7 @@ namespace Budget.Main_Classes
         private SQLiteCommand _command;
         public double monthlySalaries;
         public double monthlyPayments;
+        public int _savingMinutes;
 
         public static SqlConnect Instance
         {

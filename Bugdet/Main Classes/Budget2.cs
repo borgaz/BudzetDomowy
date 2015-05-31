@@ -209,6 +209,7 @@ namespace Budget.Main_Classes
             {
                 return false;
             }
+            listOfAdds.Clear();
             return true;
         }
 
@@ -248,9 +249,9 @@ namespace Budget.Main_Classes
                 SqlConnect.Instance.ErrLog(ex);
                 return false;
             }
+            listOfDels.Clear();
             return true;
         }
-
         private Boolean EditDB(List<Changes> listOfEdts)
         {
             try
@@ -330,6 +331,7 @@ namespace Budget.Main_Classes
             //if (DeleteFromDB(listOfEdts,true) && AddToDB(listOfEdts))
             //{
             //    return true;
+            listOfEdits.Clear();
             //}
             return true;
         }
@@ -340,10 +342,7 @@ namespace Budget.Main_Classes
                 && Instance.EditDB(Instance.ListOfEdits)
                 && Instance.DeleteFromDB(Instance.ListOfDels))
             {
-                MessageBox.Show("Zapisano");
-                listOfEdits.Clear();
-                listOfDels.Clear();
-                listOfAdds.Clear();
+                //MessageBox.Show("Zapisano");
                 SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE BUDGET SET BALANCE = '" + balance.ToString().Replace(",", ".") +
                     "'");
                 instance = FetchAll();

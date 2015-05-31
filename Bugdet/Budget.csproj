@@ -193,6 +193,9 @@
       <DependentUpon>CustomMessageBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utility Classes\GenerateDateBase.cs" />
+    <Compile Include="Utility Classes\SavingInfo.xaml.cs">
+      <DependentUpon>SavingInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WelcomePage\AddAmountToSavingsTargetWindow.xaml.cs">
       <DependentUpon>AddAmountToSavingsTargetWindow.xaml</DependentUpon>
     </Compile>
@@ -316,6 +319,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Utility Classes\CustomMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utility Classes\SavingInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
