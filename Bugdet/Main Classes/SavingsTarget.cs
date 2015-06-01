@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace Budget.Main_Classes
 {
@@ -22,6 +23,7 @@ namespace Budget.Main_Classes
         private double moneyHoldings; // odlozona juz kwota
         private DateTime addedDate; // data dodatania celu
         private double neededAmount; // kwota, jaka chcemy odlozyc
+        private double percentOfSavingsAmount;
 
         public int CompareTo(SavingsTarget sT)
         {
@@ -45,6 +47,7 @@ namespace Budget.Main_Classes
             this.addedDate = addedDate;
             this.neededAmount = neededAmount;
             this.type = type;
+            this.percentOfSavingsAmount = (moneyHoldings / neededAmount) * 100;
         }
 
         /// <summary>
@@ -58,9 +61,23 @@ namespace Budget.Main_Classes
             {
                 this.priority = Priorities.Zrealizowany;
             }
+            this.percentOfSavingsAmount = (moneyHoldings / neededAmount) * 100;
             Main_Classes.Budget.Instance.ListOfEdits.Add(new Utility_Classes.Changes(typeof(SavingsTarget), index));
 
             return CountMoneyLeft() == 0;
+        }
+
+        public Boolean CountDaysLeft()
+        {
+            if (daysLeft != (int)(deadline - DateTime.Today).TotalDays)
+            {
+                this.daysLeft = (int)(deadline - DateTime.Today).TotalDays;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -149,6 +166,14 @@ namespace Budget.Main_Classes
             get
             {
                 return neededAmount;
+            }
+        }
+
+        public double PercentOfSavingsAmount
+        {
+            get
+            {
+                return percentOfSavingsAmount;
             }
         }
    }

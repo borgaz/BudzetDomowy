@@ -32,5 +32,8 @@
         <Button x:Name="CheckButton" KeyboardNavigation.TabIndex="7" Content="Sprawdź" HorizontalAlignment="Left" Height="25" Margin="120,310,0,0" VerticalAlignment="Top" Width="120" Click="CheckButton_Click"/>
         <Label Content="Początek:" HorizontalAlignment="Left" Height="25" Margin="10,180,0,0" VerticalAlignment="Top" Width="80"/>
         <DatePicker x:Name="StartDatePicker" HorizontalAlignment="Left" Height="25" Margin="120,180,0,0" VerticalAlignment="Top" Width="120"/>
+        <CheckBox x:Name="FirstPayCheckBox" Content="Pierwsza wpłata" HorizontalAlignment="Left" Height="25" Margin="270,150,0,0" VerticalAlignment="Top" Width="120" Checked="FirstPayCheckBox_Checked" Unchecked="FirstPayCheckBox_UnChecked"/>
+        <TextBox x:Name="FirstPayAmountTextBox" HorizontalAlignment="Left" Height="25" Margin="340,180,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="50"/>
+        <Label x:Name="FirstPayLabel" Content="Kwota:" HorizontalAlignment="Left" Height="27" Margin="270,180,0,0" VerticalAlignment="Top" Width="50"/>
     </Grid>
 </Window>

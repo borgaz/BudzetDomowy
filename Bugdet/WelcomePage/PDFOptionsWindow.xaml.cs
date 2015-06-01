@@ -1,16 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Budget.WelcomePage
 {
@@ -19,10 +8,11 @@ namespace Budget.WelcomePage
     /// </summary>
     public partial class PDFOptionsWindow : Window
     {
+        private static PDFOptionsWindow _instance;
         private DateTime startDate = DateTime.Today;
         private DateTime endDate = DateTime.Today;
         private Boolean generate = false;
-        private static PDFOptionsWindow _instance;
+        
         private PDFOptionsWindow()
         {
             InitializeComponent();
@@ -50,8 +40,15 @@ namespace Budget.WelcomePage
         {
             startDate = StartDatePicker.SelectedDate.Value;
             endDate = EndDatePicker.SelectedDate.Value;
-            generate = true;
-            this.Close();
+            if (startDate < endDate)
+            {
+                generate = true;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Wybierz prawidłowy zakres!");
+            }
         }
 
         public DateTime StartDate

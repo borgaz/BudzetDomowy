@@ -25,13 +25,13 @@
                 <DataGridTextColumn Header="Data" Width="70" IsReadOnly="True" Binding="{Binding Date}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid x:Name="savingsTargetsDataGrid" ItemsSource="{Binding}"  AutoGenerateColumns="False"  CanUserResizeColumns="False" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="234" Width="308" Margin="0,0,10,10"  Loaded="Page_Loaded" SelectionMode="Single" Background="White" LoadingRow="savingsTargetsDataGrid_OnLoadingRow">
+        <DataGrid x:Name="savingsTargetsDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False"  CanUserResizeColumns="False" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="234" Width="308" Margin="0,0,10,10"  Loaded="Page_Loaded" SelectionMode="Single" Background="White" LoadingRow="savingsTargetsDataGrid_OnLoadingRow">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nazwa" Width="80" IsReadOnly="True" Binding="{Binding Target}"/>
-                <DataGridTextColumn Header="Priorytet" Width="90" IsReadOnly="True" Binding="{Binding PriorityToString}"/>
-                <DataGridTextColumn Header="Kwota" Width="65" IsReadOnly="True" Binding="{Binding NeededAmount}"/>
+                <DataGridTextColumn Header="Nazwa" Width="65" IsReadOnly="True" Binding="{Binding Target}"/>
+                <DataGridTextColumn Header="Cel" Width="65" IsReadOnly="True" Binding="{Binding NeededAmount}"/>
                 <DataGridTextColumn Header="Odłożono" Width="65" IsReadOnly="True" Binding="{Binding MoneyHoldings}"/>
-
+                <DataGridTextColumn Header="%" Width="30" IsReadOnly="True" Binding="{Binding PercentOfSavingsAmount}"/>
+                <DataGridTextColumn Header="Do końca" Width="65" IsReadOnly="True" Binding="{Binding DaysLeft}"/>   
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Najbliższe przychody i wydatki:" HorizontalAlignment="Left" Height="28" Margin="10,10,0,0" VerticalAlignment="Top" Width="191" FontWeight="Bold"/>
@@ -55,7 +55,7 @@
         </ProgressBar>
         <Rectangle Fill="#FF5899BD" HorizontalAlignment="Left" Margin="395,0,0,0" Width="2"/>
         <Label Content="Bilans na ten miesiąc" HorizontalAlignment="Left" Margin="420,30,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Width="182"/>
-        <Label Content="Przychody" HorizontalAlignment="Left" Margin="477,152,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" FontWeight="Bold" FontSize="16" >
+        <Label x:Name="SalariesLabel" Content="Przychody" HorizontalAlignment="Left" Margin="477,152,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" FontWeight="Bold" FontSize="16" >
             <Label.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -65,7 +65,7 @@
                 </TransformGroup>
             </Label.RenderTransform>
         </Label>
-        <Label Content="Wydatki" HorizontalAlignment="Left" Margin="414,152,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" FontWeight="Bold" FontSize="16">
+        <Label x:Name="PaymentsLabel" Content="Wydatki" HorizontalAlignment="Left" Margin="414,152,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" FontWeight="Bold" FontSize="16">
             <Label.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>

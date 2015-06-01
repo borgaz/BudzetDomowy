@@ -231,7 +231,7 @@ namespace Budget.New_Budget
             {
                 for (int i = 0; i < cat.Count; i++)
                 {
-                    if (cat[i].Type == type)
+                    if (cat[i].Type == type && (i != 0 && i != 1))
                     {
                         categoryBox.Items.Add(cat[i].Name);
                         originalID.Add(i);

@@ -20,28 +20,17 @@ namespace Budget.WelcomePage
         public WelcomePage()
         {
             InitializeComponent();
+            savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
+            ChangeSavingsTargetsDaysLeft();
             InsertBars();
             SetColours();
             PrevMonth();
         }
 
-        private void SetColours()
-        {
-            Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.Balance);
-            if (Main_Classes.Budget.Instance.Balance > 0)
-            {
-                Balance.Foreground = Brushes.Green;
-            }
-            if (Main_Classes.Budget.Instance.Balance <= 0)
-            {
-                Balance.Foreground = Brushes.Red;
-            }
-        }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             providedPaymentsDataGrid.ItemsSource = CreateDataForProvidedPaymentDataGrid("grid");
             shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid("grid", DateTime.Today, DateTime.Today);
-            savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
 
             Main_Classes.Budget.Instance.PropertyChanged += (s, propertyChangedEventArgs) =>
             {
@@ -52,31 +41,6 @@ namespace Budget.WelcomePage
             };
         }
 
-        private void PrevMonth()
-        {
-            var res = 0.0;
-            var date = DateTime.Now.AddMonths(-1);
-            var firstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            foreach (var p in Main_Classes.Budget.Instance.Payments)
-            {
-                if (p.Value.GetType() == typeof(PeriodPayment))
-                    continue;
-                var pp = (SinglePayment) p.Value;
-                if (pp.Date <= date || pp.Date >= firstDay) continue;
-                res = Main_Classes.Budget.Instance.BalanceLog[p.Key].Balance;
-                date = pp.Date;
-            }
-            if (res == 0.00)
-            {
-                PrevMonthLabel.Visibility = Visibility.Hidden;
-                PrevMonthTextBox.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                PrevMonthTextBox.Foreground = res < 0 ? Brushes.Red : Brushes.Green;
-                PrevMonthTextBox.Text = res.ToString();
-            }
-        }
         private List<Main_Classes.SavingsTarget> CreataDataForSavingsTargetsDataGrid()
         {
             List<Main_Classes.SavingsTarget> savingsTargets = new List<Main_Classes.SavingsTarget>();
@@ -124,7 +88,7 @@ namespace Budget.WelcomePage
                         {
                             lastDate = SettingsPage.Settings.Instance.PP_LastDateToShow() <= pP.EndDate ? SettingsPage.Settings.Instance.PP_LastDateToShow() : pP.EndDate;
                         }
-                        if (pP.CountNextDate() <= lastDate)
+                        if (pP.CountNextDate() < lastDate)
                         {
                             providedPayments.AddRange(Main_Classes.PeriodPayment.CreateListOfSelectedPeriodPayments(pP, lastDate));
                         }
@@ -133,7 +97,7 @@ namespace Budget.WelcomePage
                 else
                 {
                     var sP = (Main_Classes.SinglePayment)payment;
-                    if (sP.CompareDate() > 0 && sP.Amount <= amountTo && sP.Amount >= amountOf && sP.Date <= lastDate)
+                    if (sP.CompareDate() > 0 && sP.Amount <= amountTo && sP.Amount >= amountOf && sP.Date < lastDate)
                     {
                         providedPayments.Add(new PaymentForDataGrid(sP.Name, sP.Amount, "Pojedynczy", sP.Date, sP.Type, sP.CategoryID, 0));
                     }    
@@ -160,7 +124,7 @@ namespace Budget.WelcomePage
                 amountTo = SettingsPage.Settings.Instance.PP_AmountTo;
                 numberOfRow = SettingsPage.Settings.Instance.PP_NumberOfRow;
                 firstDate = SettingsPage.Settings.Instance.SH_LastDateToShow();
-                lastDate = DateTime.Today;
+                lastDate = DateTime.Now;
             }
             else if (destination.Equals("pdf"))
             {
@@ -210,13 +174,125 @@ namespace Budget.WelcomePage
             return shortHistory;
         }
 
+        private void NewTargetButton_Click(object sender, RoutedEventArgs e)
+        {
+            SavingsTargetsWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) =>
+            {
+                if (propertyChangedEventArgs.PropertyName.Equals("Update_sTDG"))
+                    savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
+                if (propertyChangedEventArgs.PropertyName.Equals("Update_sHDG"))
+                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid("grid", DateTime.Today, DateTime.Today);
+                if (propertyChangedEventArgs.PropertyName.Equals("Update_pPDG"))
+                    providedPaymentsDataGrid.ItemsSource = CreateDataForProvidedPaymentDataGrid("grid");
+                if (propertyChangedEventArgs.PropertyName.Equals("Refresh_sTDG"))
+                    savingsTargetsDataGrid.Items.Refresh();
+            };
+            SavingsTargetsWindow.Instance.ShowDialog();
+        }
+
+        private void AddAmountToTargetButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddAmountToSavingsTargetWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) =>
+            {
+                if (propertyChangedEventArgs.PropertyName.Equals("Update_sHDG"))
+                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid("grid", DateTime.Today, DateTime.Today);
+                if (propertyChangedEventArgs.PropertyName.Equals("Update_sTDG"))
+                    savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
+                if (propertyChangedEventArgs.PropertyName.Equals("Refresh_sTDG"))
+                    savingsTargetsDataGrid.Items.Refresh();
+            };
+            AddAmountToSavingsTargetWindow.Instance.ShowDialog();
+        }
+
+        private void PDFButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (AdvancePDFCheckBox.IsChecked == true)
+            {
+                PDFOptionsWindow.Instance.ShowDialog();
+                startDate = PDFOptionsWindow.Instance.StartDate;
+                endDate = PDFOptionsWindow.Instance.EndDate;
+                if (PDFOptionsWindow.Instance.Generate == true)
+                {
+                    GeneratePDF();
+                }
+                PDFOptionsWindow.Instance = null;
+                AdvancePDFCheckBox.IsChecked = false;
+            }
+            else
+            {
+                startDate = DateTime.Today;
+                endDate = DateTime.Today;
+                GeneratePDF();
+            }
+        }
+
         private void InsertBars()
         {
             PaymentsBar.Maximum = SalariesBar.Maximum = Main_Classes.SqlConnect.Instance.monthlySalaries + Main_Classes.SqlConnect.Instance.monthlyPayments;
+            if (PaymentsBar.Maximum == 0 && SalariesBar.Maximum == 0)
+            {
+                PaymentsBar.Maximum = SalariesBar.Maximum = 1;
+            }
             SalariesBar.Value = Main_Classes.SqlConnect.Instance.monthlySalaries;
             PaymentsBar.Value = Main_Classes.SqlConnect.Instance.monthlyPayments;
             SalariesBar.ToolTip = SalariesBar.Value + " zł";
             PaymentsBar.ToolTip = PaymentsBar.Value + " zł";
+            SalariesLabel.ToolTip = SalariesBar.Value + " zł";
+            PaymentsLabel.ToolTip = PaymentsBar.Value + " zł";
+        }
+
+        private void PrevMonth()
+        {
+            var res = 0.0;
+            var date = DateTime.Now.AddMonths(-1);
+            var firstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            foreach (var p in Main_Classes.Budget.Instance.Payments)
+            {
+                if (p.Value.GetType() == typeof(PeriodPayment))
+                    continue;
+                var pp = (SinglePayment)p.Value;
+                if (pp.Date <= date || pp.Date >= firstDay) continue;
+                res = Main_Classes.Budget.Instance.BalanceLog[p.Key].Balance;
+                date = pp.Date;
+            }
+            if (res == 0.00)
+            {
+                PrevMonthLabel.Visibility = Visibility.Hidden;
+                PrevMonthTextBox.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                PrevMonthTextBox.Foreground = res < 0 ? Brushes.Red : Brushes.Green;
+                PrevMonthTextBox.Text = res.ToString();
+            }
+        }
+
+        private void ChangeSavingsTargetsDaysLeft()
+        {
+            foreach (var sT in Main_Classes.Budget.Instance.SavingsTargets)
+            {
+                if (sT.Value.CountDaysLeft())
+                {
+                    Main_Classes.Budget.Instance.ListOfEdits.Add(new Utility_Classes.Changes(typeof(Main_Classes.SavingsTarget), sT.Key));
+                }
+            }
+        }
+
+        private void SetColours()
+        {
+            Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.Balance);
+            if (Main_Classes.Budget.Instance.Balance > 0)
+            {
+                Balance.Foreground = Brushes.Green;
+            }
+            if (Main_Classes.Budget.Instance.Balance < 0)
+            {
+                Balance.Foreground = Brushes.Red;
+            }
+            if (Main_Classes.Budget.Instance.Balance == 0)
+            {
+                Balance.Foreground = Brushes.Black;
+            }
         }
 
         private void Grid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -264,56 +340,6 @@ namespace Budget.WelcomePage
             }     
         }
 
-        private void NewTargetButton_Click(object sender, RoutedEventArgs e)
-        {
-            SavingsTargetsWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) =>
-            {
-                if (propertyChangedEventArgs.PropertyName.Equals("Update_sTDG"))
-                    savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
-                if (propertyChangedEventArgs.PropertyName.Equals("Update_sHDG"))
-                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid("grid", DateTime.Today, DateTime.Today);
-                if (propertyChangedEventArgs.PropertyName.Equals("Update_pPDG"))
-                    providedPaymentsDataGrid.ItemsSource = CreateDataForProvidedPaymentDataGrid("grid");
-            };
-            SavingsTargetsWindow.Instance.ShowDialog();
-        }
-
-        private void AddAmountToTargetButton_Click(object sender, RoutedEventArgs e)
-        { 
-            AddAmountToSavingsTargetWindow.Instance.PropertyChanged += (s, propertyChangedEventArgs) =>
-            {
-                if (propertyChangedEventArgs.PropertyName.Equals("Update_sHDG"))
-                    shortHistoryDataGrid.ItemsSource = CreataDataForShortHistoryDataGrid("grid", DateTime.Today, DateTime.Today);
-                if (propertyChangedEventArgs.PropertyName.Equals("Update_sTDG"))
-                    savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
-                if (propertyChangedEventArgs.PropertyName.Equals("Refresh_sTDG"))
-                    savingsTargetsDataGrid.Items.Refresh();
-            };
-            AddAmountToSavingsTargetWindow.Instance.ShowDialog();
-        }
-
-        private void PDFButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (AdvancePDFCheckBox.IsChecked == true)
-            {
-                PDFOptionsWindow.Instance.ShowDialog();
-                startDate = PDFOptionsWindow.Instance.StartDate;
-                endDate = PDFOptionsWindow.Instance.EndDate;
-                if (PDFOptionsWindow.Instance.Generate == true)
-                {
-                    GeneratePDF();
-                }
-                PDFOptionsWindow.Instance = null;
-                AdvancePDFCheckBox.IsChecked = false;
-            }
-            else
-            {
-                startDate = DateTime.Today;
-                endDate = DateTime.Today;
-                GeneratePDF();
-            }   
-        }
-
         private void GeneratePDF()
         {
             try
@@ -342,10 +368,7 @@ namespace Budget.WelcomePage
                     System.Windows.MessageBox.Show("Raport PDF wygenerowany poprawnie");
                 }               
             }
-           catch
-           {
- 
-           }
+           catch { }
         }
     }
 }

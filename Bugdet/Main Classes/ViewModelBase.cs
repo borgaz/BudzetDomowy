@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Budget.Main_Classes
 {
     // pomysl byl taki, zeby nie powtarzac kodu i dziedziczyc w kilku miejscach ViewModelBase, zamiast implementowac INotifyPropertyChanged, 
-    // ale zapomnialem, ze tutaj nie ma wielodziedziczenia, a kilka klad dziedziczy juz po Window... Na razie zostawiam, bo moze cos zaradze na to ;P
+    // ale zapomnialem, ze tutaj nie ma wielodziedziczenia, a kilka klas dziedziczy juz po Window... Na razie zostawiam, bo moze cos zaradze na to ;P
     abstract public class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

@@ -30,13 +30,15 @@ namespace Budget.WelcomePage
             DisabledElements();
             InsertPriorityTypes();
             New_Budget.MakeBudgetWindow.InsertDateTypes(PeriodComboBox);
+            FirstPayAmountTextBox.IsEnabled = false;
+            FirstPayLabel.IsEnabled = false;
         }
 
         public static SavingsTargetsWindow Instance
         {
             get
             {
-                return _instance ?? (_instance = new SavingsTargetsWindow());
+                return _instance == null ? (_instance = new SavingsTargetsWindow()) : _instance;
             }
             set 
             { 
@@ -68,11 +70,26 @@ namespace Budget.WelcomePage
             EndDatePicker.IsEnabled = false;
             StartDatePicker.IsEnabled = true;
             CheckButton.IsEnabled = true;
+            FirstPayCheckBox.IsEnabled = false; 
+            FirstPayAmountTextBox.IsEnabled = false;
+            FirstPayLabel.IsEnabled = false;
         }
 
         private void AutoCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             DisabledElements();
+        }
+
+        private void FirstPayCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            FirstPayAmountTextBox.IsEnabled = true;
+            FirstPayLabel.IsEnabled = true;
+        }
+
+        private void FirstPayCheckBox_UnChecked(object sender, RoutedEventArgs e)
+        {
+            FirstPayAmountTextBox.IsEnabled = false;
+            FirstPayLabel.IsEnabled = false;
         }
 
         private void DisabledElements()
@@ -87,6 +104,7 @@ namespace Budget.WelcomePage
             EndDatePicker.IsEnabled = true;
             StartDatePicker.IsEnabled = false;
             CheckButton.IsEnabled = false;
+            FirstPayCheckBox.IsEnabled = true;
 
             EndDatePicker.SelectedDate = DateTime.Now;
             StartDatePicker.SelectedDate = DateTime.Now;
@@ -114,19 +132,34 @@ namespace Budget.WelcomePage
         {
             String text = String.Empty;
             int indexOfSavingsTarget = Main_Classes.Budget.Instance.SavingsTargets.Count > 0 ? Main_Classes.Budget.Instance.SavingsTargets.Keys.Max() + 1: 0;
-            double lastPostponedAmount = 0;
+            int indexOfSinglePayment = Main_Classes.Budget.Instance.Payments.Count > 0 ? Main_Classes.Budget.Instance.Payments.Keys.Max() + 1 : 1;
+            double lastPostponedAmount = 0, neededAmount = 0;
             DateTime lastPay;
             Main_Classes.SavingsTarget sT = null;
-            Main_Classes.PeriodPayment pP;
-            Main_Classes.SinglePayment sP;
+            Main_Classes.PeriodPayment pP = null;
+            Main_Classes.SinglePayment sP = null;
             if (!NameTextBox.Text.Equals(String.Empty) && !AmountTextBox.Text.Equals(String.Empty) && PriorityComboBox.SelectedIndex != -1)
             {
                 if (AutoCheckBox.IsChecked == false)
                 {
+                    neededAmount = Convert.ToDouble(AmountTextBox.Text);
                     sT = new Main_Classes.SavingsTarget(NameTextBox.Text, NoteTextBox.Text, EndDatePicker.SelectedDate.Value,
-                                                           Convert.ToInt32(PriorityComboBox.SelectedItem), 0, DateTime.Today, Convert.ToDouble(AmountTextBox.Text), false);
+                                                           Convert.ToInt32(PriorityComboBox.SelectedItem), 0, DateTime.Today, neededAmount , false);
                     Main_Classes.Budget.Instance.AddSavingsTarget(indexOfSavingsTarget, sT);
                     OnPropertyChanged("Update_sTDG");
+                    if (FirstPayCheckBox.IsChecked == true)
+                    {
+                        lastPostponedAmount = Convert.ToDouble(FirstPayAmountTextBox.Text);
+                        if (lastPostponedAmount > neededAmount)
+                        {
+                            lastPostponedAmount = neededAmount;
+                        }
+                        sP = new Main_Classes.SinglePayment(NoteTextBox.Text, lastPostponedAmount, 0, true, "Oszczędzanie: " + NameTextBox.Text, DateTime.Now);
+                        Main_Classes.Budget.Instance.AddSinglePayment(indexOfSinglePayment, sP);
+                        OnPropertyChanged("Update_sHDG");
+                        sT.AddMoney(lastPostponedAmount, indexOfSavingsTarget);
+                        OnPropertyChanged("Refresh_sTDG");
+                    }
                     this.Close();
                 }
                 else if (AutoCheckBox.IsChecked == true)
@@ -136,15 +169,14 @@ namespace Budget.WelcomePage
                     {
                         sT = new Main_Classes.SavingsTarget(NameTextBox.Text, NoteTextBox.Text, CountDeadline(out lastPostponedAmount, out lastPay),
                                                             Convert.ToInt32(PriorityComboBox.SelectedItem), 0, DateTime.Now, Convert.ToDouble(AmountTextBox.Text), true);
+                        Main_Classes.Budget.Instance.AddSavingsTarget(indexOfSavingsTarget + 1, sT);
+                        OnPropertyChanged("Update_sTDG");
                         int indexOfPeriodPayment = Main_Classes.Budget.Instance.Payments.Count > 0 ? Main_Classes.Budget.Instance.Payments.Keys.Min() - 1 : -1;
                         pP = new Main_Classes.PeriodPayment(0, Convert.ToDouble(Amount2TextBox.Text), NoteTextBox.Text, true,
                                                                 "Oszczędzanie: " + NameTextBox.Text, Convert.ToInt32(FrequencyTextBox.Text), Convert.ToString(PeriodComboBox.SelectedItem), 
                                                                 StartDatePicker.SelectedDate.Value, StartDatePicker.SelectedDate.Value, CountDeadline(out lastPostponedAmount, out lastPay));
-                        Main_Classes.Budget.Instance.AddSavingsTarget(indexOfSavingsTarget + 1, sT);
-                        OnPropertyChanged("Update_sTDG");
                         if (lastPostponedAmount != 0)
                         {
-                            int indexOfSinglePayment = Main_Classes.Budget.Instance.Payments.Count > 0 ? Main_Classes.Budget.Instance.Payments.Keys.Max() + 1 : 1;
                             sP = new Main_Classes.SinglePayment(NoteTextBox.Text, lastPostponedAmount, 0, true, "Oszczędzanie: " + NameTextBox.Text, lastPay);
                             Main_Classes.Budget.Instance.AddSinglePayment(indexOfSinglePayment, sP);
                             OnPropertyChanged("Update_sHDG");

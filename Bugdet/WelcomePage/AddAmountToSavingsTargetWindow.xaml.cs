@@ -2,16 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Budget.WelcomePage
 {
@@ -28,21 +20,21 @@ namespace Budget.WelcomePage
             InitializeComponent();
         }
 
-        protected override void OnClosed(EventArgs e)
-        {
-            _instance = null;    
-        }
-
         public static AddAmountToSavingsTargetWindow Instance
         {
             get
             {
-                return _instance ?? (_instance = new AddAmountToSavingsTargetWindow());
+                return _instance == null ? (_instance = new AddAmountToSavingsTargetWindow()) : _instance;
             }
             set
             {
                 _instance = value;
             }
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _instance = null;
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -144,17 +136,20 @@ namespace Budget.WelcomePage
             }
         }
 
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            InsertTargets();
+
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
+            {
                 handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
-        {
-            InsertTargets();
-        }
+            }     
+        }  
     }
 }

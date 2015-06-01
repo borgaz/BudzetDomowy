@@ -34,8 +34,6 @@ namespace Budget.Main_Classes
             {
                 _mydb = new SQLiteConnection("Data Source=" + budget + ".sqlite;Version=3");
                 _mydb.Open();
-                monthlySalaries = 0;
-                monthlyPayments = 0;
                 return true;
             }
             catch(SQLiteException)
@@ -62,6 +60,8 @@ namespace Budget.Main_Classes
                 if (CheckBaseName(name))
                 {
                     SQLiteConnection.CreateFile(name + ".sqlite");
+                    monthlySalaries = 0;
+                    monthlyPayments = 0;
                     _mydb = new SQLiteConnection("Data Source=" + name + ".sqlite;Version=3");
                     _mydb.Open();
                     MakeDb();
@@ -166,8 +166,6 @@ namespace Budget.Main_Classes
                                                                       "neededAmount double," +
                                                                       "priority integer," +
                                                                       "addedDate date)");
-
-                //SetDefaultCategories();
                 return true;
             }
             catch(SQLiteException ex)
