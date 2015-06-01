@@ -13,7 +13,8 @@ namespace Budget.SettingsPage
         private readonly CustomizationPage _customizationFuturePage = new CustomizationPage(1);
         public MainSettingsWindow()
         {
-            InitializeComponent();
+            InitializeComponent(); 
+            ManagePages(1);
         }
 
         private void ManagePages(int page)

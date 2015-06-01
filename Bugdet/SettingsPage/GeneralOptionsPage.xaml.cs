@@ -12,6 +12,7 @@ namespace Budget.SettingsPage
         public GeneralOptionsPage()
         {
             InitializeComponent();
+            BudgetNameLabel.Content = Main_Classes.Budget.Instance.Name;
             AutoSaveText.Text = "1";
         }
 

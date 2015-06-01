@@ -8,10 +8,11 @@
 	Title="GeneralOptionsPage">
 
     <Grid>
-        <Label Content="Nazwa budżetu:" HorizontalAlignment="Left" Margin="25,25,0,0" VerticalAlignment="Top" Height="25" Width="100"/>
-        <Label Content="Auto zapis co:" HorizontalAlignment="Left" Margin="25,89,0,0" VerticalAlignment="Top" Width="91"/>
-        <TextBox x:Name="AutoSaveText" HorizontalAlignment="Left" Height="23" Margin="121,92,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="52" TextChanged="AutoSaveText_OnTextChanged"/>
-        <Label x:Name="MinutesLabel" Content="minute" HorizontalAlignment="Left" Margin="178,92,0,0" VerticalAlignment="Top" Width="62"/>
+        <Label x:Name="BudgetName" Content="Nazwa budżetu:" HorizontalAlignment="Left" Margin="25,25,0,0" VerticalAlignment="Top" Height="25" Width="100"/>
+        <Label Content="Auto zapis co:" HorizontalAlignment="Left" Margin="25,92,0,0" VerticalAlignment="Top" Width="91"/>
+        <TextBox x:Name="AutoSaveText" HorizontalAlignment="Left" Height="23" Margin="149,95,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="52" TextChanged="AutoSaveText_OnTextChanged"/>
+        <Label x:Name="MinutesLabel" Content="minute" HorizontalAlignment="Left" Margin="209,92,0,0" VerticalAlignment="Top" Width="62"/>
         <Button x:Name="SaveSettingsButton" Content="Zapisz" HorizontalAlignment="Left" Margin="121,186,0,0" VerticalAlignment="Top" Width="75" Click="SaveSettingsButton_Click"/>
+        <Label x:Name="BudgetNameLabel" Content="" HorizontalAlignment="Left" Margin="139,25,0,0" VerticalAlignment="Top" Width="193" FontWeight="Bold" Height="46" FontSize="14"/>
     </Grid>
 </Page>

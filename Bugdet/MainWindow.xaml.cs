@@ -26,6 +26,7 @@ namespace Budget
         private Analisys.AnalisysMainPage _analisysPage;
         private static int _actualPage = 2;
         private static int _periodChecked = 0;
+        private static int _futureSingleChecked = 0;
         private Thread _autoSave;
         private bool running = true;
        // private Thread th;
@@ -142,7 +143,6 @@ namespace Budget
             InsertPage();
 
             List<SinglePayment> list = Main_Classes.Budget.Instance.CheckPeriodPayments();
-            Main_Classes.Budget.Instance.FutureSinglePaymentsCheck();
             if (list.Count > 0 && _periodChecked == 0)
             {
                 new CheckingPeriodPayments(list).ShowDialog();
@@ -181,6 +181,12 @@ namespace Budget
             AnalisysButton.IsEnabled = true;
             _actualPage = 4;
             InsertPage();
+
+            if (_futureSingleChecked == 0)
+            {
+                Main_Classes.Budget.Instance.FutureSinglePaymentsCheck();
+            }
+
         }
 
         protected override void OnClosing(CancelEventArgs e)

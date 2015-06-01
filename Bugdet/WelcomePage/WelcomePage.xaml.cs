@@ -319,7 +319,6 @@ namespace Budget.WelcomePage
             try
             {
                 ReportViewer report = new ReportViewer();
-                //report.LocalReport.ReportPath = @"C:\Users\Konrad\Desktop\Uczelnia\PZ\BudzetDomowy\Bugdet\WelcomePage\Report.rdlc";
                 report.LocalReport.ReportPath = @".\..\..\WelcomePage\Report.rdlc"; 
                 report.LocalReport.DataSources.Add(new ReportDataSource()
                 {
