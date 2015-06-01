@@ -22,8 +22,7 @@ namespace Budget.New_Budget
             InitializeComponent();
             InsertColors();
             salaryInfo = s;
-            passTextBox.Foreground = red;
-
+            passTextBox.Background = red;
         }
 
         private void InsertColors()
@@ -93,8 +92,12 @@ namespace Budget.New_Budget
         private void PassRepeatTextBox_OnGotFocus(object sender, RoutedEventArgs e)
         {
             if (passTextBox.Password == "")
-                return;
-            passRepeatTextBox.Background = passTextBox.Password.Equals(passRepeatTextBox.Password) ? green : red;
+            {
+                passRepeatTextBox.Background = red;
+                passTextBox.Background = red;
+                return;   
+            }
+            passRepeatTextBox.Background = passTextBox.Background = passTextBox.Password.Equals(passRepeatTextBox.Password) ? green : red;
         }
 
         private void NumberOfPeopleTextBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)

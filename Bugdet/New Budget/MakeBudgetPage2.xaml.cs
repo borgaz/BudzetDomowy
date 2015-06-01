@@ -27,7 +27,7 @@ namespace Budget.New_Budget
             MakeBudgetWindow.InsertDateTypes(DateTypeBox);
             originalCategoryID = MakeBudgetWindow.InsertCategories(CategoryComboBox, _categories, true);
             StartDatePicker.Text = DateTime.Now.Date.ToString();
-            InfoLbl.Foreground = Brushes.Red;
+
         }
 
         private void addSalaryBtn_Click(object sender, RoutedEventArgs e)

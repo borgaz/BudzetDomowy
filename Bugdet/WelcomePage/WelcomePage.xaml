@@ -80,5 +80,7 @@
         <Button x:Name="AddAmountToTargetButton" Content="Zarządzaj" HorizontalAlignment="Right" Height="25" Margin="0,0,10,250" VerticalAlignment="Bottom" Width="80" Click="AddAmountToTargetButton_Click"/>
         <Button Content="Generuj PDF" HorizontalAlignment="Left" Height="25" Margin="200,277,0,0" VerticalAlignment="Top" Width="80" Click="PDFButton_Click"/>
         <CheckBox x:Name="AdvancePDFCheckBox" Content="Zaawansowane" HorizontalAlignment="Left" Height="25" Margin="283,277,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="PrevMonthTextBox" HorizontalAlignment="Left" Height="28" Margin="599,70,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="97" FontWeight="Bold"/>
+        <TextBlock x:Name="PrevMonthLabel" HorizontalAlignment="Left" Margin="602,16,0,0" TextWrapping="Wrap" Text="Przeniesienia z poprzedniego miesiąca" VerticalAlignment="Top" Height="49" Width="94" FontWeight="Bold"/>
     </Grid>
 </Page>

@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
+using Budget.Main_Classes;
 
 namespace Budget.WelcomePage
 {
@@ -20,7 +21,12 @@ namespace Budget.WelcomePage
         {
             InitializeComponent();
             InsertBars();
+            SetColours();
+            PrevMonth();
+        }
 
+        private void SetColours()
+        {
             Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.Balance);
             if (Main_Classes.Budget.Instance.Balance > 0)
             {
@@ -31,7 +37,6 @@ namespace Budget.WelcomePage
                 Balance.Foreground = Brushes.Red;
             }
         }
-
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             providedPaymentsDataGrid.ItemsSource = CreateDataForProvidedPaymentDataGrid("grid");
@@ -42,19 +47,36 @@ namespace Budget.WelcomePage
             {
                 if (propertyChangedEventArgs.PropertyName.Equals("BalanceLog"))
                 {
-                    Balance.Text = Convert.ToString(Main_Classes.Budget.Instance.Balance);
-                    if (Main_Classes.Budget.Instance.Balance > 0)
-                    {
-                        Balance.Foreground = Brushes.Green;
-                    }
-                    if (Main_Classes.Budget.Instance.Balance <= 0)
-                    {
-                        Balance.Foreground = Brushes.Red;
-                    }
+                    SetColours();
                 }
             };
         }
 
+        private void PrevMonth()
+        {
+            var res = 0.0;
+            var date = DateTime.Now.AddMonths(-1);
+            var firstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            foreach (var p in Main_Classes.Budget.Instance.Payments)
+            {
+                if (p.Value.GetType() == typeof(PeriodPayment))
+                    continue;
+                var pp = (SinglePayment) p.Value;
+                if (pp.Date <= date || pp.Date >= firstDay) continue;
+                res = Main_Classes.Budget.Instance.BalanceLog[p.Key].Balance;
+                date = pp.Date;
+            }
+            if (res == 0.00)
+            {
+                PrevMonthLabel.Visibility = Visibility.Hidden;
+                PrevMonthTextBox.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                PrevMonthTextBox.Foreground = res < 0 ? Brushes.Red : Brushes.Green;
+                PrevMonthTextBox.Text = res.ToString();
+            }
+        }
         private List<Main_Classes.SavingsTarget> CreataDataForSavingsTargetsDataGrid()
         {
             List<Main_Classes.SavingsTarget> savingsTargets = new List<Main_Classes.SavingsTarget>();
