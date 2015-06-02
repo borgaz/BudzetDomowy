@@ -28,17 +28,23 @@ namespace Budget.Main_Classes
             }
         }
 
-        private Boolean Connect(String budget)
+        private Boolean Connect(String budget, String password)
         {
             try
             {
-                _mydb = new SQLiteConnection("Data Source=" + budget + ".sqlite;Version=3");
+                string connectionString = "";
+                connectionString += "Data Source=" + budget + ".sqlite;Version=3";
+                connectionString += ";Password=" + password + ";";
+                _mydb = new SQLiteConnection(connectionString);
                 _mydb.Open();
+                using (SQLiteCommand command = new SQLiteCommand("PRAGMA schema_version;", _mydb))
+                {
+                    var ret = command.ExecuteScalar(); // sprawdzanie czy wyskoczy wyjatek, jak tak to zapewne haslo jest nieprawidlowe
+                }
                 return true;
             }
             catch(SQLiteException)
             {
-                MakeBudget(budget);
                 return false;
             }
         }
@@ -53,7 +59,7 @@ namespace Budget.Main_Classes
                 return false;
 
         }
-        public Boolean MakeBudget(String name)
+        public Boolean MakeBudget(String name, String password)
         {
             try
             {
@@ -63,6 +69,7 @@ namespace Budget.Main_Classes
                     monthlySalaries = 0;
                     monthlyPayments = 0;
                     _mydb = new SQLiteConnection("Data Source=" + name + ".sqlite;Version=3");
+                    _mydb.SetPassword(password);
                     _mydb.Open();
                     MakeDb();
                 }
@@ -77,7 +84,11 @@ namespace Budget.Main_Classes
 
         public Boolean CheckPassword(String budget, String password)
         {
-            Connect(budget);
+            if (Connect(budget, password))
+                return true;
+            else
+                return false;
+
             DataSet result = SelectQuery("Select count(*) as count from Budget where name = '" + budget + "' AND password = '" + password + "'");
             if (Convert.ToInt32(result.Tables[0].Rows[0]["count"].ToString()) < 1)
             {
@@ -95,25 +106,6 @@ namespace Budget.Main_Classes
             File.AppendAllText("./logs", "\n--------------------------\n" + DateTime.Now.ToString() + "\n--------------------------\n" + ex.ToString());
         } // TODO: Przerobic wszystkie exception, zeby wchodzily do tej metody
 
-        //public Boolean CleanDatabase()
-        //{
-        //    try
-        //    {
-        //        ExecuteSqlNonQuery("Delete FROM Budget");
-        //        ExecuteSqlNonQuery("Delete FROM PeriodPayments");
-        //        ExecuteSqlNonQuery("Delete FROM SinglePayments");
-        //        ExecuteSqlNonQuery("Delete FROM Categories");
-        //        ExecuteSqlNonQuery("Delete FROM SavingsTargets");
-        //        ExecuteSqlNonQuery("Delete FROM BalanceLogs");
-
-        //        return true;
-        //    }
-        //    catch (SQLiteException ex)
-        //    {
-        //        MessageBox.Show(ex.GetBaseException() + "\n" + "SQLConnect.CleanDatabase()");
-        //        return false;
-        //    }
-        //}
 
         public Boolean MakeDb()
         {
@@ -179,7 +171,7 @@ namespace Budget.Main_Classes
         {
             try
             {
-                MakeBudget(_name);
+                MakeBudget(_name, _password);
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // budzet
                 /////////////////////////////////////////////////////////////////////////////////////////////
