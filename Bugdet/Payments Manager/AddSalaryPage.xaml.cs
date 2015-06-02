@@ -17,9 +17,12 @@ namespace Budget.Payments_Manager
     {
         private PeriodDateGrid _periodDateGrid = new PeriodDateGrid(Main_Classes.Budget.CategoryTypeEnum.SALARY);
         private SingleDateGrid _singleDateGrid = new SingleDateGrid(Main_Classes.Budget.CategoryTypeEnum.SALARY);
-        public AddSalaryPage()
+        private MainPage mP;
+
+        public AddSalaryPage(MainPage mP)
         {
             InitializeComponent();
+            this.mP = mP;
             Main_Classes.Budget.Instance.InsertCategories(CategoryBox, Main_Classes.Budget.CategoryTypeEnum.SALARY);
             InsertDateTypes(_periodDateGrid.TypeOfDayComboBox);
             _periodDateGrid.StartDatePicker.Text = DateTime.Now.Date.ToString();
@@ -95,6 +98,7 @@ namespace Budget.Payments_Manager
                 InfoLabel.Content = "Uzupełnij wymagane pola.";
                 InfoLabel.Foreground = Brushes.Red;
             }
+            mP.LoadLastAddedDataGrid();
         }
 
         public static void InsertDateTypes(ComboBox cBox)

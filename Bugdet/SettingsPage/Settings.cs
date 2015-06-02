@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Xml.Serialization;
 
 namespace Budget.SettingsPage
 {
     [Serializable]
+    [XmlInclude(typeof(Main_Classes.Category))]
     public sealed class Settings
     {
         private static Settings instance;
@@ -19,6 +20,8 @@ namespace Budget.SettingsPage
         private double PP_amountTo; // kwota do
         /*3. liczba wyswietlanych rekordow: */
         private int PP_numberOfRow; // ile przyszlych rekordow wyswietlamy
+        /*4. Jakie kategorie wyswietlamy: */
+        private List<Main_Classes.Category> PP_categories = null;
 
         /*Wyswietlanie krotkiej historii*/
         /*1. z jakiego okresu: */
@@ -29,7 +32,10 @@ namespace Budget.SettingsPage
         private double SH_amountTo; // kwota do
         /*3. liczba wyswietlanych rekordow: */
         private int SH_numberOfRow; // ile przyszlych rekordow wyswietlamy
-        private Boolean serializable;
+        /*4. Jakie kategorie wyswietlamy: */
+        private List<Main_Classes.Category> SH_categories = null;
+        
+        private Boolean serializable; // 0 - ustawienia domyslne, 1 - ustawienia uzytkownika
 
         public static Settings Instance
         {
@@ -39,10 +45,9 @@ namespace Budget.SettingsPage
                 {
                     if (! DeserializeFromXml())
                     {
-                        instance = new Settings();
+                        instance = new Settings(1);
                     }
                 }
-
                 return instance;
             }
             set
@@ -52,21 +57,36 @@ namespace Budget.SettingsPage
 
         }
 
-        private Settings() // pozniej trzeba dorobic wczytywanie ustawien z pliku/bazy.
+        private Settings()
+        { }
+
+        private Settings(int i)
         {
             PP_period = "MIESIĄC";
             PP_frequency = 1;
             PP_amountOf = 0;
             PP_amountTo = Main_Classes.Budget.Instance.MaxAmount;
             PP_numberOfRow = 20;
+            PP_categories = DictionaryToList();
 
             SH_period = "MIESIĄC";
             SH_frequency = 1;
             SH_amountOf = 0;
             SH_amountTo = Main_Classes.Budget.Instance.MaxAmount;
             SH_numberOfRow = 20;
-
+            SH_categories = DictionaryToList();
+          
             serializable = false;
+        }
+
+        private List<Main_Classes.Category> DictionaryToList()
+        {
+            List<Main_Classes.Category> list = new List<Main_Classes.Category>();
+            foreach(Main_Classes.Category cat in Main_Classes.Budget.Instance.Categories.Values)
+            {
+                list.Add(cat);
+            }
+            return list;
         }
 
         public string SerializeToXml()
@@ -90,10 +110,10 @@ namespace Budget.SettingsPage
                 return true;
             }
             catch(Exception)
-            { 
-                return false; 
-            }    
-        }
+            {
+                return false;
+            }
+         }
 
         public DateTime PP_LastDateToShow()
         {
@@ -250,6 +270,30 @@ namespace Budget.SettingsPage
             get
             {
                 return serializable;
+            }
+        }
+
+        public List<Main_Classes.Category> PP_Categories
+        {
+            get
+            {
+                return PP_categories;
+            }
+            set
+            {
+                PP_categories = value;
+            }
+        }
+
+        public List<Main_Classes.Category> SH_Categories
+        {
+            get
+            {
+                return SH_categories;
+            }
+            set
+            {
+                SH_categories = value;
             }
         }
     }

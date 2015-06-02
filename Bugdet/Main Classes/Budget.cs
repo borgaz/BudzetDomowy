@@ -80,7 +80,7 @@ namespace Budget.Main_Classes
 
         private void CheckPayment(SinglePayment payment, int delete)
         {
-            if (payment.Date.Month.Equals(DateTime.Now.Month))
+            if (payment.Date.Month.Equals(DateTime.Now.Month) && payment.Date.CompareTo(DateTime.Now) <= 0)
             {
                 if (payment.Type)
                 {

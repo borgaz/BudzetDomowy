@@ -10,7 +10,7 @@
         <ComboBox x:Name="TypeOfDayComboBox" KeyboardNavigation.TabIndex="1" HorizontalAlignment="Left" Margin="160,5,0,0" VerticalAlignment="Top" Width="110" Height="27"/>
         <Label Content="Od Kiedy:" HorizontalAlignment="Left" Margin="0,37,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.115" Width="70" Height="27"/>
         <DatePicker x:Name="StartDatePicker" HorizontalAlignment="Left" Margin="110,39,0,0" Width="160" Height="25" VerticalAlignment="Top"/>
-        <CheckBox x:Name="EndDateEnableCheckBox" HorizontalAlignment="Left" Margin="70,76,0,0" Width="14" Height="14" VerticalAlignment="Top" Checked="EndDateEnableCheckBox_Checked" Unchecked="EndDateEnableCheckBox_OnUnchecked"/>
+        <CheckBox x:Name="EndDateEnableCheckBox" HorizontalAlignment="Left" Margin="70,76,0,0" Width="15" Height="15" VerticalAlignment="Top" Checked="EndDateEnableCheckBox_Checked" Unchecked="EndDateEnableCheckBox_OnUnchecked"/>
         <DatePicker x:Name="EndDatePicker" HorizontalAlignment="Left" Margin="110,71,0,0" Width="160" Height="25" VerticalAlignment="Top"/>
         <Label Content="Do Kiedy:" HorizontalAlignment="Left" Margin="0,69,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.115" Width="70" Height="27"/>
         <TextBox x:Name="NumberOfTextBox" KeyboardNavigation.TabIndex="0" HorizontalAlignment="Left" Height="27" Margin="110,5,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="45"/>

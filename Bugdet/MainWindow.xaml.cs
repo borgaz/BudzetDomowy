@@ -11,6 +11,7 @@ using Budget.SettingsPage;
 using Budget.Utility_Classes;
 using System;
 using System.Windows.Threading;
+using System.Windows.Controls;
 
 namespace Budget
 {
@@ -29,7 +30,6 @@ namespace Budget
         private static int _futureSingleChecked = 0;
         private Thread _autoSave;
         private bool running = true;
-       // private Thread th;
 
         public MainWindow()
         {
@@ -70,6 +70,7 @@ namespace Budget
         {
             running = false;
         }
+
         private void Save()
         {
             int time = 0;
@@ -90,20 +91,6 @@ namespace Budget
                 time = 0;
             }
         }
-
-        //private void OnPageChange()
-        //{
-        //    int page = _actualPage;
-        //    while (running)
-        //    {
-        //        Thread.Sleep(1);
-        //        if (page != _actualPage)
-        //        {
-        //            this.Dispatcher.Invoke(InsertPage);
-        //            page = _actualPage;
-        //        }
-        //    }
-        //}
 
         protected void InsertPage()
         {
@@ -129,64 +116,10 @@ namespace Budget
 
         public static int ActualPage
         {
-            set { _actualPage = value; }
-        }
-
-        private void CreatorButton_Click(object sender, RoutedEventArgs e)
-        {
-            CreatorButton.IsEnabled = false;
-            WelcomePageButton.IsEnabled = true;
-            SettingsButton.IsEnabled = true;
-            HistoryButton.IsEnabled = true;
-            AnalisysButton.IsEnabled = true;
-            _actualPage = 1;
-            InsertPage();
-
-            List<SinglePayment> list = Main_Classes.Budget.Instance.CheckPeriodPayments();
-            if (list.Count > 0 && _periodChecked == 0)
-            {
-                new CheckingPeriodPayments(list).ShowDialog();
-                _periodChecked = 1;
+            set 
+            { 
+                _actualPage = value; 
             }
-        }
-
-        private void WelcomePageButton_Click(object sender, RoutedEventArgs e)
-        {
-            CreatorButton.IsEnabled = true;
-            WelcomePageButton.IsEnabled = false;
-            SettingsButton.IsEnabled = true;
-            HistoryButton.IsEnabled = true;
-            AnalisysButton.IsEnabled = true;
-            _actualPage = 2;
-            InsertPage();
-        }
-
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            CreatorButton.IsEnabled = true;
-            WelcomePageButton.IsEnabled = true;
-            SettingsButton.IsEnabled = false;
-            HistoryButton.IsEnabled = true;
-            AnalisysButton.IsEnabled = true;
-            _actualPage = 3;
-            InsertPage();
-        }
-
-        private void HistoryButton_Click(object sender, RoutedEventArgs e)
-        {
-            CreatorButton.IsEnabled = true;
-            WelcomePageButton.IsEnabled = true;
-            SettingsButton.IsEnabled = true;
-            HistoryButton.IsEnabled = false;
-            AnalisysButton.IsEnabled = true;
-            _actualPage = 4;
-            InsertPage();
-
-            if (_futureSingleChecked == 0)
-            {
-                Main_Classes.Budget.Instance.FutureSinglePaymentsCheck();
-            }
-
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -228,6 +161,70 @@ namespace Budget
             }
         }
 
+        private void CreatorButton_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonsControl(CreatorButton);
+            _actualPage = 1;
+            InsertPage();
+
+            List<SinglePayment> list = Main_Classes.Budget.Instance.CheckPeriodPayments();
+            if (list.Count > 0 && _periodChecked == 0)
+            {
+                new CheckingPeriodPayments(list).ShowDialog();
+                _periodChecked = 1;
+            }
+        }
+
+        private void WelcomePageButton_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonsControl(WelcomePageButton);
+            _actualPage = 2;
+            InsertPage();
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonsControl(SettingsButton);
+            _actualPage = 3;
+            InsertPage();
+        }
+
+        private void HistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonsControl(HistoryButton);
+            _actualPage = 4;
+            InsertPage();
+
+            if (_futureSingleChecked == 0)
+            {
+                Main_Classes.Budget.Instance.FutureSinglePaymentsCheck();
+            }
+
+        }
+
+        private void AnalisysButton_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonsControl(AnalisysButton);
+            _actualPage = 5;
+            InsertPage();
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            Main_Classes.Budget.Instance.Dump();
+            MessageBox.Show("Zapisano");
+        }
+
+        private void ButtonsControl(Button b)
+        {
+            CreatorButton.IsEnabled = true;
+            WelcomePageButton.IsEnabled = true;
+            SettingsButton.IsEnabled = true;
+            HistoryButton.IsEnabled = true;
+            AnalisysButton.IsEnabled = true;
+            b.IsEnabled = false;
+        }
+
         private void CheckSavings()
         {
             if (Main_Classes.Budget.Instance.ListOfAdds.Count != 0 || Main_Classes.Budget.Instance.ListOfEdits.Count != 0 || Main_Classes.Budget.Instance.ListOfDels.Count != 0)
@@ -241,6 +238,36 @@ namespace Budget
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
+            if (Keyboard.IsKeyDown(Key.F1) || Keyboard.IsKeyDown(Key.F2) || Keyboard.IsKeyDown(Key.F3) || Keyboard.IsKeyDown(Key.F4) || Keyboard.IsKeyDown(Key.F5))
+            {
+                if (Keyboard.IsKeyDown(Key.F1))
+                {
+                    _actualPage = 2;
+                    ButtonsControl(WelcomePageButton);
+                }     
+                if (Keyboard.IsKeyDown(Key.F2))
+                {
+                    _actualPage = 4;
+                    ButtonsControl(HistoryButton);
+                }      
+                if (Keyboard.IsKeyDown(Key.F3))
+                {
+                    _actualPage = 1;
+                    ButtonsControl(CreatorButton);
+                }  
+                if (Keyboard.IsKeyDown(Key.F4))
+                {
+                    _actualPage = 5;
+                    ButtonsControl(AnalisysButton);
+                }
+                if (Keyboard.IsKeyDown(Key.F5))
+                {
+                    _actualPage = 3;
+                    ButtonsControl(SettingsButton);
+                }  
+                InsertPage();
+            }
+
             if (!Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightAlt) || Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightCtrl)) return;
             if (e.Key.Equals(Key.S))
                 Main_Classes.Budget.Instance.Dump();
@@ -250,23 +277,6 @@ namespace Budget
                 MessageBox.Show("Generuję bazę danych!");
                 generator.Generate();
             }
-        }
-
-        private void AnalisysButton_Click(object sender, RoutedEventArgs e)
-        {
-            CreatorButton.IsEnabled = true;
-            WelcomePageButton.IsEnabled = true;
-            SettingsButton.IsEnabled = true;
-            HistoryButton.IsEnabled = true;
-            AnalisysButton.IsEnabled = false;
-            _actualPage = 5;
-            InsertPage();
-        }
-
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            Main_Classes.Budget.Instance.Dump();
-            MessageBox.Show("Zapisano");
         }
     }
 }

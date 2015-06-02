@@ -114,7 +114,7 @@ namespace Budget.Main_Classes
                 ExecuteSqlNonQuery("CREATE TABLE Budget (name varchar(50)," + 
                                                         "note varchar (200)," +
                                                         "password varchar (20)," +
-                                                        "balance double," + // TODO: Chyba trzeba usunąć i odwoływać się od BalanceLog
+                                                        "balance double," +
                                                         "creation date," +
                                                         "numberOfPeople integer)");
 

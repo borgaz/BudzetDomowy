@@ -1,5 +1,8 @@
-﻿namespace Budget.Main_Classes
+﻿using System;
+using System.Xml.Serialization;
+namespace Budget.Main_Classes
 {
+    [Serializable]
     public class Category
     {
         private string name; // nazwa kategorii
@@ -10,6 +13,8 @@
         {
             return "NAME: " + name + ", NOTE: " + note + ", TYPE: " + type + "\n";
         }
+
+        public Category() { }
 
         public Category(string name, string note, bool type)
         {
@@ -36,6 +41,10 @@
             {
                 return note;
             }
+            set
+            {
+                note = value;
+            }
         }
 
         public bool Type
@@ -43,6 +52,10 @@
             get
             {
                 return type;
+            }
+            set
+            {
+                type = value;
             }
         }
     }

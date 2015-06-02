@@ -128,10 +128,6 @@ namespace Budget.Main_Classes
         override public SinglePayment CreateSingleFromPeriod(int _period)
         {
             _period -= 1;
-            System.Console.WriteLine("p:" + _period);
-            System.Console.WriteLine(DateTime.MinValue);
-            System.Console.WriteLine(DateTime.MinValue.AddDays(0));
-
             DateTime temp = this.lastUpdate;
 
             if (this.period == "MIESIĄC")

@@ -14,14 +14,16 @@ namespace Budget.Payments_Manager
     /// </summary>
     public partial class MainPage : Page
     {
-        private AddPaymentPage _singlePaymentPage = new AddPaymentPage();
-        private AddSalaryPage _singleSalaryPage = new AddSalaryPage();
+        private AddPaymentPage _singlePaymentPage;
+        private AddSalaryPage _singleSalaryPage;
         private int _lastSingleId = Main_Classes.Budget.Instance.Payments.Count > 0 ? Main_Classes.Budget.Instance.Payments.Keys.Max() : 0;
         private int _lastPeriodId = Main_Classes.Budget.Instance.Payments.Count > 0 ? Main_Classes.Budget.Instance.Payments.Keys.Min() : 0;
 
         public MainPage()
         {
-            InitializeComponent();
+            _singlePaymentPage = new AddPaymentPage(this);
+            _singleSalaryPage = new AddSalaryPage(this);
+            InitializeComponent();   
         }
 
         private void addPaymentBtn_Click(object sender, RoutedEventArgs e)
@@ -38,7 +40,7 @@ namespace Budget.Payments_Manager
             Main_Classes.Budget.Instance.InsertCategories(_singleSalaryPage.CategoryBox, Main_Classes.Budget.CategoryTypeEnum.SALARY);
         }
 
-        private void LoadAddedGrid()
+        public void LoadLastAddedDataGrid()
         {
             var added = new DataTable();
             added.Columns.Add("Id", typeof(int));
@@ -64,21 +66,14 @@ namespace Budget.Payments_Manager
                 }
             }
             LastAddedDataGrid.ItemsSource = added.DefaultView;
-        }
-
-        private void LoadHistoryButton_Click(object sender, RoutedEventArgs e)
-        {
-            RefreshTable();
-            LoadAddedGrid();
-            if (LastAddedDataGrid.Columns.Count < 1)
+            if (LastAddedDataGrid.Columns.Count > 0)
             {
-                return;
-            } 
-            LastAddedDataGrid.Columns[0].Visibility = Visibility.Hidden;
-            LastAddedDataGrid.Columns[1].Visibility = Visibility.Hidden;
+                LastAddedDataGrid.Columns[0].Visibility = Visibility.Hidden;
+                LastAddedDataGrid.Columns[1].Visibility = Visibility.Hidden;
+            }
         }
 
-        private void RefreshTable()
+        public void LoadAllPeriodDataGrid()
         {
             var history = new DataTable();
             history.Columns.Add("Id", typeof (int));
@@ -96,65 +91,60 @@ namespace Budget.Payments_Manager
                 history.Rows.Add(p.Key,pp.Type,pp.Name, pp.Amount, Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name);
             }
             PeriodPaymentsTable.ItemsSource = history.DefaultView;
-            PeriodPaymentsTable.Columns[0].Visibility = Visibility.Hidden;
-            PeriodPaymentsTable.Columns[1].Visibility = Visibility.Hidden;
-        }
-
-        private void dataGridView_Loaded(object sender, RoutedEventArgs e)
-        {
-            RefreshTable();
-        }
-
-        private void DataGridView_OnLoadingRow(object sender, DataGridRowEventArgs e)
-        {
-            var dataRow = e.Row.DataContext as DataRowView;
-            if (dataRow == null)
+            if (PeriodPaymentsTable.Columns.Count > 0)
             {
-                return;
-            }       
-            try
-            {
-                e.Row.Background = (int)dataRow.Row.ItemArray[1] == 1 ? Brushes.Tomato : Brushes.SpringGreen;
+                PeriodPaymentsTable.Columns[0].Visibility = Visibility.Hidden;
+                PeriodPaymentsTable.Columns[1].Visibility = Visibility.Hidden;
             }
-            catch (InvalidCastException)
-            { }
         }
 
-        private void UIElement_OnFocusableChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void AllPeriodDataGrid_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadAddedGrid();
-            if (LastAddedDataGrid.Columns.Count < 1)
+            LoadAllPeriodDataGrid();
+            if (PeriodPaymentsTable.Columns.Count > 0)
             {
-                return;
-            } 
-            LastAddedDataGrid.Columns[0].Visibility = Visibility.Hidden;
-            LastAddedDataGrid.Columns[1].Visibility = Visibility.Hidden;
+                PeriodPaymentsTable.Columns[0].Visibility = Visibility.Hidden;
+                PeriodPaymentsTable.Columns[1].Visibility = Visibility.Hidden;
+            }
         }
 
         private void LastAddedDataGrid_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadAddedGrid();
-            if (LastAddedDataGrid.Columns.Count < 1)
+            LoadLastAddedDataGrid();
+            if (LastAddedDataGrid.Columns.Count > 0)
             {
-                return;
-            }
-            LastAddedDataGrid.Columns[0].Visibility = Visibility.Hidden;
-            LastAddedDataGrid.Columns[1].Visibility = Visibility.Hidden;
+                LastAddedDataGrid.Columns[0].Visibility = Visibility.Hidden;
+                LastAddedDataGrid.Columns[1].Visibility = Visibility.Hidden;
+            } 
         }
 
         private void LastAddedDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
         {
             var dataRow = e.Row.DataContext as DataRowView;
-            if (dataRow == null)
+            if (dataRow != null)
             {
-                return;
+
+                try
+                {
+                    e.Row.Background = (int)dataRow.Row.ItemArray[1] == 1 ? Brushes.Tomato : Brushes.SpringGreen;
+                }
+                catch (InvalidCastException)
+                { }
             }
-            try
+        }
+
+        private void AllPeriodDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            var dataRow = e.Row.DataContext as DataRowView;
+            if (dataRow != null)
             {
-                e.Row.Background = (int)dataRow.Row.ItemArray[1] == 1 ? Brushes.Tomato : Brushes.SpringGreen;
+                try
+                {
+                    e.Row.Background = (int)dataRow.Row.ItemArray[1] == 1 ? Brushes.Tomato : Brushes.SpringGreen;
+                }
+                catch (InvalidCastException)
+                { }
             }
-            catch (InvalidCastException)
-            { }
         }
     }
 }

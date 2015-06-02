@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
 using Budget.Main_Classes;
+using System.Linq;
 
 namespace Budget.WelcomePage
 {
@@ -79,29 +80,32 @@ namespace Budget.WelcomePage
             List<PaymentForDataGrid> providedPayments = new List<PaymentForDataGrid>();
             foreach (Main_Classes.Payment payment in Main_Classes.Budget.Instance.Payments.Values)
             {
-                if (payment.GetType() == typeof(Main_Classes.PeriodPayment))
+                if (destination.Equals("grid") && IsOnList(SettingsPage.Settings.Instance.PP_Categories, payment.CategoryID))
                 {
-                    var pP = (Main_Classes.PeriodPayment)payment;
-                    if (pP.Amount <= amountTo && pP.Amount >= amountOf)
+                    if (payment.GetType() == typeof(Main_Classes.PeriodPayment))
                     {
-                        if (!lastDate.Equals(DateTime.MinValue))
+                        var pP = (Main_Classes.PeriodPayment)payment;
+                        if (pP.Amount <= amountTo && pP.Amount >= amountOf)
                         {
-                            lastDate = SettingsPage.Settings.Instance.PP_LastDateToShow() <= pP.EndDate ? SettingsPage.Settings.Instance.PP_LastDateToShow() : pP.EndDate;
-                        }
-                        if (pP.CountNextDate() < lastDate)
-                        {
-                            providedPayments.AddRange(Main_Classes.PeriodPayment.CreateListOfSelectedPeriodPayments(pP, lastDate));
+                            if (!lastDate.Equals(DateTime.MinValue))
+                            {
+                                lastDate = SettingsPage.Settings.Instance.PP_LastDateToShow() <= pP.EndDate ? SettingsPage.Settings.Instance.PP_LastDateToShow() : pP.EndDate;
+                            }
+                            if (pP.CountNextDate() < lastDate)
+                            {
+                                providedPayments.AddRange(Main_Classes.PeriodPayment.CreateListOfSelectedPeriodPayments(pP, lastDate));
+                            }
                         }
                     }
-                }
-                else
-                {
-                    var sP = (Main_Classes.SinglePayment)payment;
-                    if (sP.CompareDate() > 0 && sP.Amount <= amountTo && sP.Amount >= amountOf && sP.Date < lastDate)
+                    else
                     {
-                        providedPayments.Add(new PaymentForDataGrid(sP.Name, sP.Amount, "Pojedynczy", sP.Date, sP.Type, sP.CategoryID, 0));
-                    }    
-                }
+                        var sP = (Main_Classes.SinglePayment)payment;
+                        if (sP.CompareDate() > 0 && sP.Amount <= amountTo && sP.Amount >= amountOf && sP.Date < lastDate)
+                        {
+                            providedPayments.Add(new PaymentForDataGrid(sP.Name, sP.Amount, "Pojedynczy", sP.Date, sP.Type, sP.CategoryID, 0));
+                        }
+                    }
+                } 
             }
 
             providedPayments.Sort();
@@ -141,25 +145,31 @@ namespace Budget.WelcomePage
                 if ((balanceLog.SinglePaymentID != 0 && balanceLog.PeriodPaymentID == 0) || (balanceLog.SinglePaymentID == 0 && balanceLog.PeriodPaymentID == 0))
                 {
                     var sP = (Main_Classes.SinglePayment)Main_Classes.Budget.Instance.Payments[balanceLog.SinglePaymentID];
-                    if (sP.Date <= lastDate && sP.Date >= firstDate && sP.Amount <= amountTo && sP.Amount >= amountOf)
+                    if (destination.Equals("grid") && IsOnList(SettingsPage.Settings.Instance.SH_Categories, sP.CategoryID))
                     {
-                        if (sP.Name.StartsWith("Okresowy:"))
+                        if (sP.Date <= lastDate && sP.Date >= firstDate && sP.Amount <= amountTo && sP.Amount >= amountOf)
                         {
-                            String TempName = sP.Name.Substring(9);
-                            shortHistory.Add(new PaymentForDataGrid(TempName, sP.Amount, "Okresowy", sP.Date, sP.Type, sP.CategoryID, balanceLog.Balance));
-                        }
-                        else 
-                        {
-                            shortHistory.Add(new PaymentForDataGrid(sP.Name, sP.Amount, "Pojedynczy", sP.Date, sP.Type, sP.CategoryID, balanceLog.Balance));
+                            if (sP.Name.StartsWith("Okresowy:"))
+                            {
+                                String TempName = sP.Name.Substring(9);
+                                shortHistory.Add(new PaymentForDataGrid(TempName, sP.Amount, "Okresowy", sP.Date, sP.Type, sP.CategoryID, balanceLog.Balance));
+                            }
+                            else
+                            {
+                                shortHistory.Add(new PaymentForDataGrid(sP.Name, sP.Amount, "Pojedynczy", sP.Date, sP.Type, sP.CategoryID, balanceLog.Balance));
+                            }
                         }
                     }
                 }
                 else if(balanceLog.SinglePaymentID == 0 && balanceLog.PeriodPaymentID != 0)
                 {
                     var pP = (Main_Classes.PeriodPayment)Main_Classes.Budget.Instance.Payments[balanceLog.PeriodPaymentID];
-                    if (balanceLog.Date >= firstDate && pP.Amount <= amountTo && pP.Amount >= amountOf)
+                    if (destination.Equals("grid") && IsOnList(SettingsPage.Settings.Instance.SH_Categories, pP.CategoryID))
                     {
-                        shortHistory.Add(new PaymentForDataGrid(pP.Name, pP.Amount, "Okresowy", balanceLog.Date, pP.Type, pP.CategoryID, balanceLog.Balance));
+                        if (balanceLog.Date >= firstDate && pP.Amount <= amountTo && pP.Amount >= amountOf)
+                        {
+                            shortHistory.Add(new PaymentForDataGrid(pP.Name, pP.Amount, "Okresowy", balanceLog.Date, pP.Type, pP.CategoryID, balanceLog.Balance));
+                        }
                     }
                 }
             }
@@ -264,6 +274,20 @@ namespace Budget.WelcomePage
             {
                 PrevMonthTextBox.Foreground = res < 0 ? Brushes.Red : Brushes.Green;
                 PrevMonthTextBox.Text = res.ToString();
+            }
+        }
+
+        private Boolean IsOnList(List<Category> list, int catID)
+        {
+            String name = Main_Classes.Budget.Instance.Categories.FirstOrDefault(x => x.Key.Equals(catID)).Value.Name;
+            Category cat = list.FirstOrDefault(x => x.Name.Equals(name));
+            if (cat == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
 

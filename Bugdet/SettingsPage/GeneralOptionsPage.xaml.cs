@@ -13,7 +13,7 @@ namespace Budget.SettingsPage
         {
             InitializeComponent();
             BudgetNameLabel.Content = Main_Classes.Budget.Instance.Name;
-            AutoSaveText.Text = "1";
+            AutoSaveText.Text = "3";
         }
 
         private void SaveSettingsButton_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -32,7 +32,7 @@ namespace Budget.SettingsPage
                 return;
             if (Convert.ToInt32(AutoSaveText.Text) == 1)
             {
-                MinutesLabel.Content = "minute";
+                MinutesLabel.Content = "minutę";
             }
             if (Convert.ToInt32(AutoSaveText.Text) > 1 && Convert.ToInt32(AutoSaveText.Text) < 5)
             {

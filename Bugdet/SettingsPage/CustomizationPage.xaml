@@ -21,8 +21,8 @@
         <TextBox x:Name="AmountToTextBox" KeyboardNavigation.TabIndex="3" HorizontalAlignment="Left" Height="25" Margin="135,180,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="50"/>
         <TextBox x:Name="NumberOfRowTextBox" KeyboardNavigation.TabIndex="4" HorizontalAlignment="Left" Height="25" Margin="135,215,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="50"/>
         <Label Name="Label" Content="" HorizontalAlignment="Left" Height="25" Margin="305,75,0,0" VerticalAlignment="Top" Width="100"/>
-        <Button x:Name="SelectCategoriesButton" KeyboardNavigation.TabIndex="5" Content="Wybierz kategorie" HorizontalAlignment="Left" Height="25" Margin="25,250,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="CategoriesLabel" Content="Wybierz kategorie:" HorizontalAlignment="Left" Height="25" Margin="25,250,0,0" VerticalAlignment="Top" Width="110"/>
         <Label x:Name="TitleOfPageLabel" Content="" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" Height="35" Margin="50,25,0,0" VerticalAlignment="Top" Width="450"/>
-
+        <ComboBox x:Name="CategoriesComboBox" HorizontalAlignment="Left" Height="25" Margin="135,250,0,0" VerticalAlignment="Top" Width="110"/>
     </Grid>
 </Page>
