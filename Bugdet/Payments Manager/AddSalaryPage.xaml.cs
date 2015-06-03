@@ -32,6 +32,13 @@ namespace Budget.Payments_Manager
 
         private void addPaymentBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (!Utility_Classes.UtilityFunctions.IsValueCorrect(SalaryValue.Text))
+            {
+                InfoLabel.Content = "Nie Dodano";
+                InfoLabel.Foreground = Brushes.Red;// ="#FF000000";
+                return;
+            }
+
             if (SalaryName.Text != "" && SalaryValue.Text != "" && CategoryBox.SelectedIndex != -1)
             {
                 var categoryItem = (ComboBoxItem)CategoryBox.SelectedValue;

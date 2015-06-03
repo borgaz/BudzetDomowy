@@ -32,6 +32,13 @@ namespace Budget.New_Budget
 
         private void addSalaryBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (!Utility_Classes.UtilityFunctions.IsValueCorrect(SalaryValue.Text))
+            {
+                InfoLbl.Content = "Nie Dodano";
+                InfoLbl.Foreground = Brushes.Red;// ="#FF000000";
+                return;
+            }
+
             if(SalaryName.Text != "" && SalaryValue.Text != "" && NumberOfTextBox.Text != "" && DateTypeBox.SelectedIndex != -1 && CategoryComboBox.SelectedIndex != -1)
             {
                 int temp = 1;

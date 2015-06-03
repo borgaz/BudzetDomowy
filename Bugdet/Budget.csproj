@@ -196,6 +196,7 @@
     <Compile Include="Utility Classes\SavingInfo.xaml.cs">
       <DependentUpon>SavingInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utility Classes\UtilityFunctions.cs" />
     <Compile Include="WelcomePage\AddAmountToSavingsTargetWindow.xaml.cs">
       <DependentUpon>AddAmountToSavingsTargetWindow.xaml</DependentUpon>
     </Compile>

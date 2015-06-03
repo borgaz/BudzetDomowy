@@ -63,6 +63,11 @@ namespace Budget.New_Budget
         /// </summary>
         public Boolean CheckInfo()
         {
+            if (!Utility_Classes.UtilityFunctions.IsValueCorrect(budgetBalance.Text))
+            {
+                return false;
+            }
+            
             if (budgetBalance.Text != "" && budgetNameText.Text != "" && (passTextBox.Password.Equals(passRepeatTextBox.Password)) && passTextBox.Password != "")
             {
                 if (!SqlConnect.Instance.CheckBaseName(budgetNameText.Text))
@@ -100,9 +105,9 @@ namespace Budget.New_Budget
             passRepeatTextBox.Background = passTextBox.Background = passTextBox.Password.Equals(passRepeatTextBox.Password) ? green : red;
         }
 
-        private void NumberOfPeopleTextBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void FirstBalanceTextBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!char.IsDigit(e.Text, e.Text.Length - 1) && !char.IsPunctuation(e.Text, e.Text.Length - 1) && char.IsPunctuation(e.Text, e.Text.Length - 2))
+            if (!char.IsDigit(e.Text, e.Text.Length - 1) && !char.IsPunctuation(e.Text, e.Text.Length - 1))
             {
                 e.Handled = true;
                 budgetBalance.ToolTip = "Wpisz kwotę liczbą!";

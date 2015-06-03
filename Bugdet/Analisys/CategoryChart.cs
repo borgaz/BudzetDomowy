@@ -20,25 +20,28 @@ namespace Budget.Analisys
 
             foreach (KeyValuePair<int, Main_Classes.Category> c in Main_Classes.Budget.Instance.Categories)
             {
-                double sum = 0;
-                double sum2 = 0;
-                foreach (KeyValuePair<int, Main_Classes.Payment> s in Main_Classes.Budget.Instance.Payments)
+                if (c.Value.Name != "-") //wyeliminowanie salda początkowego
                 {
-                    if (!c.Value.Type) 
-                        if (s.Value.GetType() == typeof(Main_Classes.SinglePayment))
-                            if (s.Value.CompareDate() <= 0)
-                                if (c.Key == s.Value.CategoryID)
-                                    sum += s.Value.Amount;
-                    if (c.Value.Type)
-                        if (s.Value.GetType() == typeof(Main_Classes.SinglePayment))
-                            if (s.Value.CompareDate() <= 0)
-                                if (c.Key == s.Value.CategoryID)
-                                    sum2 += s.Value.Amount;
+                    double sum = 0;
+                    double sum2 = 0;
+                    foreach (KeyValuePair<int, Main_Classes.Payment> s in Main_Classes.Budget.Instance.Payments)
+                    {
+                        if (!c.Value.Type) 
+                            if (s.Value.GetType() == typeof(Main_Classes.SinglePayment))
+                                if (s.Value.CompareDate() <= 0)
+                                    if (c.Key == s.Value.CategoryID)
+                                        sum += s.Value.Amount;
+                        if (c.Value.Type)
+                            if (s.Value.GetType() == typeof(Main_Classes.SinglePayment))
+                                if (s.Value.CompareDate() <= 0)
+                                    if (c.Key == s.Value.CategoryID)
+                                        sum2 += s.Value.Amount;
+                    }
+                    if (sum != 0)
+                        Payments.Add(new TestClass() { Category = c.Value.Name, Number = sum });
+                    if (sum2 != 0)
+                        Salary.Add(new TestClass() { Category = c.Value.Name, Number = sum2 });
                 }
-                if (sum != 0)
-                    Payments.Add(new TestClass() { Category = c.Value.Name, Number = sum });
-                if (sum2 != 0)
-                    Salary.Add(new TestClass() { Category = c.Value.Name, Number = sum2 });
             }
         }
 

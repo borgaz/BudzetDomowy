@@ -84,9 +84,7 @@ namespace Budget.Main_Classes
 
         public Boolean CheckPassword(String budget, String password)
         {
-            if (Connect(budget, password))
-                return true;
-            else
+            if (!Connect(budget, password))
                 return false;
 
             DataSet result = SelectQuery("Select count(*) as count from Budget where name = '" + budget + "' AND password = '" + password + "'");
