@@ -11,6 +11,7 @@ namespace Budget.Main_Classes
         private String note; // notatka
 
         abstract public int CompareDate();
+        abstract public int CompareDateTo(DateTime date);
         abstract public void changeUpdateDate(int count);
 
         public override string ToString()

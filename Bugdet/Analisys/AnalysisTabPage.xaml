@@ -9,11 +9,15 @@
 	Title="AnalysisTabPage">
 
     <Grid>
-        <chart:PieChart x:Name="Chart" Style="{StaticResource MinimalChartStyle}" ChartTitle="Kategorie płatności" ChartSubTitle="Wykres sumy płatności na poszczególne kategorie" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}" Height="Auto" Margin="0,0,0,10" Width="Auto" SelectedBrush="{x:Null}" >
+        <chart:PieChart x:Name="Chart" Style="{StaticResource MinimalChartStyle}" ChartTitle="Kategorie płatności" ChartSubTitle="Wykres sumy płatności na poszczególne kategorie, za dany okres" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}" Height="Auto" Margin="0,0,0,10" Width="Auto" SelectedBrush="{x:Null}" >
             <chart:PieChart.Series>
                 <chart:ChartSeries SeriesTitle="Przychody" DisplayMember="Category" ValueMember="Number" ItemsSource="{Binding Path=Salary}"/>
                 <chart:ChartSeries SeriesTitle="Wydatki" DisplayMember="Category" ValueMember="Number" ItemsSource="{Binding Path=Payments}"/>
             </chart:PieChart.Series>
         </chart:PieChart>
+        <DatePicker x:Name="startDate" HorizontalAlignment="Left" Margin="598,10,0,0" VerticalAlignment="Top" CalendarClosed="startDate_CalendarClosed"/>
+        <DatePicker x:Name="endDate" HorizontalAlignment="Left" Margin="598,37,0,0" VerticalAlignment="Top" CalendarClosed="endDate_CalendarClosed"/>
+        <Label Content="Data początkowa:" HorizontalAlignment="Left" Margin="489,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Data końcowa:" HorizontalAlignment="Left" Margin="489,35,0,0" VerticalAlignment="Top" Width="104"/>
     </Grid>
 </Page>

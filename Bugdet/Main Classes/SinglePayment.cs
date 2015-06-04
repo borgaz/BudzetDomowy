@@ -37,5 +37,10 @@ namespace Budget.Main_Classes
         {
             this.date = DateTime.Now;
         }
+
+        override public int CompareDateTo(DateTime date)
+        {
+            return DateTime.Compare(this.date, date);
+        }
     }
 }

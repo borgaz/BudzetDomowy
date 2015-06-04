@@ -13,7 +13,7 @@ namespace Budget.Analisys
         public ObservableCollection<TestClass> Salary { get; private set; }
         public ObservableCollection<TestClass> Payments { get; private set; }
 
-        public CategoryChart()
+        public CategoryChart(DateTime start, DateTime end)
         {
             Payments = new ObservableCollection<TestClass>();
             Salary = new ObservableCollection<TestClass>();
@@ -28,12 +28,12 @@ namespace Budget.Analisys
                     {
                         if (!c.Value.Type) 
                             if (s.Value.GetType() == typeof(Main_Classes.SinglePayment))
-                                if (s.Value.CompareDate() <= 0)
+                                if ((s.Value.CompareDateTo(start) >= 0) && (s.Value.CompareDateTo(end) <= 0))
                                     if (c.Key == s.Value.CategoryID)
                                         sum += s.Value.Amount;
                         if (c.Value.Type)
                             if (s.Value.GetType() == typeof(Main_Classes.SinglePayment))
-                                if (s.Value.CompareDate() <= 0)
+                                if ((s.Value.CompareDateTo(start) >= 0) && (s.Value.CompareDateTo(end) <= 0))
                                     if (c.Key == s.Value.CategoryID)
                                         sum2 += s.Value.Amount;
                     }

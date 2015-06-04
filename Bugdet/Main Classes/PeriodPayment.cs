@@ -210,5 +210,10 @@ namespace Budget.Main_Classes
                 CheckAndAddElement(list, lastDate);
             }
         }
+
+        override public int CompareDateTo(DateTime date)
+        {
+            return DateTime.Compare(this.lastUpdate, date);
+        }
     }
 }
