@@ -19,12 +19,15 @@ namespace Budget.Utility_Classes
                 return false;
             }
 
-            var tab = value.Split('.');
-            var tab2 = value.Split(',');
-            if (tab.Last().Length > 2 && tab2.Last().Length > 2) // sprawdza ilosc cyfr po przecinku
+            if (count == 1)
             {
-                MessageBox.Show("Niepoprawnie wpisana kwota.");
-                return false;
+                var tab = value.Split('.');
+                var tab2 = value.Split(',');
+                if (tab.Last().Length > 2 && tab2.Last().Length > 2) // sprawdza ilosc cyfr po przecinku
+                {
+                    MessageBox.Show("Niepoprawnie wpisana kwota.");
+                    return false;
+                }
             }
             return true;
         }

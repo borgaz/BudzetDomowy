@@ -29,6 +29,8 @@ namespace Budget.History
             history.Columns.Add("Kategoria", typeof(string));
             history.Columns.Add("Data", typeof(string));
             history.Columns.Add("Kwota", typeof(double));
+            history.Columns.Add("Saldo", typeof(double));
+
             foreach (KeyValuePair<int, BalanceLog> p in Main_Classes.Budget.Instance.BalanceLog)
             {
                 if (!((p.Value.Date >= (StartDateCheckBox.IsChecked == true ? StartDatePicker.SelectedDate : DateTime.MinValue)) &&
@@ -56,12 +58,12 @@ namespace Budget.History
                 {
                     var fd = Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name;
                     history.Rows.Add(pp.Type, p.Key, pp.Name, Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name,
-                        pp.Date.ToShortDateString(), pp.Amount);
+                        pp.Date.ToShortDateString(), pp.Amount, p.Value.Balance);
                 }
                 if (!pp.Type && SingleSalaryCheckBox.IsChecked == true)
                 {
                     history.Rows.Add(pp.Type, p.Key, pp.Name, Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name,
-                        pp.Date.ToShortDateString(), pp.Amount);
+                        pp.Date.ToShortDateString(), pp.Amount, p.Value.Balance);
                 }
             }
 
@@ -70,6 +72,12 @@ namespace Budget.History
 
             HistoryDataGrid.Columns[0].Visibility = Visibility.Hidden;
             HistoryDataGrid.Columns[1].Visibility = Visibility.Hidden;
+            HistoryDataGrid.Columns[5].DisplayIndex = 1;
+            HistoryDataGrid.Columns[2].DisplayIndex = 2;
+            HistoryDataGrid.Columns[2].Width = 170;
+            HistoryDataGrid.Columns[4].DisplayIndex = 3;
+            HistoryDataGrid.Columns[3].DisplayIndex = 4;
+            HistoryDataGrid.Columns[6].DisplayIndex = 5;
         }
         private void HistoryDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
         {
@@ -136,11 +144,6 @@ namespace Budget.History
             }
 
             RefreshTable();
-            // dla testow
-            //int id = 5;
-            //Main_Classes.Budget.Instance.Categories[id].Name = "gas";
-            //Main_Classes.Budget.Instance.ListOfEdits.Add(new Utility_Classes.Changes(typeof(Category), id));
-            //throw new NotImplementedException();
         }
 
         private void PeriodPaymentCheckBox_OnClick(object sender, RoutedEventArgs e)
