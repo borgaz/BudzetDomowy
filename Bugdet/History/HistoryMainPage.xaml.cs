@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Budget.Main_Classes;
+using System.Linq;
 using ComboBoxItem = Budget.Utility_Classes.ComboBoxItem;
 
 namespace Budget.History
@@ -31,7 +32,7 @@ namespace Budget.History
             history.Columns.Add("Kwota", typeof(double));
             history.Columns.Add("Saldo", typeof(double));
 
-            foreach (KeyValuePair<int, BalanceLog> p in Main_Classes.Budget.Instance.BalanceLog)
+            foreach (KeyValuePair<int, BalanceLog> p in Main_Classes.Budget.Instance.BalanceLog.Reverse())
             {
                 if (!((p.Value.Date >= (StartDateCheckBox.IsChecked == true ? StartDatePicker.SelectedDate : DateTime.MinValue)) &&
                       (p.Value.Date <= (EndDateCheckBox.IsChecked == true ? EndDatePicker.SelectedDate : DateTime.MaxValue))))
@@ -67,7 +68,6 @@ namespace Budget.History
                 }
             }
 
-            history.DefaultView.Sort = "[Data] DESC";
             HistoryDataGrid.ItemsSource = history.DefaultView;
 
             HistoryDataGrid.Columns[0].Visibility = Visibility.Hidden;
