@@ -7,13 +7,14 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using Budget.Main_Classes;
 using System.Linq;
+using Budget.Utility_Classes;
 
 namespace Budget.WelcomePage
 {
     /// <summary>
     /// Interaction logic for WelcomePage.xaml
     /// </summary>
-    public partial class WelcomePage : Page
+    public partial class WelcomePage : Page,IGetOnPage
     {
         private const int INF = 9999999;
         public DateTime startDate, endDate;
@@ -256,14 +257,15 @@ namespace Budget.WelcomePage
             var res = 0.0;
             var date = DateTime.Now.AddMonths(-1);
             var firstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            foreach (var p in Main_Classes.Budget.Instance.Payments)
+            var lastId = 0;
+            foreach (var p in Main_Classes.Budget.Instance.BalanceLog)
             {
-                if (p.Value.GetType() == typeof(PeriodPayment))
-                    continue;
-                var pp = (SinglePayment)p.Value;
-                if (pp.Date <= date || pp.Date >= firstDay) continue;
+                var pp = (SinglePayment)Main_Classes.Budget.Instance.Payments[p.Value.SinglePaymentID];
+                if (pp.Date <= date || pp.Date > firstDay) continue;
+                if (lastId > p.Key) continue;
                 res = Main_Classes.Budget.Instance.BalanceLog[p.Key].Balance;
                 date = pp.Date;
+                lastId = p.Key;
             }
             if (res == 0.00)
             {
@@ -272,6 +274,7 @@ namespace Budget.WelcomePage
             }
             else
             {
+                res = Main_Classes.Budget.Instance.BalanceLog[lastId-1].Balance;
                 PrevMonthTextBox.Foreground = res < 0 ? Brushes.Red : Brushes.Green;
                 PrevMonthTextBox.Text = res.ToString();
             }
@@ -393,6 +396,12 @@ namespace Budget.WelcomePage
                 }               
             }
            catch { }
+        }
+
+        public void GetOnPage()
+        {
+            PrevMonth();
+            InsertBars();
         }
     }
 }

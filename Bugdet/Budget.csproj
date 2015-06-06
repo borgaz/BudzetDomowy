@@ -200,6 +200,7 @@
       <DependentUpon>CustomMessageBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utility Classes\GenerateDateBase.cs" />
+    <Compile Include="Utility Classes\GetOnPage.cs" />
     <Compile Include="Utility Classes\SavingInfo.xaml.cs">
       <DependentUpon>SavingInfo.xaml</DependentUpon>
     </Compile>

@@ -100,6 +100,7 @@ namespace Budget
                     this.MainContentFrame.Content = _mainPage;
                     break;
                 case 2:
+                    _welcomePage.GetOnPage();
                     this.MainContentFrame.Content = _welcomePage;
                     break;
                 case 3:

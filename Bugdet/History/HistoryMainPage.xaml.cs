@@ -71,7 +71,7 @@ namespace Budget.History
             HistoryDataGrid.ItemsSource = history.DefaultView;
 
             HistoryDataGrid.Columns[0].Visibility = Visibility.Hidden;
-            HistoryDataGrid.Columns[1].Visibility = Visibility.Hidden;
+          //  HistoryDataGrid.Columns[1].Visibility = Visibility.Hidden;
             HistoryDataGrid.Columns[5].DisplayIndex = 1;
             HistoryDataGrid.Columns[2].DisplayIndex = 2;
             HistoryDataGrid.Columns[2].Width = 170;
