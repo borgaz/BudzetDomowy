@@ -220,7 +220,7 @@ namespace Budget.Main_Classes
         /// <param name="type"></param>
         public void InsertCategories(ComboBox comboBox, CategoryTypeEnum type)
         {
-            bool catType = (false || type == CategoryTypeEnum.SALARY);
+            bool catType = (type == CategoryTypeEnum.SALARY);
             
             comboBox.Items.Clear();
             foreach (KeyValuePair<int,Category> c in categories)

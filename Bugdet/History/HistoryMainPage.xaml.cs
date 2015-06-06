@@ -19,7 +19,8 @@ namespace Budget.History
         public HistoryMainPage()
         {
             InitializeComponent();
-            Main_Classes.Budget.Instance.InsertCategories(CategoryComboBox, Main_Classes.Budget.CategoryTypeEnum.ANY);
+           // Main_Classes.Budget.Instance.InsertCategories(CategoryComboBox, Main_Classes.Budget.CategoryTypeEnum.ANY);
+            CheckBoxForCategories();
         }
         private void RefreshTable()
         {
@@ -43,16 +44,14 @@ namespace Budget.History
                     continue;
                 var pp = (SinglePayment)Main_Classes.Budget.Instance.Payments[p.Value.SinglePaymentID];
                 // jesli wartosc nie zawiera sie w sliderze to nie bierzemy pod uwage
-                if (
-                    !((pp.Amount < AmountSlider.Value && LowerRadio.IsChecked == true) ||
-                      (pp.Amount > AmountSlider.Value && GreaterRadio.IsChecked == true)))
+                if (pp.Amount > LowerAmountSlider.Value || pp.Amount < HigherAmountSlider.Value)
                     continue;
-                // jesli kategoria jest ustawiona i nie jest taka sama to nie bierzemy pod uwage.
-                if (CategoryCheckBox.IsChecked == true && CategoryComboBox.SelectedIndex != -1)
+                // jesli kategoria jest odhaczona to nie bierzemy pod uwage.
+                if (CategoryCheckBox.IsChecked == true)
                 {
-                    var categoryItem = (ComboBoxItem)CategoryComboBox.SelectedValue;
-                    if (categoryItem.Id != pp.CategoryID)
-                        continue;
+                    var add = false;
+                    foreach (var cat in CategoryComboBox.Items.Cast<CheckBox>().Where(cat => Convert.ToInt32(cat.Name.Substring(1)) == pp.CategoryID && cat.IsChecked == true)) {add = true; }
+                    if (!add) continue;
                 }
 
                 if (pp.Type && SinglePaymentCheckBox.IsChecked == true)
@@ -73,6 +72,14 @@ namespace Budget.History
             HistoryDataGrid.Columns[0].Visibility = Visibility.Hidden;
           //  HistoryDataGrid.Columns[1].Visibility = Visibility.Hidden;
             HistoryDataGrid.Columns[5].DisplayIndex = 1;
+
+            // -- to powinno dzialac wg MSDN ;(
+            //var a = new DataTemplate();
+            //a.VisualTree = new FrameworkElementFactory(typeof(TextBlock));
+            //a.VisualTree.SetValue(TextBlock.FontSizeProperty,12);
+            //HistoryDataGrid.Columns[5].HeaderTemplate = a;
+
+
             HistoryDataGrid.Columns[2].DisplayIndex = 2;
             HistoryDataGrid.Columns[2].Width = 170;
             HistoryDataGrid.Columns[4].DisplayIndex = 3;
@@ -208,7 +215,7 @@ namespace Budget.History
 
         private void AmountSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            SliderValueTextBox.Text = Convert.ToInt32(AmountSlider.Value).ToString();
+            HigherSliderValueTextBox.Text = Convert.ToInt32(HigherAmountSlider.Value).ToString();
             RefreshTable();
         }
 
@@ -222,17 +229,60 @@ namespace Budget.History
 
         private void SliderValueTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!SliderValueTextBox.IsFocused)
+            if (!HigherSliderValueTextBox.IsFocused)
                 return;
-            if (SliderValueTextBox.Text == "")
-                AmountSlider.Value = 0;
-            AmountSlider.Value = Convert.ToInt32(SliderValueTextBox.Text);
+            if (HigherSliderValueTextBox.Text == "")
+                HigherAmountSlider.Value = 0;
+            HigherAmountSlider.Value = Convert.ToInt32(HigherSliderValueTextBox.Text);
+        }
+
+        private void CheckBoxForCategories()
+        {
+            foreach (var cat in Main_Classes.Budget.Instance.Categories)
+            {
+                var c = new CheckBox {Content = cat.Value.Name, Name = "a" + cat.Key, IsChecked = true};
+                CategoryComboBox.Items.Add(c);
+            }
         }
 
         private void AmountSlider_Loaded(object sender, RoutedEventArgs e)
         {
-            AmountSlider.Value = 0;
-            AmountSlider.Maximum = Main_Classes.Budget.Instance.MaxAmount;
+            HigherAmountSlider.Value = 0;
+            HigherAmountSlider.Maximum = Main_Classes.Budget.Instance.MaxAmount;
+        }
+
+        private void CategoryComboBox_OnDropDownClosed(object sender, EventArgs e)
+        {
+            RefreshTable();
+        }
+
+        private void LowerAmountSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            LowerSliderValueTextBox.Text = Convert.ToInt32(LowerAmountSlider.Value).ToString();
+            RefreshTable();
+        }
+
+        private void LowerAmountSlider_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            LowerAmountSlider.Maximum = Main_Classes.Budget.Instance.MaxAmount;
+            LowerAmountSlider.Value = LowerAmountSlider.Maximum;
+        }
+
+        private void LowerSliderValueTextBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!char.IsDigit(e.Text, e.Text.Length - 1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void LowerSliderValueTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!LowerSliderValueTextBox.IsFocused)
+                return;
+            if (LowerSliderValueTextBox.Text == "")
+                LowerAmountSlider.Value = 0;
+            LowerAmountSlider.Value = Convert.ToInt32(LowerSliderValueTextBox.Text);
         }
     }
 }
