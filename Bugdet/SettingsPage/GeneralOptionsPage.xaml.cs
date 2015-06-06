@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Windows.Controls;
 using Budget.Main_Classes;
+using System.Windows.Forms;
+using System.IO;
+using System.IO.Compression;
 
 namespace Budget.SettingsPage
 {
@@ -44,7 +47,7 @@ namespace Budget.SettingsPage
             }
         }
 
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void DeleteDataBase_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             //System.Diagnostics.Process.Start(Application.ExecutablePath); // to start new instance of application
             string file = @"" + Main_Classes.Budget.Instance.Name + ".sqlite";
@@ -52,6 +55,42 @@ namespace Budget.SettingsPage
             App.Current.Shutdown();
             Main_Classes.SqlConnect.Instance.Disconnect();
             System.IO.File.Delete(file);
+        }
+
+        private void ExportDataBase_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (ExportDataBaseToZip())
+                MessageBox.Show("Poprawnie wyeksportowana baza danych");
+        }
+
+        private bool ExportDataBaseToZip()
+        {
+            var dialog = new FolderBrowserDialog();
+            DialogResult result = dialog.ShowDialog();
+
+            if (result.ToString() == "OK")
+            {
+                try
+                {
+                    string budgetName = Main_Classes.Budget.Instance.Name;
+                    string startPath = budgetName;
+                    string endPath  = dialog.SelectedPath + "\\" + budgetName + ".zip";
+                    if (File.Exists(endPath))
+                        MessageBox.Show("Plik " + endPath + " istnieje. Podaj inną ścieżkę.");
+                    Directory.CreateDirectory(budgetName);
+                    string fileInDir = Main_Classes.Budget.Instance.Name + "\\" + budgetName + ".sqlite";
+                    File.Copy(Main_Classes.Budget.Instance.Name + ".sqlite", fileInDir);
+                    
+
+                    ZipFile.CreateFromDirectory(startPath, endPath);
+                    Directory.Delete(budgetName, true);
+                }
+                catch (IOException e)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
