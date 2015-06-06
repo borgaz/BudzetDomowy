@@ -14,5 +14,15 @@
         <Label x:Name="MinutesLabel" Content="minuty" HorizontalAlignment="Left" Margin="200,60,0,0" VerticalAlignment="Top" Width="62"/>
         <Button x:Name="SaveSettingsButton" Content="Zapisz" HorizontalAlignment="Left" Margin="25,150,0,0" VerticalAlignment="Top" Width="100" Height="25" Click="SaveSettingsButton_Click"/>
         <Label x:Name="BudgetNameLabel" Content="" HorizontalAlignment="Left" Margin="135,25,0,0" VerticalAlignment="Top" Width="150" FontWeight="Bold" Height="25" FontSize="14"/>
+        <Button Content="Usuń aktualny budżet" HorizontalAlignment="Left" Margin="187,150,0,0" VerticalAlignment="Top" Width="154" Click="Button_Click">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="#FFF3F3F3" Offset="0"/>
+                    <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
+                    <GradientStop Color="#FFDDDDDD" Offset="0.526"/>
+                    <GradientStop Color="Red" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
     </Grid>
 </Page>

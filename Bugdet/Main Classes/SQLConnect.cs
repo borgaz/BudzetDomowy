@@ -28,6 +28,12 @@ namespace Budget.Main_Classes
             }
         }
 
+        public void Disconnect ()
+        {
+            _mydb.Close();
+            GC.Collect();
+        }
+
         private Boolean Connect(String budget, String password)
         {
             try
