@@ -92,6 +92,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit">
+      <HintPath>WPFToolkit\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -115,6 +118,9 @@
     </Compile>
     <Compile Include="Analisys\AnalisysMainPage.xaml.cs">
       <DependentUpon>AnalisysMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Analisys\AnalysisAvgTrendlinePage.xaml.cs">
+      <DependentUpon>AnalysisAvgTrendlinePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Analisys\AnalysisTabPage.xaml.cs">
       <DependentUpon>AnalysisTabPage.xaml</DependentUpon>
@@ -224,6 +230,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Analisys\AnalisysMainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analisys\AnalysisAvgTrendlinePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
