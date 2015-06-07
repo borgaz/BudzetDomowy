@@ -19,5 +19,8 @@
                 <chart:ChartSeries DisplayMember="Payment" SeriesTitle="miesiac+2" ValueMember="Number" ItemsSource="{Binding Path=PaymentsNext2}" />-->
             </chart:ClusteredColumnChart.Series>
         </chart:ClusteredColumnChart>
+        <Calendar x:Name="DateOneCalendar" HorizontalAlignment="Left" Margin="487,419,0,0" VerticalAlignment="Top" Height="33" DisplayDateChanged="DateThreeCalendar_OnDisplayDateChanged"/>
+        <Calendar x:Name="DateTwoCalendar" HorizontalAlignment="Left" Margin="278,419,0,0" VerticalAlignment="Top" Height="33" DisplayDateChanged="DateThreeCalendar_OnDisplayDateChanged"/>
+        <Calendar x:Name="DateThreeCalendar" HorizontalAlignment="Left" Margin="81,419,0,0" VerticalAlignment="Top" Height="33" DisplayDateChanged="DateThreeCalendar_OnDisplayDateChanged"/>
     </Grid>
 </Page>

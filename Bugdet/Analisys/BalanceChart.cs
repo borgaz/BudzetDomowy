@@ -16,11 +16,19 @@ namespace Budget.Analisys
         public ObservableCollection<Now> Paymentsa { get; private set; }
         public ObservableCollection<Now> Paymentsb { get; private set; }
 
-        public BalanceChart()
+        public DateTime DateOne { get; set; }
+        public DateTime DateTwo { get; set; }
+        public DateTime DateThree { get; set; }
+
+
+        public BalanceChart(DateTime one,DateTime two,DateTime three)
         {
             Payments = new ObservableCollection<Now>();
             Paymentsa = new ObservableCollection<Now>();
             Paymentsb = new ObservableCollection<Now>();
+            DateOne = one;
+            DateTwo = two;
+            DateThree = three;
           //  Salary = new ObservableCollection<Now>();
             double suma = 0;
             double sum2a = 0;
@@ -30,31 +38,30 @@ namespace Budget.Analisys
 
             double sumc = 0;
             double sum2c = 0;
-                foreach (KeyValuePair<int, Main_Classes.Payment> s in Main_Classes.Budget.Instance.Payments)
+                foreach (KeyValuePair<int, Payment> s in Main_Classes.Budget.Instance.Payments)
                 {
+                    if (s.Value.GetType() != typeof (SinglePayment)) continue;
+                    
                     if (!s.Value.Type)
-                        if (s.Value.GetType() == typeof (Main_Classes.SinglePayment))
-                        {
-                            var temp = (SinglePayment) s.Value;
-                            if(temp.Date.Month == DateTime.Now.Month)
-                                suma += s.Value.Amount;
-                            if(temp.Date.Month == DateTime.Now.AddMonths(-1).Month)
-                                sumb += s.Value.Amount;
-                            if (temp.Date.Month == DateTime.Now.AddMonths(-2).Month)
-                                sumc += s.Value.Amount;
-
-                        }
-                    if (s.Value.Type)
-                        if (s.Value.GetType() == typeof (Main_Classes.SinglePayment))
-                        {
-                            var temp = (SinglePayment)s.Value;
-                            if (temp.Date.Month == DateTime.Now.Month)
-                                sum2a += s.Value.Amount;
-                            if (temp.Date.Month == DateTime.Now.AddMonths(-1).Month)
-                                sum2b += s.Value.Amount;
-                            if (temp.Date.Month == DateTime.Now.AddMonths(-2).Month)
-                                sum2c += s.Value.Amount;
-                        }
+                    {
+                        var temp = (SinglePayment) s.Value;
+                        if (temp.Date.Month == DateOne.Month)
+                            suma += s.Value.Amount;
+                        if (temp.Date.Month == DateTwo.Month)
+                            sumb += s.Value.Amount;
+                        if (temp.Date.Month == DateThree.Month)
+                            sumc += s.Value.Amount;
+                    }
+                    else
+                    {
+                        var temp = (SinglePayment) s.Value;
+                        if (temp.Date.Month == DateOne.Month)
+                            sum2a += s.Value.Amount;
+                        if (temp.Date.Month == DateTwo.Month)
+                            sum2b += s.Value.Amount;
+                        if (temp.Date.Month == DateThree.Month)
+                            sum2c += s.Value.Amount;
+                    }
 
                 }
             if (suma != 0)
@@ -71,6 +78,76 @@ namespace Budget.Analisys
                 Paymentsb.Add(new Now() { Payment = "Wydatki", Number = sumc });
             if (sum2c != 0)
                 Paymentsb.Add(new Now() { Payment = "Przychody", Number = sum2c });
+        }
+
+        private DateTime AddDateFrequency(DateTime date, string freq,int times)
+        {
+            if (freq.Equals("DZIEŃ"))
+                return date.AddDays(times);
+            if (freq.Equals("TYDZIEŃ"))
+                return date.AddDays(times * 7);
+            if (freq.Equals("MIESIĄC"))
+                return date.AddMonths(times);
+            if (freq.Equals("ROK")) 
+                return date.AddYears(times);
+            else
+            {
+                return DateTime.Now;
+            }
+        }
+        public double CountFutureSalaries(DateTime fUtUrE)
+        {
+            var result = 0.0; // ile bedzie periodow w przyszlym miesiacu
+            var singleResult = 0.0; // suma realnych singlePaymentsow z 3 miesiecy wstecz
+            var months = 0;
+            var tempDate = new DateTime();
+            tempDate = DateTime.Now;
+
+            foreach (var p in Main_Classes.Budget.Instance.Payments)
+            {
+                if (p.Value.GetType() == typeof (SinglePayment) || p.Value.Type) continue;
+                var pp = (PeriodPayment) p.Value;
+                var pDate = DateTime.Now.AddMonths(1).Month;
+                var pLast = pp.LastUpdate;
+                while (pLast.Month < DateTime.Now.AddMonths(2).Month)
+                {
+                    if (pLast.Month == pDate)
+                        result += pp.Amount;
+                    pLast = AddDateFrequency(pLast, pp.Period, pp.Frequency);
+                }
+            }
+            
+            while (tempDate > DateTime.Now.AddMonths(-3))
+            {
+                var avg = 0.0;
+                var actualAvg = 0.0;
+                var anyPayment = 0;
+                foreach (var p in Main_Classes.Budget.Instance.Payments)
+                {
+                    if (p.Value.GetType() == typeof(PeriodPayment) || p.Value.Type) continue;
+                    var pp = (SinglePayment) p.Value;
+                    if (pp.Date != tempDate)
+                        continue;
+                    avg += pp.Amount;
+                    anyPayment++;
+                }
+                
+                foreach (var p in Main_Classes.Budget.Instance.Payments)
+                {
+                    if (p.Value.GetType() == typeof(PeriodPayment) || p.Value.Type) continue;
+                    var pp = (SinglePayment)p.Value;
+                    if (pp.Date != tempDate)
+                        continue;
+                    if (pp.Amount/avg > 0.4) continue;
+                    actualAvg += pp.Amount;
+                }
+                tempDate = tempDate.AddMonths(-1);
+                singleResult += actualAvg;
+                if (anyPayment != 0)
+                    months++;
+            }
+            singleResult /= months;
+            return singleResult + result;
         }
 
         private object selectedItem = null;

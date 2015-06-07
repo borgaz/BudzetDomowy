@@ -322,11 +322,6 @@ namespace Budget.WelcomePage
             }
         }
 
-        private void Grid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            InsertBars();
-        }
-
         private void ProvidedPaymentsDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
         {
             colorDataGridRow(e);
@@ -400,6 +395,9 @@ namespace Budget.WelcomePage
 
         public void GetOnPage()
         {
+            savingsTargetsDataGrid.ItemsSource = CreataDataForSavingsTargetsDataGrid();
+            ChangeSavingsTargetsDaysLeft();
+            SetColours();
             PrevMonth();
             InsertBars();
         }
