@@ -132,7 +132,7 @@ namespace Budget.Analisys
             var singleResult = 0.0; // suma realnych singlePaymentsow z 3 miesiecy wstecz
             var months = 0; // ilosc miesiacy w ktorych byly dane
             var tempDate = new DateTime(); // zmienna daty pomocnicza
-            tempDate = DateTime.Now;
+            tempDate = DateTime.Now.AddMonths(-1);
 
             foreach (var p in Main_Classes.Budget.Instance.Payments)
             {
@@ -150,7 +150,7 @@ namespace Budget.Analisys
                 }
             }
             
-            while (tempDate > DateTime.Now.AddMonths(-3))
+            while (tempDate > DateTime.Now.AddMonths(-4))
             {
                 var avg = 0.0; // srednia arytmetyczna
                 var actualAvg = 0.0; // srednia po odjeciu wartosci wykraczajacych poza odchylenie standartowe
