@@ -4,6 +4,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Budget.Main_Classes;
 using Budget.New_Budget;
+using System;
+using System.IO.Compression;
 
 namespace Budget.LoginWindow
 {
@@ -106,6 +108,59 @@ namespace Budget.LoginWindow
         {
             if(e.Key == Key.Enter)
                 LogInButton_Click(new object(),new RoutedEventArgs());
+        }
+
+        private void ImportButton_Click(object sender, RoutedEventArgs e)
+        {
+            string nameOfFile = ImportDateBaseFromZIP();
+            if (nameOfFile != "")
+            {
+                MessageBox.Show("Budżet został zaimportowany. Proszę o zalogowanie.");
+                BudgetsComboBox.Items.Clear();
+                InsertBudgets();
+                BudgetsComboBox.SelectedItem = nameOfFile;
+            }         
+        }
+
+        private string ImportDateBaseFromZIP()
+        {
+            var openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+
+            openFileDialog1.Filter = "Plik zip (.zip)|*.zip";
+            openFileDialog1.FilterIndex = 1;
+
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                try
+                {
+                    string zipPath = openFileDialog1.FileName;
+                    ZipArchive archive = ZipFile.OpenRead(zipPath);
+                    if (archive.Entries.Count > 1)
+                    {
+                        MessageBox.Show("Niepoprawny plik ZIP. Zbyt duża ilość plików w archiwum.");
+                        return "";
+                    }
+
+                    foreach (ZipArchiveEntry entry in archive.Entries)
+                    {
+                        if (!entry.FullName.EndsWith(".sqlite", StringComparison.OrdinalIgnoreCase))
+                        {
+                            MessageBox.Show("Niepoprawny plik ZIP. Złe rozszerzenie bazy danych.");
+                            return "";
+                        }
+                    }
+
+                    string extract = @".";
+                    ZipFile.ExtractToDirectory(zipPath, extract);
+                }
+                catch
+                {
+                    return "";
+                }
+            }
+            else
+                return "";
+            return System.IO.Path.GetFileNameWithoutExtension(openFileDialog1.SafeFileName);
         }
     }
 }

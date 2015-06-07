@@ -64,6 +64,8 @@ namespace Budget.SettingsPage
         {
             if (ExportDataBaseToZip())
                 MessageBox.Show("Poprawnie wyeksportowana baza danych");
+            else
+                MessageBox.Show("Wystąpił błąd");
         }
 
         private bool ExportDataBaseToZip()
@@ -73,24 +75,27 @@ namespace Budget.SettingsPage
 
             if (result.ToString() == "OK")
             {
+                string budgetName = Main_Classes.Budget.Instance.Name;
                 try
                 {
-                    string budgetName = Main_Classes.Budget.Instance.Name;
                     string startPath = budgetName;
-                    string endPath  = dialog.SelectedPath + "\\" + budgetName + ".zip";
+                    string endPath = dialog.SelectedPath + "\\" + budgetName + ".zip";
                     if (File.Exists(endPath))
                         MessageBox.Show("Plik " + endPath + " istnieje. Podaj inną ścieżkę.");
                     Directory.CreateDirectory(budgetName);
                     string fileInDir = Main_Classes.Budget.Instance.Name + "\\" + budgetName + ".sqlite";
                     File.Copy(Main_Classes.Budget.Instance.Name + ".sqlite", fileInDir);
-                    
 
                     ZipFile.CreateFromDirectory(startPath, endPath);
-                    Directory.Delete(budgetName, true);
+
                 }
                 catch (IOException e)
                 {
                     return false;
+                }
+                finally
+                {
+                    Directory.Delete(budgetName, true);
                 }
             }
             return true;
