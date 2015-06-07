@@ -29,8 +29,6 @@ namespace Budget.Analisys
             DateTwoCalendar.DisplayDate = DateTime.Now.AddMonths(-1);
             DateThreeCalendar.DisplayDate = DateTime.Now.AddMonths(-2);
             SetDates(DateOneCalendar.DisplayDate, DateTwoCalendar.DisplayDate, DateThreeCalendar.DisplayDate);
-            //  var = new BalanceChart(DateTime.Now, DateTime.Now.AddMonths(-1), DateTime.Now.AddMonths(-2));
-          //  DataContext = var;
         }
 
         private void SetDates(DateTime one, DateTime two, DateTime three)
@@ -41,8 +39,6 @@ namespace Budget.Analisys
 
         private void DateThreeCalendar_OnDisplayDateChanged(object sender, CalendarDateChangedEventArgs e)
         {
-           // if (e.AddedDate.Value.Month > DateTime.Now.Month)
-           //     System.Windows.MessageBox.Show(var.CountFutureSalaries(e.AddedDate.Value) + "");
             SetDates(DateOneCalendar.DisplayDate,DateTwoCalendar.DisplayDate,DateThreeCalendar.DisplayDate);
         }
     }

@@ -64,20 +64,45 @@ namespace Budget.Analisys
                     }
 
                 }
-            if (suma != 0)
-                Payments.Add(new Now() { Payment = "Wydatki", Number = suma });
-            if (sum2a != 0)
-                Payments.Add(new Now() { Payment = "Przychody", Number = sum2a });
+            if (DateOne.Month > DateTime.Now.Month)
+            {
+                Payments.Add(new Now() { Payment = "Wydatki", Number = CountFutureMonth(DateOne,true) });
+                Payments.Add(new Now() { Payment = "Przychody", Number = CountFutureMonth(DateOne, false) });
+            }
+            else
+            {
+                if (suma != 0)
+                    Payments.Add(new Now() { Payment = "Wydatki", Number = suma });
+                if (sum2a != 0)
+                    Payments.Add(new Now() { Payment = "Przychody", Number = sum2a });
+            }
 
-            if (sumb != 0)
-                Paymentsa.Add(new Now() { Payment = "Wydatki", Number = sumb });
-            if (sum2b != 0)
-                Paymentsa.Add(new Now() { Payment = "Przychody", Number = sum2b });
+            if (DateTwo.Month > DateTime.Now.Month)
+            {
+                Payments.Add(new Now() { Payment = "Wydatki", Number = CountFutureMonth(DateTwo, true) });
+                Payments.Add(new Now() { Payment = "Przychody", Number = CountFutureMonth(DateTwo, false) });
+            }
+            else
+            {
+                if (sumb != 0)
+                    Paymentsa.Add(new Now() { Payment = "Wydatki", Number = sumb });
+                if (sum2b != 0)
+                    Paymentsa.Add(new Now() { Payment = "Przychody", Number = sum2b });    
+            }
 
-            if (sumc != 0)
-                Paymentsb.Add(new Now() { Payment = "Wydatki", Number = sumc });
-            if (sum2c != 0)
-                Paymentsb.Add(new Now() { Payment = "Przychody", Number = sum2c });
+            if (DateThree.Month > DateTime.Now.Month)
+            {
+                Payments.Add(new Now() { Payment = "Wydatki", Number = CountFutureMonth(DateThree, true) });
+                Payments.Add(new Now() { Payment = "Przychody", Number = CountFutureMonth(DateThree, false) });
+            }
+            else
+            {
+                if (sumc != 0)
+                    Paymentsb.Add(new Now() { Payment = "Wydatki", Number = sumc });
+                if (sum2c != 0)
+                    Paymentsb.Add(new Now() { Payment = "Przychody", Number = sum2c });
+            }
+
         }
 
         private DateTime AddDateFrequency(DateTime date, string freq,int times)
@@ -95,59 +120,86 @@ namespace Budget.Analisys
                 return DateTime.Now;
             }
         }
-        public double CountFutureSalaries(DateTime fUtUrE)
+        /// <summary>
+        /// return salary prediction on month from parameter
+        /// </summary>
+        /// <param name="fUtUrE">DateTime with month you want to predict</param>
+        /// <param name="payment">true for payment, false for salaries</param>
+        /// <returns>prediction value</returns>
+        public Int32 CountFutureMonth(DateTime fUtUrE,bool payment)
         {
             var result = 0.0; // ile bedzie periodow w przyszlym miesiacu
             var singleResult = 0.0; // suma realnych singlePaymentsow z 3 miesiecy wstecz
-            var months = 0;
-            var tempDate = new DateTime();
+            var months = 0; // ilosc miesiacy w ktorych byly dane
+            var tempDate = new DateTime(); // zmienna daty pomocnicza
             tempDate = DateTime.Now;
 
             foreach (var p in Main_Classes.Budget.Instance.Payments)
             {
-                if (p.Value.GetType() == typeof (SinglePayment) || p.Value.Type) continue;
+                if (p.Value.GetType() == typeof (SinglePayment) || p.Value.Type == !payment) continue;
                 var pp = (PeriodPayment) p.Value;
                 var pDate = DateTime.Now.AddMonths(1).Month;
                 var pLast = pp.LastUpdate;
                 while (pLast.Month < DateTime.Now.AddMonths(2).Month)
                 {
-                    if (pLast.Month == pDate)
+                    if (pLast.Month == pDate) // gdy akurat mamy ten miesiac
                         result += pp.Amount;
-                    pLast = AddDateFrequency(pLast, pp.Period, pp.Frequency);
+                    if (pp.EndDate > AddDateFrequency(pLast, pp.Period, pp.Frequency)) // czy koniec periodu nie wykracza poza kolejna "rate"
+                        pLast = AddDateFrequency(pLast, pp.Period, pp.Frequency); // dodanie odstepu do kolejnej raty
+                    else break;
                 }
             }
             
             while (tempDate > DateTime.Now.AddMonths(-3))
             {
-                var avg = 0.0;
-                var actualAvg = 0.0;
-                var anyPayment = 0;
+                var avg = 0.0; // srednia arytmetyczna
+                var actualAvg = 0.0; // srednia po odjeciu wartosci wykraczajacych poza odchylenie standartowe
+                var anyPayment = 0; // zmienna pomocnicza
+                var variationList = new List<double>(); // lista wartosci do liczenia odchylenia standartowego
                 foreach (var p in Main_Classes.Budget.Instance.Payments)
                 {
-                    if (p.Value.GetType() == typeof(PeriodPayment) || p.Value.Type) continue;
+                    if (p.Value.GetType() == typeof(PeriodPayment) || p.Value.Type == !payment) continue;
                     var pp = (SinglePayment) p.Value;
-                    if (pp.Date != tempDate)
+                    if (pp.Date.Month != tempDate.Month)
                         continue;
                     avg += pp.Amount;
+                    variationList.Add(pp.Amount);
                     anyPayment++;
                 }
-                
+                avg /= anyPayment; // liczenie sredniej arytmetycznej
+                var varSum = variationList.Sum(v => Math.Exp(v - avg)); // liczenie sumy roznic kwadratow wartosci i sredniej
+                varSum = Math.Sqrt(varSum/(anyPayment - 1)); // pierwiastek z sumy/n-1
                 foreach (var p in Main_Classes.Budget.Instance.Payments)
                 {
-                    if (p.Value.GetType() == typeof(PeriodPayment) || p.Value.Type) continue;
+                    if (p.Value.GetType() == typeof(PeriodPayment) || p.Value.Type == !payment) continue;
                     var pp = (SinglePayment)p.Value;
-                    if (pp.Date != tempDate)
+                    if (pp.Date.Month != tempDate.Month)
                         continue;
-                    if (pp.Amount/avg > 0.4) continue;
-                    actualAvg += pp.Amount;
+                    if (!IsInRange(pp.Amount, avg, varSum)) continue; // jesli wartosc wykracza poza odchylenie standartowe
+                    // if (pp.Amount / avg > 0.4 && pp.Amount / avg != 1.0) continue;
+                    actualAvg += pp.Amount; // dodanie do rzeczywistej sredniej
                 }
                 tempDate = tempDate.AddMonths(-1);
-                singleResult += actualAvg;
-                if (anyPayment != 0)
+                singleResult += actualAvg; // dodanie do koncowego wyniku z miesiaca
+                if (anyPayment != 0) // jesli nie bylo zadnych wydatkow/przychodow
                     months++;
             }
-            singleResult /= months;
-            return singleResult + result;
+            singleResult /= months; // wyliczenie sredniej arytmetycznej z miesiecy z ktorych mamy dane
+            result += singleResult;
+            if (result == 0.0)
+                return 0;
+            return Convert.ToInt32(result);  
+        }
+        /// <summary>
+        /// Returns if 'a' is in range of [b - c ; b + c] 
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        private bool IsInRange(double a, double b, double c)
+        {
+            return a >= b - c && a <= b + c;
         }
 
         private object selectedItem = null;
