@@ -49,12 +49,15 @@ namespace Budget.SettingsPage
 
         private void DeleteDataBase_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            //System.Diagnostics.Process.Start(Application.ExecutablePath); // to start new instance of application
-            string file = @"" + Main_Classes.Budget.Instance.Name + ".sqlite";
-            System.Windows.Forms.Application.Restart();
-            App.Current.Shutdown();
-            Main_Classes.SqlConnect.Instance.Disconnect();
-            System.IO.File.Delete(file);
+            DialogResult dialogResult = MessageBox.Show("Czy na pewno chcesz usunąć aktualny budżet?", "Usuwanie bazy danych", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                string file = @"" + Main_Classes.Budget.Instance.Name + ".sqlite";
+                System.Windows.Forms.Application.Restart();
+                App.Current.Shutdown();
+                Main_Classes.SqlConnect.Instance.Disconnect();
+                System.IO.File.Delete(file);
+            }
         }
 
         private void ExportDataBase_Click(object sender, System.Windows.RoutedEventArgs e)
