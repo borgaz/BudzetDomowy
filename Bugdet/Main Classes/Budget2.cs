@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Windows;
+using System.Windows.Forms;
 using Budget.Utility_Classes;
+using MessageBox = System.Windows.MessageBox;
 
 // Second part of Budget class - FetchAll() and Dump()
 namespace Budget.Main_Classes
@@ -35,7 +36,9 @@ namespace Budget.Main_Classes
                     password = Convert.ToString(nameFromSelect.Tables[0].Rows[0]["password"]);
                     creationDate = Convert.ToDateTime(nameFromSelect.Tables[0].Rows[0]["creation"]);
                 }
-
+                ///// resetowanie zarobkow
+                SqlConnect.Instance.monthlyPayments = 0;
+                SqlConnect.Instance.monthlySalaries = 0;
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // Lista kategorii
                 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,16 +110,17 @@ namespace Budget.Main_Classes
                             Convert.ToString(singlePayFromSelect.Tables[0].Rows[i]["name"]),
                             date));
                     //do miesiecznej sumy
-                    if (!Convert.ToDateTime(singlePayFromSelect.Tables[0].Rows[i]["date"]).Month.Equals(DateTime.Now.Month))
+                    if (Convert.ToDateTime(singlePayFromSelect.Tables[0].Rows[i]["date"]).Month != DateTime.Now.Month ||
+                        Convert.ToDateTime(singlePayFromSelect.Tables[0].Rows[i]["date"]).Year != DateTime.Now.Year)
                         continue;
-
                     if (Convert.ToInt32(singlePayFromSelect.Tables[0].Rows[i]["type"]) == 1)
                         SqlConnect.Instance.monthlyPayments +=
                             Convert.ToDouble(singlePayFromSelect.Tables[0].Rows[i]["amount"]);
                     else
                     {
+                        MessageBox.Show(Convert.ToDateTime(singlePayFromSelect.Tables[0].Rows[i]["date"]).Month + "\n" + Convert.ToDateTime(singlePayFromSelect.Tables[0].Rows[i]["date"]));
                         SqlConnect.Instance.monthlySalaries +=
-                             Convert.ToDouble(singlePayFromSelect.Tables[0].Rows[i]["amount"]);
+                            Convert.ToDouble(singlePayFromSelect.Tables[0].Rows[i]["amount"]);
                     }
                 }
 

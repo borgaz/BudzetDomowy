@@ -42,24 +42,24 @@ namespace Budget.Analisys
                 {
                     if (s.Value.GetType() != typeof (SinglePayment)) continue;
                     
-                    if (!s.Value.Type)
+                    if (s.Value.Type)
                     {
                         var temp = (SinglePayment) s.Value;
-                        if (temp.Date.Month == DateOne.Month)
+                        if (temp.Date.Month == DateOne.Month && temp.Date.Year == DateOne.Year)
                             suma += s.Value.Amount;
-                        if (temp.Date.Month == DateTwo.Month)
+                        if (temp.Date.Month == DateTwo.Month && temp.Date.Year == DateTwo.Year)
                             sumb += s.Value.Amount;
-                        if (temp.Date.Month == DateThree.Month)
+                        if (temp.Date.Month == DateThree.Month && temp.Date.Year == DateThree.Year)
                             sumc += s.Value.Amount;
                     }
                     else
                     {
                         var temp = (SinglePayment) s.Value;
-                        if (temp.Date.Month == DateOne.Month)
+                        if (temp.Date.Month == DateOne.Month && temp.Date.Year == DateOne.Year)
                             sum2a += s.Value.Amount;
-                        if (temp.Date.Month == DateTwo.Month)
+                        if (temp.Date.Month == DateTwo.Month && temp.Date.Year == DateTwo.Year)
                             sum2b += s.Value.Amount;
-                        if (temp.Date.Month == DateThree.Month)
+                        if (temp.Date.Month == DateThree.Month && temp.Date.Year == DateThree.Year)
                             sum2c += s.Value.Amount;
                     }
 
@@ -79,8 +79,8 @@ namespace Budget.Analisys
 
             if (DateTwo.Month > DateTime.Now.Month)
             {
-                Payments.Add(new Now() { Payment = "Wydatki", Number = CountFutureMonth(DateTwo, true) });
-                Payments.Add(new Now() { Payment = "Przychody", Number = CountFutureMonth(DateTwo, false) });
+                Paymentsa.Add(new Now() { Payment = "Wydatki", Number = CountFutureMonth(DateTwo, true) });
+                Paymentsa.Add(new Now() { Payment = "Przychody", Number = CountFutureMonth(DateTwo, false) });
             }
             else
             {
@@ -92,8 +92,8 @@ namespace Budget.Analisys
 
             if (DateThree.Month > DateTime.Now.Month)
             {
-                Payments.Add(new Now() { Payment = "Wydatki", Number = CountFutureMonth(DateThree, true) });
-                Payments.Add(new Now() { Payment = "Przychody", Number = CountFutureMonth(DateThree, false) });
+                Paymentsb.Add(new Now() { Payment = "Wydatki", Number = CountFutureMonth(DateThree, true) });
+                Paymentsb.Add(new Now() { Payment = "Przychody", Number = CountFutureMonth(DateThree, false) });
             }
             else
             {
@@ -138,11 +138,11 @@ namespace Budget.Analisys
             {
                 if (p.Value.GetType() == typeof (SinglePayment) || p.Value.Type == !payment) continue;
                 var pp = (PeriodPayment) p.Value;
-                var pDate = DateTime.Now.AddMonths(1).Month;
+                var pDate = DateTime.Now.AddMonths(1);
                 var pLast = pp.LastUpdate;
                 while (pLast.Month < DateTime.Now.AddMonths(2).Month)
                 {
-                    if (pLast.Month == pDate) // gdy akurat mamy ten miesiac
+                    if (pLast.Month == pDate.Month && pLast.Year == pDate.Year) // gdy akurat mamy ten miesiac
                         result += pp.Amount;
                     if (pp.EndDate > AddDateFrequency(pLast, pp.Period, pp.Frequency)) // czy koniec periodu nie wykracza poza kolejna "rate"
                         pLast = AddDateFrequency(pLast, pp.Period, pp.Frequency); // dodanie odstepu do kolejnej raty
@@ -160,7 +160,7 @@ namespace Budget.Analisys
                 {
                     if (p.Value.GetType() == typeof(PeriodPayment) || p.Value.Type == !payment) continue;
                     var pp = (SinglePayment) p.Value;
-                    if (pp.Date.Month != tempDate.Month)
+                    if (pp.Date.Month != tempDate.Month || pp.Date.Year != tempDate.Year)
                         continue;
                     avg += pp.Amount;
                     variationList.Add(pp.Amount);
@@ -173,7 +173,7 @@ namespace Budget.Analisys
                 {
                     if (p.Value.GetType() == typeof(PeriodPayment) || p.Value.Type == !payment) continue;
                     var pp = (SinglePayment)p.Value;
-                    if (pp.Date.Month != tempDate.Month)
+                    if (pp.Date.Month != tempDate.Month || pp.Date.Year != tempDate.Year)
                         continue;
                     if (!IsInRange(pp.Amount, avg, varSum)) continue; // jesli wartosc wykracza poza odchylenie standartowe
                     // if (pp.Amount / avg > 0.4 && pp.Amount / avg != 1.0) continue;
@@ -184,10 +184,10 @@ namespace Budget.Analisys
                 if (anyPayment != 0) // jesli nie bylo zadnych wydatkow/przychodow
                     months++;
             }
+            if (months == 0)
+                return 0;
             singleResult /= months; // wyliczenie sredniej arytmetycznej z miesiecy z ktorych mamy dane
             result += singleResult;
-            if (result == 0.0)
-                return 0;
             return Convert.ToInt32(result);  
         }
         /// <summary>

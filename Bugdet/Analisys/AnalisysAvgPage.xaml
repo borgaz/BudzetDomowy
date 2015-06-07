@@ -12,11 +12,9 @@
     <Grid>
         <chart:ClusteredColumnChart x:Name="chart" Style="{StaticResource MinimalChartStyle}" ChartTitle="Średnie saldo miesięczne" ChartSubTitle="Średnie saldo za poszczególny miesiąc" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}" Height="Auto" Margin="10,0,10,10" Width="Auto" >
             <chart:ClusteredColumnChart.Series>
-                <chart:ChartSeries DisplayMember="Payment" SeriesTitle="miesiac-2" ValueMember="Number" ItemsSource="{Binding Path=Paymentsb}" />
-                <chart:ChartSeries DisplayMember="Payment" SeriesTitle="miesiac-1" ValueMember="Number" ItemsSource="{Binding Path=Paymentsa}" />
-                <chart:ChartSeries DisplayMember="Payment" SeriesTitle="{Binding Source={x:Static sys:DateTime.Today}, StringFormat='{}{0:MMMM}'}" ValueMember="Number" ItemsSource="{Binding Path=Payments}" />
-                <!--<chart:ChartSeries DisplayMember="Payment" SeriesTitle="miesiac+1" ValueMember="Number" ItemsSource="{Binding Path=PaymentsNext1}" />
-                <chart:ChartSeries DisplayMember="Payment" SeriesTitle="miesiac+2" ValueMember="Number" ItemsSource="{Binding Path=PaymentsNext2}" />-->
+                <chart:ChartSeries DisplayMember="Payment" SeriesTitle=" " ValueMember="Number" ItemsSource="{Binding Path=Paymentsb}" />
+                <chart:ChartSeries DisplayMember="Payment" SeriesTitle="  " ValueMember="Number" ItemsSource="{Binding Path=Paymentsa}" />
+                <chart:ChartSeries DisplayMember="Payment" SeriesTitle="   " ValueMember="Number" ItemsSource="{Binding Path=Payments}" />
             </chart:ClusteredColumnChart.Series>
         </chart:ClusteredColumnChart>
         <Calendar x:Name="DateOneCalendar" HorizontalAlignment="Left" Margin="487,419,0,0" VerticalAlignment="Top" Height="33" DisplayDateChanged="DateThreeCalendar_OnDisplayDateChanged"/>
