@@ -215,6 +215,8 @@ namespace Budget.History
 
         private void AmountSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            if (HigherAmountSlider.Value > LowerAmountSlider.Value)
+                HigherAmountSlider.Value = LowerAmountSlider.Value;
             HigherSliderValueTextBox.Text = Convert.ToInt32(HigherAmountSlider.Value).ToString();
             RefreshTable();
         }
@@ -258,6 +260,8 @@ namespace Budget.History
 
         private void LowerAmountSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            if (LowerAmountSlider.Value < HigherAmountSlider.Value)
+                LowerAmountSlider.Value = HigherAmountSlider.Value;
             LowerSliderValueTextBox.Text = Convert.ToInt32(LowerAmountSlider.Value).ToString();
             RefreshTable();
         }
