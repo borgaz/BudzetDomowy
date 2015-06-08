@@ -12,6 +12,6 @@
         <Button x:Name="LogInButton" Content="Zaloguj" KeyboardNavigation.TabIndex="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,55" Height="26" Width="95" Click="LogInButton_Click" FontSize="14"/>
         <Button x:Name="CloseButton" Content="Wyjdź" KeyboardNavigation.TabIndex="3" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,55" Height="26" Width="95" Click="CloseButton_Click" FontSize="14"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Zaloguj się do istniejącego budżetu, utwórz nowy lub importuj z pliku." VerticalAlignment="Top" Width="207" FontSize="14" TextAlignment="Center"/>
-        <Button x:Name="ImportButton" Content="Importuj budżet z pliku ZIP" HorizontalAlignment="Left" Margin="35,170,0,0" VerticalAlignment="Top" Width="164" Click="ImportButton_Click"/>
+        <Button x:Name="ImportButton" Content="Importuj budżet z pliku ZIP" HorizontalAlignment="Left" Margin="36,170,0,0" VerticalAlignment="Top" Width="164" Click="ImportButton_Click" Height="24"/>
     </Grid>
 </Window>

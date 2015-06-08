@@ -31,7 +31,7 @@
                 <DataGridTextColumn Header="Cel" Width="65" IsReadOnly="True" Binding="{Binding NeededAmount}"/>
                 <DataGridTextColumn Header="Odłożono" Width="65" IsReadOnly="True" Binding="{Binding MoneyHoldings}"/>
                 <DataGridTextColumn Header="%" Width="30" IsReadOnly="True" Binding="{Binding PercentOfSavingsAmount}"/>
-                <DataGridTextColumn Header="Do końca" Width="65" IsReadOnly="True" Binding="{Binding DaysLeft}"/>   
+                <DataGridTextColumn Header="Do końca" Width="65" IsReadOnly="True" Binding="{Binding DaysLeft}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Najbliższe przychody i wydatki:" HorizontalAlignment="Left" Height="28" Margin="10,10,0,0" VerticalAlignment="Top" Width="191" FontWeight="Bold"/>

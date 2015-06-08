@@ -279,5 +279,6 @@ namespace Budget
                 generator.Generate();
             }
         }
+
     }
 }

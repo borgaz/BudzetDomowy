@@ -401,5 +401,6 @@ namespace Budget.WelcomePage
             PrevMonth();
             InsertBars();
         }
+
     }
 }

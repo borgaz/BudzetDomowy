@@ -17,8 +17,8 @@
                 <chart:ChartSeries DisplayMember="Payment" SeriesTitle="   " ValueMember="Number" ItemsSource="{Binding Path=Payments}" />
             </chart:ClusteredColumnChart.Series>
         </chart:ClusteredColumnChart>
-        <Calendar x:Name="DateOneCalendar" HorizontalAlignment="Left" Margin="487,419,0,0" VerticalAlignment="Top" Height="33" DisplayDateChanged="DateThreeCalendar_OnDisplayDateChanged"/>
-        <Calendar x:Name="DateTwoCalendar" HorizontalAlignment="Left" Margin="278,419,0,0" VerticalAlignment="Top" Height="33" DisplayDateChanged="DateThreeCalendar_OnDisplayDateChanged"/>
-        <Calendar x:Name="DateThreeCalendar" HorizontalAlignment="Left" Margin="81,419,0,0" VerticalAlignment="Top" Height="33" DisplayDateChanged="DateThreeCalendar_OnDisplayDateChanged"/>
+        <Calendar x:Name="DateOneCalendar" HorizontalAlignment="Left" Margin="487,419,0,0" VerticalAlignment="Top" Height="33" DisplayDateChanged="DateCalendar_OnDisplayDateChanged"/>
+        <Calendar x:Name="DateTwoCalendar" HorizontalAlignment="Left" Margin="278,419,0,0" VerticalAlignment="Top" Height="33" DisplayDateChanged="DateCalendar_OnDisplayDateChanged"/>
+        <Calendar x:Name="DateThreeCalendar" HorizontalAlignment="Left" Margin="81,419,0,0" VerticalAlignment="Top" Height="33" DisplayDateChanged="DateCalendar_OnDisplayDateChanged"/>
     </Grid>
 </Page>

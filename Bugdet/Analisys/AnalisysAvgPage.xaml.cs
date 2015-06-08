@@ -37,9 +37,10 @@ namespace Budget.Analisys
             DataContext = var;
         }
 
-        private void DateThreeCalendar_OnDisplayDateChanged(object sender, CalendarDateChangedEventArgs e)
+        private void DateCalendar_OnDisplayDateChanged(object sender, CalendarDateChangedEventArgs e)
         {
-            SetDates(DateOneCalendar.DisplayDate,DateTwoCalendar.DisplayDate,DateThreeCalendar.DisplayDate);
+            SetDates(DateOneCalendar.DisplayDate, DateTwoCalendar.DisplayDate, DateThreeCalendar.DisplayDate);
         }
+
     }
 }

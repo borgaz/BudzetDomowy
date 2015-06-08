@@ -15,7 +15,7 @@
             <TabItem x:Name="MonthAvgTab" Header="Średnie wydatki i przychody">
                 <Frame x:Name="MonthAvgFrame"></Frame>
             </TabItem>
-            <TabItem x:Name="LineChartTab" Header="Wykres liniowy" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="107" Margin="0">
+            <TabItem x:Name="LineChartTab" Header="Wykres salda" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="107" Margin="0">
                 <Frame x:Name="LineChartFrame"></Frame>
             </TabItem>
         </TabControl>
