@@ -38,14 +38,11 @@
         <Label Content="Cele oszczędzania:" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="122" Height="28" Margin="0,0,196,250" FontWeight="Bold"/>
         <Label Content="Skrócona historia:" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="115" Height="28" Margin="10,0,0,244" FontWeight="Bold"/>
         <Label Content="Aktualne saldo:" HorizontalAlignment="Right" VerticalAlignment="Top" Width="97" Height="25" Margin="0,32,32,0" FontWeight="Bold"/>
-        <ProgressBar x:Name="PaymentsBar" HorizontalAlignment="Right" Height="200" Margin="0,60,257,0" VerticalAlignment="Top" Width="34" Orientation="Vertical" Background="#FFFBFBFB" Foreground="#FFCD0505"/>
-        <ProgressBar x:Name="SalariesBar" HorizontalAlignment="Right" Height="200" Margin="0,60,187,0" VerticalAlignment="Top" Width="34" Orientation="Vertical">
+        <ProgressBar x:Name="PaymentsBar" HorizontalAlignment="Right" Height="200" Margin="0,60,257,0" VerticalAlignment="Top" Width="34" Orientation="Vertical" Background="{x:Null}" Foreground="#FFCD0505"/>
+        <ProgressBar x:Name="SalariesBar" HorizontalAlignment="Right" Height="200" Margin="0,60,187,0" VerticalAlignment="Top" Width="34" Orientation="Vertical" Background="{x:Null}">
             <ProgressBar.Foreground>
                 <SolidColorBrush Color="#FF02AE02"/>
             </ProgressBar.Foreground>
-            <ProgressBar.Background>
-                <SolidColorBrush Color="White"/>
-            </ProgressBar.Background>
             <ProgressBar.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                     <GradientStop Color="#FFB2B2B2" Offset="0"/>

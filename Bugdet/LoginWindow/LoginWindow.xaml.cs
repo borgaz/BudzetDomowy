@@ -133,9 +133,12 @@ namespace Budget.LoginWindow
             {
                 try
                 {
+                    string SQLFile = System.IO.Path.GetFileNameWithoutExtension(openFileDialog1.SafeFileName) + ".sqlite";
+                    if (File.Exists(SQLFile))
+                        MessageBox.Show("Baza danych o podanej nazwie już istnieje");
                     string zipPath = openFileDialog1.FileName;
                     ZipArchive archive = ZipFile.OpenRead(zipPath);
-                    if (archive.Entries.Count > 1)
+                    if (archive.Entries.Count > 2)
                     {
                         MessageBox.Show("Niepoprawny plik ZIP. Zbyt duża ilość plików w archiwum.");
                         return "";
@@ -143,9 +146,10 @@ namespace Budget.LoginWindow
 
                     foreach (ZipArchiveEntry entry in archive.Entries)
                     {
-                        if (!entry.FullName.EndsWith(".sqlite", StringComparison.OrdinalIgnoreCase))
+                        if (!entry.FullName.EndsWith(".sqlite", StringComparison.OrdinalIgnoreCase)
+                            && !entry.FullName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
                         {
-                            MessageBox.Show("Niepoprawny plik ZIP. Złe rozszerzenie bazy danych.");
+                            MessageBox.Show("Niepoprawny plik ZIP. Złe rozszerzenie plików budżetu");
                             return "";
                         }
                     }

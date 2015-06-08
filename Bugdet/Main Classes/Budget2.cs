@@ -118,7 +118,6 @@ namespace Budget.Main_Classes
                             Convert.ToDouble(singlePayFromSelect.Tables[0].Rows[i]["amount"]);
                     else
                     {
-                        MessageBox.Show(Convert.ToDateTime(singlePayFromSelect.Tables[0].Rows[i]["date"]).Month + "\n" + Convert.ToDateTime(singlePayFromSelect.Tables[0].Rows[i]["date"]));
                         SqlConnect.Instance.monthlySalaries +=
                             Convert.ToDouble(singlePayFromSelect.Tables[0].Rows[i]["amount"]);
                     }

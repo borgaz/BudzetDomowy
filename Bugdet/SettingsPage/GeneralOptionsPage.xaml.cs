@@ -53,10 +53,12 @@ namespace Budget.SettingsPage
             if (dialogResult == DialogResult.Yes)
             {
                 string file = @"" + Main_Classes.Budget.Instance.Name + ".sqlite";
+                string file2 = @"" + Main_Classes.Budget.Instance.Name + "Settings.xml";
                 System.Windows.Forms.Application.Restart();
                 App.Current.Shutdown();
                 Main_Classes.SqlConnect.Instance.Disconnect();
                 System.IO.File.Delete(file);
+                System.IO.File.Delete(file2);
             }
         }
 
@@ -81,8 +83,11 @@ namespace Budget.SettingsPage
                     if (File.Exists(endPath))
                         MessageBox.Show("Plik " + endPath + " istnieje. Podaj inną ścieżkę.");
                     Directory.CreateDirectory(budgetName);
-                    string fileInDir = Main_Classes.Budget.Instance.Name + "\\" + budgetName + ".sqlite";
-                    File.Copy(Main_Classes.Budget.Instance.Name + ".sqlite", fileInDir);
+                    string fileInDir = budgetName + "\\" + budgetName + ".sqlite";
+                    string file2InDir = budgetName + "\\" + budgetName + "Settings.xml";
+                    if (File.Exists(budgetName + "Settings.xml"))
+                        File.Copy(budgetName + "Settings.xml", file2InDir);
+                    File.Copy(budgetName + ".sqlite", fileInDir);
 
                     ZipFile.CreateFromDirectory(startPath, endPath);
                     return true;
