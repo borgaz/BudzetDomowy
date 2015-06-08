@@ -13,7 +13,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Typ" Width="70" IsReadOnly="True" Binding="{Binding Type}"/>
                 <DataGridTextColumn Header="Nazwa" Width="150" IsReadOnly="True" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Kwota" Width="60" IsReadOnly="True" Binding="{Binding Amount}"/>
+                <DataGridTextColumn Header="Kwota" Width="60" IsReadOnly="True" Binding="{Binding Amount}" FontWeight="Bold"/>
                 <DataGridTextColumn Header="Data" Width="70" IsReadOnly="True" Binding="{Binding Date}"/>
             </DataGrid.Columns>
         </DataGrid>
@@ -21,7 +21,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Typ" Width="70" IsReadOnly="True" Binding="{Binding Type}"/>
                 <DataGridTextColumn Header="Nazwa" Width="150" IsReadOnly="True" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Kwota" Width="60" IsReadOnly="True" Binding="{Binding Amount}"/>
+                <DataGridTextColumn Header="Kwota" Width="60" IsReadOnly="True" Binding="{Binding Amount}" FontWeight="Bold"/>
                 <DataGridTextColumn Header="Data" Width="70" IsReadOnly="True" Binding="{Binding Date}"/>
             </DataGrid.Columns>
         </DataGrid>

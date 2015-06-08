@@ -63,9 +63,7 @@ namespace Budget.SettingsPage
         private void ExportDataBase_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             if (ExportDataBaseToZip())
-                MessageBox.Show("Poprawnie wyeksportowana baza danych");
-            else
-                MessageBox.Show("Wystąpił błąd");
+                MessageBox.Show("Poprawnie wyeksportowana baza danych");  
         }
 
         private bool ExportDataBaseToZip()
@@ -87,10 +85,11 @@ namespace Budget.SettingsPage
                     File.Copy(Main_Classes.Budget.Instance.Name + ".sqlite", fileInDir);
 
                     ZipFile.CreateFromDirectory(startPath, endPath);
-
+                    return true;
                 }
                 catch (IOException e)
                 {
+                    MessageBox.Show("Wystąpił błąd");
                     return false;
                 }
                 finally
@@ -98,7 +97,10 @@ namespace Budget.SettingsPage
                     Directory.Delete(budgetName, true);
                 }
             }
-            return true;
+            else
+            {
+                return false;
+            }
         }
     }
 }

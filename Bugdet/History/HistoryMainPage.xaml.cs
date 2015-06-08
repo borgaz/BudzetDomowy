@@ -79,13 +79,13 @@ namespace Budget.History
             //a.VisualTree.SetValue(TextBlock.FontSizeProperty,12);
             //HistoryDataGrid.Columns[5].HeaderTemplate = a;
 
-
             HistoryDataGrid.Columns[2].DisplayIndex = 2;
             HistoryDataGrid.Columns[2].Width = 170;
             HistoryDataGrid.Columns[4].DisplayIndex = 3;
             HistoryDataGrid.Columns[3].DisplayIndex = 4;
             HistoryDataGrid.Columns[6].DisplayIndex = 5;
         }
+
         private void HistoryDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
         {
             var dataRow = e.Row.DataContext as DataRowView;
