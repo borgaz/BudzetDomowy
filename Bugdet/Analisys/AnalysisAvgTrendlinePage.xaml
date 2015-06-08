@@ -10,9 +10,9 @@
 	Title="AnalysisAvgTrendline">
 
     <Grid>
-        <DVC:Chart Name="Chart" Width="725" Background="#FFD9E6EC" Title="Saldo z poprzednich miesięcy oraz predykcja na kolejne">
+        <DVC:Chart Name="Chart" Width="725" Background="#FFEDEEF9" Title="Saldo z poprzednich miesięcy oraz predykcja na kolejne">
             <DVC:Chart.Series>
-                <DVC:LineSeries Title="Saldo" IndependentValueBinding="{Binding Path=Key}" DependentValueBinding="{Binding Path=Value}">
+                <DVC:LineSeries Title="Saldo" IndependentValueBinding="{Binding Path=Key}" DependentValueBinding="{Binding Path=Value}" Margin="0,0,1,0">
                 </DVC:LineSeries>
             </DVC:Chart.Series>
             </DVC:Chart>

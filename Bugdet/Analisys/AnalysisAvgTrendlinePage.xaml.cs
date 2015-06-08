@@ -202,9 +202,33 @@ namespace Budget.Analisys
 
             }
 
-            sumF += ((sumPredF1_1 + sumPredF1_2 + sumpM + sump2M) / 4);
-            sum2F += ((sumPredF2_1 + sumPredF2_2 + sumpM + sump2M) / 4);
-            sumaM += ((sumPredaM1_1 + sumPredaM1_2 + sumpM + sump2M) / 4);
+            int tempCount1 = 4;
+            if (sump2M == 0)
+                tempCount1--;
+            if (sumPredF1_1 == 0)
+                tempCount1--;
+            if (sumPredF1_2 == 0)
+                tempCount1--;
+
+            int tempCount2 = 4;
+            if (sump2M == 0)
+                tempCount2--;
+            if (sumPredF2_1 == 0)
+                tempCount2--;
+            if (sumPredF2_2 == 0)
+                tempCount2--;
+
+            int tempCount3 = 4;
+            if (sumPredaM1_1 == 0)
+                tempCount3--;
+            if (sumPredaM1_2 == 0)
+                tempCount3--;
+            if (sump2M == 0)
+                tempCount3--;
+
+            sumF += ((sumPredF1_1 + sumPredF1_2 + sumpM + sump2M) / tempCount1);
+            sum2F += ((sumPredF2_1 + sumPredF2_2 + sumpM + sump2M) / tempCount2);
+            sumaM += ((sumPredaM1_1 + sumPredaM1_2 + sumpM + sump2M) / tempCount3);
 
             data.Add(new KeyValuePair<string, int>(getMonthName(prevthreeMonth.Month, prevthreeMonth.Year), sump3M));
             data.Add(new KeyValuePair<string, int>(getMonthName(prevtwoMonth.Month, prevtwoMonth.Year), sump2M));
