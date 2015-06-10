@@ -146,7 +146,7 @@ namespace Budget.WelcomePage
                 if ((balanceLog.SinglePaymentID != 0 && balanceLog.PeriodPaymentID == 0) || (balanceLog.SinglePaymentID == 0 && balanceLog.PeriodPaymentID == 0))
                 {
                     var sP = (Main_Classes.SinglePayment)Main_Classes.Budget.Instance.Payments[balanceLog.SinglePaymentID];
-                    if (destination.Equals("grid") && IsOnList(SettingsPage.Settings.Instance.SH_Categories, sP.CategoryID))
+                    if ((destination.Equals("grid") && IsOnList(SettingsPage.Settings.Instance.SH_Categories, sP.CategoryID)) || destination.Equals("pdf"))
                     {
                         if (sP.Date <= lastDate && sP.Date >= firstDate && sP.Amount <= amountTo && sP.Amount >= amountOf)
                         {
@@ -165,7 +165,7 @@ namespace Budget.WelcomePage
                 else if(balanceLog.SinglePaymentID == 0 && balanceLog.PeriodPaymentID != 0)
                 {
                     var pP = (Main_Classes.PeriodPayment)Main_Classes.Budget.Instance.Payments[balanceLog.PeriodPaymentID];
-                    if (destination.Equals("grid") && IsOnList(SettingsPage.Settings.Instance.SH_Categories, pP.CategoryID))
+                    if ((destination.Equals("grid") && IsOnList(SettingsPage.Settings.Instance.SH_Categories, pP.CategoryID)) || destination.Equals("pdf"))
                     {
                         if (balanceLog.Date >= firstDate && pP.Amount <= amountTo && pP.Amount >= amountOf)
                         {
