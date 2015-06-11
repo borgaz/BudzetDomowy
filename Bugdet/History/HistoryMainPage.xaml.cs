@@ -56,8 +56,13 @@ namespace Budget.History
 
                 if (pp.Type && SinglePaymentCheckBox.IsChecked == true)
                 {
+                    String TempName = pp.Name;
+                    if (pp.Name.StartsWith("Okresowy:"))
+                    {
+                        TempName = pp.Name.Substring(10);
+                    }
                     var fd = Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name;
-                    history.Rows.Add(pp.Type, p.Key, pp.Name, Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name,
+                    history.Rows.Add(pp.Type, p.Key, TempName, Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name,
                         pp.Date.ToShortDateString(), pp.Amount, p.Value.Balance);
                 }
                 if (!pp.Type && SingleSalaryCheckBox.IsChecked == true)

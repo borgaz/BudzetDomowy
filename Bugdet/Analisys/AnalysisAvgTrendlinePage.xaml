@@ -12,9 +12,11 @@
     <Grid>
         <DVC:Chart Name="Chart" Width="725" Background="#FFEDEEF9" Title="Saldo z poprzednich miesięcy oraz predykcja na kolejne">
             <DVC:Chart.Series>
-                <DVC:LineSeries Title="Saldo" IndependentValueBinding="{Binding Path=Key}" DependentValueBinding="{Binding Path=Value}" Margin="0,0,1,0">
-                </DVC:LineSeries>
+                <DVC:LineSeries Title="Saldo" IndependentValueBinding="{Binding Path=Key}" DependentValueBinding="{Binding Path=Value}" Margin="0,0,1,0"/>
             </DVC:Chart.Series>
-            </DVC:Chart>
+            <DVC:Chart.Axes>
+                <DVC:LinearAxis Orientation="Y" ShowGridLines="True"/>
+            </DVC:Chart.Axes>
+        </DVC:Chart>
     </Grid>
 </Page>

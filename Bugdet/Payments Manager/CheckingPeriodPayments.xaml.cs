@@ -17,7 +17,14 @@ namespace Budget.Payments_Manager
             InitializeComponent();
             singlePaymentsList = _singlePaymentsList;
             listIndex = _singlePaymentsList.Count - 1;
-            PaymentName.Content = singlePaymentsList[listIndex].Name; 
+
+            String tempName = singlePaymentsList[listIndex].Name;
+            if (singlePaymentsList[listIndex].Name.StartsWith("Okresowy:"))
+            {
+                tempName = singlePaymentsList[listIndex].Name.Substring(10);
+            }
+
+            PaymentName.Content = tempName; 
             DateText.Content = singlePaymentsList[listIndex].Date.ToShortDateString();
             Amount.Text = singlePaymentsList[listIndex].Amount.ToString();
         }

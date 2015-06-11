@@ -28,16 +28,8 @@ namespace Budget.Analisys
         public AnalysisAvgTrendline()
         {
             InitializeComponent();
-
-            //Tymczasowo
-            //data.Add(new KeyValuePair<string, int>("Luty 2015", 6580));
-            //data.Add(new KeyValuePair<string, int>("Marzec 2015", 7130));
-            //data.Add(new KeyValuePair<string, int>("Kwiecień 2015", 6890));
-            //data.Add(new KeyValuePair<string, int>("Maj 2015", 7500));
-            //data.Add(new KeyValuePair<string, int>("Czerwiec 2015", 7740));
             setData();
             ((LineSeries)Chart.Series[0]).ItemsSource = data;
-
         }
 
         private void setData()

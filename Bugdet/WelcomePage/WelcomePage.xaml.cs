@@ -152,7 +152,7 @@ namespace Budget.WelcomePage
                         {
                             if (sP.Name.StartsWith("Okresowy:"))
                             {
-                                String TempName = sP.Name.Substring(9);
+                                String TempName = sP.Name.Substring(10);
                                 shortHistory.Add(new PaymentForDataGrid(TempName, sP.Amount, "Okresowy", sP.Date, sP.Type, sP.CategoryID, balanceLog.Balance));
                             }
                             else
