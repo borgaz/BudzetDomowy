@@ -92,7 +92,7 @@ namespace Budget.SettingsPage
                     ZipFile.CreateFromDirectory(startPath, endPath);
                     return true;
                 }
-                catch (IOException e)
+                catch (Exception)
                 {
                     MessageBox.Show("Wystąpił błąd");
                     return false;

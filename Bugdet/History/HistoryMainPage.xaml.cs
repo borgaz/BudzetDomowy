@@ -19,7 +19,6 @@ namespace Budget.History
         public HistoryMainPage()
         {
             InitializeComponent();
-           // Main_Classes.Budget.Instance.InsertCategories(CategoryComboBox, Main_Classes.Budget.CategoryTypeEnum.ANY);
             CheckBoxForCategories();
         }
         private void RefreshTable()
@@ -77,13 +76,6 @@ namespace Budget.History
             HistoryDataGrid.Columns[0].Visibility = Visibility.Hidden;
             HistoryDataGrid.Columns[1].Visibility = Visibility.Hidden;
             HistoryDataGrid.Columns[5].DisplayIndex = 1;
-
-            // -- to powinno dzialac wg MSDN ;(
-            //var a = new DataTemplate();
-            //a.VisualTree = new FrameworkElementFactory(typeof(TextBlock));
-            //a.VisualTree.SetValue(TextBlock.FontSizeProperty,12);
-            //HistoryDataGrid.Columns[5].HeaderTemplate = a;
-
             HistoryDataGrid.Columns[2].DisplayIndex = 2;
             HistoryDataGrid.Columns[2].Width = 170;
             HistoryDataGrid.Columns[4].DisplayIndex = 3;
@@ -104,7 +96,6 @@ namespace Budget.History
                 }
                 else
                 {
-                    //e.Row.Background = Brushes.ForestGreen;
                     e.Row.Background = Brushes.SpringGreen;
                 }
             }

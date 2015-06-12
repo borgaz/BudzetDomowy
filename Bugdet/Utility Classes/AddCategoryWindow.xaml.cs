@@ -70,8 +70,8 @@ namespace Budget.Utility_Classes
 
                 if (!creator)
                 {
-                    Main_Classes.Budget.Instance.ListOfAdds.Add(new Changes(typeof(Category), Main_Classes.Budget.Instance.Categories.Keys.Max() + 1));
-                    Main_Classes.Budget.Instance.Categories.Add(Main_Classes.Budget.Instance.Categories.Keys.Max() + 1,
+                    Main_Classes.Budget.Instance.ListOfAdds.Add(new Changes(typeof(Category), Main_Classes.Budget.Instance.Categories.Keys.Max() + 2));
+                    Main_Classes.Budget.Instance.Categories.Add(Main_Classes.Budget.Instance.Categories.Keys.Max() + 2,
                         new Category(CategoryNameTextBox.Text, CategoryNoteTextBox.Text, category));
                     Main_Classes.Budget.Instance.InsertCategories(_actualComboBox, type);
                     _actualComboBox.SelectedIndex = _actualComboBox.Items.Count - 1;

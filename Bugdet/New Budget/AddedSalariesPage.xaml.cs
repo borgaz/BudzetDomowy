@@ -30,7 +30,7 @@ namespace Budget.New_Budget
                 _salaries.Remove((int)dataRow.Row.ItemArray[0]);
                 Refresh(_salaries);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 // Nic sie nie dzieje
                 // niech se klika

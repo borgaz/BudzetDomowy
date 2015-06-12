@@ -39,6 +39,7 @@ namespace Budget.Main_Classes
                 ///// resetowanie zarobkow
                 SqlConnect.Instance.monthlyPayments = 0;
                 SqlConnect.Instance.monthlySalaries = 0;
+
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 // Lista kategorii
                 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -208,7 +209,7 @@ namespace Budget.Main_Classes
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -345,7 +346,6 @@ namespace Budget.Main_Classes
                 && Instance.EditDB(Instance.ListOfEdits)
                 && Instance.DeleteFromDB(Instance.ListOfDels))
             {
-                //MessageBox.Show("Zapisano");
                 SqlConnect.Instance.ExecuteSqlNonQuery("UPDATE BUDGET SET BALANCE = '" + balance.ToString().Replace(",", ".") +
                     "'");
                 instance = FetchAll();

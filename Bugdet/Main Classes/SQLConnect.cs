@@ -229,10 +229,9 @@ namespace Budget.Main_Classes
                 }
                 return true;
             }
-            catch (SQLiteException ex)
+            catch (SQLiteException)
             {
-                MessageBox.Show("Błąd");
-                Console.WriteLine(ex.ToString());
+                MessageBox.Show("Błąd w SQL");
                 return false;
             }
         }
@@ -243,7 +242,6 @@ namespace Budget.Main_Classes
         /// <param name="query">zapytanie (insert, create itp )</param>
         public Boolean ExecuteSqlNonQuery(String query)
         {
-            Console.WriteLine(query);
             try
             {
                 _command = new SQLiteCommand(query, _mydb);
@@ -316,10 +314,9 @@ namespace Budget.Main_Classes
                 defaultCategories.Add(11, new Category("Renta", "Renta", true));
                 return defaultCategories;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 MessageBox.Show("Błąd");
-                Console.WriteLine(ex.GetBaseException() + "\n addDefaultCategories()");
                 return null;
             }
         }
