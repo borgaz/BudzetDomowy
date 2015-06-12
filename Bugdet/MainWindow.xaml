@@ -11,7 +11,7 @@
                 </RadialGradientBrush>
             </Frame.Background>
         </Frame>
-        <Button x:Name="WelcomePageButton" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-100,172,0,0" Width="260" Height="44" RenderTransformOrigin="0.5,0.5" Content="Strona Główna" FontSize="20" Click="WelcomePageButton_Click">
+        <Button x:Name="WelcomePageButton" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-94,157,0,0" Width="250" Height="44" RenderTransformOrigin="0.5,0.5" Content="Strona Główna" FontSize="20" Click="WelcomePageButton_Click">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -21,7 +21,7 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button x:Name="HistoryButton" HorizontalAlignment="Left" Margin="-86,423,0,0" VerticalAlignment="Top" Width="230" Height="44" RenderTransformOrigin="0.5,0.5" Content="Historia" FontSize="20" Click="HistoryButton_Click">
+        <Button x:Name="HistoryButton" HorizontalAlignment="Left" Margin="-94,414,0,0" VerticalAlignment="Top" Width="250" Height="44" RenderTransformOrigin="0.5,0.5" Content="Historia" FontSize="20" Click="HistoryButton_Click">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -31,10 +31,12 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button x:Name="SettingsButton" HorizontalAlignment="Right" Margin="0,14,9,0" VerticalAlignment="Top" Width="40" Height="44" RenderTransformOrigin="0.5,0.5" FontSize="20" Click="SettingsButton_Click">
+        <Button x:Name="SettingsButton" HorizontalAlignment="Right" Margin="0,10,9,0" VerticalAlignment="Top" Width="44" Height="40" RenderTransformOrigin="0.5,0.5" FontSize="20" Click="SettingsButton_Click">
             <Button.Content>
                 <Image Source="/Resources/cog.png"/>
             </Button.Content>
+        </Button>
+        <Button x:Name="CreatorButton" HorizontalAlignment="Right" Margin="0,157,-94,0" VerticalAlignment="Top" Width="250" Height="44" RenderTransformOrigin="0.5,0.5" Content="Przychody i wydatki" FontSize="20" Click="CreatorButton_Click">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -44,7 +46,7 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button x:Name="CreatorButton" HorizontalAlignment="Right" Margin="0,168,-101,0" VerticalAlignment="Top" Width="260" Height="44" RenderTransformOrigin="0.5,0.5" Content="Przychody i wydatki" FontSize="20" Click="CreatorButton_Click">
+        <Button x:Name="AnalisysButton" Content="Analiza" HorizontalAlignment="Right" Margin="0,414,-94,0" VerticalAlignment="Top" Width="250" Height="44" RenderTransformOrigin="0.5,0.5" FontSize="20" Click="AnalisysButton_Click">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -54,17 +56,7 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button x:Name="AnalisysButton" Content="Analiza" HorizontalAlignment="Left" Margin="699,421,-85,0" VerticalAlignment="Top" Width="230" Height="42" RenderTransformOrigin="0.5,0.5" FontSize="20" Click="AnalisysButton_Click">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="90"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button x:Name="SaveButton" HorizontalAlignment="Left" Margin="9,19,0,0" VerticalAlignment="Top" Width="44" Height="40" Click="SaveButton_Click">
+        <Button x:Name="SaveButton" HorizontalAlignment="Left" Margin="9,10,0,0" VerticalAlignment="Top" Width="44" Height="40" Click="SaveButton_Click">
             <Button.Content>
                 <Image Source="/Resources/saveButton.png"/>
             </Button.Content>
