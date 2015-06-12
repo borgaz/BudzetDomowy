@@ -23,6 +23,7 @@ namespace Budget.Analisys
         private AnalysisTabPage _chartTab;
         private AnalisysAvgPage _balanceTab;
         private AnalysisAvgTrendline _trendlineTab;
+        private AnalysisCategoryPage _categoryPage;
 
         public AnalisysMainPage()
         {
@@ -34,9 +35,11 @@ namespace Budget.Analisys
             _chartTab = new AnalysisTabPage();
             _balanceTab = new AnalisysAvgPage();
             _trendlineTab = new AnalysisAvgTrendline();
+            _categoryPage = new AnalysisCategoryPage();
             CategoryPaymentFrame.Content = _chartTab;
             MonthAvgFrame.Content = _balanceTab;
             LineChartFrame.Content = _trendlineTab;
+            CategoryTabFrame.Content = _categoryPage;
         }
     }
 }

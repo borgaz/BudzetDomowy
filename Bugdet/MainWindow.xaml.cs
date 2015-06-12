@@ -26,8 +26,8 @@ namespace Budget
         private HistoryMainPage _historyPage;
         private Analisys.AnalisysMainPage _analisysPage;
         private static int _actualPage = 2;
-        private static int _periodChecked = 0;
-        private static int _futureSingleChecked = 0;
+        private static int periodChecked = 0;
+        private static int futureSingleChecked = 0;
         private Thread _autoSave;
         private bool running = true;
 
@@ -169,10 +169,10 @@ namespace Budget
             InsertPage();
 
             List<SinglePayment> list = Main_Classes.Budget.Instance.CheckPeriodPayments();
-            if (list.Count > 0 && _periodChecked == 0)
+            if (list.Count > 0 && periodChecked == 0)
             {
                 new CheckingPeriodPayments(list).ShowDialog();
-                _periodChecked = 1;
+                periodChecked = 1;
             }
         }
 
@@ -196,7 +196,7 @@ namespace Budget
             _actualPage = 4;
             InsertPage();
 
-            if (_futureSingleChecked == 0)
+            if (futureSingleChecked == 0)
             {
                 Main_Classes.Budget.Instance.FutureSinglePaymentsCheck();
             }
@@ -278,6 +278,11 @@ namespace Budget
                 MessageBox.Show("Generuję bazę danych!");
                 generator.Generate();
             }
+        }
+
+        public static void resetPeriodChecked()
+        {
+            periodChecked = 0;
         }
 
     }

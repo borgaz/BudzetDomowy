@@ -18,6 +18,9 @@
             <TabItem x:Name="LineChartTab" Header="Wykres salda" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="107" Margin="0">
                 <Frame x:Name="LineChartFrame"></Frame>
             </TabItem>
+            <TabItem x:Name="CategoryTab" Header="Kategorie płatności" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="123" Margin="-1,0,-26,0">
+                <Frame x:Name="CategoryTabFrame"></Frame>
+            </TabItem>
         </TabControl>
     </Grid>
 </Page>

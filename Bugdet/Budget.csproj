@@ -124,6 +124,9 @@
     <Compile Include="Analisys\AnalysisAvgTrendlinePage.xaml.cs">
       <DependentUpon>AnalysisAvgTrendlinePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Analisys\AnalysisCategoryPage.xaml.cs">
+      <DependentUpon>AnalysisCategoryPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Analisys\AnalysisTabPage.xaml.cs">
       <DependentUpon>AnalysisTabPage.xaml</DependentUpon>
     </Compile>
@@ -237,6 +240,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Analisys\AnalysisAvgTrendlinePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analisys\AnalysisCategoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

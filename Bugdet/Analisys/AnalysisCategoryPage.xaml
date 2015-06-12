@@ -1,4 +1,4 @@
-﻿<Page x:Class="Budget.Analisys.AnalysisAvgTrendline"
+﻿<Page x:Class="Budget.Analisys.AnalysisCategoryPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,13 +7,10 @@
       xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
       mc:Ignorable="d" 
       d:DesignHeight="550" d:DesignWidth="725"
-	Title="AnalysisAvgTrendline">
+	Title="AnalysisCategoryPage">
 
     <Grid>
-        <DVC:Chart Name="Chart" Width="725" Background="#FFEDEEF9" Title="Saldo z poprzednich miesięcy oraz predykcja na kolejne">
-            <DVC:Chart.Series>
-                <DVC:LineSeries Title="Saldo" IndependentValueBinding="{Binding Path=Key}" DependentValueBinding="{Binding Path=Value}" Margin="0,0,1,0" Background="#FF0627F9"/>
-            </DVC:Chart.Series>
+        <DVC:Chart Name="Chart" Width="725" Background="#FFEDEEF9" Title="Kategorie płatności">
             <DVC:Chart.Axes>
                 <DVC:LinearAxis Orientation="Y" ShowGridLines="True"/>
             </DVC:Chart.Axes>
@@ -23,5 +20,8 @@
                 </Style>
             </DVC:Chart.PlotAreaStyle>
         </DVC:Chart>
+        <ComboBox x:Name="CategoryComboBox" HorizontalAlignment="Left" Margin="542,30,0,0" VerticalAlignment="Top" Width="173" DropDownClosed="CategoryComboBox_DropDownClosed"/>
+        <Label x:Name="CategoryLabel" Content="Wybierz kategorie:" HorizontalAlignment="Left" Margin="542,4,0,0" VerticalAlignment="Top" Width="173"/>
+
     </Grid>
 </Page>

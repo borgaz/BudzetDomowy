@@ -67,6 +67,8 @@ namespace Budget.Payments_Manager
                             _periodDateGrid.StartDate,
                             _periodDateGrid.EndDate));
                     _periodDateGrid.ClearComponents();
+
+                    Budget.MainWindow.resetPeriodChecked();
                 }
                 else
                 {
