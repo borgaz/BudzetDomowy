@@ -18,7 +18,7 @@
             <TabItem x:Name="LineChartTab" Header="Wykres salda">
                 <Frame x:Name="LineChartFrame"></Frame>
             </TabItem>
-            <TabItem x:Name="CategoryTab" Header="Kategorie płatności">
+            <TabItem x:Name="CategoryTab" Header="Wykres kategorii płatności">
                 <Frame x:Name="CategoryTabFrame"></Frame>
             </TabItem>
         </TabControl>

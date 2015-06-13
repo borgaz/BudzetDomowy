@@ -9,7 +9,13 @@
     Width="420"
     ResizeMode="NoResize">
 
-    <Grid Height="400" Width="400">
+    <Grid Margin="0">
+        <Grid.Background>
+            <RadialGradientBrush>
+                <GradientStop Color="#FFD1DAEA" Offset="0"/>
+                <GradientStop Color="#FFEDEEF9" Offset="1"/>
+            </RadialGradientBrush>
+        </Grid.Background>
         <CheckBox x:Name="AutoCheckBox" KeyboardNavigation.TabIndex="3" Content="Automatyczne odkładanie" HorizontalAlignment="Left" Height="25" Margin="10,150,0,0" VerticalAlignment="Top" Width="200" Unchecked="AutoCheckBox_Unchecked" Checked="AutoCheckBox_Checked"/>
         <ComboBox x:Name="PriorityComboBox" KeyboardNavigation.TabIndex="2" HorizontalAlignment="Left" Height="25" Margin="120,115,0,0" VerticalAlignment="Top" Width="120"/>
         <ComboBox x:Name="PeriodComboBox" KeyboardNavigation.TabIndex="6" HorizontalAlignment="Left" Height="25" Margin="120,245,0,0" VerticalAlignment="Top" Width="120"/>
