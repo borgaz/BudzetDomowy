@@ -9,16 +9,16 @@
 
     <Grid>
         <TabControl x:Name="ChartsTab" HorizontalAlignment="Left" Height="550" VerticalAlignment="Top" Width="725" Loaded="ChartsTab_OnLoaded">
-            <TabItem x:Name="CategoryPaymentTab" Header="Wykres kołowy płatności" Margin="0,0,0,0">
-                <Frame x:Name="CategoryPaymentFrame" Background="White"></Frame>
+            <TabItem x:Name="CategoryPaymentTab" Header="Wykres kołowy płatności">
+                <Frame x:Name="CategoryPaymentFrame"></Frame>
             </TabItem>
             <TabItem x:Name="MonthAvgTab" Header="Średnie wydatki i przychody">
                 <Frame x:Name="MonthAvgFrame"></Frame>
             </TabItem>
-            <TabItem x:Name="LineChartTab" Header="Wykres salda" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="107" Margin="0">
+            <TabItem x:Name="LineChartTab" Header="Wykres salda">
                 <Frame x:Name="LineChartFrame"></Frame>
             </TabItem>
-            <TabItem x:Name="CategoryTab" Header="Kategorie płatności" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="123" Margin="-1,0,-26,0">
+            <TabItem x:Name="CategoryTab" Header="Kategorie płatności">
                 <Frame x:Name="CategoryTabFrame"></Frame>
             </TabItem>
         </TabControl>
