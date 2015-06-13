@@ -52,7 +52,16 @@ namespace Budget.History
                     foreach (var cat in CategoryComboBox.Items.Cast<CheckBox>().Where(cat => Convert.ToInt32(cat.Name.Substring(1)) == pp.CategoryID && cat.IsChecked == true)) {add = true; }
                     if (!add) continue;
                 }
-
+                var categoryName = Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name;
+                if (categoryName == "-")
+                {
+                    categoryName = "";
+                }
+                var date = pp.Date.ToShortDateString();
+                if (pp.Date == DateTime.MinValue)
+                {
+                    date = "";
+                }
                 if (pp.Type && SinglePaymentCheckBox.IsChecked == true)
                 {
                     String TempName = pp.Name;
@@ -60,14 +69,13 @@ namespace Budget.History
                     {
                         TempName = pp.Name.Substring(10);
                     }
-                    var fd = Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name;
-                    history.Rows.Add(pp.Type, p.Key, TempName, Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name,
-                        pp.Date.ToShortDateString(), pp.Amount, p.Value.Balance);
+                    history.Rows.Add(pp.Type, p.Key, TempName, categoryName,
+                        date, pp.Amount, p.Value.Balance);
                 }
                 if (!pp.Type && SingleSalaryCheckBox.IsChecked == true)
                 {
-                    history.Rows.Add(pp.Type, p.Key, pp.Name, Main_Classes.Budget.Instance.Categories[pp.CategoryID].Name,
-                        pp.Date.ToShortDateString(), pp.Amount, p.Value.Balance);
+                    history.Rows.Add(pp.Type, p.Key, pp.Name, categoryName,
+                        date, pp.Amount, p.Value.Balance);
                 }
             }
 

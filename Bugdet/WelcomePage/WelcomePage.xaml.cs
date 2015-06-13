@@ -136,10 +136,6 @@ namespace Budget.WelcomePage
                 amountOf = 0;
                 amountTo = INF;
                 numberOfRow = INF;
-                if (firstDate.Equals(DateTime.Today))
-                {
-                    firstDate = DateTime.MinValue;
-                }
             }
             foreach (Main_Classes.BalanceLog balanceLog in Main_Classes.Budget.Instance.BalanceLog.Values)
             {
@@ -231,7 +227,7 @@ namespace Budget.WelcomePage
             }
             else
             {
-                startDate = DateTime.Today;
+                startDate = DateTime.MinValue;
                 endDate = DateTime.Today;
                 GeneratePDF();
             }
@@ -374,6 +370,10 @@ namespace Budget.WelcomePage
                     Value = CreataDataForShortHistoryDataGrid("pdf", startDate, endDate)
                 });
                 ReportParameter startDateParameter = new ReportParameter("StartDate", startDate.ToShortDateString());
+                if (startDate.Equals(DateTime.MinValue))
+                {
+                    startDateParameter = new ReportParameter("StartDate", "");
+                }
                 ReportParameter endDateParameter = new ReportParameter("EndDate", endDate.ToShortDateString());
                 ReportParameter nameParameter = new ReportParameter("Name", Main_Classes.Budget.Instance.Name);
                 report.LocalReport.SetParameters(new ReportParameter[] { startDateParameter, endDateParameter, nameParameter });

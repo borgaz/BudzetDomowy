@@ -33,6 +33,10 @@ namespace Budget.WelcomePage
                 this.singleAmount = -1 * amount;
             }
             this.categoryName = Main_Classes.Budget.Instance.Categories.FirstOrDefault(x => x.Key.Equals(categoryID)).Value.Name;
+            if (this.categoryName == "-")
+            {
+                this.categoryName = "";
+            }
         }
 
         public int CompareTo(PaymentForDataGrid pP)
