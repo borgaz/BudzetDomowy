@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 
 namespace Budget.Analisys
 {
@@ -22,6 +23,7 @@ namespace Budget.Analisys
     public partial class AnalisysAvgPage : Page
     {
         private BalanceChart var;
+        private bool user;
         public AnalisysAvgPage()
         {
             InitializeComponent();
@@ -39,8 +41,30 @@ namespace Budget.Analisys
 
         private void DateCalendar_OnDisplayDateChanged(object sender, CalendarDateChangedEventArgs e)
         {
+            if (!user)
+                return;
+            if (((Calendar)sender).Equals(DateOneCalendar))
+                if (DateOneCalendar.DisplayDate.Month == DateTwoCalendar.DisplayDate.Month)
+                    DateOneCalendar.DisplayDate = DateOneCalendar.DisplayDate.AddMonths(1);
+            if (((Calendar)sender).Equals(DateTwoCalendar))
+            {
+                if (DateTwoCalendar.DisplayDate.Month == DateThreeCalendar.DisplayDate.Month) { DateTwoCalendar.DisplayDate = DateTwoCalendar.DisplayDate.AddMonths(1); }
+                else if (DateTwoCalendar.DisplayDate.Month == DateOneCalendar.DisplayDate.Month) { DateTwoCalendar.DisplayDate = DateTwoCalendar.DisplayDate.AddMonths(-1); }
+            }
+            if (((Calendar)sender).Equals(DateThreeCalendar))
+                if (DateThreeCalendar.DisplayDate.Month == DateTwoCalendar.DisplayDate.Month)
+                    DateThreeCalendar.DisplayDate = DateThreeCalendar.DisplayDate.AddMonths(-1);
+            if (((Calendar)sender).DisplayDate.Month > DateTime.Now.Month)
+                System.Windows.MessageBox.Show(
+                    "Przyszły miesiąc zawiera przewidywaną sumę wydatków i przychodów wynikającą z analizy dotychczasowych danych.\nNie należy traktować tego jako wiarygodnego źródła informacji");
+
             SetDates(DateOneCalendar.DisplayDate, DateTwoCalendar.DisplayDate, DateThreeCalendar.DisplayDate);
         }
 
+        private void UIElement_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            if (!user)
+                user = true;
+        }
     }
 }

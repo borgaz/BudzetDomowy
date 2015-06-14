@@ -9,8 +9,8 @@
       d:DesignHeight="550" d:DesignWidth="725"
 	Title="AnalisysAvgPage">
 
-    <Grid>
-        <chart:ClusteredColumnChart x:Name="chart" Style="{StaticResource MinimalChartStyle}"  Background="#FFEDEEF9" ChartTitle="Średnie saldo miesięczne" ChartSubTitle="Średnie saldo za poszczególny miesiąc" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}" Height="Auto" Margin="0,0,0,0" Width="Auto" SelectedBrush="{x:Null}" >
+    <Grid MouseEnter="UIElement_OnMouseEnter">
+        <chart:ClusteredColumnChart x:Name="chart" Style="{StaticResource MinimalChartStyle}"  Background="#FFEDEEF9" ChartTitle="Miesięczna suma wydatków i przychodów" ChartSubTitle="Miesięczna suma na poszczególny miesiąc" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}" Height="Auto" Margin="0,0,0,0" Width="Auto" SelectedBrush="{x:Null}" >
             <chart:ClusteredColumnChart.Series>
                 <chart:ChartSeries DisplayMember="Payment" SeriesTitle=" " ValueMember="Number" ItemsSource="{Binding Path=Paymentsb}" />
                 <chart:ChartSeries DisplayMember="Payment" SeriesTitle="  " ValueMember="Number" ItemsSource="{Binding Path=Paymentsa}" />

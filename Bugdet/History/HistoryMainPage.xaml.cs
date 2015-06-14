@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Budget.Main_Classes;
 using System.Linq;
+using Budget.Utility_Classes;
 using ComboBoxItem = Budget.Utility_Classes.ComboBoxItem;
 
 namespace Budget.History
@@ -14,7 +15,7 @@ namespace Budget.History
     /// <summary>
     /// Interaction logic for HistoryMainPage.xaml
     /// </summary>
-    public partial class HistoryMainPage : Page
+    public partial class HistoryMainPage : Page,IGetOnPage
     {
         public HistoryMainPage()
         {
@@ -244,6 +245,7 @@ namespace Budget.History
 
         private void CheckBoxForCategories()
         {
+            CategoryComboBox.Items.Clear();
             foreach (var cat in Main_Classes.Budget.Instance.Categories)
             {
                 var c = new CheckBox {Content = cat.Value.Name, Name = "a" + cat.Key, IsChecked = true};
@@ -291,6 +293,11 @@ namespace Budget.History
             if (LowerSliderValueTextBox.Text == "")
                 LowerAmountSlider.Value = 0;
             LowerAmountSlider.Value = Convert.ToInt32(LowerSliderValueTextBox.Text);
+        }
+
+        public void GetOnPage()
+        {
+            CheckBoxForCategories();
         }
     }
 }

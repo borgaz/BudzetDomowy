@@ -107,6 +107,7 @@ namespace Budget
                     this.MainContentFrame.Content = _mainSettingsWindow;
                     break;
                 case 4:
+                    _historyPage.GetOnPage();
                     this.MainContentFrame.Content = _historyPage;
                     break;
                 case 5:
