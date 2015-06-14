@@ -4,6 +4,12 @@
         Title="Okno wylogowania" Background="#FFEDEEF9
         " Height="117" Width="353" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/Budget;component/Resources/app-icon.ico">
     <Grid>
+        <Grid.Background>
+            <RadialGradientBrush>
+                <GradientStop Color="#FFD1DAEA" Offset="0"/>
+                <GradientStop Color="#FFEDEEF9" Offset="1"/>
+            </RadialGradientBrush>
+        </Grid.Background>
         <StackPanel x:Name="ButtonsStackPanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10" Height="32" Width="345">
             <Button x:Name="YesButton" KeyboardNavigation.TabIndex="0" Width="75" Margin="30,0,15,0" Click="YesButton_OnClick"/>
             <Button x:Name="CancelButton" KeyboardNavigation.TabIndex="1" Width="75" Margin="15,0,15,0" Click="CancelButton_OnClick"/>
