@@ -35,9 +35,6 @@ namespace Budget.History
 
             foreach (KeyValuePair<int, BalanceLog> p in Main_Classes.Budget.Instance.BalanceLog.Reverse())
             {
-                if (!((p.Value.Date >= (StartDateCheckBox.IsChecked == true ? StartDatePicker.SelectedDate : DateTime.MinValue)) &&
-                      (p.Value.Date <= (EndDateCheckBox.IsChecked == true ? EndDatePicker.SelectedDate : DateTime.MaxValue))))
-                    continue;
                 if (p.Value.PeriodPaymentID != 0) continue;
                 // oba id sa 0 to nie bierzemy pod uwage - zepsute rekordy przy dodawaniu w kreatorze
                 if (p.Value.SinglePaymentID == 0)
@@ -45,6 +42,10 @@ namespace Budget.History
                 var pp = (SinglePayment)Main_Classes.Budget.Instance.Payments[p.Value.SinglePaymentID];
                 // jesli wartosc nie zawiera sie w sliderze to nie bierzemy pod uwage
                 if (pp.Amount > LowerAmountSlider.Value || pp.Amount < HigherAmountSlider.Value)
+                    continue;
+                // jesli przekracza zakres daty
+                if (!((pp.Date >= (StartDateCheckBox.IsChecked == true ? StartDatePicker.SelectedDate : DateTime.MinValue)) &&
+                    (pp.Date <= (EndDateCheckBox.IsChecked == true ? EndDatePicker.SelectedDate : DateTime.MaxValue))))
                     continue;
                 // jesli kategoria jest odhaczona to nie bierzemy pod uwage.
                 if (CategoryCheckBox.IsChecked == true)
