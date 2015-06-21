@@ -91,7 +91,7 @@ namespace Budget.Main_Classes
             int _periods = 0;
             DateTime temp = this.lastUpdate;
 
-            while (DateTime.Compare(temp, DateTime.Today) <= 0 && DateTime.Compare(temp, this.EndDate) <= 0)
+            while (DateTime.Compare(temp, DateTime.Today) < 0 && DateTime.Compare(temp, this.EndDate) < 0)
             //Mniej niż zeroooooo - lastUpdate (temp) jest wcześniejsza niż Now.
             //Zero - lastUpdate (temp) jest taka sama jak Now.
             //Większe od zera - lastUpdate (temp) jest późniejsza niż Now.
